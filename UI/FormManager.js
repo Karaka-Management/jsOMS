@@ -22,6 +22,7 @@
         this.ignore = [];
         this.success = [];
         this.injectSelector = [];
+        this.forms = [];
     };
 
     /**
@@ -95,13 +96,19 @@
      */
     jsOMS.FormManager.prototype.bind = function (id)
     {
+        this.forms = [];
+
         if (typeof id !== 'undefined' && this.ignore.indexOf(id) === -1) {
-            this.bindElement(document.getElementById(id));
+            var form = document.getElementById(id);
+
+            this.forms.push(form);
+            this.bindElement(form);
         } else {
             var forms = document.getElementsByTagName('form');
 
             for (var i = 0; i < forms.length; i++) {
                 if (this.ignore.indexOf(forms[i].id) === -1) {
+                    this.forms.push(forms[i])
                     this.bindElement(forms[i]);
                 }
             }
@@ -405,4 +412,14 @@
             }
         }
     };
+
+    jsOMS.FormManager.prototype.getElements = function ()
+    {
+        return this.forms;
+    }
+
+    jsOMS.FormManager.prototype.count = function ()
+    {
+        return this.forms.length;
+    }
 }(window.jsOMS = window.jsOMS || {}));

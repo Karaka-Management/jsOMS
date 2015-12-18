@@ -1,5 +1,5 @@
 (function (jsOMS, undefined) {
-    jsOMS.ChartLegend = function () {
+    jsOMS.Chart.Legend = function () {
         this.position = {x: 0, y: 0};
         this.relative = true;
         this.horizontal = false;
@@ -7,39 +7,39 @@
         this.labels = []; // {title, color, marker}
     };
 
-    jsOMS.ChartLegend.prototype.addLabel = function(label) {
+    jsOMS.Chart.Legend.prototype.addLabel = function(label) {
         this.labels.push(label);
     };
 
-    jsOMS.ChartLegend.prototype.setVisibility = function(visibility) {
+    jsOMS.Chart.Legend.prototype.setVisibility = function(visibility) {
         this.visible = visibility;
     };
 
-    jsOMS.ChartLegend.prototype.getVisibility = function() {
+    jsOMS.Chart.Legend.prototype.getVisibility = function() {
         return this.visible;
     };
 
-    jsOMS.ChartLegend.prototype.setPosition = function(position) {
+    jsOMS.Chart.Legend.prototype.setPosition = function(position) {
         this.position = position;
     };
 
-    jsOMS.ChartLegend.prototype.getPosition = function() {
+    jsOMS.Chart.Legend.prototype.getPosition = function() {
         return this.position;
     };
 
-    jsOMS.ChartLegend.prototype.setRelative = function(relative) {
+    jsOMS.Chart.Legend.prototype.setRelative = function(relative) {
         this.relative = relative;
     };
 
-    jsOMS.ChartLegend.prototype.isRelative = function() {
+    jsOMS.Chart.Legend.prototype.isRelative = function() {
         return this.relative;
     };
 
-    jsOMS.ChartLegend.prototype.setHorizontal = function(horizontal) {
+    jsOMS.Chart.Legend.prototype.setHorizontal = function(horizontal) {
         this.horizontal = horizontal;
     };
 
-    jsOMS.ChartLegend.prototype.isHorizontal = function() {
+    jsOMS.Chart.Legend.prototype.isHorizontal = function() {
         return this.horizontal;
     };
 
