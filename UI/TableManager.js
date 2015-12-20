@@ -38,7 +38,7 @@
         } else {
             var tables = document.querySelectorAll('.tables');
 
-            for (var i = 0; i < tabs.length; i++) {
+            for (var i = 0; i < tables.length; i++) {
                 this.bindElement(tables[i]);
             }
         }
