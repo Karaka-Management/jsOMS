@@ -25,10 +25,10 @@
      * Set option.
      *
      * @param {int|string} key Option key
-     * @param {boo|int|float|string|Array} value Option value
-     * @param {bool} [overwrite=true] Overwrite value
+     * @param {boolean|int|float|string|Array} value Option value
+     * @param {boolean} [overwrite=true] Overwrite value
      *
-     * @param {bool}
+     * @return {boolean}
      *
      * @method
      *
@@ -53,7 +53,7 @@
      *
      * @param {int|string} key Option key
      *
-     * @return {boo|int|float|string|Array}
+     * @return {boolean|int|float|string|Array}
      *
      * @method
      *
@@ -74,7 +74,7 @@
      *
      * @param {int|string} key Option key
      *
-     * @return {boo}
+     * @return {boolean}
      *
      * @method
      *

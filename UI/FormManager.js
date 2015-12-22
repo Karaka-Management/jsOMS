@@ -50,7 +50,7 @@
      * @param {string} selector Form id
      * @param {requestCallback} callback Callback to execute before submit
      *
-     * @return {bool}
+     * @return {boolean}
      *
      * @method
      *
@@ -108,7 +108,7 @@
 
             for (var i = 0; i < forms.length; i++) {
                 if (this.ignore.indexOf(forms[i].id) === -1) {
-                    this.forms.push(forms[i])
+                    this.forms.push(forms[i]);
                     this.bindElement(forms[i]);
                 }
             }
@@ -120,7 +120,7 @@
      *
      * @param {Object} e Form element
      *
-     * @return {bool}
+     * @return {boolean}
      *
      * @method
      *
@@ -416,10 +416,10 @@
     jsOMS.FormManager.prototype.getElements = function ()
     {
         return this.forms;
-    }
+    };
 
     jsOMS.FormManager.prototype.count = function ()
     {
         return this.forms.length;
-    }
+    };
 }(window.jsOMS = window.jsOMS || {}));

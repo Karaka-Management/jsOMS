@@ -23,7 +23,7 @@
     /**
      * Is local storage available?
      *
-     * @return {boo}
+     * @return {boolean}
      *
      * @method
      *

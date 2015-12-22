@@ -70,7 +70,7 @@
         }
 
         return x;
-    }
+    };
 
     jsOMS.Chart.prototype.calculateVerticalPosition = function (position)
     {
@@ -90,17 +90,17 @@
         }
 
         return y;
-    }
+    };
 
     jsOMS.Chart.prototype.setColor = function (color)
     {
         this.color = color;
-    }
+    };
 
     jsOMS.Chart.prototype.getColor = function ()
     {
         return this.color;
-    }
+    };
 
     jsOMS.Chart.prototype.setAxis = function (id, axis)
     {
@@ -194,7 +194,7 @@
         this.dataset = data;
 
         this.findAxisDomain();
-    }
+    };
 
     jsOMS.Chart.prototype.findAxisDomain = function ()
     {
@@ -215,12 +215,12 @@
                 });
             })
         }
-    }
+    };
 
     jsOMS.Chart.prototype.getData = function ()
     {
         return this.dataset;
-    }
+    };
 
     jsOMS.Chart.prototype.drawLegend = function (svg, dataPointEnter, dataPoint)
     {
@@ -253,8 +253,10 @@
             });
             dataPoint.exit().remove();
 
+            var tlength = this.chartSelect.select('.dataPoint-name').node().getComputedTextLength();
+
             // Adding margin for legend
-            if (this.margin.right < (tlength = this.chartSelect.select('.dataPoint-name').node().getComputedTextLength())) {
+            if (this.margin.right < tlength) {
                 this.margin.right = tlength + 30;
                 this.shouldRedraw = true;
             }
@@ -262,7 +264,7 @@
             this.margin.right = 10;
             this.shouldRedraw = true;
         }
-    }
+    };
 
     jsOMS.Chart.prototype.drawMarker = function (svg, x, y, dataPointEnter, dataPoint)
     {
@@ -308,7 +310,7 @@
                         .style("opacity", 0);
                 });
         }
-    }
+    };
 
     jsOMS.Chart.prototype.drawText = function (svg)
     {
@@ -372,7 +374,7 @@
                 this.shouldRedraw = true;
             }
         }
-    }
+    };
 
     jsOMS.Chart.prototype.drawAxis = function (svg, xAxis1, yAxis1)
     {
@@ -448,7 +450,7 @@
         if (this.axis.y2 !== undefined) {
 
         }
-    }
+    };
 
     jsOMS.Chart.prototype.drawGrid = function (svg, xGrid, yGrid)
     {

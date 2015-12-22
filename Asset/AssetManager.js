@@ -116,7 +116,7 @@
      *
      * @param {string} key Key of the asset (hash)
      *
-     * @return {bool}
+     * @return {boolean}
      *
      * @method
      *

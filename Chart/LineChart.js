@@ -55,7 +55,7 @@
     jsOMS.Chart.LineChart.prototype.getChart = function ()
     {
         return this.chart;
-    }
+    };
 
     jsOMS.Chart.LineChart.prototype.draw = function ()
     {
@@ -193,7 +193,7 @@
         this.chart.shouldRedraw = false;
         this.chart.chartSelect.select("*").remove();
         this.draw();
-    }
+    };
 
     jsOMS.Chart.LineChart.prototype.drawData = function (svg, line, dataPointEnter, dataPoint)
     {
@@ -215,7 +215,7 @@
         });
 
         return [dataPointEnter, dataPoint];
-    }
+    };
 
     jsOMS.Chart.LineChart.prototype.drawZoomPanel = function (svg, zoom)
     {

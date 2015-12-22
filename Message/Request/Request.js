@@ -67,7 +67,7 @@
      *
      * EnumResponseType
      *
-     * @param {string} method Method type
+     * @param {string} type Method type
      *
      * @method
      *
@@ -160,7 +160,7 @@
     /**
      * Set success callback.
      *
-     * @param {requestCallback} success Success callback
+     * @param {requestCallback} callback Success callback
      *
      * @method
      *
@@ -207,7 +207,7 @@
      *
      * EnumRequestType
      *
-     * @param {string} method Method type
+     * @param {string} type Method type
      *
      * @method
      *

@@ -16,7 +16,7 @@
      * @param {Object} ele DOM Element
      * @param {string} cls Class to find
      *
-     * @return {bool}
+     * @return {boolean}
      *
      * @function
      *
@@ -173,7 +173,7 @@
      *
      * @param ele DOM Node
      *
-     * @return {bool}
+     * @return {boolean}
      *
      * @function
      *
@@ -195,7 +195,7 @@
      *
      * @param o DOM Element
      *
-     * @return {bool}
+     * @return {boolean}
      *
      * @function
      *
