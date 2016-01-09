@@ -9,6 +9,7 @@
  */
 (function (jsOMS, undefined)
 {
+    "use strict";
 
     /**
      * @constructor
@@ -99,12 +100,12 @@
         this.forms = [];
 
         if (typeof id !== 'undefined' && this.ignore.indexOf(id) === -1) {
-            var form = document.getElementById(id);
+            let form = document.getElementById(id);
 
             this.forms.push(form);
             this.bindElement(form);
         } else {
-            var forms = document.getElementsByTagName('form');
+            let forms = document.getElementsByTagName('form');
 
             for (var i = 0; i < forms.length; i++) {
                 if (this.ignore.indexOf(forms[i].id) === -1) {
@@ -227,8 +228,10 @@
             console.log('Form contains invalid data');
         }
 
+        //noinspection JSUnresolvedVariable
         if (typeof e.dataset.formfields !== 'undefined') {
             try {
+                //noinspection JSUnresolvedVariable
                 var formdata = JSON.parse(e.dataset.formfields);
 
                 Object.keys(formdata).forEach(function (key)
@@ -327,10 +330,12 @@
         /** Handle select */
         for (i = 0; i < select.length; i++) {
             /** Redirect on change */
+            //noinspection JSUnresolvedVariable
             if (typeof select[i].dataset.redirect !== 'undefined') {
                 select[i].onchange = function ()
                 {
                     // TODO: use URI factory (which i still have to create :))
+                    //noinspection JSUnresolvedVariable
                     window.document.href = e.action.replace('{' + select[i].dataset.redirect + '}', select[i].value);
                 };
             }
@@ -339,12 +344,14 @@
         /** Handle button */
         for (i = 0; i < buttons.length; i++) {
             /** Redirect in new window on click */
+            //noinspection JSUnresolvedVariable
             if (typeof buttons[i].dataset.ropen !== 'undefined' || typeof buttons[i].dataset.redirect !== 'undefined') {
                 buttons[i].addEventListener('click', function (event)
                 {
-                    var ropen = typeof this.dataset.ropen !== 'undefined' ? this.dataset.ropen : this.dataset.redirect,
+                    //noinspection JSUnresolvedVariable
+                    let ropen = typeof this.dataset.ropen !== 'undefined' ? this.dataset.ropen : this.dataset.redirect,
                         matches = ropen.match(new RegExp("\{[#\?\.a-zA-Z0-9]*\}", "gi")),
-                        current = jsOMS.Uri.parse_url(window.location.href),
+                        current = jsOMS.Uri.parseUrl(window.location.href),
                         value = null;
 
                     // TODO: find a way to use existing query parameters as well and just overwrite them if defined differently here
@@ -362,6 +369,7 @@
                         ropen = ropen.replace(matches[c], value);
                     }
 
+                    //noinspection JSUnresolvedVariable
                     if (typeof this.dataset.ropen !== 'undefined') {
                         var win = window.open(ropen, '_blank');
                         win.focus();
@@ -373,7 +381,7 @@
 
                 // TODO: maybe validate input value??? if not done during typing
                 // TODO: maybe use id here instead? then this needs to get changed in the form builder
-                var inputButton = document.querySelector('input[name=' + buttons[i].dataset.name + ']'),
+                let inputButton = document.querySelector('input[name=' + buttons[i].dataset.name + ']'),
                     list = document.querySelector('ul[data-name=l-' + buttons[i].dataset.name + ']'),
                     hidden = document.querySelector('input[type=hidden][name=h-' + buttons[i].dataset.name + ']');
                 buttons[i].addEventListener('click', function (event)
@@ -392,7 +400,7 @@
                 });
             } else if (jsOMS.hasClass(buttons[i], 'form-table') && buttons[i].dataset.name !== 'undefined') {
                 // TODO: maybe use id here instead? then this needs to get changed in the form builder
-                var inputButton = document.querySelector('input[name=' + buttons[i].dataset.name + ']'),
+                let inputButton = document.querySelector('input[name=' + buttons[i].dataset.name + ']'),
                     table = document.querySelector('table[data-name=l-' + buttons[i].dataset.name + ']'),
                     hidden = document.querySelector('input[type=hidden][name=h-' + buttons[i].dataset.name + ']');
 
