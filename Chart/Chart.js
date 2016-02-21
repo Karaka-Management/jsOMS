@@ -500,7 +500,7 @@
             text: {
                 title: false,
                 subtitle: false,
-                footer: false,
+                footer: false
             },
             legend: false
         };

@@ -1,12 +1,11 @@
 (function (jsOMS, undefined) {
-    jsOMS.Client = function () {
-        this.port = 80;
-        this.ip = '127.0.0.1';
-        this.protocol = '';
+    jsOMS.Client = function (ip, port, protocol) {
+        this.port = port;
+        this.ip = ip;
+        this.protocol = protocol;
         this.connection = null;
         this.messages = [];
     };
-
     jsOMS.Client.prototype.setMessage = function(id, callback) {
         this.messages[id] = callback;
     };
