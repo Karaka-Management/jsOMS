@@ -97,8 +97,6 @@
      */
     jsOMS.FormManager.prototype.bind = function (id)
     {
-        this.forms = [];
-
         if (typeof id !== 'undefined' && this.ignore.indexOf(id) === -1) {
             let form = document.getElementById(id);
 
@@ -131,8 +129,8 @@
     jsOMS.FormManager.prototype.validateFormElement = function (e)
     {
         /** Validate on change */
-        if (typeof e.dataset.validate !== 'undefined') {
-            if (!(new RegExp(e.dataset.validate)).test(e.value)) {
+        if (typeof e.pattern !== 'undefined') {
+            if (!(new RegExp(e.pattern)).test(e.value)) {
                 return false;
             }
         }
