@@ -33,7 +33,8 @@
                 strokewidth: 3
             },
             marker: {
-                visible: true
+                visible: true,
+                type: 'circle'
             },
             info: {
                 visible: true
