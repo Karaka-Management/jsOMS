@@ -9,7 +9,7 @@
  */
 (function (jsOMS, undefined)
 {
-    jsOMS.EnumRequestType = Object.freeze({
+    jsOMS.Message.Request.RequestType = Object.freeze({
         JSON: 'json',
         RAW: 'raw'
     });

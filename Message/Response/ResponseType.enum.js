@@ -9,7 +9,7 @@
  */
 (function (jsOMS, undefined)
 {
-    jsOMS.EnumResponseType = Object.freeze({
+    jsOMS.Message.Response.ResponseType = Object.freeze({
         TEXT: 'text',
         JSON: 'json',
         DOCUMENT: 'document',

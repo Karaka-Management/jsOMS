@@ -94,7 +94,7 @@
         self = this;
 
         request.setData(form.getData());
-        request.setType(jsOMS.EnumResponseType.JSON);
+        request.setType(jsOMS.Message.Response.ResponseType.JSON);
         request.setUri(form.getAction());
         request.setMethod(form.getMethod());
         request.setRequestHeader('Content-Type', 'application/json');
