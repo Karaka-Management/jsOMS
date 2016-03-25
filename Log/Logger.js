@@ -11,6 +11,8 @@
  {
     "use strict";
 
+    jsOMS.Logger.layout = '{datetime}; {level}; {version}; {os}; {browser}; {path}; {message}'
+
     /**
      * @constructor
      *
@@ -26,10 +28,32 @@
 
     jsOMS.FormManager.prototype.interpolate = function(message, context, level)
     {
+        let newMessage = jsOMS.Logger.layout;
+
+        for(replace in context) {
+            newMessage = newMessage.replace('{'+replace+'}', context[replace]);
+        }
+
+        return newMessage;
     };
+
+    jsOMS.FormManager.prototype.createContext = function(message, context, level)
+    {
+        context['datetime'] = (new Date()).toISOString();
+        context['version'] = '1.0.0';
+        context['os'] = jsOMS.Request.getOS();
+        context['browser'] = jsOMS.Request.getBrowser();
+        context['path'] = window.location.href;
+        context['level'] = level;
+        context['message'] = message;
+
+        return context;
+    }
 
     jsOMS.FormManager.prototype.write = function(message, context, level)
     {
+        context = this.createContext(message, context, level);
+
         if(this.verbose) {
             console.log(this.interpolate(message, context, level)));
         }
@@ -41,7 +65,7 @@
         if(this.remote) {
             let request = new jsOMS.Request(),
             request.setData(message);
-            request.setType('json');
+            request.setType(jsOMS.EnumResponseType.JSON);
             request.setUri('/{/lang}/api/log');
             request.setMethod(jsOMS.EnumRequestMethod.POST);
             request.setRequestHeader('Content-Type', 'application/json');
