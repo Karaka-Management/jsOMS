@@ -18,7 +18,7 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.RequestManager = function ()
+    jsOMS.Message.RequestManager = function ()
     {
     };
 }(window.jsOMS = window.jsOMS || {}));

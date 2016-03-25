@@ -41,8 +41,8 @@
     {
         context['datetime'] = (new Date()).toISOString();
         context['version'] = '1.0.0';
-        context['os'] = jsOMS.Request.getOS();
-        context['browser'] = jsOMS.Request.getBrowser();
+        context['os'] = jsOMS.Message.Request.getOS();
+        context['browser'] = jsOMS.Message.Request.getBrowser();
         context['path'] = window.location.href;
         context['level'] = level;
         context['message'] = message;
@@ -63,7 +63,7 @@
         }
 
         if(this.remote) {
-            let request = new jsOMS.Request(),
+            let request = new jsOMS.Message.Request(),
             request.setData(context);
             request.setType(jsOMS.EnumResponseType.JSON);
             request.setUri('/{/lang}/api/log');

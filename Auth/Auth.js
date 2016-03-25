@@ -62,7 +62,7 @@
      */
     jsOMS.Auth.prototype.login = function ()
     {
-        var authRequest = new jsOMS.Request();
+        var authRequest = new jsOMS.Message.Request();
         authRequest.setUri(this.uri);
         authRequest.setMethod(jsOMS.EnumRequestMethod.POST);
         authRequest.setResponseType(jsOMS.EnumRequestType.JSON);

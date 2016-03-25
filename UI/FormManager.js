@@ -17,24 +17,24 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-     jsOMS.FormManager = function (app)
+     jsOMS.UI.FormManager = function (app)
      {
         this.app = app;
         this.forms = {};
         this.ignore = {};
     };
 
-    jsOMS.FormManager.prototype.get = function(id)
+    jsOMS.UI.FormManager.prototype.get = function(id)
     {
         return this.forms[id];
     };
 
-    jsOMS.FormManager.prototype.isIgnored = function(id)
+    jsOMS.UI.FormManager.prototype.isIgnored = function(id)
     {
         return this.ignore.indexOf(id) !== -1;
     };
 
-    jsOMS.FormManager.prototype.bind = function(id) 
+    jsOMS.UI.FormManager.prototype.bind = function(id) 
     {
         if (typeof id !== 'undefined' && this.ignore.indexOf(id) === -1) {
             this.bindForm(id)
@@ -50,7 +50,7 @@
         }
     };
 
-    jsOMS.FormManager.prototype.bindForm = function(id) 
+    jsOMS.UI.FormManager.prototype.bindForm = function(id) 
     {
         let self = this;
 
@@ -66,7 +66,7 @@
         });
     };
 
-    jsOMS.FormManager.prototype.unbindForm = function(id)
+    jsOMS.UI.FormManager.prototype.unbindForm = function(id)
     {
         // todo: do i need the findex? can't i just use id?
         let findex = 0;
@@ -81,7 +81,7 @@
         return false;
     };
 
-    jsOMS.FormManager.prototype.submit = function(form)
+    jsOMS.UI.FormManager.prototype.submit = function(form)
     {
         /* Handle injects */
         let injects = form.getSubmitInjects();
@@ -90,7 +90,7 @@
         }
 
         /* Handle default submit */
-        let request = new jsOMS.Request(),
+        let request = new jsOMS.Message.Request(),
         self = this;
 
         request.setData(form.getData());
@@ -127,7 +127,7 @@
         request.send();
     };
 
-    jsOMS.FormManager.prototype.count = function ()
+    jsOMS.UI.FormManager.prototype.count = function ()
     {
         return this.forms.length;
     };

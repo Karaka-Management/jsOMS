@@ -9,6 +9,7 @@
  */
 (function (jsOMS, undefined)
 {
+    jsOMS.UI = {};
 
     /**
      * @constructor
@@ -16,10 +17,10 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.UIManager = function (app)
+    jsOMS.UI.UIManager = function (app)
     {
         this.app = app;
-        this.formManager = new jsOMS.FormManager(this.app.responseManager);
+        this.formManager = new jsOMS.FormManager(this.app);
         this.tabManager = new jsOMS.TabManager(this.app.responseManager);
         this.tableManager = new jsOMS.TableManager(this.app.responseManager);
     };
@@ -34,7 +35,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.UIManager.prototype.bind = function (id)
+    jsOMS.UI.UIManager.prototype.bind = function (id)
     {
         if (typeof id === 'undefined') {
             this.formManager.bind();
@@ -64,7 +65,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.UIManager.prototype.getFormManager = function ()
+    jsOMS.UI.UIManager.prototype.getFormManager = function ()
     {
         return this.formManager;
     };
@@ -79,7 +80,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.UIManager.prototype.getTabManager = function ()
+    jsOMS.UI.UIManager.prototype.getTabManager = function ()
     {
         return this.tabManager;
     };
@@ -94,7 +95,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.UIManager.prototype.getTableManager = function ()
+    jsOMS.UI.UIManager.prototype.getTableManager = function ()
     {
         return this.tabManager;
     };
