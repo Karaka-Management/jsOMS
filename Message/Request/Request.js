@@ -25,7 +25,7 @@
         this.type = typeof type !== 'undefined' ? type : 'json';
         this.data = {};
 
-        
+
 
         this.xhr = new XMLHttpRequest();
     };
@@ -274,7 +274,7 @@
         let self = this;
 
         if (self.xhr.readyState !== 1) {
-            self.xhr.open(this.method, this.uri);
+            self.xhr.open(this.method, jsOMS.UriFactory.build(this.uri));
 
             for (let p in this.requestHeader) {
                 if (this.requestHeader.hasOwnProperty(p)) {
