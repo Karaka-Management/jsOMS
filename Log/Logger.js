@@ -11,7 +11,7 @@
  {
     "use strict";
 
-    jsOMS.Logger.layout = '{datetime}; {level}; {version}; {os}; {browser}; {path}; {message}'
+    jsOMS.Logger.layout = '{datetime}; {level}; {version}; {os}; {browser}; {path}; {message}';
 
     /**
      * @constructor
@@ -64,7 +64,7 @@
 
         if(this.remote) {
             let request = new jsOMS.Request(),
-            request.setData(message);
+            request.setData(context);
             request.setType(jsOMS.EnumResponseType.JSON);
             request.setUri('/{/lang}/api/log');
             request.setMethod(jsOMS.EnumRequestMethod.POST);
