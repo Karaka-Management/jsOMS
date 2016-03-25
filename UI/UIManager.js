@@ -41,15 +41,16 @@
             this.tabManager.bind();
             this.tableManager.bind();
         } else {
-            var tag = document.getElementById(id);
+            let tag = document.getElementById(id);
 
-            if (tag.tagName === 'form') {
-                this.formManager.bind(id);
-            } else if (tag.tagName === 'table') {
-                this.tableManager.bind(id);
-            } else if (tag.tagName === 'div') {
-                // Todo: be more specific in order to handle tab
-            }
+            switch(tag.tagName) {
+                case 'form':
+                    this.formManager.bind(id);
+                    break;
+                case 'table':
+                    this.tableManager.bind(id);
+                    break;
+            };
         }
     };
 
