@@ -16,14 +16,16 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Request = function ()
+    jsOMS.Request = function (uri, method, type)
     {
-        this.uri = null;
-        this.method = null;
+        this.uri = typeof uri !== 'undefined' ? uri : null;
+        this.method = typeof method !== 'undefined' ? method : jsOMS.EnumRequestMethod.GET;
         this.requestHeader = [];
         this.success = null;
-        this.type = jsOMS.EnumRequestMethod.GET;
+        this.type = typeof type !== 'undefined' ? type : 'json';
         this.data = {};
+
+        
 
         this.xhr = new XMLHttpRequest();
     };
@@ -248,8 +250,8 @@
      */
     jsOMS.Request.prototype.queryfy = function (obj)
     {
-        var str = [];
-        for (var p in obj) {
+        let str = [];
+        for (let p in obj) {
             if (obj.hasOwnProperty(p)) {
                 str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
             }
@@ -269,12 +271,12 @@
      */
     jsOMS.Request.prototype.send = function ()
     {
-        var self = this;
+        let self = this;
 
         if (self.xhr.readyState !== 1) {
             self.xhr.open(this.method, this.uri);
 
-            for (var p in this.requestHeader) {
+            for (let p in this.requestHeader) {
                 if (this.requestHeader.hasOwnProperty(p)) {
                     self.xhr.setRequestHeader(p, this.requestHeader[p]);
                 }
