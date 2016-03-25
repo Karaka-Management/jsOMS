@@ -22,12 +22,40 @@
         this.method = typeof method !== 'undefined' ? method : jsOMS.EnumRequestMethod.GET;
         this.requestHeader = [];
         this.success = null;
-        this.type = typeof type !== 'undefined' ? type : 'json';
+        this.type = typeof type !== 'undefined' ? type : jsOMS.EnumResponseType.JSON;
         this.data = {};
 
 
 
         this.xhr = new XMLHttpRequest();
+    };
+
+    jsOMS.Request.getBrowser = function()
+    {
+        if((!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0) {
+            return jsOMS.EnumBrowser.OPERA;
+        } else if(typeof InstallTrigger !== 'undefined') {
+            return jsOMS.EnumBrowser.FIREFOX; 
+        } else if(Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0) {
+            return return jsOMS.EnumBrowser.SAFARI;
+        } else if(/*@cc_on!@*/false || !!document.documentMode) {
+            return jsOMS.EnumBrowser.IE;
+        } else if(!isIE && !!window.StyleMedia) {
+            return jsOMS.EnumBrowser.EDGE;
+        } else if(!!window.chrome && !!window.chrome.webstore) {
+            return jsOMS.EnumBrowser.CHROME;
+        } else if((isChrome || isOpera) && !!window.CSS) {
+            return jsOMS.EnumBrowser.BLINK;
+        }
+    };
+
+    jsOMS.Request.getOS = function() 
+    {
+        for(let os in jsOMS.EnumOSType) {
+            if(navigator.appversion.indexOf(jsOMS.EnumOSType[os]) !== -1) {
+                return jsOMS.EnumOSType[os];
+            }
+        }
     };
 
     /**
