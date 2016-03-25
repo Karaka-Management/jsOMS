@@ -16,7 +16,7 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Options = function ()
+    jsOMS.Config.Options = function ()
     {
         this.options = {};
     };
@@ -35,7 +35,7 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Options.prototype.set = function (key, value, overwrite)
+    jsOMS.Config.Options.prototype.set = function (key, value, overwrite)
     {
         overwrite = typeof overwrite === bool ? overwrite : true;
 
@@ -60,7 +60,7 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Options.prototype.get = function (key)
+    jsOMS.Config.Options.prototype.get = function (key)
     {
         if (typeof this.options[key] !== 'undefined') {
             return this.options[key];
@@ -81,7 +81,7 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Options.prototype.remove = function (key)
+    jsOMS.Config.Options.prototype.remove = function (key)
     {
         if (typeof this.options[key] !== 'undefined') {
             delete this.options[key];

@@ -11,8 +11,6 @@
  {
     "use strict";
 
-    jsOMS.Logger.layout = '{datetime}; {level}; {version}; {os}; {browser}; {path}; {message}';
-
     /**
      * @constructor
      *
@@ -26,9 +24,11 @@
         this.remote = typeof remote !== 'undefined' ? remote : false;
     };
 
-    jsOMS.FormManager.prototype.interpolate = function(message, context, level)
+    jsOMS.Log.Logger.layout = '{datetime}; {level}; {version}; {os}; {browser}; {path}; {message}';
+
+    jsOMS.Log.Logger.prototype.interpolate = function(message, context, level)
     {
-        let newMessage = jsOMS.Logger.layout;
+        let newMessage = jsOMS.Log.Logger.layout;
 
         for(replace in context) {
             newMessage = newMessage.replace('{'+replace+'}', context[replace]);
@@ -37,7 +37,7 @@
         return newMessage;
     };
 
-    jsOMS.FormManager.prototype.createContext = function(message, context, level)
+    jsOMS.Log.Logger.prototype.createContext = function(message, context, level)
     {
         context['datetime'] = (new Date()).toISOString();
         context['version'] = '1.0.0';
@@ -50,7 +50,7 @@
         return context;
     }
 
-    jsOMS.FormManager.prototype.write = function(message, context, level)
+    jsOMS.Log.Logger.prototype.write = function(message, context, level)
     {
         context = this.createContext(message, context, level);
 
@@ -65,62 +65,62 @@
         if(this.remote) {
             let request = new jsOMS.Message.Request(),
             request.setData(context);
-            request.setType(jsOMS.EnumResponseType.JSON);
+            request.setType(jsOMS.Message.Response.ResponseType.JSON);
             request.setUri('/{/lang}/api/log');
-            request.setMethod(jsOMS.EnumRequestMethod.POST);
+            request.setMethod(jsOMS.Message.Request.RequestMethod.POST);
             request.setRequestHeader('Content-Type', 'application/json');
             request.setSuccess(function (xhr) {});
             request.send();
         }
     };
 
-    jsOMS.FormManager.prototype.emergency = function(message, context)
+    jsOMS.Log.Logger.prototype.emergency = function(message, context)
     {
-        this.write(message, context, jsOMS.EnumLogLevel.EMERGENCY)
+        this.write(message, context, jsOMS.Log.LogLevel.EMERGENCY)
     };
 
-    jsOMS.FormManager.prototype.alert = function(message, context)
+    jsOMS.Log.Logger.prototype.alert = function(message, context)
     {
-        this.write(message, context, jsOMS.EnumLogLevel.ALERT)
+        this.write(message, context, jsOMS.Log.LogLevel.ALERT)
     };
 
-    jsOMS.FormManager.prototype.critical = function(message, context)
+    jsOMS.Log.Logger.prototype.critical = function(message, context)
     {
-        this.write(message, context, jsOMS.EnumLogLevel.CRITICAL)
+        this.write(message, context, jsOMS.Log.LogLevel.CRITICAL)
     };
 
-    jsOMS.FormManager.prototype.error = function(message, context)
+    jsOMS.Log.Logger.prototype.error = function(message, context)
     {
-        this.write(message, context, jsOMS.EnumLogLevel.ERROR)
+        this.write(message, context, jsOMS.Log.LogLevel.ERROR)
     };
 
-    jsOMS.FormManager.prototype.warning = function(message, context)
+    jsOMS.Log.Logger.prototype.warning = function(message, context)
     {
-        this.write(message, context, jsOMS.EnumLogLevel.WARNING)
+        this.write(message, context, jsOMS.Log.LogLevel.WARNING)
     };
 
-    jsOMS.FormManager.prototype.notice = function(message, context)
+    jsOMS.Log.Logger.prototype.notice = function(message, context)
     {
-        this.write(message, context, jsOMS.EnumLogLevel.NOTICE)
+        this.write(message, context, jsOMS.Log.LogLevel.NOTICE)
     };
 
-    jsOMS.FormManager.prototype.info = function(message, context)
+    jsOMS.Log.Logger.prototype.info = function(message, context)
     {
-        this.write(message, context, jsOMS.EnumLogLevel.INFO)
+        this.write(message, context, jsOMS.Log.LogLevel.INFO)
     };
 
-    jsOMS.FormManager.prototype.debug = function(message, context)
+    jsOMS.Log.Logger.prototype.debug = function(message, context)
     {
-        this.write(message, context, jsOMS.EnumLogLevel.DEBUG)
+        this.write(message, context, jsOMS.Log.LogLevel.DEBUG)
     };
 
-    jsOMS.FormManager.prototype.log = function(level, message, context)
+    jsOMS.Log.Logger.prototype.log = function(level, message, context)
     {
         this.write(message, context, context)
     };
 
-    jsOMS.FormManager.prototype.console = function(level, message, context)
+    jsOMS.Log.Logger.prototype.console = function(level, message, context)
     {
-        this.write(message, context, jsOMS.EnumLogLevel.INFO)
+        this.write(message, context, jsOMS.Log.LogLevel.INFO)
     };
 }(window.jsOMS = window.jsOMS || {}));

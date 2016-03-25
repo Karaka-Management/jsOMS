@@ -1,49 +1,57 @@
 (function (jsOMS, undefined) {
     "use strict";
     
-    jsOMS.FormView = function (id) {
+    jsOMS.Views.FormView = function (id) {
         this.id = id;
 
         this.initializeMembers();
         this.bind();
     };
 
-    jsOMS.FormView.prototype.initializeMembers = function() 
+    jsOMS.Views.FormView.prototype.initializeMembers = function() 
     {
         this.submitInjects = {};
         this.method = 'POST';
         this.action = '';
     };
 
-    jsOMS.FormView.prototype.getMethod = function()
+    jsOMS.Views.FormView.prototype.getMethod = function()
     {
         return this.method;
     };
 
-    jsOMS.FormView.prototype.getAction = function() 
+    jsOMS.Views.FormView.prototype.getAction = function() 
     {
         return this.action;
     };
 
-    jsOMS.FormView.prototype.getSubmit = function()
+    jsOMS.Views.FormView.prototype.getSubmit = function()
     {
         return document.getElementById(this.id).querySelectorAll('input[type=submit]')[0];
     };
 
-    jsOMS.FormView.prototype.injectSubmit = function(id, callback)
+    jsOMS.Views.FormView.prototype.injectSubmit = function(id, callback)
     {
         this.submitInjects[id] = callback;
     };
 
-    jsOMS.FormView.prototype.getData = function()
+    jsOMS.Views.FormView.prototype.getFormElements = function(id)
     {
-        let data = {},
-        form = document.getElementById(this.id),
+        let form = document.getElementById(id),
         selects = form.getElementsByTagName('select'),
         textareas = form.getElementsByTagName('textarea'),
         inputs = form.getElementsByTagName('input'),
-        external = document.querySelectorAll('[form='+this.id+']'),
+        external = document.querySelectorAll('[form='+id+']'),
         elements = Array.prototype.slice.call(inputs).concat(Array.prototype.slice.call(selects), Array.prototype.slice.call(textareas), Array.prototype.slice.call(external)),
+        length = elements.length;
+
+        return elements;
+    }
+
+    jsOMS.Views.FormView.prototype.getData = function()
+    {
+        let data = {},
+        elements = this.getFormElements(this.id),
         length = elements.length,
         i = 0;
 
@@ -54,24 +62,19 @@
         return data;
     };
 
-    jsOMS.FormView.prototype.getSubmitInjects = function()
+    jsOMS.Views.FormView.prototype.getSubmitInjects = function()
     {
         return this.submitInjects;
     };
 
-    jsOMS.FormView.prototype.bind = function() 
+    jsOMS.Views.FormView.prototype.bind = function() 
     {
         this.clean();
 
         this.method = document.getElementById(this.id).method;
         this.action = document.getElementById(this.id).action;
 
-        let form = document.getElementById(this.id),
-        selects = form.getElementsByTagName('select'),
-        textareas = form.getElementsByTagName('textarea'),
-        inputs = form.getElementsByTagName('input'),
-        external = document.querySelectorAll('[form='+this.id+']'),
-        elements = Array.prototype.slice.call(inputs).concat(Array.prototype.slice.call(selects), Array.prototype.slice.call(textareas), Array.prototype.slice.call(external)),
+        let elements = this.getFormElements(this.id),
         length = elements.length,
         i = 0;
 
@@ -93,12 +96,31 @@
         }
     };
 
-    jsOMS.FormView.prototype.unbind = function() 
+    jsOMS.Views.FormView.prototype.unbind = function() 
     {
-        
+        let elements = this.getFormElements(this.id),
+        length = elements.length,
+        i = 0;
+
+        for(i = 0; i < length; i++) {
+            switch(elements[i].tagName) {
+                case 'input':
+                    jsOMS.UI.Input.unbind(elements[i])
+                    break;
+                case 'select':
+                    this.bindSelect(elements[i]);
+                    break;
+                case 'textarea':
+                    this.bindTextarea(elements[i]);
+                    break;
+                case 'button':
+                    this.bindButton(elements[i]);
+                    break;
+            };
+        }
     };
 
-    jsOMS.FormView.prototype.clean = function()
+    jsOMS.Views.FormView.prototype.clean = function()
     {
         this.unbind();
         this.initializeMembers();

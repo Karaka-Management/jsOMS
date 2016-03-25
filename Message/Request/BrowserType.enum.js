@@ -9,7 +9,7 @@
  */
 (function (jsOMS, undefined)
 {
-    jsOMS.EnumBrowserType = Object.freeze({
+    jsOMS.Message.Request.BrowserType = Object.freeze({
         OPERA: 'opera',
         FIREFOX: 'firefox',
         SAFARI: 'safari',

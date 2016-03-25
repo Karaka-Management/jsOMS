@@ -16,7 +16,7 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.ModuleFactory = function ()
+    jsOMS.Module.ModuleFactory = function ()
     {
     };
 
@@ -33,7 +33,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.ModuleFactory.getInstance = function (module, app)
+    jsOMS.Module.ModuleFactory.getInstance = function (module, app)
     {
         return new window['jsOMS']['Modules'][module](app);
     };

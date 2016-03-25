@@ -16,13 +16,13 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Message.Request = function (uri, method, type)
+    jsOMS.Message.Request.Request = function (uri, method, type)
     {
         this.uri = typeof uri !== 'undefined' ? uri : null;
-        this.method = typeof method !== 'undefined' ? method : jsOMS.EnumRequestMethod.GET;
+        this.method = typeof method !== 'undefined' ? method : jsOMS.Message.Request.RequestMethod.GET;
         this.requestHeader = [];
         this.success = null;
-        this.type = typeof type !== 'undefined' ? type : jsOMS.EnumResponseType.JSON;
+        this.type = typeof type !== 'undefined' ? type : jsOMS.Message.Response.ResponseType.JSON;
         this.data = {};
 
 
@@ -30,7 +30,7 @@
         this.xhr = new XMLHttpRequest();
     };
 
-    jsOMS.Message.Request.getBrowser = function()
+    jsOMS.Message.Request.Request.getBrowser = function()
     {
         if((!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0) {
             return jsOMS.EnumBrowser.OPERA;
@@ -49,11 +49,11 @@
         }
     };
 
-    jsOMS.Message.Request.getOS = function() 
+    jsOMS.Message.Request.Request.getOS = function() 
     {
-        for(let os in jsOMS.EnumOSType) {
-            if(navigator.appversion.indexOf(jsOMS.EnumOSType[os]) !== -1) {
-                return jsOMS.EnumOSType[os];
+        for(let os in jsOMS.Message.Request.OSType) {
+            if(navigator.appversion.indexOf(jsOMS.Message.Request.OSType[os]) !== -1) {
+                return jsOMS.Message.Request.OSType[os];
             }
         }
     };
@@ -70,7 +70,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Message.Request.prototype.setMethod = function (method)
+    jsOMS.Message.Request.Request.prototype.setMethod = function (method)
     {
         this.method = method;
     };
@@ -87,7 +87,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Message.Request.prototype.getMethod = function ()
+    jsOMS.Message.Request.Request.prototype.getMethod = function ()
     {
         return this.method;
     };
@@ -104,7 +104,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Message.Request.prototype.setResponseType = function (type)
+    jsOMS.Message.Request.Request.prototype.setResponseType = function (type)
     {
         this.xhr.responseType = type;
     };
@@ -121,7 +121,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Message.Request.prototype.getResponseType = function ()
+    jsOMS.Message.Request.Request.prototype.getResponseType = function ()
     {
         return this.responseType;
     };
@@ -137,7 +137,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Message.Request.prototype.setRequestHeader = function (type, header)
+    jsOMS.Message.Request.Request.prototype.setRequestHeader = function (type, header)
     {
         this.requestHeader[type] = header;
     };
@@ -152,7 +152,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Message.Request.prototype.getRequestHeader = function ()
+    jsOMS.Message.Request.Request.prototype.getRequestHeader = function ()
     {
         return this.requestHeader;
     };
@@ -167,7 +167,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Message.Request.prototype.setUri = function (uri)
+    jsOMS.Message.Request.Request.prototype.setUri = function (uri)
     {
         this.uri = uri;
     };
@@ -182,7 +182,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Message.Request.prototype.getUri = function ()
+    jsOMS.Message.Request.Request.prototype.getUri = function ()
     {
         return this.uri;
     };
@@ -197,7 +197,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Message.Request.prototype.setSuccess = function (callback)
+    jsOMS.Message.Request.Request.prototype.setSuccess = function (callback)
     {
         this.success = callback;
     };
@@ -212,7 +212,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Message.Request.prototype.setData = function (data)
+    jsOMS.Message.Request.Request.prototype.setData = function (data)
     {
         this.data = data;
     };
@@ -227,7 +227,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Message.Request.prototype.getData = function ()
+    jsOMS.Message.Request.Request.prototype.getData = function ()
     {
         return this.data
     };
@@ -244,7 +244,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Message.Request.prototype.setType = function (type)
+    jsOMS.Message.Request.Request.prototype.setType = function (type)
     {
         this.type = type;
     };
@@ -261,7 +261,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Message.Request.prototype.getType = function ()
+    jsOMS.Message.Request.Request.prototype.getType = function ()
     {
         return this.type;
     };
@@ -276,7 +276,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Message.Request.prototype.queryfy = function (obj)
+    jsOMS.Message.Request.Request.prototype.queryfy = function (obj)
     {
         let str = [];
         for (let p in obj) {
@@ -297,7 +297,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Message.Request.prototype.send = function ()
+    jsOMS.Message.Request.Request.prototype.send = function ()
     {
         let self = this;
 
@@ -318,14 +318,14 @@
             }
         };
 
-        if (this.type === jsOMS.EnumRequestType.JSON) {
+        if (this.type === jsOMS.Message.Request.RequestType.JSON) {
             if (typeof this.requestHeader !== 'undefined' && this.requestHeader['Content-Type'] === 'application/json') {
                 console.log(JSON.stringify(this.data));
                 self.xhr.send(JSON.stringify(this.data));
             } else {
                 self.xhr.send(this.queryfy(this.data));
             }
-        } else if (this.type === jsOMS.EnumRequestType.RAW) {
+        } else if (this.type === jsOMS.Message.Request.RequestType.RAW) {
             self.xhr.send(this.data);
         }
     };

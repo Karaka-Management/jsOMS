@@ -9,7 +9,7 @@
  */
 (function (jsOMS, undefined)
 {
-    jsOMS.EnumLogLevel = Object.freeze({
+    jsOMS.Log.LogLevel = Object.freeze({
         EMERGENCY: 'normal',
         ALERT: 'normal',
         CRITICAL: 'normal',

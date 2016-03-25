@@ -18,7 +18,7 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Message.ResponseManager = function ()
+    jsOMS.Message.Response.ResponseManager = function ()
     {
         this.messages = {};
     };
@@ -37,7 +37,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Message.ResponseManager.prototype.add = function (key, message, request)
+    jsOMS.Message.Response.ResponseManager.prototype.add = function (key, message, request)
     {
         request = typeof request !== 'undefined' ? request : 'any';
         if (typeof this.messages[key] === 'undefined') {
@@ -61,7 +61,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Message.ResponseManager.prototype.execute = function (key, data, request)
+    jsOMS.Message.Response.ResponseManager.prototype.execute = function (key, data, request)
     {
         console.log(data);
         if (typeof request !== 'undefined' && typeof this.messages[key][request] !== 'undefined') {

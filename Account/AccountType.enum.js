@@ -9,7 +9,7 @@
  */
 (function (jsOMS, undefined)
 {
-    jsOMS.EnumAccountType = Object.freeze({
+    jsOMS.Account.EnumAccountType = Object.freeze({
         USER: 0,
         GROUP: 1
     });

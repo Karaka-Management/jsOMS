@@ -1,8 +1,8 @@
 (function (uriFactory, undefined) {
-    jsOMS.UriFactory = {};
-    jsOMS.UriFactory.uri = {};
+    jsOMS.Uri.UriFactory = {};
+    jsOMS.Uri.UriFactory.uri = {};
 
-    jsOMS.UriFactory.parseUrl = function (str, component)
+    jsOMS.Uri.UriFactory.parseUrl = function (str, component)
     {
         let query, key = ['source', 'scheme', 'authority', 'userInfo', 'user', 'pass', 'host', 'port',
                 'relative', 'path', 'directory', 'file', 'query', 'fragment'
@@ -61,7 +61,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.UriFactory.getUriQueryParameter = function (query, name)
+    jsOMS.Uri.UriFactory.getUriQueryParameter = function (query, name)
     {
         name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
 
@@ -71,12 +71,12 @@
         return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
     };
 
-    jsOMS.UriFactory.setQuery = function(key, value, overwrite)
+    jsOMS.Uri.UriFactory.setQuery = function(key, value, overwrite)
     {
         overwrite = typeof overwrite !== 'undefined' ? overwrite : true;
 
-        if(overwrite || !jsOMS.UriFactory.uri.hasProperty(key)) {
-            jsOMS.UriFactory.uri[key] = value;
+        if(overwrite || !jsOMS.Uri.UriFactory.uri.hasProperty(key)) {
+            jsOMS.Uri.UriFactory.uri[key] = value;
 
             return true;
         }
@@ -84,9 +84,9 @@
         return false;
     };
 
-    jsOMS.UriFactory.build = function(uri, toMatch)
+    jsOMS.Uri.UriFactory.build = function(uri, toMatch)
     {
-        let current = jsOMS.UriFactory.parseUrl(window.location.href);
+        let current = jsOMS.Uri.UriFactory.parseUrl(window.location.href);
         // match(new RegExp("\{[#\?\.a-zA-Z0-9]*\}", "gi"));
 
         return uri.replace('\{[\/#\?@\.\$][a-zA-Z0-9]*\}' function(match) {
@@ -94,12 +94,12 @@
 
             if(toMatch.hasProperty(match)) {
                 return toMatch[match];
-            } else if(jsOMS.UriFactory.uri[match] !== 'undefined') {
-                return jsOMS.UriFactory.uri[match];
+            } else if(jsOMS.Uri.UriFactory.uri[match] !== 'undefined') {
+                return jsOMS.Uri.UriFactory.uri[match];
             } else if (match.indexOf('#') === 0) {
                 return document.getElementById(match.substring(1, match.length)).value;
             } else if(match.indexOf('?') === 0) {
-                return jsOMS.UriFactory.getUriQueryParameter(current.query, match.substring(1, match.length));
+                return jsOMS.Uri.UriFactory.getUriQueryParameter(current.query, match.substring(1, match.length));
             } else if(match.indexOf('/') === 0) {
                 // todo: second match should return second path
                 return 'ERROR PATH';
