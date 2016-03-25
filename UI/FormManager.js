@@ -94,7 +94,7 @@
         self = this;
 
         request.setData(form.getData());
-        request.setType('json');
+        request.setType(jsOMS.EnumResponseType.JSON);
         request.setUri(form.getAction());
         request.setMethod(form.getMethod());
         request.setRequestHeader('Content-Type', 'application/json');
@@ -109,7 +109,7 @@
 
                 /* Handle responses (can be multiple response object) */
                 for (let k = 0; k < responseLength; k++) {
-                    tempResponse = response.get(k);
+                    tempResponse = response.getByIndex(k);
                     console.log(tempResponse);
 
                     if(typeof (success = form.getSuccess()) !== 'undefined') {
