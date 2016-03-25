@@ -42,7 +42,7 @@
             let request = new jsOMS.Request(),
             request.setData(message);
             request.setType('json');
-            request.setUri(jsOMS.UriFactory.build('/{/lang}/api/log'));
+            request.setUri('/{/lang}/api/log');
             request.setMethod(jsOMS.EnumRequestMethod.POST);
             request.setRequestHeader('Content-Type', 'application/json');
             request.setSuccess(function (xhr) {});
