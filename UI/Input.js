@@ -25,7 +25,7 @@
 
     jsOMS.UI.Input.bind = function(input)
     {
-        let self = this, ref = null;
+        let self = this;
         
         input.addEventListener('change', function changeBind(event) {
             /* Handle remote datalist/autocomplete input element */
@@ -34,7 +34,14 @@
                 self.addRemoteDatalistOptions(this, list);
             }
 
-            /* Handle dynamic change events */
+            /* Handle html defined functions */
+            let change;
+            if((change = this.getAttribute('data-change-func')) !== 'undefined') {
+                change(this);
+            }
+
+            /* Handle pre-defined dynamic change events */
+            let ref;
             if(ref = this.getAttribute('data-ref') !== 'undefined') {
                 let e = document.getElementById(ref);
 
@@ -47,9 +54,12 @@
             }
         });
 
-        this.app.inputManager.getKeyboardManager().bind(input, 13, function() { 
-            document.getElementById(this.getAttribute('data-button')).click(); 
-        });
+        let dataButton;
+        if((dataButton = input.getAttribute('data-button')) !== 'undefined') {
+            this.app.inputManager.getKeyboardManager().bind(input, 13, function() { 
+                document.getElementById(dataButton).click(); 
+            });
+        }
     };
 
     jsOMS.UI.Input.addRemoteDatalistOptions = function(input, datalist) 
