@@ -34,16 +34,21 @@
         return this.ignore.indexOf(id) !== -1;
     };
 
+    jsOMS.UI.FormManager.prototype.unbind = function(id) 
+    {
+
+    };
+
     jsOMS.UI.FormManager.prototype.bind = function(id) 
     {
-        if (typeof id !== 'undefined' && this.ignore.indexOf(id) === -1) {
+        if (typeof id !== 'undefined' && typeof this.ignore[id] === 'undefined') {
             this.bindForm(id)
         } else {
             let forms = document.getElementsByTagName('form'),
             length = forms.length;
 
             for (var i = 0; i < length; i++) {
-                if (this.ignore.indexOf(forms[i].id) === -1) {
+                if (typeof this.ignore[forms[i].id] === 'undefined') {
                     this.bindForm(forms[i].id);
                 }
             }
@@ -52,12 +57,16 @@
 
     jsOMS.UI.FormManager.prototype.bindForm = function(id) 
     {
+        if(typeof id === 'undefined' || !id) {
+            throw false;
+        }
+
         let self = this;
 
         this.unbind(id);
 
-        if(this.ignore.indexOf(id) === -1) {
-            this.forms[id] = new FormView(id);
+        if(typeof this.ignore[id] === 'undefined') {
+            this.forms[id] = new jsOMS.Views.FormView(id);
         }
 
         this.forms[id].getSubmit().addEventListener('click', function(event) {
@@ -71,7 +80,7 @@
         // todo: do i need the findex? can't i just use id?
         let findex = 0;
 
-        if((findex = this.forms.indexOf(id)) !== -1) {
+        if((findex = this.forms[id]) !== 'undefined') {
             this.forms[id].unbind();
             this.forms.splice(findex, 1);
 
