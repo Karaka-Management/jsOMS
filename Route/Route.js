@@ -1,6 +1,8 @@
 (function (jsOMS, undefined) {
+    jsOMS.Autoloader.defineNamespace('jsOMS.Route');
+
     // TODO: create comments
-    jsOMS.Route = function () 
+    jsOMS.Route.Route = function () 
     {
         this.routes = null;
     };

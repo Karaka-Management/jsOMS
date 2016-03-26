@@ -1,5 +1,6 @@
 (function (jsOMS, undefined) {
     "use strict";
+    jsOMS.Autoloader.defineNamespace('jsOMS.Views');
     
     jsOMS.Views.FormView = function (id) {
         this.id = id;

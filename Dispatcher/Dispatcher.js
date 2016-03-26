@@ -1,5 +1,7 @@
 (function (jsOMS, undefined) {
-    jsOMS.Dispatcher = function () 
+    jsOMS.Autoloader.defineNamespace('jsOMS.Dispatcher');
+
+    jsOMS.Dispatcher.Dispatcher = function () 
     {
     };
 }(window.jsOMS = window.jsOMS || {}));

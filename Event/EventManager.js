@@ -1,4 +1,6 @@
 (function (jsOMS, undefined) {
-    jsOMS.EventManager = function () {
+    jsOMS.Autoloader.defineNamespace('jsOMS.Event');
+
+    jsOMS.Event.EventManager = function () {
     };
 }(window.jsOMS = window.jsOMS || {}));

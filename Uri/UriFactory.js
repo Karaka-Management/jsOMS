@@ -1,6 +1,5 @@
 (function (uriFactory, undefined) {
-    jsOMS.Uri.UriFactory = {};
-    jsOMS.Uri.UriFactory.uri = {};
+    jsOMS.Autoloader.defineNamespace('jsOMS.Uri.UriFactory');
 
     jsOMS.Uri.UriFactory.parseUrl = function (str, component)
     {
@@ -89,7 +88,7 @@
         let current = jsOMS.Uri.UriFactory.parseUrl(window.location.href);
         // match(new RegExp("\{[#\?\.a-zA-Z0-9]*\}", "gi"));
 
-        return uri.replace('\{[\/#\?@\.\$][a-zA-Z0-9]*\}' function(match) {
+        return uri.replace('\{[\/#\?@\.\$][a-zA-Z0-9]*\}', function(match) {
             match = substr(match[0], 1, match[0].length - 2);
 
             if(toMatch.hasProperty(match)) {

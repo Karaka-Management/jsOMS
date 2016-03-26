@@ -9,6 +9,7 @@
  */
 (function (jsOMS, undefined)
 {
+    jsOMS.Autoloader.defineNamespace('jsOMS.Message.Request');
     
     /**
      * @constructor
@@ -37,7 +38,7 @@
         } else if(typeof InstallTrigger !== 'undefined') {
             return jsOMS.EnumBrowser.FIREFOX; 
         } else if(Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0) {
-            return return jsOMS.EnumBrowser.SAFARI;
+            return jsOMS.EnumBrowser.SAFARI;
         } else if(/*@cc_on!@*/false || !!document.documentMode) {
             return jsOMS.EnumBrowser.IE;
         } else if(!isIE && !!window.StyleMedia) {

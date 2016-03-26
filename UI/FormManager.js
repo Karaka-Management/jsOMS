@@ -9,15 +9,15 @@
  */
  (function (jsOMS, undefined)
  {
-    "use strict";
-
+    jsOMS.Autoloader.defineNamespace('jsOMS.UI');
+    
     /**
      * @constructor
      *
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-     jsOMS.UI.FormManager = function (app)
+     jsOMS.UI.FormManager = function(app)
      {
         this.app = app;
         this.forms = {};

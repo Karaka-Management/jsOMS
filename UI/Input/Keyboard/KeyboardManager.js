@@ -1,9 +1,11 @@
 (function (jsOMS, undefined) {
-    jsOMS.UI.Input.KeyboardManager = function () 
+    jsOMS.Autoloader.defineNamespace('jsOMS.UI.Input.Keyboard');
+    
+    jsOMS.UI.Input.Keyboard.KeyboardManager = function () 
     {
     };
 
-    jsOMS.UI.Input.KeyboardManager.prototype.bind = function (element, keys, callback) 
+    jsOMS.UI.Input.Keyboard.KeyboardManager.prototype.bind = function (element, keys, callback) 
     {
         element.addEventListener('keyup', function keyBind(event) {
             if(event.keyCode === keys.keyCode) {
@@ -13,7 +15,7 @@
 
     };
 
-    jsOMS.UI.Input.KeyboardManager.prototype.unbind = function (element) 
+    jsOMS.UI.Input.Keyboard.KeyboardManager.prototype.unbind = function (element) 
     {
         element.removeEventListener('keyup', keyBind, false);
     };

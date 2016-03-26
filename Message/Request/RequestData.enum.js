@@ -9,7 +9,9 @@
  */
 (function (jsOMS, undefined)
 {
-    jsOMS.EnumLinkRequestData = Object.freeze({
+    jsOMS.Autoloader.defineNamespace('jsOMS.Message.Request');
+
+    jsOMS.Message.RequestLinkRequestData = Object.freeze({
         NORMAL: 'normal',
         OBJECT: 'object'
     });

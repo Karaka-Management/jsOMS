@@ -10,6 +10,7 @@
  (function (jsOMS, undefined)
  {
     "use strict";
+    jsOMS.Autoloader.defineNamespace('jsOMS.Log');
 
     /**
      * @constructor
@@ -17,7 +18,7 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Logger = function (verbose, ui, remote)
+    jsOMS.Log.Logger = function (verbose, ui, remote)
     {
         this.verbose = typeof verbose !== 'undefined' ? verbose : true;
         this.ui = typeof ui !== 'undefined' ? ui : true;
@@ -55,7 +56,7 @@
         context = this.createContext(message, context, level);
 
         if(this.verbose) {
-            console.log(this.interpolate(message, context, level)));
+            console.log(this.interpolate(message, context, level));
         }
 
         if(this.ui) {
@@ -63,7 +64,7 @@
         }
 
         if(this.remote) {
-            let request = new jsOMS.Message.Request(),
+            let request = new jsOMS.Message.Request();
             request.setData(context);
             request.setType(jsOMS.Message.Response.ResponseType.JSON);
             request.setUri('/{/lang}/api/log');

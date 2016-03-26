@@ -9,6 +9,8 @@
  */
 (function (jsOMS, undefined)
 {
+    jsOMS.Autoloader.defineNamespace('jsOMS.Log');
+
     jsOMS.Log.LogLevel = Object.freeze({
         EMERGENCY: 'normal',
         ALERT: 'normal',

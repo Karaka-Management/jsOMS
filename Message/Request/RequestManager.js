@@ -11,14 +11,15 @@
  */
 (function (jsOMS, undefined)
 {
-
+    jsOMS.Autoloader.defineNamespace('jsOMS.Message.Request');
+    
     /**
      * @constructor
      *
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Message.RequestManager = function ()
+    jsOMS.Message.Request.RequestManager = function ()
     {
     };
 }(window.jsOMS = window.jsOMS || {}));

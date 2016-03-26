@@ -9,8 +9,7 @@
  */
 (function (jsOMS, undefined)
 {
-    jsOMS.Modules = {};
-    jsOMS.Modules.Models = {};
+    jsOMS.Autoloader.defineNamespace('jsOMS.Module');
 
     /**
      * @constructor

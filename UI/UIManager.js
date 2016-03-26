@@ -9,8 +9,8 @@
  */
 (function (jsOMS, undefined)
 {
-    jsOMS.UI = {};
-
+    jsOMS.Autoloader.defineNamespace('jsOMS.UI');
+    
     /**
      * @constructor
      *
@@ -20,9 +20,9 @@
     jsOMS.UI.UIManager = function (app)
     {
         this.app = app;
-        this.formManager = new jsOMS.FormManager(this.app);
-        this.tabManager = new jsOMS.TabManager(this.app.responseManager);
-        this.tableManager = new jsOMS.TableManager(this.app.responseManager);
+        this.formManager = new jsOMS.UI.FormManager(this.app);
+        this.tabManager = new jsOMS.UI.TabManager(this.app.responseManager);
+        this.tableManager = new jsOMS.UI.TableManager(this.app.responseManager);
     };
 
     /**

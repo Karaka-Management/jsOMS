@@ -1,4 +1,6 @@
 (function (uriFactory, undefined) {
+    jsOMS.Autoloader.defineNamespace('jsOMS.Message.Response');
+    
     jsOMS.Message.Response.Response = function (data) {
         this.responses = data;
     };

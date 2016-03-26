@@ -9,6 +9,8 @@
  */
 (function (jsOMS, undefined)
 {
+    jsOMS.Autoloader.defineNamespace('jsOMS.Message.Request');
+
     jsOMS.Message.Request.BrowserType = Object.freeze({
         OPERA: 'opera',
         FIREFOX: 'firefox',

@@ -9,6 +9,8 @@
  */
 (function (jsOMS, undefined)
 {
+    jsOMS.Autoloader.defineNamespace('jsOMS.Message.Response');
+    
     jsOMS.Message.Response.ResponseResultType = Object.freeze({
         MULTI: 0,
         MESSAGE: 1,

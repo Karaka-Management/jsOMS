@@ -9,6 +9,7 @@
  */
 (function (jsOMS, undefined)
 {
+    jsOMS.Autoloader.defineNamespace('jsOMS.Auth');
 
     /**
      * @constructor

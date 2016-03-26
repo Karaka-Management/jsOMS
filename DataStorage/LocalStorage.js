@@ -9,7 +9,8 @@
  */
 (function (jsOMS, undefined)
 {
-
+    jsOMS.Autoloader.defineNamespace('jsOMS.DataStorage');
+    
     /**
      * @constructor
      *
