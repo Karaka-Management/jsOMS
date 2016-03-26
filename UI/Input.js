@@ -30,19 +30,19 @@
         input.addEventListener('change', function changeBind(event) {
             /* Handle remote datalist/autocomplete input element */
             let listId, list;
-            if((listId = this.getAttribute('list')) !== 'undefined' && (list = document.getElementById(listId)).getAttribute('data-list-src') !== 'undefined') {
+            if(typeof (listId = this.getAttribute('list')) !== 'undefined' && (list = document.getElementById(listId)).getAttribute('data-list-src') !== 'undefined') {
                 self.addRemoteDatalistOptions(this, list);
             }
 
             /* Handle html defined functions */
             let change;
-            if((change = this.getAttribute('data-change-func')) !== 'undefined') {
+            if(typeof (change = this.getAttribute('data-change-func')) !== 'undefined') {
                 change(this);
             }
 
             /* Handle pre-defined dynamic change events */
             let ref;
-            if(ref = this.getAttribute('data-ref') !== 'undefined') {
+            if(typeof (ref = this.getAttribute('data-ref')) !== 'undefined') {
                 let e = document.getElementById(ref);
 
                 switch(e.tagName) {
@@ -55,7 +55,7 @@
         });
 
         let dataButton;
-        if((dataButton = input.getAttribute('data-button')) !== 'undefined') {
+        if(typeof (dataButton = input.getAttribute('data-button')) !== 'undefined') {
             this.app.inputManager.getKeyboardManager().bind(input, 13, function() { 
                 document.getElementById(dataButton).click(); 
             });

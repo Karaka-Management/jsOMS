@@ -47,7 +47,7 @@
             current = jsOMS;
 
             for(let i = 0; i < length; i++) {
-                if(current[paths[i]] === 'undefined') {
+                if(typeof current[paths[i]] === 'undefined') {
                     current[paths[i]] = {};
                 }
 
