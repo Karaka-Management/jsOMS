@@ -34,26 +34,26 @@
     jsOMS.Message.Request.Request.getBrowser = function()
     {
         if((!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0) {
-            return jsOMS.EnumBrowser.OPERA;
+            return jsOMS.Message.Request.BrowserType.OPERA;
         } else if(typeof InstallTrigger !== 'undefined') {
-            return jsOMS.EnumBrowser.FIREFOX; 
+            return jsOMS.Message.Request.BrowserType.FIREFOX; 
         } else if(Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0) {
-            return jsOMS.EnumBrowser.SAFARI;
+            return jsOMS.Message.Request.BrowserType.SAFARI;
         } else if(/*@cc_on!@*/false || !!document.documentMode) {
-            return jsOMS.EnumBrowser.IE;
-        } else if(!isIE && !!window.StyleMedia) {
-            return jsOMS.EnumBrowser.EDGE;
+            return jsOMS.Message.Request.BrowserType.IE;
+        } else if(!!window.StyleMedia) {
+            return jsOMS.Message.Request.BrowserType.EDGE;
         } else if(!!window.chrome && !!window.chrome.webstore) {
-            return jsOMS.EnumBrowser.CHROME;
+            return jsOMS.Message.Request.BrowserType.CHROME;
         } else if((isChrome || isOpera) && !!window.CSS) {
-            return jsOMS.EnumBrowser.BLINK;
+            return jsOMS.Message.Request.BrowserType.BLINK;
         }
     };
 
     jsOMS.Message.Request.Request.getOS = function() 
     {
         for(let os in jsOMS.Message.Request.OSType) {
-            if(navigator.appversion.indexOf(jsOMS.Message.Request.OSType[os]) !== -1) {
+            if(navigator.appVersion.toLowerCase().indexOf(jsOMS.Message.Request.OSType[os]) !== -1) {
                 return jsOMS.Message.Request.OSType[os];
             }
         }
@@ -303,7 +303,7 @@
         let self = this;
 
         if (self.xhr.readyState !== 1) {
-            self.xhr.open(this.method, jsOMS.UriFactory.build(this.uri));
+            self.xhr.open(this.method, jsOMS.Uri.UriFactory.build(this.uri));
 
             for (let p in this.requestHeader) {
                 if (this.requestHeader.hasOwnProperty(p)) {

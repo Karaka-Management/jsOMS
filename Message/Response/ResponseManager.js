@@ -62,7 +62,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Message.Response.ResponseManager.prototype.execute = function (key, data, request)
+    jsOMS.Message.Response.ResponseManager.prototype.run = function (key, data, request)
     {
         console.log(data);
         if (typeof request !== 'undefined' && typeof this.messages[key][request] !== 'undefined') {

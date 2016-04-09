@@ -12,13 +12,13 @@
     jsOMS.Autoloader.defineNamespace('jsOMS.Log');
 
     jsOMS.Log.LogLevel = Object.freeze({
-        EMERGENCY: 'normal',
-        ALERT: 'normal',
-        CRITICAL: 'normal',
-        ERROR: 'normal',
-        WARNING: 'normal',
-        NOTICE: 'normal',
-        INFO: 'normal',
-        DEBUG: 'normal'
+        EMERGENCY: 'emergency',
+        ALERT: 'alert',
+        CRITICAL: 'critical',
+        ERROR: 'error',
+        WARNING: 'warning',
+        NOTICE: 'notice',
+        INFO: 'info',
+        DEBUG: 'debug'
     });
 }(window.jsOMS = window.jsOMS || {}));

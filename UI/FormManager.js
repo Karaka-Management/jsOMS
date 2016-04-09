@@ -58,7 +58,8 @@
     jsOMS.UI.FormManager.prototype.bindForm = function(id) 
     {
         if(typeof id === 'undefined' || !id) {
-            throw false;
+            this.app.logger.info('A form doesn\'t have an ID.');
+            return;
         }
 
         let self = this;
@@ -99,7 +100,7 @@
         }
 
         /* Handle default submit */
-        let request = new jsOMS.Message.Request(),
+        let request = new jsOMS.Message.Request.Request(),
         self = this;
 
         request.setData(form.getData());
@@ -111,7 +112,7 @@
         {
             try {
                 let o = JSON.parse(xhr.response),
-                response = new Response(o),
+                response = new jsOMS.Message.Response.Response(o),
                 responseLength = response.count(),
                 tempResponse = null,
                 success = null;
@@ -119,16 +120,16 @@
                 /* Handle responses (can be multiple response object) */
                 for (let k = 0; k < responseLength; k++) {
                     tempResponse = response.getByIndex(k);
-                    console.log(tempResponse);
 
-                    if(typeof (success = form.getSuccess()) !== 'undefined') {
+                    if((success = form.getSuccess()) !== null) {
                         success(tempResponse);
                     } else {
-                        self.app.responseManager.run(tempResponse);
+                        self.app.responseManager.run(tempResponse.type, tempResponse, request);
                     }
                 }
             } catch (exception) {
-                self.app.logger.error('Invalid JSON object: ' + xhr, 'FormManager')
+                self.app.logger.error('Invalid Login response: ' + JSON.stringify(xhr));
+
                 return false;
             }
         });
