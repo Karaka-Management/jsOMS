@@ -9,8 +9,7 @@
  */
 (function (jsOMS, undefined)
 {
-    jsOMS.Modules = {};
-    jsOMS.Modules.Models = {};
+    jsOMS.Autoloader.defineNamespace('jsOMS.Module');
 
     /**
      * @constructor
@@ -18,7 +17,7 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.ModuleManager = function (app)
+    jsOMS.Module.ModuleManager = function (app)
     {
         this.modules = {};
         this.app = app;
@@ -36,7 +35,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.ModuleManager.prototype.get = function (module)
+    jsOMS.Module.ModuleManager.prototype.get = function (module)
     {
         if (this.modules[module] === undefined) {
             this.modules[module] = jsOMS.ModuleFactory.getInstance(module, this.app);

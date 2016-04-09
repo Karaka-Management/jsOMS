@@ -9,19 +9,20 @@
  */
 (function (jsOMS, undefined)
 {
-
+    jsOMS.Autoloader.defineNamespace('jsOMS.UI');
+    
     /**
      * @constructor
      *
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.UIManager = function (app)
+    jsOMS.UI.UIManager = function (app)
     {
         this.app = app;
-        this.formManager = new jsOMS.FormManager(this.app.responseManager);
-        this.tabManager = new jsOMS.TabManager(this.app.responseManager);
-        this.tableManager = new jsOMS.TableManager(this.app.responseManager);
+        this.formManager = new jsOMS.UI.FormManager(this.app);
+        this.tabManager = new jsOMS.UI.TabManager(this.app.responseManager);
+        this.tableManager = new jsOMS.UI.TableManager(this.app.responseManager);
     };
 
     /**
@@ -34,22 +35,23 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.UIManager.prototype.bind = function (id)
+    jsOMS.UI.UIManager.prototype.bind = function (id)
     {
         if (typeof id === 'undefined') {
             this.formManager.bind();
             this.tabManager.bind();
             this.tableManager.bind();
         } else {
-            var tag = document.getElementById(id);
+            let tag = document.getElementById(id);
 
-            if (tag.tagName === 'form') {
-                this.formManager.bind(id);
-            } else if (tag.tagName === 'table') {
-                this.tableManager.bind(id);
-            } else if (tag.tagName === 'div') {
-                // Todo: be more specific in order to handle tab
-            }
+            switch(tag.tagName) {
+                case 'form':
+                    this.formManager.bind(id);
+                    break;
+                case 'table':
+                    this.tableManager.bind(id);
+                    break;
+            };
         }
     };
 
@@ -63,7 +65,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.UIManager.prototype.getFormManager = function ()
+    jsOMS.UI.UIManager.prototype.getFormManager = function ()
     {
         return this.formManager;
     };
@@ -78,7 +80,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.UIManager.prototype.getTabManager = function ()
+    jsOMS.UI.UIManager.prototype.getTabManager = function ()
     {
         return this.tabManager;
     };
@@ -93,7 +95,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.UIManager.prototype.getTableManager = function ()
+    jsOMS.UI.UIManager.prototype.getTableManager = function ()
     {
         return this.tabManager;
     };

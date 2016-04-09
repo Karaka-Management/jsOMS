@@ -9,14 +9,15 @@
  */
 (function (jsOMS, undefined)
 {
-
+    jsOMS.Autoloader.defineNamespace('jsOMS.UI');
+    
     /**
      * @constructor
      *
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.TableManager = function (responseManager)
+    jsOMS.UI.TableManager = function (responseManager)
     {
         this.responseManager = responseManager;
     };
@@ -31,7 +32,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.TableManager.prototype.bind = function (id)
+    jsOMS.UI.TableManager.prototype.bind = function (id)
     {
         if (typeof id !== 'undefined') {
             this.bindElement(document.getElementById(id));
@@ -54,7 +55,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.TableManager.prototype.bindElement = function (e)
+    jsOMS.UI.TableManager.prototype.bindElement = function (e)
     {
     };
 }(window.jsOMS = window.jsOMS || {}));

@@ -9,23 +9,54 @@
  */
 (function (jsOMS, undefined)
 {
-
+    jsOMS.Autoloader.defineNamespace('jsOMS.Message.Request');
+    
     /**
      * @constructor
      *
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Request = function ()
+    jsOMS.Message.Request.Request = function (uri, method, type)
     {
-        this.uri = null;
-        this.method = null;
+        this.uri = typeof uri !== 'undefined' ? uri : null;
+        this.method = typeof method !== 'undefined' ? method : jsOMS.Message.Request.RequestMethod.GET;
         this.requestHeader = [];
         this.success = null;
-        this.type = jsOMS.EnumRequestMethod.GET;
+        this.type = typeof type !== 'undefined' ? type : jsOMS.Message.Response.ResponseType.JSON;
         this.data = {};
 
+
+
         this.xhr = new XMLHttpRequest();
+    };
+
+    jsOMS.Message.Request.Request.getBrowser = function()
+    {
+        if((!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0) {
+            return jsOMS.Message.Request.BrowserType.OPERA;
+        } else if(typeof InstallTrigger !== 'undefined') {
+            return jsOMS.Message.Request.BrowserType.FIREFOX; 
+        } else if(Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0) {
+            return jsOMS.Message.Request.BrowserType.SAFARI;
+        } else if(/*@cc_on!@*/false || !!document.documentMode) {
+            return jsOMS.Message.Request.BrowserType.IE;
+        } else if(!!window.StyleMedia) {
+            return jsOMS.Message.Request.BrowserType.EDGE;
+        } else if(!!window.chrome && !!window.chrome.webstore) {
+            return jsOMS.Message.Request.BrowserType.CHROME;
+        } else if((isChrome || isOpera) && !!window.CSS) {
+            return jsOMS.Message.Request.BrowserType.BLINK;
+        }
+    };
+
+    jsOMS.Message.Request.Request.getOS = function() 
+    {
+        for(let os in jsOMS.Message.Request.OSType) {
+            if(navigator.appVersion.toLowerCase().indexOf(jsOMS.Message.Request.OSType[os]) !== -1) {
+                return jsOMS.Message.Request.OSType[os];
+            }
+        }
     };
 
     /**
@@ -40,7 +71,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Request.prototype.setMethod = function (method)
+    jsOMS.Message.Request.Request.prototype.setMethod = function (method)
     {
         this.method = method;
     };
@@ -57,7 +88,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Request.prototype.getMethod = function ()
+    jsOMS.Message.Request.Request.prototype.getMethod = function ()
     {
         return this.method;
     };
@@ -74,7 +105,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Request.prototype.setResponseType = function (type)
+    jsOMS.Message.Request.Request.prototype.setResponseType = function (type)
     {
         this.xhr.responseType = type;
     };
@@ -91,7 +122,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Request.prototype.getResponseType = function ()
+    jsOMS.Message.Request.Request.prototype.getResponseType = function ()
     {
         return this.responseType;
     };
@@ -107,7 +138,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Request.prototype.setRequestHeader = function (type, header)
+    jsOMS.Message.Request.Request.prototype.setRequestHeader = function (type, header)
     {
         this.requestHeader[type] = header;
     };
@@ -122,7 +153,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Request.prototype.getRequestHeader = function ()
+    jsOMS.Message.Request.Request.prototype.getRequestHeader = function ()
     {
         return this.requestHeader;
     };
@@ -137,7 +168,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Request.prototype.setUri = function (uri)
+    jsOMS.Message.Request.Request.prototype.setUri = function (uri)
     {
         this.uri = uri;
     };
@@ -152,7 +183,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Request.prototype.getUri = function ()
+    jsOMS.Message.Request.Request.prototype.getUri = function ()
     {
         return this.uri;
     };
@@ -167,7 +198,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Request.prototype.setSuccess = function (callback)
+    jsOMS.Message.Request.Request.prototype.setSuccess = function (callback)
     {
         this.success = callback;
     };
@@ -182,7 +213,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Request.prototype.setData = function (data)
+    jsOMS.Message.Request.Request.prototype.setData = function (data)
     {
         this.data = data;
     };
@@ -197,7 +228,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Request.prototype.getData = function ()
+    jsOMS.Message.Request.Request.prototype.getData = function ()
     {
         return this.data
     };
@@ -214,7 +245,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Request.prototype.setType = function (type)
+    jsOMS.Message.Request.Request.prototype.setType = function (type)
     {
         this.type = type;
     };
@@ -231,7 +262,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Request.prototype.getType = function ()
+    jsOMS.Message.Request.Request.prototype.getType = function ()
     {
         return this.type;
     };
@@ -246,10 +277,10 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Request.prototype.queryfy = function (obj)
+    jsOMS.Message.Request.Request.prototype.queryfy = function (obj)
     {
-        var str = [];
-        for (var p in obj) {
+        let str = [];
+        for (let p in obj) {
             if (obj.hasOwnProperty(p)) {
                 str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
             }
@@ -267,14 +298,14 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Request.prototype.send = function ()
+    jsOMS.Message.Request.Request.prototype.send = function ()
     {
-        var self = this;
+        let self = this;
 
         if (self.xhr.readyState !== 1) {
-            self.xhr.open(this.method, this.uri);
+            self.xhr.open(this.method, jsOMS.Uri.UriFactory.build(this.uri));
 
-            for (var p in this.requestHeader) {
+            for (let p in this.requestHeader) {
                 if (this.requestHeader.hasOwnProperty(p)) {
                     self.xhr.setRequestHeader(p, this.requestHeader[p]);
                 }
@@ -288,14 +319,14 @@
             }
         };
 
-        if (this.type === jsOMS.EnumRequestType.JSON) {
+        if (this.type === jsOMS.Message.Request.RequestType.JSON) {
             if (typeof this.requestHeader !== 'undefined' && this.requestHeader['Content-Type'] === 'application/json') {
                 console.log(JSON.stringify(this.data));
                 self.xhr.send(JSON.stringify(this.data));
             } else {
                 self.xhr.send(this.queryfy(this.data));
             }
-        } else if (this.type === jsOMS.EnumRequestType.RAW) {
+        } else if (this.type === jsOMS.Message.Request.RequestType.RAW) {
             self.xhr.send(this.data);
         }
     };

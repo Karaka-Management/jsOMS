@@ -9,7 +9,9 @@
  */
 (function (jsOMS, undefined)
 {
-    jsOMS.EnumAccountType = Object.freeze({
+    jsOMS.Autoloader.defineNamespace('jsOMS.Account');
+
+    jsOMS.Account.AccountType = Object.freeze({
         USER: 0,
         GROUP: 1
     });

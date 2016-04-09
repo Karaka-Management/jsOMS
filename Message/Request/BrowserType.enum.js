@@ -11,8 +11,13 @@
 {
     jsOMS.Autoloader.defineNamespace('jsOMS.Message.Request');
 
-    jsOMS.Message.RequestLinkRequestData = Object.freeze({
-        NORMAL: 'normal',
-        OBJECT: 'object'
+    jsOMS.Message.Request.BrowserType = Object.freeze({
+        OPERA: 'opera',
+        FIREFOX: 'firefox',
+        SAFARI: 'safari',
+        IE: 'msie',
+        EDGE: 'edge',
+        CHROME: 'chrome',
+        BLINK: 'blink',
     });
 }(window.jsOMS = window.jsOMS || {}));

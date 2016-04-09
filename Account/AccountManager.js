@@ -9,14 +9,15 @@
  */
 (function (jsOMS, undefined)
 {
-
+    jsOMS.Autoloader.defineNamespace('jsOMS.Account');
+    
     /**
      * @constructor
      *
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.AccountManager = function ()
+    jsOMS.Account.AccountManager = function ()
     {
         this.accounts = [];
     };
@@ -31,7 +32,7 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.AccountManager.prototype.add = function (account)
+    jsOMS.Account.AccountManager.prototype.add = function (account)
     {
         this.accounts[account.getId()] = account;
     };
@@ -46,7 +47,7 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.AccountManager.prototype.remove = function (id)
+    jsOMS.Account.AccountManager.prototype.remove = function (id)
     {
         if (typeof this.accounts[id] !== 'undefined') {
             delete this.accounts[id];
@@ -69,7 +70,7 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.AccountManager.prototype.get = function (id)
+    jsOMS.Account.AccountManager.prototype.get = function (id)
     {
         if (this.accounts[id]) {
             return this.accounts[id];

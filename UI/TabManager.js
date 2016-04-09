@@ -9,14 +9,15 @@
  */
 (function (jsOMS, undefined)
 {
-
+    jsOMS.Autoloader.defineNamespace('jsOMS.UI');
+    
     /**
      * @constructor
      *
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.TabManager = function (responseManager)
+    jsOMS.UI.TabManager = function (responseManager)
     {
         this.responseManager = responseManager;
     };
@@ -31,7 +32,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.TabManager.prototype.bind = function (id)
+    jsOMS.UI.TabManager.prototype.bind = function (id)
     {
         if (typeof id !== 'undefined') {
             this.bindElement(document.getElementById(id));
@@ -54,7 +55,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.TabManager.prototype.bindElement = function (e)
+    jsOMS.UI.TabManager.prototype.bindElement = function (e)
     {
         var nodes = e.querySelectorAll('.tab-links a');
 

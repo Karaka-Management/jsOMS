@@ -9,14 +9,15 @@
  */
 (function (jsOMS, undefined)
 {
-
+    jsOMS.Autoloader.defineNamespace('jsOMS.Asset');
+    
     /**
      * @constructor
      *
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.AssetManager = function ()
+    jsOMS.Asset.AssetManager = function ()
     {
         this.assets = {};
     };
@@ -36,7 +37,7 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.AssetManager.prototype.load = function (path, filename, filetype, callback)
+    jsOMS.Asset.AssetManager.prototype.load = function (path, filename, filetype, callback)
     {
         var hash;
 
@@ -102,7 +103,7 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.AssetManager.prototype.get = function (id)
+    jsOMS.Asset.AssetManager.prototype.get = function (id)
     {
         if (this.assets[id]) {
             return this.assets[id];
@@ -123,7 +124,7 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.AssetManager.prototype.remove = function (key)
+    jsOMS.Asset.AssetManager.prototype.remove = function (key)
     {
         if (typeof this.assets[key] !== 'undefined') {
             delete this.assets[key];

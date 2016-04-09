@@ -9,7 +9,9 @@
  */
 (function (jsOMS, undefined)
 {
-    jsOMS.EnumResponseType = Object.freeze({
+    jsOMS.Autoloader.defineNamespace('jsOMS.Message.Response');
+    
+    jsOMS.Message.Response.ResponseType = Object.freeze({
         TEXT: 'text',
         JSON: 'json',
         DOCUMENT: 'document',

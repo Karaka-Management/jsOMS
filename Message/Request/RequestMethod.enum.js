@@ -9,7 +9,9 @@
  */
 (function (jsOMS, undefined)
 {
-    jsOMS.EnumRequestMethod = Object.freeze({
+    jsOMS.Autoloader.defineNamespace('jsOMS.Message.Request');
+    
+    jsOMS.Message.Request.RequestMethod = Object.freeze({
         POST: 'POST',
         GET: 'GET',
         PUT: 'PUT',

@@ -9,6 +9,7 @@
  */
 (function (jsOMS, undefined)
 {
+    jsOMS.Autoloader.defineNamespace('jsOMS.Auth');
 
     /**
      * @constructor
@@ -16,7 +17,7 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Auth = function (uri)
+    jsOMS.Auth.Auth = function (uri)
     {
         this.account = null;
         this.uri = uri;
@@ -32,7 +33,7 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Auth.prototype.setAccount = function (account)
+    jsOMS.Auth.Auth.prototype.setAccount = function (account)
     {
         this.account = account;
     };
@@ -47,7 +48,7 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Auth.prototype.getAccount = function ()
+    jsOMS.Auth.Auth.prototype.getAccount = function ()
     {
         return this.account;
     };
@@ -60,12 +61,12 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Auth.prototype.login = function ()
+    jsOMS.Auth.Auth.prototype.login = function ()
     {
-        var authRequest = new jsOMS.Request();
+        var authRequest = new jsOMS.Message.Request.Request();
         authRequest.setUri(this.uri);
-        authRequest.setMethod(jsOMS.EnumRequestMethod.POST);
-        authRequest.setResponseType(jsOMS.EnumRequestType.JSON);
+        authRequest.setMethod(jsOMS.Message.Request.RequestMethod.POST);
+        authRequest.setResponseType(jsOMS.Message.Request.RequestType.JSON);
         authRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         authRequest.setSuccess(function (xhr)
         {
@@ -83,7 +84,7 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Auth.prototype.logout = function ()
+    jsOMS.Auth.Auth.prototype.logout = function ()
     {
         location.reload();
     };
@@ -96,7 +97,7 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Auth.prototype.loginResult = function (xhr)
+    jsOMS.Auth.Auth.prototype.loginResult = function (xhr)
     {
         console.log(xhr);
         location.reload();

@@ -9,14 +9,15 @@
  */
 (function (jsOMS, undefined)
 {
-
+    jsOMS.Autoloader.defineNamespace('jsOMS.DataStorage');
+    
     /**
      * @constructor
      *
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.CookieJar = function ()
+    jsOMS.DataStorage.CookieJar = function ()
     {
     };
 
@@ -36,7 +37,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.CookieJar.prototype.setCookie = function (cName, value, exdays, domain, path)
+    jsOMS.DataStorage.CookieJar.prototype.setCookie = function (cName, value, exdays, domain, path)
     {
         var exdate = new Date();
         exdate.setDate(exdate.getDate() + exdays);
@@ -56,7 +57,7 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.CookieJar.prototype.getCookie = function (cName)
+    jsOMS.DataStorage.CookieJar.prototype.getCookie = function (cName)
     {
         var cValue = document.cookie;
         var cStart = cValue.indexOf(" " + cName + "=");

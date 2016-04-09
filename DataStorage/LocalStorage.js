@@ -9,14 +9,15 @@
  */
 (function (jsOMS, undefined)
 {
-
+    jsOMS.Autoloader.defineNamespace('jsOMS.DataStorage');
+    
     /**
      * @constructor
      *
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.LocalStorage = function ()
+    jsOMS.DataStorage.LocalStorage = function ()
     {
     };
 
@@ -30,7 +31,7 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.LocalStorage.prototype.available = function ()
+    jsOMS.DataStorage.LocalStorage.prototype.available = function ()
     {
         try {
             return 'localStorage' in window && window.localStorage !== null;
