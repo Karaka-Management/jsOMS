@@ -71,8 +71,8 @@
         }
 
         this.forms[id].getSubmit().addEventListener('click', function(event) {
-            self.submit(self.forms[id]); 
             jsOMS.preventAll(event);
+            self.submit(self.forms[id]);
         });
     };
 
@@ -93,10 +93,15 @@
 
     jsOMS.UI.FormManager.prototype.submit = function(form)
     {
+        if(!form.isValid()) {
+            this.app.logger.debug('Form "' + form.getId() + '" has invalid values.');
+            return;
+        }
+
         /* Handle injects */
         let injects = form.getSubmitInjects();
         for(let property in injects) {
-            property();
+            injects[property](form.getElement());
         }
 
         /* Handle default submit */
@@ -128,7 +133,7 @@
                     }
                 }
             } catch (exception) {
-                self.app.logger.error('Invalid Login response: ' + JSON.stringify(xhr));
+                self.app.logger.error('Invalid form response: ' + JSON.stringify(xhr));
 
                 return false;
             }

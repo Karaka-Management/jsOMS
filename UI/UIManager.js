@@ -51,7 +51,7 @@
                 case 'table':
                     this.tableManager.bind(id);
                     break;
-            };
+            }
         }
     };
 

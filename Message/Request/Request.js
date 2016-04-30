@@ -25,9 +25,6 @@
         this.success = null;
         this.type = typeof type !== 'undefined' ? type : jsOMS.Message.Response.ResponseType.JSON;
         this.data = {};
-
-
-
         this.xhr = new XMLHttpRequest();
     };
 
@@ -191,7 +188,8 @@
     /**
      * Set success callback.
      *
-     * @param {requestCallback} callback Success callback
+     * @callback requestCallback
+     * @param {requestCallback} callback - Success callback
      *
      * @method
      *

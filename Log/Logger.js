@@ -49,14 +49,36 @@
         context['message'] = message;
 
         return context;
-    }
+    };
 
     jsOMS.Log.Logger.prototype.write = function(message, context, level)
     {
         context = this.createContext(message, context, level);
 
         if(this.verbose) {
-            console.log('%c' + this.interpolate(message, context, level), 'color: #FFA600');
+            let color = '000';
+
+            switch(level) {
+                case 'info':
+                case 'notice':
+                case 'log':
+                    color = '000';
+                    break;
+                case 'debug':
+                    color = '289E39';
+                    break;
+                case 'warning':
+                case 'alert':
+                    color = 'FFA600';
+                    break;
+                case 'error':
+                case 'critical':
+                case 'emergency':
+                    color = 'CF304A';
+                    break;
+            }
+
+            console.log('%c' + this.interpolate(message, context, level), 'color: #' + color);
         }
 
         if(this.ui) {

@@ -12,7 +12,7 @@
 
     jsOMS.Views.FormView.prototype.initializeMembers = function() 
     {
-        this.submitInjects = {};
+        this.submitInjects = [];
         this.method = 'POST';
         this.action = '';
     };
@@ -44,41 +44,62 @@
 
     jsOMS.Views.FormView.prototype.injectSubmit = function(id, callback)
     {
-        this.submitInjects[id] = callback;
+        this.submitInjects.push(callback);
     };
 
-    jsOMS.Views.FormView.prototype.getFormElements = function(id)
+    jsOMS.Views.FormView.prototype.getFormElements = function()
     {
-        let form = document.getElementById(id),
+        let form = document.getElementById(this.id),
         selects = form.getElementsByTagName('select'),
         textareas = form.getElementsByTagName('textarea'),
         inputs = form.getElementsByTagName('input'),
-        external = document.querySelectorAll('[form='+id+']'),
-        elements = Array.prototype.slice.call(inputs).concat(Array.prototype.slice.call(selects), Array.prototype.slice.call(textareas), Array.prototype.slice.call(external)),
-        length = elements.length;
+        external = document.querySelectorAll('[form='+this.id+']'),
+        elements = Array.prototype.slice.call(inputs).concat(Array.prototype.slice.call(selects), Array.prototype.slice.call(textareas), Array.prototype.slice.call(external));
 
         return elements;
-    }
+    };
 
     jsOMS.Views.FormView.prototype.getData = function()
     {
         let data = {},
-        elements = this.getFormElements(this.id),
+        elements = this.getFormElements(),
         length = elements.length,
         i = 0;
 
         for(i = 0; i < length; i++) {
-            data[this.getElementId(elements[i])] = elements[i].value;
+            data[jsOMS.Views.FormView.getElementId(elements[i])] = elements[i].value;
         }
 
         return data;
     };
 
-    jsOMS.Views.FormView.prototype.getElementId = function(e) 
+    jsOMS.Views.FormView.prototype.getId = function()
     {
-        let id = null;
+        return this.id;
+    };
 
-        id = e.getAttribute('name');
+    jsOMS.Views.FormView.prototype.isValid = function()
+    {
+        let elements = this.getFormElements(),
+            length = elements.length;
+
+        for(let i = 0; i < length; i++) {
+            if((elements[i].required && elements[i].value === '') || (typeof elements[i].pattern !== 'undefined' && elements[i].pattern !== '' && (new RegExp(elements[i].pattern)).test(elements[i].value))) {
+                return false;
+            }
+        }
+
+        return true;
+    };
+
+    jsOMS.Views.FormView.prototype.getElement = function()
+    {
+        return document.getElementById(this.getId());
+    };
+
+    jsOMS.Views.FormView.getElementId = function(e)
+    {
+        let id = e.getAttribute('name');
 
         if(id === null) {
             id = e.getAttribute('id');
@@ -93,7 +114,7 @@
         }
 
         return id;
-    }
+    };
 
     jsOMS.Views.FormView.prototype.getSubmitInjects = function()
     {
@@ -107,7 +128,7 @@
         this.method = document.getElementById(this.id).method;
         this.action = document.getElementById(this.id).action;
 
-        let elements = this.getFormElements(this.id),
+        let elements = this.getFormElements(),
         length = elements.length,
         i = 0;
 
@@ -131,7 +152,7 @@
 
     jsOMS.Views.FormView.prototype.unbind = function() 
     {
-        let elements = this.getFormElements(this.id),
+        let elements = this.getFormElements(),
         length = elements.length,
         i = 0;
 

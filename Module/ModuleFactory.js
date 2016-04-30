@@ -36,6 +36,6 @@
      */
     jsOMS.Module.ModuleFactory.getInstance = function (module, app)
     {
-        return new window['jsOMS']['Modules'][module](app);
+        return new jsOMS.Modules[module](app);
     };
 }(window.jsOMS = window.jsOMS || {}));

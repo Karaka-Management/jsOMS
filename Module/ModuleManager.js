@@ -38,7 +38,7 @@
     jsOMS.Module.ModuleManager.prototype.get = function (module)
     {
         if (this.modules[module] === undefined) {
-            this.modules[module] = jsOMS.ModuleFactory.getInstance(module, this.app);
+            this.modules[module] = jsOMS.Module.ModuleFactory.getInstance(module, this.app);
         }
 
         return this.modules[module];

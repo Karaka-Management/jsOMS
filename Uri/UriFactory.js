@@ -1,12 +1,13 @@
 (function (uriFactory, undefined) {
     jsOMS.Autoloader.defineNamespace('jsOMS.Uri.UriFactory');
 
-    jsOMS.Uri.UriFactory.parseUrl = function (str, component)
+    jsOMS.Uri.UriFactory.uri = {};
+
+    jsOMS.Uri.UriFactory.parseUrl = function (str)
     {
         let query, key = ['source', 'scheme', 'authority', 'userInfo', 'user', 'pass', 'host', 'port',
                 'relative', 'path', 'directory', 'file', 'query', 'fragment'
             ],
-            ini = {},
             mode = 'php',
             parser = {
                 php: /^(?:([^:\/?#]+):)?(?:\/\/()(?:(?:()(?:([^:@]*):?([^:@]*))?@)?([^:\/?#]*)(?::(\d*))?))?()(?:(()(?:(?:[^?#\/]*\/)*)()(?:[^?#]*))(?:\?([^#]*))?(?:#(.*))?)/,
@@ -22,24 +23,6 @@
             if (m[i]) {
                 uri[key[i]] = m[i];
             }
-        }
-
-        if (component) {
-            return uri[component.replace('PHP_URL_', '').toLowerCase()];
-        }
-
-        if (mode !== 'php') {
-            let name = 'queryKey';
-            parser = /(?:^|&)([^&=]*)=?([^&]*)/g;
-            uri[name] = {};
-            query = uri[key[12]] || '';
-
-            query.replace(parser, function ($0, $1, $2)
-            {
-                if ($1) {
-                    uri[name][$1] = $2;
-                }
-            });
         }
 
         delete uri.source;
@@ -86,12 +69,11 @@
     jsOMS.Uri.UriFactory.build = function(uri, toMatch)
     {
         let current = jsOMS.Uri.UriFactory.parseUrl(window.location.href);
-        // match(new RegExp("\{[#\?\.a-zA-Z0-9]*\}", "gi"));
 
-        return uri.replace('\{[\/#\?@\.\$][a-zA-Z0-9]*\}', function(match) {
-            match = substr(match[0], 1, match[0].length - 2);
+        return uri.replace(new RegExp('\{[\/#\?@\.\$][a-zA-Z0-9]*\}', 'g'), function(match) {
+            match = match.substr(1, match.length - 2);
 
-            if(toMatch.hasProperty(match)) {
+            if(typeof toMatch !== 'undefined' && toMatch.hasProperty(match)) {
                 return toMatch[match];
             } else if(jsOMS.Uri.UriFactory.uri[match] !== 'undefined') {
                 return jsOMS.Uri.UriFactory.uri[match];
