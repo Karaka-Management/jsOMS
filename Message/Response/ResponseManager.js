@@ -64,7 +64,6 @@
      */
     jsOMS.Message.Response.ResponseManager.prototype.run = function (key, data, request)
     {
-        console.log(data);
         if (typeof request !== 'undefined' && typeof this.messages[key][request] !== 'undefined') {
             this.messages[key][request](data);
         } else if (typeof this.messages[key] !== 'undefined') {

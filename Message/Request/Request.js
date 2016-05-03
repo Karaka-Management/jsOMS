@@ -10,7 +10,7 @@
 (function (jsOMS, undefined)
 {
     jsOMS.Autoloader.defineNamespace('jsOMS.Message.Request');
-    
+
     /**
      * @constructor
      *
@@ -19,38 +19,38 @@
      */
     jsOMS.Message.Request.Request = function (uri, method, type)
     {
-        this.uri = typeof uri !== 'undefined' ? uri : null;
-        this.method = typeof method !== 'undefined' ? method : jsOMS.Message.Request.RequestMethod.GET;
+        this.uri           = typeof uri !== 'undefined' ? uri : null;
+        this.method        = typeof method !== 'undefined' ? method : jsOMS.Message.Request.RequestMethod.GET;
         this.requestHeader = [];
-        this.success = null;
-        this.type = typeof type !== 'undefined' ? type : jsOMS.Message.Response.ResponseType.JSON;
-        this.data = {};
-        this.xhr = new XMLHttpRequest();
+        this.success       = null;
+        this.type          = typeof type !== 'undefined' ? type : jsOMS.Message.Response.ResponseType.JSON;
+        this.data          = {};
+        this.xhr           = new XMLHttpRequest();
     };
 
-    jsOMS.Message.Request.Request.getBrowser = function()
+    jsOMS.Message.Request.Request.getBrowser = function ()
     {
-        if((!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0) {
+        if ((!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0) {
             return jsOMS.Message.Request.BrowserType.OPERA;
-        } else if(typeof InstallTrigger !== 'undefined') {
-            return jsOMS.Message.Request.BrowserType.FIREFOX; 
-        } else if(Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0) {
+        } else if (typeof InstallTrigger !== 'undefined') {
+            return jsOMS.Message.Request.BrowserType.FIREFOX;
+        } else if (Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0) {
             return jsOMS.Message.Request.BrowserType.SAFARI;
-        } else if(/*@cc_on!@*/false || !!document.documentMode) {
+        } else if (/*@cc_on!@*/false || !!document.documentMode) {
             return jsOMS.Message.Request.BrowserType.IE;
-        } else if(!!window.StyleMedia) {
+        } else if (!!window.StyleMedia) {
             return jsOMS.Message.Request.BrowserType.EDGE;
-        } else if(!!window.chrome && !!window.chrome.webstore) {
+        } else if (!!window.chrome && !!window.chrome.webstore) {
             return jsOMS.Message.Request.BrowserType.CHROME;
-        } else if((isChrome || isOpera) && !!window.CSS) {
+        } else if ((isChrome || isOpera) && !!window.CSS) {
             return jsOMS.Message.Request.BrowserType.BLINK;
         }
     };
 
-    jsOMS.Message.Request.Request.getOS = function() 
+    jsOMS.Message.Request.Request.getOS = function ()
     {
-        for(let os in jsOMS.Message.Request.OSType) {
-            if(navigator.appVersion.toLowerCase().indexOf(jsOMS.Message.Request.OSType[os]) !== -1) {
+        for (let os in jsOMS.Message.Request.OSType) {
+            if (navigator.appVersion.toLowerCase().indexOf(jsOMS.Message.Request.OSType[os]) !== -1) {
                 return jsOMS.Message.Request.OSType[os];
             }
         }
