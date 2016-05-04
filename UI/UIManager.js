@@ -23,6 +23,7 @@
         this.formManager = new jsOMS.UI.FormManager(this.app);
         this.tabManager = new jsOMS.UI.TabManager(this.app.responseManager);
         this.tableManager = new jsOMS.UI.TableManager(this.app.responseManager);
+        this.button = new jsOMS.Ui.Button(this.app);
     };
 
     /**
@@ -41,6 +42,7 @@
             this.formManager.bind();
             this.tabManager.bind();
             this.tableManager.bind();
+            this.button.bind();
         } else {
             let tag = document.getElementById(id);
 
@@ -50,6 +52,10 @@
                     break;
                 case 'table':
                     this.tableManager.bind(id);
+                    break;
+                case 'button':
+                case 'a':
+                    this.button.bind(id);
                     break;
             }
         }
@@ -68,6 +74,11 @@
     jsOMS.UI.UIManager.prototype.getFormManager = function ()
     {
         return this.formManager;
+    };
+
+    jsOMS.UI.UIManager.prototype.getButton = function ()
+    {
+        return this.button;
     };
 
     /**

@@ -95,22 +95,25 @@
     jsOMS.UI.FormManager.prototype.submit = function (form)
     {
         /* Handle injects */
-        let self = this,
+        let self    = this,
             injects = form.getSubmitInjects(),
             counter = 0;
 
         for (let property in injects) {
             counter++;
-            this.app.requestManager.addGroup(counter, form.getId());
+            this.app.eventManager.addGroup(counter, form.getId());
 
             injects[property](form.getElement(), counter, form.getId());
         }
 
-        this.app.requestManager.setDone(form.getId(), function() {self.submitForm(form)});
-        this.app.requestManager.triggerDone('?', form.getId());
+        this.app.eventManager.setDone(form.getId(), function ()
+        {
+            self.submitForm(form);
+        });
+        this.app.eventManager.triggerDone('?', form.getId());
     };
 
-    jsOMS.UI.FormManager.prototype.submitForm = function(form)
+    jsOMS.UI.FormManager.prototype.submitForm = function (form)
     {
         if (!form.isValid()) {
             this.app.logger.debug('Form "' + form.getId() + '" has invalid values.');
