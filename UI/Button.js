@@ -22,12 +22,12 @@
         if (typeof id !== 'undefined') {
             this.bindButton(id)
         } else {
-            let buttons = document.getElementsByTagName('form'),
+            let buttons = document.getElementsByTagName('button'),
                 length  = buttons.length;
 
             for (var i = 0; i < length; i++) {
-                if (typeof buttons[i].getAttribute('data-action') !== 'undefined') {
-                    this.bind(buttons[i].id);
+                if (typeof buttons[i].getAttribute('data-action') !== 'undefined' && buttons[i].getAttribute('id') !== null) {
+                    this.bindButton(buttons[i].getAttribute('id'));
                 }
             }
         }

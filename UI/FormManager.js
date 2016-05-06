@@ -48,8 +48,8 @@
                 length = forms.length;
 
             for (var i = 0; i < length; i++) {
-                if (typeof this.ignore[forms[i].id] === 'undefined') {
-                    this.bindForm(forms[i].id);
+                if (typeof forms[i].getAttribute('id') !== 'undefined' && forms[i].getAttribute('id') !== null && typeof this.ignore[forms[i].getAttribute('id')] === 'undefined') {
+                    this.bindForm(forms[i].getAttribute('id'));
                 }
             }
         }
@@ -62,13 +62,10 @@
             return;
         }
 
-        let self = this;
+        let self       = this;
+        this.forms[id] = new jsOMS.Views.FormView(id);
 
         this.unbind(id);
-
-        if (typeof this.ignore[id] === 'undefined') {
-            this.forms[id] = new jsOMS.Views.FormView(id);
-        }
 
         this.forms[id].getSubmit().addEventListener('click', function (event)
         {

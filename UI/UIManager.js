@@ -23,7 +23,7 @@
         this.formManager = new jsOMS.UI.FormManager(this.app);
         this.tabManager = new jsOMS.UI.TabManager(this.app.responseManager);
         this.tableManager = new jsOMS.UI.TableManager(this.app.responseManager);
-        this.button = new jsOMS.Ui.Button(this.app);
+        this.button = new jsOMS.UI.Button(this.app);
     };
 
     /**
