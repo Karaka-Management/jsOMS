@@ -22,9 +22,25 @@
     {
         this.app    = app;
         this.surface = {};
+        
+        this.activeSwipe = {'startX': null, 'startY': null, 'time': null};
     };
 
-    jsOMS.UI.Input.Touch.SwipeManager.prototype.add = function (surface, id, gesture, callback)
+    jsOMS.UI.Input.Touch.SwipeManager.prototype.add = function (surface, id, cUp, cRight, cDown, cLeft)
     {
+        let e = document.getElementById(surface)
+        self = this;
+        e.addEventListener('touchstart', function(event) {
+            let touch = e.changedTouches[0];
+            
+            self.activeSwipe.startX = touch.pageX;
+            self.activeSwipe.startY = touch.pageY;
+            self.activeSwipe.time = new Date().getTime();
+            
+            jsOMS.preventAll(event);
+        });
+        
     };
+    
+    
 }(window.jsOMS = window.jsOMS || {}));
