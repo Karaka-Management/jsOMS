@@ -21,11 +21,11 @@
     jsOMS.UI.Input.Touch.TouchManager = function (app)
     {
         this.app    = app;
-        this.surfaces = {};
+        this.swipe = new jsOMS.UI.Input.Touch.SwipeManager(app);
     };
 
-    jsOMS.UI.FormManager.prototype.add = function (id, callback)
+    jsOMS.UI.Input.Touch.TouchManager.prototype.getSwipeManager = function ()
     {
+        return this.swipe;
     };
-    
 }(window.jsOMS = window.jsOMS || {}));
