@@ -19,9 +19,7 @@
      */
     jsOMS.UI.Input.Touch.SwipeManager = function (app)
     {
-        this.app     = app;
-        this.surface = {};
-
+        this.app         = app;
         this.activeSwipe = {};
         this.resetSwipe();
     };
@@ -31,15 +29,10 @@
         this.activeSwipe = {'startX': null, 'startY': null, 'time': null};
     };
 
-    jsOMS.UI.Input.Touch.SwipeManager.prototype.add = function (surface, id, cUp, cRight, cDown, cLeft)
+    jsOMS.UI.Input.Touch.SwipeManager.prototype.add = function ()
     {
-        cUp    = typeof cUp === 'undefined' ? null : cUp;
-        cRight = typeof cRight === 'undefined' ? null : cRight;
-        cDown  = typeof cDown === 'undefined' ? null : cDown;
-        cLeft  = typeof cLeft === 'undefined' ? null : cLeft;
+        let self = this;
 
-        let e    = document.getElementById(surface),
-            self = this;
         e.addEventListener('touchstart', function (event)
         {
             let touch = this.changedTouches[0];
@@ -64,14 +57,20 @@
                 elapsedTime = new Date().getTime() - self.activeSwipe.time;
 
             if (elapsedTime < 500) {
-                if (distY > 100 && cUp !== null) {
-                    cUp();
-                } else if (distX > 100 && cRight !== null) {
-                    cRight();
-                } else if (distY < -100 && cDown !== null) {
-                    cDown();
-                } else if (distX < -100 && cLeft !== null) {
-                    cLeft();
+                let e = new Event('keyup');
+
+                if (distY > 100) {
+                    e.keyCode = 38;
+                    document.dispatchEvent(e);
+                } else if (distX > 100) {
+                    e.keyCode = 39;
+                    document.dispatchEvent(e);
+                } else if (distY < -100) {
+                    e.keyCode = 40;
+                    document.dispatchEvent(e);
+                } else if (distX < -100) {
+                    e.keyCode = 37;
+                    document.dispatchEvent(e);
                 }
             }
 
@@ -80,6 +79,5 @@
             jsOMS.preventAll(event);
         });
     };
-
 
 }(window.jsOMS = window.jsOMS || {}));
