@@ -46,13 +46,14 @@
                 visible: false
             },
             dataset: true, /* show dataset below */
-            interpolate: "linear", /* splines interpolation? */
+            interpolate: "linear" /* splines interpolation? */
         };
 
         this.axis = {};
         this.grid = {};
+        this.subtype = '';
 
-        this.purge();
+        this.clean();
     };
 
     jsOMS.Chart.prototype.calculateHorizontalPosition = function (position)
@@ -290,6 +291,7 @@
 
         if (this.dataSettings.info.visible && this.dataSettings.marker.visible) {
             var div = this.chartSelect.append("div").attr("class", "charttooltip").style("opacity", 0);
+            div.html(self.axis.x1.label.text + ': ' + 100 + "<br/>" + self.axis.y1.label.text + ': ' + 100);
 
             /* todo: allow also hover on charts without marker... not possible since hover only on marker and not on point? */
             temp.on("mouseover", function (d)
@@ -300,9 +302,10 @@
                     div.transition()
                         .duration(200)
                         .style("opacity", .9);
+
                     div.html(self.axis.x1.label.text + ': ' + d.x1 + "<br/>" + self.axis.y1.label.text + ': ' + d.y1)
-                        .style("left", (pos.left + 3 - dim.width / 2) + "px")
-                        .style("top", (pos.top - dim.height - 5) + "px");
+                    .style("left", (x(d.x1) + dim.width / 2) + "px")
+                    .style("top", (y(d.y1) + dim.height) + "px");
                 })
                 .on("mouseout", function (d)
                 {
@@ -469,7 +472,7 @@
         }
     };
 
-    jsOMS.Chart.prototype.purge = function ()
+    jsOMS.Chart.prototype.clean = function ()
     {
         this.margin = {top: 0, right: 0, bottom: 0, left: 0};
         this.dimension = {width: 0, height: 0};

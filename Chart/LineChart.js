@@ -6,8 +6,8 @@
 
         // Setting default chart values
         this.chart.margin = {top: 5, right: 0, bottom: 0, left: 0};
-        this.chart.color = d3.scale.category10();
-        this.chart.axis = {
+        this.chart.color  = d3.scale.category10();
+        this.chart.axis   = {
             x1: {
                 visible: true,
                 label: {
@@ -50,6 +50,8 @@
                 visible: true
             }
         };
+
+        this.chart.subtype = 'area';
     };
 
     jsOMS.Chart.LineChart.prototype.getChart = function ()
@@ -59,7 +61,7 @@
 
     jsOMS.Chart.LineChart.prototype.draw = function ()
     {
-        var line, svg, x, xAxis1, xAxis2, y, yAxis1, yAxis2, xGrid, yGrid, zoom, self = this, box = this.chart.chartSelect.node().getBoundingClientRect();
+        let line, svg, x, xAxis1, xAxis2, y, yAxis1, yAxis2, xGrid, yGrid, zoom, self = this, box = this.chart.chartSelect.node().getBoundingClientRect();
 
         this.chart.dimension = {
             width: box.width,
@@ -114,17 +116,38 @@
         x.domain([this.chart.axis.x1.min, this.chart.axis.x1.max + 1]);
         y.domain([this.chart.axis.y1.min - 1, this.chart.axis.y1.max + 1]);
 
-        line = d3.svg.line().interpolate(this.chart.dataSettings.interpolate).x(function (d)
-        {
-            return x(d.x1);
-        }).y(function (d)
-        {
-            return y(d.y1);
-        });
+        if (this.chart.subtype === 'area') {
+            line = d3.svg.area().interpolate(this.chart.dataSettings.interpolate).x(function (d)
+            {
+                return x(d.x1);
+            }).y0(this.chart.getDimension().height).y1(function (d)
+            {
+                return y(d.y1);
+            });
+        } else if (this.chart.subtype === 'stacked') {
+            line = d3.svg.area().interpolate(this.chart.dataSettings.interpolate).x(function (d)
+            {
+                return x(d.x1);
+            }).y0(function (d)
+            {
+                return y(d.y0);
+            }).y1(function (d)
+            {
+                return y(d.y1 + d.y0);
+            });
+        } else if (this.chart.subtype === 'line') {
+            line = d3.svg.line().interpolate(this.chart.dataSettings.interpolate).x(function (d)
+            {
+                return x(d.x1);
+            }).y(function (d)
+            {
+                return y(d.y1);
+            });
+        }
 
         zoom = d3.behavior.zoom().x(x).scaleExtent([1, 2]).on('zoom', function ()
         {
-            var tx, ty;
+            let tx, ty;
             tx = d3.event.translate[0];
             ty = d3.event.translate[1];
             tx = Math.min(1,
@@ -148,13 +171,24 @@
             {
                 return self.chart.color(d.name);
             });
-            return svg.selectAll('circle.dot').attr('cy', function (d)
-            {
-                return y(d.y1);
-            }).attr('cx', function (d)
-            {
-                return x(d.x1);
-            }).attr('r', 4);
+
+            if (self.chart.subtype === 'stacked') {
+                return svg.selectAll('circle.dot').attr('cy', function (d)
+                {
+                    return y(d.y1 + d.y0);
+                }).attr('cx', function (d)
+                {
+                    return x(d.x1);
+                }).attr('r', 4);
+            } else {
+                return svg.selectAll('circle.dot').attr('cy', function (d)
+                {
+                    return y(d.y1);
+                }).attr('cx', function (d)
+                {
+                    return x(d.x1);
+                }).attr('r', 4);
+            }
         });
 
         svg = this.chart.chartSelect.append("svg")
@@ -172,10 +206,10 @@
         //svg.selectAll('.x.axis').transition().duration(500).call(xAxis1);
         //svg.selectAll('.y.axis').transition().duration(500).call(yAxis1);
 
-        var dataPoint, dataPointEnter;
-        var temp = this.drawData(svg, line, dataPointEnter, dataPoint);
+        let dataPoint, dataPointEnter,
+            temp       = this.drawData(svg, line, dataPointEnter, dataPoint);
         dataPointEnter = temp[0];
-        dataPoint = temp[1];
+        dataPoint      = temp[1];
         this.chart.drawMarker(svg, x, y, dataPointEnter, dataPoint);
         this.chart.drawLegend(svg, dataPointEnter, dataPoint);
         this.chart.drawText(svg);
@@ -197,7 +231,7 @@
 
     jsOMS.Chart.LineChart.prototype.drawData = function (svg, line, dataPointEnter, dataPoint)
     {
-        var self = this;
+        let self = this;
 
         dataPoint = svg.selectAll(".dataPoint").data(this.chart.dataset, function (c)
         {
@@ -205,13 +239,18 @@
         });
 
         dataPointEnter = dataPoint.enter().append("g").attr("class", "dataPoint");
-        dataPointEnter.append("path").attr('clip-path', 'url(#clipper1)').attr("class", "line");
+        dataPointEnter.append("path").attr('clip-path', 'url(#clipper1)').attr("class", self.chart.subtype);
         dataPoint.select('path').style("stroke-width", this.chart.dataSettings.style.strokewidth).transition().duration(500).attr("d", function (d)
         {
             return line(d.points);
         }).style("stroke", function (d)
         {
             return self.chart.color(d.name);
+        }).style("fill", function (d)
+        {
+            if (self.chart.subtype === 'area' || self.chart.subtype === 'stacked') {
+                return self.chart.color(d.name);
+            }
         });
 
         return [dataPointEnter, dataPoint];
@@ -237,7 +276,7 @@
     }
 }(window.jsOMS = window.jsOMS || {}));
 
-var c, chart, data, dataGen, i, k;
+var c, chart, data, dataGen, i, k, count;
 
 dataGen = (function ()
 {
@@ -245,34 +284,49 @@ dataGen = (function ()
     {
         return function ()
         {
-            var data, j, nums, y1Seed;
-            nums = Math.ceil(Math.random() * 50) + 4;
+            var tempData, j, nums, y1Seed;
+            nums   = Math.ceil(Math.random() * 50) + 4;
             y1Seed = Math.round(Math.random() * 20);
-            data = {
+            tempData   = {
                 id: id,
                 name: "Dataset " + id,
                 points: (function ()
                 {
-                    var k, ref, results;
+                    var k, ref, results, prev, counter = 0;
                     results = [];
                     for (j = k = 1, ref = nums; 1 <= ref ? k <= ref : k >= ref; j = 1 <= ref ? ++k : --k) {
+                        if(data.length > 0) {
+                            if(typeof data[count-2].points !== 'undefined' && data[count-2].points.length > counter &&  typeof data[count-2].points[counter].y1 !== 'undefined') {
+                                prev = data[count-2].points[counter].y1;
+                            } else {
+                                prev = 0;
+                            }
+                        }  else {
+                            prev = 0;
+                        }
+
+                        counter++;
+
                         results.push({
                             x1: j,
-                            y1: y1Seed + Math.round(Math.random() * 5)
+                            y1: y1Seed + Math.round(Math.random() * 5),
+                            y0: prev
                         });
                     }
+
                     return results;
                 })()
             };
-            id = id + 1;
-            return data;
+            id     = id + 1;
+            return tempData;
         };
     })(1);
 })();
 
 data = [];
 
-for (i = k = 1; k <= 10; i = ++k) {
+for (i = k = 1; k <= 3; i = ++k) {
+    count = i;
     data.push(dataGen());
 }
 
