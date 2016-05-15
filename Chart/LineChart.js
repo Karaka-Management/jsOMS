@@ -8,7 +8,7 @@
         this.chart.margin = {top: 5, right: 0, bottom: 0, left: 0};
         this.chart.color  = d3.scale.category10();
         this.chart.axis   = {
-            x1: {
+            x: {
                 visible: true,
                 label: {
                     visible: true,
@@ -24,7 +24,7 @@
                 min: 0,
                 max: 0
             },
-            y1: {
+            y: {
                 visible: true,
                 label: {
                     visible: true,
@@ -51,7 +51,7 @@
             }
         };
 
-        this.chart.subtype = 'area';
+        this.chart.subtype = 'line';
     };
 
     jsOMS.Chart.LineChart.prototype.getChart = function ()
@@ -85,13 +85,13 @@
         // axis
         xAxis1 = d3.svg.axis().scale(x).tickFormat(function (d)
         {
-            return self.chart.axis.x1.tick.prefix + d;
-        }).orient("bottom").outerTickSize(this.chart.axis.x1.tick.size).innerTickSize(this.chart.axis.x1.tick.size).tickPadding(7);
+            return self.chart.axis.x.tick.prefix + d;
+        }).orient("bottom").outerTickSize(this.chart.axis.x.tick.size).innerTickSize(this.chart.axis.x.tick.size).tickPadding(7);
 
         yAxis1 = d3.svg.axis().scale(y).tickFormat(function (d)
         {
-            return self.chart.axis.y1.tick.prefix + d;
-        }).orient("left").outerTickSize(this.chart.axis.y1.tick.size).innerTickSize(this.chart.axis.y1.tick.size).tickPadding(7);
+            return self.chart.axis.y.tick.prefix + d;
+        }).orient("left").outerTickSize(this.chart.axis.y.tick.size).innerTickSize(this.chart.axis.y.tick.size).tickPadding(7);
 
         xGrid = d3.svg.axis()
             .scale(x)
@@ -113,35 +113,35 @@
                 + this.chart.margin.left, 0, 0)
             .tickFormat("");
 
-        x.domain([this.chart.axis.x1.min, this.chart.axis.x1.max + 1]);
-        y.domain([this.chart.axis.y1.min - 1, this.chart.axis.y1.max + 1]);
+        x.domain([this.chart.axis.x.min, this.chart.axis.x.max + 1]);
+        y.domain([this.chart.axis.y.min - 1, this.chart.axis.y.max + 1]);
 
         if (this.chart.subtype === 'area') {
             line = d3.svg.area().interpolate(this.chart.dataSettings.interpolate).x(function (d)
             {
-                return x(d.x1);
+                return x(d.x);
             }).y0(this.chart.getDimension().height).y1(function (d)
             {
-                return y(d.y1);
+                return y(d.y);
             });
         } else if (this.chart.subtype === 'stacked') {
             line = d3.svg.area().interpolate(this.chart.dataSettings.interpolate).x(function (d)
             {
-                return x(d.x1);
+                return x(d.x);
             }).y0(function (d)
             {
                 return y(d.y0);
             }).y1(function (d)
             {
-                return y(d.y1 + d.y0);
+                return y(d.y + d.y0);
             });
         } else if (this.chart.subtype === 'line') {
             line = d3.svg.line().interpolate(this.chart.dataSettings.interpolate).x(function (d)
             {
-                return x(d.x1);
+                return x(d.x);
             }).y(function (d)
             {
-                return y(d.y1);
+                return y(d.y);
             });
         }
 
@@ -155,11 +155,11 @@
                     self.chart.dimension.width
                     - self.chart.margin.right
                     - self.chart.margin.left
-                    - Math.round(x(self.chart.axis.y1.max) - x(1)),
+                    - Math.round(x(self.chart.axis.y.max) - x(1)),
                     self.chart.dimension.width
                     - self.chart.margin.right
                     - self.chart.margin.left
-                    - Math.round(x(self.chart.axis.y1.max) - x(1)) * d3.event.scale));
+                    - Math.round(x(self.chart.axis.y.max) - x(1)) * d3.event.scale));
 
             zoom.translate([tx, ty]);
             svg.select('.x.axis').call(xAxis1);
@@ -175,18 +175,18 @@
             if (self.chart.subtype === 'stacked') {
                 return svg.selectAll('circle.dot').attr('cy', function (d)
                 {
-                    return y(d.y1 + d.y0);
+                    return y(d.y + d.y0);
                 }).attr('cx', function (d)
                 {
-                    return x(d.x1);
+                    return x(d.x);
                 }).attr('r', 4);
             } else {
                 return svg.selectAll('circle.dot').attr('cy', function (d)
                 {
-                    return y(d.y1);
+                    return y(d.y);
                 }).attr('cx', function (d)
                 {
-                    return x(d.x1);
+                    return x(d.x);
                 }).attr('r', 4);
             }
         });
@@ -273,7 +273,7 @@
                 - this.chart.margin.top
                 - this.chart.margin.bottom - this.chart.position.zoompanel.top
             ).call(zoom);
-    }
+    };
 }(window.jsOMS = window.jsOMS || {}));
 
 var c, chart, data, dataGen, i, k, count;
@@ -285,31 +285,31 @@ dataGen = (function ()
         return function ()
         {
             var tempData, j, nums, y1Seed;
-            nums   = Math.ceil(Math.random() * 50) + 4;
-            y1Seed = Math.round(Math.random() * 20);
-            tempData   = {
+            nums     = Math.ceil(Math.random() * 50) + 4;
+            y1Seed   = Math.round(Math.random() * 20);
+            tempData = {
                 id: id,
                 name: "Dataset " + id,
                 points: (function ()
                 {
                     var k, ref, results, prev, counter = 0;
-                    results = [];
+                    results                            = [];
                     for (j = k = 1, ref = nums; 1 <= ref ? k <= ref : k >= ref; j = 1 <= ref ? ++k : --k) {
-                        if(data.length > 0) {
-                            if(typeof data[count-2].points !== 'undefined' && data[count-2].points.length > counter &&  typeof data[count-2].points[counter].y1 !== 'undefined') {
-                                prev = data[count-2].points[counter].y1;
+                        if (data.length > 0) {
+                            if (typeof data[count - 2].points !== 'undefined' && data[count - 2].points.length > counter && typeof data[count - 2].points[counter].y !== 'undefined') {
+                                prev = data[count - 2].points[counter].y;
                             } else {
                                 prev = 0;
                             }
-                        }  else {
+                        } else {
                             prev = 0;
                         }
 
                         counter++;
 
                         results.push({
-                            x1: j,
-                            y1: y1Seed + Math.round(Math.random() * 5),
+                            x: j,
+                            y: y1Seed + Math.round(Math.random() * 5),
                             y0: prev
                         });
                     }
@@ -317,7 +317,7 @@ dataGen = (function ()
                     return results;
                 })()
             };
-            id     = id + 1;
+            id       = id + 1;
             return tempData;
         };
     })(1);

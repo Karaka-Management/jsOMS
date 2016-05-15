@@ -58,7 +58,7 @@
 
     jsOMS.Chart.prototype.calculateHorizontalPosition = function (position)
     {
-        var x = 0;
+        let x = 0;
         if (position === 'center') {
             x = (
                     this.dimension.width
@@ -76,7 +76,7 @@
 
     jsOMS.Chart.prototype.calculateVerticalPosition = function (position)
     {
-        var y = 0;
+        let y = 0;
         if (position === 'center') {
             y = -(this.dimension.height
                     - this.margin.top
@@ -170,6 +170,16 @@
         return this.footer;
     };
 
+    jsOMS.Chart.prototype.setSubtype = function (subtype)
+    {
+        this.subtype = subtype;
+    };
+
+    jsOMS.Chart.prototype.getSubtype = function ()
+    {
+        return this.subtype;
+    };
+
     jsOMS.Chart.prototype.setLegend = function (legend)
     {
         this.legend = legend;
@@ -200,7 +210,7 @@
 
     jsOMS.Chart.prototype.findAxisDomain = function ()
     {
-        for (var id in this.axis) {
+        for (let id in this.axis) {
             this.axis[id].max = d3.max(this.dataset, function (m)
             {
                 return d3.max(m.points, function (d)
@@ -226,7 +236,7 @@
 
     jsOMS.Chart.prototype.drawLegend = function (svg, dataPointEnter, dataPoint)
     {
-        var self = this;
+        let self = this;
 
         if (this.legend !== undefined && this.legend.visible) {
             dataPointEnter.append("text").attr('class', 'dataPoint-name');
@@ -255,7 +265,7 @@
             });
             dataPoint.exit().remove();
 
-            var tlength = this.chartSelect.select('.dataPoint-name').node().getComputedTextLength();
+            let tlength = this.chartSelect.select('.dataPoint-name').node().getComputedTextLength();
 
             // Adding margin for legend
             if (this.margin.right < tlength) {
@@ -270,7 +280,7 @@
 
     jsOMS.Chart.prototype.drawMarker = function (svg, x, y, dataPointEnter, dataPoint)
     {
-        var self = this, temp;
+        let self = this, temp;
 
         if (this.dataSettings.marker.visible) {
             temp = dataPointEnter.append('g').attr('class', 'dots').attr('clip-path', 'url(#clipper1)').selectAll('circle').data(function (d)
@@ -282,16 +292,16 @@
                 return self.color(d.name);
             }).selectAll('circle').transition().duration(500).attr('cy', function (d)
             {
-                return y(d.y1);
+                return y(d.y);
             }).attr('cx', function (d)
             {
-                return x(d.x1);
+                return x(d.x);
             }).attr('r', 4);
         }
 
         if (this.dataSettings.info.visible && this.dataSettings.marker.visible) {
             var div = this.chartSelect.append("div").attr("class", "charttooltip").style("opacity", 0);
-            div.html(self.axis.x1.label.text + ': ' + 100 + "<br/>" + self.axis.y1.label.text + ': ' + 100);
+            div.html(self.axis.x.label.text + ': ' + 100 + "<br/>" + self.axis.y.label.text + ': ' + 100);
 
             /* todo: allow also hover on charts without marker... not possible since hover only on marker and not on point? */
             temp.on("mouseover", function (d)
@@ -303,9 +313,9 @@
                         .duration(200)
                         .style("opacity", .9);
 
-                    div.html(self.axis.x1.label.text + ': ' + d.x1 + "<br/>" + self.axis.y1.label.text + ': ' + d.y1)
-                    .style("left", (x(d.x1) + dim.width / 2) + "px")
-                    .style("top", (y(d.y1) + dim.height) + "px");
+                    div.html(self.axis.x.label.text + ': ' + d.x + "<br/>" + self.axis.y.label.text + ': ' + d.y)
+                    .style("left", (x(d.x) + dim.width / 2) + "px")
+                    .style("top", (y(d.y) + dim.height) + "px");
                 })
                 .on("mouseout", function (d)
                 {
@@ -382,8 +392,9 @@
 
     jsOMS.Chart.prototype.drawAxis = function (svg, xAxis1, yAxis1)
     {
+
         // draw clipper
-        var defs = svg.append('svg').attr('width', 0).attr('height', 0).append('defs'), pos = 0, temp;
+        let defs = svg.append('svg').attr('width', 0).attr('height', 0).append('defs'), pos = 0, temp;
         defs.append('clipPath').attr('id', 'clipper1').append('rect').attr('x', 0).attr('y', 0)
             .attr('width',
                 this.dimension.width
@@ -396,7 +407,7 @@
                 - this.margin.bottom
             );
 
-        if (this.axis.x1 !== undefined && this.axis.x1.visible) {
+        if (this.axis.x !== undefined && this.axis.x.visible) {
             temp = svg.append("g")
                 .attr("class", "x axis")
                 .attr("transform", "translate(0," + (
@@ -406,43 +417,43 @@
                     ) + ")")
                 .call(xAxis1);
 
-            if (this.axis.x1.label.visible) {
-                pos = this.calculateHorizontalPosition(this.axis.x1.label.position);
+            if (this.axis.x.label.visible) {
+                pos = this.calculateHorizontalPosition(this.axis.x.label.position);
 
                 temp.append("text")
                     .attr('y', 45)
                     .attr('x', pos)
-                    .style("text-anchor", this.axis.x1.label.anchor)
-                    .text(this.axis.x1.label.text);
+                    .style("text-anchor", this.axis.x.label.anchor)
+                    .text(this.axis.x.label.text);
             }
 
-            if (!this.defined.axis.x1) {
+            if (!this.defined.axis.x) {
                 this.margin.bottom += 50;
-                this.defined.axis.x1 = true;
+                this.defined.axis.x = true;
                 this.shouldRedraw = true;
             }
         }
 
-        if (this.axis.y1 !== undefined && this.axis.y1.visible) {
+        if (this.axis.y !== undefined && this.axis.y.visible) {
             temp = svg.append("g")
                 .attr("class", "y axis")
                 .attr("transform", "translate(0,0)")
                 .call(yAxis1);
 
-            if (this.axis.y1.label.visible) {
-                pos = this.calculateVerticalPosition(this.axis.y1.label.position);
+            if (this.axis.y.label.visible) {
+                pos = this.calculateVerticalPosition(this.axis.y.label.position);
 
                 temp.append("text")
                     .attr("transform", "rotate(-90)")
                     .attr("y", -this.margin.left + 10)
                     .attr('x', pos)
-                    .style("text-anchor", this.axis.y1.label.anchor)
-                    .text(this.axis.y1.label.text);
+                    .style("text-anchor", this.axis.y.label.anchor)
+                    .text(this.axis.y.label.text);
             }
 
-            if (!this.defined.axis.y1) {
+            if (!this.defined.axis.y) {
                 this.margin.left += svg.select('.y.axis .tick').node().getBoundingClientRect().width + 25;
-                this.defined.axis.y1 = true;
+                this.defined.axis.y = true;
                 this.shouldRedraw = true;
             }
         }
@@ -498,8 +509,8 @@
         this.shouldRedraw = false;
         this.defined = {
             axis: {
-                x1: false,
-                y1: false
+                x: false,
+                y: false
             },
             text: {
                 title: false,
