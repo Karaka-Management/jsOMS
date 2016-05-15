@@ -301,14 +301,14 @@
         }
 
         if (this.dataSettings.info.visible && this.dataSettings.marker.visible) {
-            var div = this.chartSelect.append("div").attr("class", "charttooltip").style("opacity", 0);
+            let div = this.chartSelect.append("div").attr("class", "charttooltip").style("opacity", 0);
             div.html(self.axis.x.label.text + ': ' + 100 + "<br/>" + self.axis.y.label.text + ': ' + 100);
 
             /* todo: allow also hover on charts without marker... not possible since hover only on marker and not on point? */
             temp.on("mouseover", function (d)
                 {
-                    var dim = div.node().getBoundingClientRect();
-                    var pos = this.getBoundingClientRect();
+                    let dim = div.node().getBoundingClientRect();
+                    let pos = this.getBoundingClientRect();
 
                     div.transition()
                         .duration(200)
@@ -329,7 +329,7 @@
 
     jsOMS.Chart.prototype.drawText = function (svg)
     {
-        var temp, pos = 0, topmargin = 0;
+        let temp, pos = 0, topmargin = 0;
 
         /* No subtitle without title */
         if (this.subtitle !== undefined && this.subtitle.visible && this.title !== undefined && this.title.visible) {
@@ -372,12 +372,21 @@
         }
 
         if (this.footer !== undefined && this.footer.visible) {
+            let spacer = 0;
+
+            // if no x axis available an element less will be drawn and the footer
+            // will be out of bounds.
+            // todo: fix this hacky solution!!!
+            if(typeof this.axis.x === 'undefined') {
+                spacer = -this.margin.top;
+            }
+
             pos = this.calculateHorizontalPosition(this.footer.position);
 
             temp = svg.append("text")
                 .attr("class", "footer")
                 .attr('y', this.dimension.height
-                    - this.margin.bottom + this.position.footer.top + 10)
+                    - this.margin.bottom + spacer + this.position.footer.top)
                 .attr('x', pos)
                 .style("text-anchor", this.footer.anchor)
                 .text(this.footer.text);
@@ -393,7 +402,6 @@
 
     jsOMS.Chart.prototype.drawAxis = function (svg, xAxis1, yAxis1)
     {
-
         // draw clipper
         let defs = svg.append('svg').attr('width', 0).attr('height', 0).append('defs'), pos = 0, temp;
         defs.append('clipPath').attr('id', 'clipper1').append('rect').attr('x', 0).attr('y', 0)

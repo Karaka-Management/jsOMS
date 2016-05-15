@@ -48,6 +48,7 @@
         dataPointEnter = temp[0];
         dataPoint      = temp[1];
 
+        // todo: create own legend drawing
         this.chart.drawLegend(svg, dataPointEnter, dataPoint);
         this.chart.drawText(svg);
 
@@ -87,7 +88,7 @@
             }).enter().append('path')
             .attr("transform", "translate("
                 + (this.chart.dimension.width / 2) + ","
-                + (this.chart.dimension.height / 2 - this.chart.margin.bottom) + ")")
+                + (this.chart.dimension.height / 2 - this.chart.margin.bottom - this.chart.margin.top + 10) + ")")
             .attr('fill', function (d)
             {
                 return self.chart.color(d.data.name);
