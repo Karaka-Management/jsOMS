@@ -30,7 +30,8 @@
         this.dataset = [];
         this.dataSettings = {
             style: {
-                strokewidth: 3
+                strokewidth: 3,
+                padding: 0
             },
             marker: {
                 visible: true,
