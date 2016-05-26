@@ -68,6 +68,7 @@
             height: box.height
         };
 
+        // todo: allow ordinal data axis
         x = d3.scale.linear().range([
             0,
             this.chart.dimension.width
@@ -83,6 +84,7 @@
         ]);
 
         // axis
+        // todo: implement manual tick (e.g. .ticks(6)) setting for axis
         xAxis1 = d3.svg.axis().scale(x).tickFormat(function (d)
         {
             return self.chart.axis.x.tick.prefix + d;
@@ -329,7 +331,8 @@ for (i = k = 1; k <= 3; i = ++k) {
     count = i;
     data.push(dataGen());
 }
-
+/*
 var mychart = new jsOMS.Chart.LineChart('chart');
 mychart.getChart().setData(data);
 mychart.draw();
+*/

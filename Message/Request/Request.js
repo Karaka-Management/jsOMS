@@ -314,12 +314,18 @@
         {
             if (self.xhr.readyState === 4 && self.xhr.status === 200) {
                 self.success(self.xhr);
+            } else if(self.xhr.readyState === 2) {
+                // todo: handle server received request
+            } else if(self.xhr.readyState === 3) {
+                // todo: server is handling request
+            } else {
+                // todo: create handler for error returns
+                console.log(self.xhr)
             }
         };
 
         if (this.type === jsOMS.Message.Request.RequestType.JSON) {
             if (typeof this.requestHeader !== 'undefined' && this.requestHeader['Content-Type'] === 'application/json') {
-                console.log(JSON.stringify(this.data));
                 self.xhr.send(JSON.stringify(this.data));
             } else {
                 self.xhr.send(this.queryfy(this.data));

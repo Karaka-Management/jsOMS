@@ -7,19 +7,19 @@
 
         this.title = {
             visible: true,
-            text: "Title",
+            text: "",
             anchor: "middle",
             position: "center"
         };
         this.subtitle = {
             visible: true,
-            text: "This is a short subtitle",
+            text: "",
             anchor: "middle",
             position: "center"
         };
         this.footer = {
             visible: true,
-            text: "(c) Orange Management Solutions",
+            text: "",
             anchor: "end",
             position: "right"
         };
@@ -107,7 +107,7 @@
 
     jsOMS.Chart.prototype.setAxis = function (id, axis)
     {
-        this.axis[id] = axis;
+        this.axis[id] = jsOMS.merge(this.axis[id], axis);
 
         // Setting axis dimensions in case dataset existss
         if (Object.keys(this.dataset).length > 0) {
@@ -143,7 +143,7 @@
 
     jsOMS.Chart.prototype.setTitle = function (title)
     {
-        this.title = title;
+        this.title = jsOMS.merge(this.title, title);
     };
 
     jsOMS.Chart.prototype.getTitle = function ()
@@ -183,7 +183,7 @@
 
     jsOMS.Chart.prototype.setLegend = function (legend)
     {
-        this.legend = legend;
+        this.legend = jsOMS.merge(this.legend, legend);
     };
 
     jsOMS.Chart.prototype.getLegend = function ()
@@ -332,7 +332,7 @@
         let temp, pos = 0, topmargin = 0;
 
         /* No subtitle without title */
-        if (this.subtitle !== undefined && this.subtitle.visible && this.title !== undefined && this.title.visible) {
+        if (this.subtitle !== undefined && this.subtitle.text !== '' && this.subtitle.visible && this.title !== undefined && this.title.text !== '' && this.title.visible) {
             pos = this.calculateHorizontalPosition(this.subtitle.position);
 
             temp = svg.append("text")
@@ -353,7 +353,7 @@
             }
         }
 
-        if (this.title !== undefined && this.title.visible) {
+        if (this.title !== undefined && this.title.text !== '' && this.title.visible) {
             pos = this.calculateHorizontalPosition(this.title.position);
 
             temp = svg.append("text")
@@ -371,7 +371,7 @@
             }
         }
 
-        if (this.footer !== undefined && this.footer.visible) {
+        if (this.footer !== undefined && this.footer.text !== '' && this.footer.visible) {
             let spacer = 0;
 
             // if no x axis available an element less will be drawn and the footer

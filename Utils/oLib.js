@@ -264,20 +264,36 @@
      */
     jsOMS.merge = function (target, source)
     {
-        for (var p in source) {
+        let out = jsOMS.clone(target);
+
+        for (let p in source) {
             try {
-                if (source[p].constructor == Object) {
-                    target[p] = merge(target[p], source[p]);
+                // Property in destination object set; update its value.
+                if ( source[p].constructor==Object ) {
+                    out[p] = jsOMS.merge(out[p], source[p]);
 
                 } else {
-                    target[p] = source[p];
+                    out[p] = source[p];
+
                 }
 
-            } catch (e) {
-                target[p] = source[p];
+            } catch(e) {
+                // Property in destination object not set; create it and set its value.
+                out[p] = source[p];
+
             }
         }
 
-        return target;
+        return out;
     };
+
+    /**
+     * todo: implement deep clone/copy
+     * @param obj
+     * @returns {*}
+     */
+    jsOMS.clone = function (obj)
+    {
+        return obj;
+    }
 }(window.jsOMS = window.jsOMS || {}));

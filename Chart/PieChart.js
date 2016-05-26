@@ -87,8 +87,8 @@
                 return pie(d.points);
             }).enter().append('path')
             .attr("transform", "translate("
-                + (this.chart.dimension.width / 2) + ","
-                + (this.chart.dimension.height / 2 - this.chart.margin.bottom - this.chart.margin.top + 10) + ")")
+                + ((this.chart.dimension.width - this.chart.margin.left - this.chart.margin.right) / 2 ) + ","
+                + ((this.chart.dimension.height - this.chart.margin.bottom - this.chart.margin.top) / 2) + ")")
             .attr('fill', function (d)
             {
                 return self.chart.color(d.data.name);
@@ -142,6 +142,10 @@ for (i = k = 1; k <= 1; i = ++k) {
     data.push(dataGen());
 }
 
+/*
+
 var mychart = new jsOMS.Chart.PieChart('chart');
 mychart.getChart().setData(data);
 mychart.draw();
+
+*/
