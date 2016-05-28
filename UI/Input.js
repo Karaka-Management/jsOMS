@@ -10,7 +10,8 @@
 (function (jsOMS, undefined)
 {
     "use strict";
-    jsOMS.Autoloader.defineNamespace('jsOMS.UI');
+    /** @namespace jsOMS.UI.Input*/
+    jsOMS.Autoloader.defineNamespace('jsOMS.UI.Input');
 
     /**
      * Unbind input element

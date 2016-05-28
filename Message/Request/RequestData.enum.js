@@ -9,9 +9,10 @@
  */
 (function (jsOMS, undefined)
 {
+    /** @namespace jsOMS.Message.Request */
     jsOMS.Autoloader.defineNamespace('jsOMS.Message.Request');
 
-    jsOMS.Message.RequestLinkRequestData = Object.freeze({
+    jsOMS.Message.Request.RequestLinkRequestData = Object.freeze({
         NORMAL: 'normal',
         OBJECT: 'object'
     });

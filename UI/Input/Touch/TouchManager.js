@@ -9,6 +9,7 @@
  */
 (function (jsOMS, undefined)
 {
+    /** @namespace jsOMS.UI.Input.Touch */
     jsOMS.Autoloader.defineNamespace('jsOMS.UI.Input.Touch');
 
     /**

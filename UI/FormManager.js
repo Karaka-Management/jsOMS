@@ -9,6 +9,7 @@
  */
 (function (jsOMS, undefined)
 {
+    /** @namespace jsOMS.UI */
     jsOMS.Autoloader.defineNamespace('jsOMS.UI');
 
     /**

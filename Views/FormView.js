@@ -10,6 +10,7 @@
 (function (jsOMS, undefined)
 {
     "use strict";
+    /** @namespace jsOMS.Views */
     jsOMS.Autoloader.defineNamespace('jsOMS.Views');
 
     /**
@@ -153,10 +154,9 @@
     {
         let data     = {},
             elements = this.getFormElements(),
-            length   = elements.length,
-            i        = 0;
+            length   = elements.length;
 
-        for (i = 0; i < length; i++) {
+        for (let i = 0; i < length; i++) {
             data[jsOMS.Views.FormView.getElementId(elements[i])] = elements[i].value;
         }
 
@@ -269,13 +269,12 @@
         this.action = document.getElementById(this.id).action;
 
         let elements = this.getFormElements(),
-            length   = elements.length,
-            i        = 0;
+            length   = elements.length;
 
-        for (i = 0; i < length; i++) {
+        for (let i = 0; i < length; i++) {
             switch (elements[i].tagName) {
                 case 'input':
-                    jsOMS.UI.Input.bind(elements[i])
+                    jsOMS.UI.Input.bind(elements[i]);
                     break;
                 case 'select':
                     this.bindSelect(elements[i]);
@@ -304,7 +303,7 @@
         for (let i = 0; i < length; i++) {
             switch (elements[i].tagName) {
                 case 'input':
-                    jsOMS.UI.Input.unbind(elements[i])
+                    jsOMS.UI.Input.unbind(elements[i]);
                     break;
                 case 'select':
                     this.bindSelect(elements[i]);

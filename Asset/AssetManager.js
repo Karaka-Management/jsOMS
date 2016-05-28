@@ -9,6 +9,7 @@
  */
 (function (jsOMS, undefined)
 {
+    /** @namespace jsOMS.Asset */
     jsOMS.Autoloader.defineNamespace('jsOMS.Asset');
     
     /**
@@ -30,7 +31,7 @@
      * @param {string} filetype Filetype of the asset
      * @param {requestCallback} [callback] Callback after load
      *
-     * @return {string}
+     * @return {string|boolean}
      *
      * @method
      *

@@ -9,6 +9,7 @@
  */
 (function (jsOMS, undefined)
 {
+    /** @namespace jsOMS.UI.Input.Mouse */
     jsOMS.Autoloader.defineNamespace('jsOMS.UI.Input.Mouse');
 
     /**

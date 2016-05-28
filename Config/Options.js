@@ -9,6 +9,7 @@
  */
 (function (jsOMS, undefined)
 {
+    /** @namespace jsOMS.Config */
     jsOMS.Autoloader.defineNamespace('jsOMS.Config');
 
     /**

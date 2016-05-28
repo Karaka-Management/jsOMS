@@ -9,6 +9,7 @@
  */
 (function (uriFactory, undefined)
 {
+    /** @namespace jsOMS.Uri.UriFactory */
     jsOMS.Autoloader.defineNamespace('jsOMS.Uri.UriFactory');
 
     /**

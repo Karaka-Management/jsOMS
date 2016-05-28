@@ -11,6 +11,7 @@
  */
 (function (jsOMS, undefined)
 {
+    /** @namespace jsOMS.Message.Response */
     jsOMS.Autoloader.defineNamespace('jsOMS.Message.Response');
 
     /**

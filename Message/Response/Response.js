@@ -11,6 +11,7 @@
  */
 (function (uriFactory, undefined)
 {
+    /** @namespace jsOMS.Message.Response */
     jsOMS.Autoloader.defineNamespace('jsOMS.Message.Response');
 
     jsOMS.Message.Response.Response = function (data)
