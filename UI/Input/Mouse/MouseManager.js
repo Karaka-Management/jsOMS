@@ -1,13 +1,40 @@
+/**
+ * Mouse manager class.
+ *
+ * @author     OMS Development Team <dev@oms.com>
+ * @author     Dennis Eichhorn <d.eichhorn@oms.com>
+ * @copyright  2013 Dennis Eichhorn
+ * @license    OMS License 1.0
+ * @version    1.0.0 * @since      1.0.0
+ */
 (function (jsOMS, undefined)
 {
     jsOMS.Autoloader.defineNamespace('jsOMS.UI.Input.Mouse');
 
+    /**
+     * @constructor
+     *
+     * @since 1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.UI.Input.Mouse.MouseManager = function ()
     {
         this.elements = {};
         this.click    = {time: 0};
     };
 
+    /**
+     * Add input listener.
+     *
+     * @param {string} element Container id
+     * @param {int} type Action type
+     * @param {int} button Button
+     * @param {callback} callback Callback
+     * @param {bool} exact ??? todo: can't remember why this was important oO!!!
+     *
+     * @since  1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.UI.Input.Mouse.MouseManager.prototype.add = function (element, type, button, callback, exact)
     {
         if (typeof this.elements[element] === 'undefined') {
@@ -18,12 +45,21 @@
         this.elements[element].push({callback: callback, type: type, button: button, exact: exact});
     };
 
+    /**
+     * Add input listener.
+     *
+     * @param {string} element Element id
+     * @param {int} type Action type
+     *
+     * @since  1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.UI.Input.Mouse.MouseManager.prototype.bind = function (element, type)
     {
         let self = this,
-            e = document.getElementById(element);
+            e    = document.getElementById(element);
 
-        if(e === null) {
+        if (e === null) {
             return;
         }
 
@@ -56,6 +92,15 @@
         }
     };
 
+    /**
+     * Run mouse input callback.
+     *
+     * @param {string} element Element id
+     * @param {Object} event Click event
+     *
+     * @since  1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.UI.Input.Mouse.MouseManager.prototype.run = function (element, event)
     {
         if (typeof this.elements[element] === 'undefined') {

@@ -13,57 +13,81 @@
     jsOMS.Autoloader.defineNamespace('jsOMS.UI');
 
     /**
-     * @constructor
+     * Unbind input element
+     *
+     * @param {Object} input Input element
      *
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.UI.Input.unbind = function(input)
+    jsOMS.UI.Input.unbind = function (input)
     {
         this.app.inputManager.getKeyboardManager().unbind(input);
         input.removeEventListener('change', changeBind, false);
     };
 
-    jsOMS.UI.Input.bind = function(input)
+    /**
+     * Bind input elment
+     *
+     * @param {Object} input Input elment
+     *
+     * @since 1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
+    jsOMS.UI.Input.bind = function (input)
     {
         let self = this;
-        
-        input.addEventListener('change', function changeBind(event) {
+
+        input.addEventListener('change', function changeBind(event)
+        {
             /* Handle remote datalist/autocomplete input element */
             let listId, list;
-            if(typeof (listId = this.getAttribute('list')) !== 'undefined' && (list = document.getElementById(listId)).getAttribute('data-list-src') !== 'undefined') {
+            if (typeof (listId = this.getAttribute('list')) !== 'undefined' && (list = document.getElementById(listId)).getAttribute('data-list-src') !== 'undefined') {
                 self.addRemoteDatalistOptions(this, list);
             }
 
             /* Handle html defined functions */
             let change;
-            if(typeof (change = this.getAttribute('data-change-func')) !== 'undefined') {
+            if (typeof (change = this.getAttribute('data-change-func')) !== 'undefined') {
                 change(this);
             }
 
             /* Handle pre-defined dynamic change events */
             let ref;
-            if(typeof (ref = this.getAttribute('data-ref')) !== 'undefined') {
+            if (typeof (ref = this.getAttribute('data-ref')) !== 'undefined') {
                 let e = document.getElementById(ref);
 
-                switch(e.tagName) {
+                switch (e.tagName) {
                     case 'ul':
                         break;
                     case 'table':
                         break;
-                };
+                }
+                ;
             }
         });
 
         let dataButton;
-        if(typeof (dataButton = input.getAttribute('data-button')) !== 'undefined') {
-            this.app.inputManager.getKeyboardManager().bind(input, 13, function() { 
-                document.getElementById(dataButton).click(); 
+        if (typeof (dataButton = input.getAttribute('data-button')) !== 'undefined') {
+            this.app.inputManager.getKeyboardManager().bind(input, 13, function ()
+            {
+                document.getElementById(dataButton).click();
             });
         }
     };
 
-    jsOMS.UI.Input.addRemoteDatalistOptions = function(input, datalist) 
+    /**
+     * Add remote datalist options
+     *
+     * This only applies for datalists that have remote options
+     *
+     * @param {Object} input Input elment
+     * @param {Object} datalist Datalist elment
+     *
+     * @since 1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
+    jsOMS.UI.Input.addRemoteDatalistOptions = function (input, datalist)
     {
         this.clearDatalistOptions(datalist);
 
@@ -73,27 +97,28 @@
         request.setUri(datalist.getAttribute('data-list-src'));
         request.setMethod(jsOMS.Message.Request.RequestMethod.POST);
         request.setRequestHeader('Content-Type', 'application/json');
-        request.setSuccess(function (xhr) {
+        request.setSuccess(function (xhr)
+        {
             try {
-                let o = JSON.parse(xhr.response),
-                response = new Response(o),
-                responseLength = response.count(),
-                tempResponse = null,
-                success = null;
+                let o              = JSON.parse(xhr.response),
+                    response       = new Response(o),
+                    responseLength = response.count(),
+                    tempResponse   = null,
+                    success        = null;
 
                 for (let k = 0; k < responseLength; k++) {
                     tempResponse = response.getByIndex(k);
                     console.log(tempResponse);
 
                     let option = null,
-                    data = tempResponse.getData(),
-                    length = data.length;
+                        data   = tempResponse.getData(),
+                        length = data.length;
 
-                    for(let i = 0; i < length; i++) {
-                        option = document.createElement('option');
+                    for (let i = 0; i < length; i++) {
+                        option       = document.createElement('option');
                         option.value = tempResponse.value;
-                        option.text = tempResponse.text;
-                        
+                        option.text  = tempResponse.text;
+
                         datalist.appendChild(option);
                     }
                 }
@@ -106,12 +131,19 @@
         request.send();
     };
 
-    jsOMS.UI.Input.clearDatalistOptions = function(datalist) 
+    /**
+     * Remove all datalist options from datalist
+     *
+     * @param {Object} datalist Datalist elment
+     *
+     * @since 1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
+    jsOMS.UI.Input.clearDatalistOptions = function (datalist)
     {
-        let length = datalist.options.length,
-        i = 0;
+        let length = datalist.options.length;
 
-        for(i = 0; i < length; i++) {
+        for (let i = 0; i < length; i++) {
             datalist.remove(0);
         }
     };

@@ -24,21 +24,53 @@
         this.ignore = {};
     };
 
+    /**
+     * Get form
+     *
+     * @param {string} id Form Id
+     *
+     * @since 1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.UI.FormManager.prototype.get = function (id)
     {
         return this.forms[id];
     };
 
+    /**
+     * Is form ignored?
+     *
+     * @param {string} id Form Id
+     *
+     * @since 1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.UI.FormManager.prototype.isIgnored = function (id)
     {
         return this.ignore.indexOf(id) !== -1;
     };
 
+    /**
+     * Unbind form
+     *
+     * @param {string} id Form Id
+     *
+     * @since 1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.UI.FormManager.prototype.unbind = function (id)
     {
 
     };
 
+    /**
+     * Bind form
+     *
+     * @param {string} id Form Id (optional)
+     *
+     * @since 1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.UI.FormManager.prototype.bind = function (id)
     {
         if (typeof id !== 'undefined' && typeof this.ignore[id] === 'undefined') {
@@ -55,6 +87,14 @@
         }
     };
 
+    /**
+     * Bind form
+     *
+     * @param {string} id Form Id
+     *
+     * @since 1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.UI.FormManager.prototype.bindForm = function (id)
     {
         if (typeof id === 'undefined' || !id) {
@@ -74,6 +114,14 @@
         });
     };
 
+    /**
+     * Unbind form
+     *
+     * @param {string} id Form Id
+     *
+     * @since 1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.UI.FormManager.prototype.unbindForm = function (id)
     {
         // todo: do i need the findex? can't i just use id?
@@ -89,6 +137,16 @@
         return false;
     };
 
+    /**
+     * Submit form
+     *
+     * Calls injections first befor executing the actual form submit
+     *
+     * @param {Object} form Form object
+     *
+     * @since 1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.UI.FormManager.prototype.submit = function (form)
     {
         /* Handle injects */
@@ -110,6 +168,16 @@
         this.app.eventManager.triggerDone('?', form.getId());
     };
 
+    /**
+     * Submit form data
+     *
+     * Submits the main form data
+     *
+     * @param {Object} form Form object
+     *
+     * @since 1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.UI.FormManager.prototype.submitForm = function (form)
     {
         if (!form.isValid()) {
@@ -160,6 +228,14 @@
         request.send();
     };
 
+    /**
+     * Count the bound forms
+     *
+     * @return {number}
+     *
+     * @since 1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.UI.FormManager.prototype.count = function ()
     {
         return this.forms.length;

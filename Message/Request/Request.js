@@ -28,6 +28,16 @@
         this.xhr           = new XMLHttpRequest();
     };
 
+    /**
+     * Get browser.
+     *
+     * @return {string}
+     *
+     * @method
+     *
+     * @since  1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.Message.Request.Request.getBrowser = function ()
     {
         if ((!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0) {
@@ -47,6 +57,16 @@
         }
     };
 
+    /**
+     * Get os.
+     *
+     * @return {string}
+     *
+     * @method
+     *
+     * @since  1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.Message.Request.Request.getOS = function ()
     {
         for (let os in jsOMS.Message.Request.OSType) {

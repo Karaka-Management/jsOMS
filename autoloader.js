@@ -1,19 +1,37 @@
-(function (jsOMS, undefined) {
-    jsOMS.Autoloader = {};
-    jsOMS.Autoloader.loaded = [];
+/**
+ * Autoloader.
+ *
+ * @author     OMS Development Team <dev@oms.com>
+ * @author     Dennis Eichhorn <d.eichhorn@oms.com>
+ * @copyright  2013 Dennis Eichhorn
+ * @license    OMS License 1.0
+ * @version    1.0.0 * @since      1.0.0
+ */
+(function (jsOMS, undefined)
+{
+    jsOMS.Autoloader            = {};
+    jsOMS.Autoloader.loaded     = [];
     jsOMS.Autoloader.namespaced = [];
 
-    jsOMS.Autoloader.defineNamespace = function(namespace)
+    /**
+     * Define namespace
+     *
+     * @param {string} namespace Namespace
+     *
+     * @since 1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
+    jsOMS.Autoloader.defineNamespace = function (namespace)
     {
-        if(jsOMS.Autoloader.namespaced.indexOf(namespace) === -1) {
+        if (jsOMS.Autoloader.namespaced.indexOf(namespace) === -1) {
             let paths = namespace.split('.');
             paths.splice(0, 1);
 
-            let length = paths.length,
+            let length  = paths.length,
                 current = jsOMS;
 
-            for(let i = 0; i < length; i++) {
-                if(typeof current[paths[i]] === 'undefined') {
+            for (let i = 0; i < length; i++) {
+                if (typeof current[paths[i]] === 'undefined') {
                     current[paths[i]] = {};
                 }
 
@@ -24,33 +42,56 @@
         }
     };
 
-    jsOMS.Autoloader.initPreloaded = function()
+    /**
+     * Collect all loaded javascript files
+     *
+     * @since 1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
+    jsOMS.Autoloader.initPreloaded = function ()
     {
         let scripts = document.getElementsByTagName('script'),
-            length = scripts.length;
+            length  = scripts.length;
 
-        for(let i = 0; i < length; i++) {
+        for (let i = 0; i < length; i++) {
             scripts[i].src.replace(URL + '/', '');
 
-            if(jsOMS.Autoloader.loaded.indexOf(scripts[i].src) === -1) {
+            if (jsOMS.Autoloader.loaded.indexOf(scripts[i].src) === -1) {
                 jsOMS.Autoloader.loaded.push(scripts[i].src);
             }
         }
     };
 
-    jsOMS.Autoloader.setPreloaded = function(file)
+    /**
+     * Add loaded script
+     *
+     * @param {string} file Script URI
+     *
+     * @since 1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
+    jsOMS.Autoloader.addPreloaded = function (file)
     {
-        if(jsOMS.Autoloader.loaded.indexOf(file) === -1) {
+        if (jsOMS.Autoloader.loaded.indexOf(file) === -1) {
             jsOMS.Autoloader.loaded.push(file);
         }
     };
 
-    jsOMS.Autoloader.include = function(file, callback)
+    /**
+     * Include script
+     *
+     * @param {string} file Script URI
+     * @param {callback} callback Callback after script loading
+     *
+     * @since 1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
+    jsOMS.Autoloader.include = function (file, callback)
     {
         let length = file.length;
 
-        for(let i = 0; i < length; i++) {
-            if(jsOMS.Autoloader.loaded.indexOf(file) === -1) {
+        for (let i = 0; i < length; i++) {
+            if (jsOMS.Autoloader.loaded.indexOf(file) === -1) {
                 // todo: implement asset loading and pass callback
 
                 jsOMS.Autoloader.loaded.push(file);
