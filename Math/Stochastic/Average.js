@@ -1,0 +1,31 @@
+/**
+ * Average class.
+ *
+ * @author     OMS Development Team <dev@oms.com>
+ * @author     Dennis Eichhorn <d.eichhorn@oms.com>
+ * @copyright  2013 Dennis Eichhorn
+ * @license    OMS License 1.0
+ * @version    1.0.0 * @since      1.0.0
+ */
+(function (jsOMS, undefined)
+{
+    "use strict";
+    /** @namespace jsOMS.Math.Stochastic.Average */
+    jsOMS.Autoloader.defineNamespace('jsOMS.Math.Stochastic.Average');
+
+    jsOMS.Math.Stochastic.Average.arithmeticMean = function (values, offset = 0)
+    {
+        Array.sort(values);
+        let length = values.length;
+
+        if (offset > 0) {
+            values = Array.splice(offset, length - offset);
+        }
+
+        if (length === 0) {
+            throw 'Division zero';
+        }
+
+        return values.reduce((a, b) => a + b, 0) / count;
+    };
+}(window.jsOMS = window.jsOMS || {}));
