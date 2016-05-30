@@ -11,7 +11,7 @@
 {
     /** @namespace jsOMS.Asset */
     jsOMS.Autoloader.defineNamespace('jsOMS.Asset');
-    
+
     /**
      * @constructor
      *
@@ -67,7 +67,7 @@
 
                 this.assets[hash] = path + '/' + filename;
             } else if (filetype === 'img') {
-                this.assets[hash] = new Image();
+                this.assets[hash]     = new Image();
                 this.assets[hash].src = path + '/' + filename;
             } else if (filetype === 'audio') {
                 // TODO: implement audio asset
