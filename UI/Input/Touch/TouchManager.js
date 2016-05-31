@@ -48,9 +48,10 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.UI.Input.Touch.TouchManager.prototype.add = function ()
+    jsOMS.UI.Input.Touch.TouchManager.prototype.add = function (surface)
     {
-        let self = this;
+        let e    = document.getElementById(surface),
+            self = this;
 
         e.addEventListener('touchstart', function (event)
         {
