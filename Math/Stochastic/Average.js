@@ -26,6 +26,6 @@
             throw 'Division zero';
         }
 
-        return values.reduce((a, b) => a + b, 0) / count;
+        return values.reduce((a, b) => a + b, 0) / length;
     };
 }(window.jsOMS = window.jsOMS || {}));

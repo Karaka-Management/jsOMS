@@ -64,7 +64,6 @@
                     case 'table':
                         break;
                 }
-                ;
             }
         });
 
@@ -92,7 +91,7 @@
     {
         this.clearDatalistOptions(datalist);
 
-        let request = new Request();
+        let request = new jsOMS.Message.Request();
         request.setData(input.value);
         request.setType(jsOMS.Message.Response.ResponseType.JSON);
         request.setUri(datalist.getAttribute('data-list-src'));
@@ -102,7 +101,7 @@
         {
             try {
                 let o              = JSON.parse(xhr.response),
-                    response       = new Response(o),
+                    response       = new jsOMS.Message.Response(o),
                     responseLength = response.count(),
                     tempResponse   = null,
                     success        = null;

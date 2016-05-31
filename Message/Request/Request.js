@@ -26,6 +26,8 @@
         this.success       = null;
         this.type          = typeof type !== 'undefined' ? type : jsOMS.Message.Response.ResponseType.JSON;
         this.data          = {};
+
+        /** global: XMLHttpRequest */
         this.xhr           = new XMLHttpRequest();
     };
 

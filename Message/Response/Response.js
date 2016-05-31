@@ -9,7 +9,7 @@
  * @license    OMS License 1.0
  * @version    1.0.0 * @since      1.0.0
  */
-(function (uriFactory, undefined)
+(function (jsOMS)
 {
     /** @namespace jsOMS.Message.Response */
     jsOMS.Autoloader.defineNamespace('jsOMS.Message.Response');

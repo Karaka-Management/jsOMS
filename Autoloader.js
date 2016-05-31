@@ -54,6 +54,8 @@
             length  = scripts.length;
 
         for (let i = 0; i < length; i++) {
+            /** global: URL */
+            /** @var {string} URL */
             scripts[i].src.replace(URL + '/', '');
 
             if (jsOMS.Autoloader.loaded.indexOf(scripts[i].src) === -1) {

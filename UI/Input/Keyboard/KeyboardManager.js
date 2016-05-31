@@ -66,7 +66,7 @@
         document.addEventListener('keyup', function keyBind(event)
         {
             if (self.down.length > 0) {
-                self.run(element);
+                self.run(element, event);
                 self.down = [];
             }
         });
@@ -76,11 +76,12 @@
      * Execute callback based on key presses.
      *
      * @param {string} element Container id
+     * @param {Object} event Key event
      *
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.UI.Input.Keyboard.KeyboardManager.prototype.run = function (element)
+    jsOMS.UI.Input.Keyboard.KeyboardManager.prototype.run = function (element, event)
     {
         if (typeof this.elements[element] === 'undefined') {
             throw 'Unexpected elmenet!';

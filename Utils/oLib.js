@@ -194,6 +194,7 @@
      */
     jsOMS.isNode = function (ele)
     {
+        /** global: Node */
         return (
             typeof Node === "object" ? ele instanceof Node :
             ele && typeof ele === "object" && typeof ele.nodeType === "number" && typeof ele.nodeName === "string"
@@ -216,6 +217,7 @@
      */
     jsOMS.isElement = function (o)
     {
+        /** global: HTMLElement */
         return (
             typeof HTMLElement === "object" ? o instanceof HTMLElement : o && typeof o === "object" && o !== null && o.nodeType === 1 && typeof o.nodeName === "string"
         );
