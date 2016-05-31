@@ -1,4 +1,4 @@
-(function (jsOMS, undefined) {
+(function (jsOMS) {
     jsOMS.Account = function () {
         this.login = '';
         this.password = '';

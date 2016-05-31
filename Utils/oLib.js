@@ -5,7 +5,7 @@
  *
  * @since      1.0.0
  */
-(function (jsOMS, undefined)
+(function (jsOMS)
 {
 
     /**

@@ -1,4 +1,4 @@
-(function (jsOMS, undefined)
+(function (jsOMS)
 {
     // TODO: create comments
     jsOMS.Markdown = function (source, destination)

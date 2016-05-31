@@ -1,4 +1,4 @@
-(function (jsOMS, undefined) {
+(function (jsOMS) {
     jsOMS.Autoloader.defineNamespace('jsOMS.DataStorage');
 
     // TODO: create comments

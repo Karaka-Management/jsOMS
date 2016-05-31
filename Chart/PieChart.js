@@ -1,4 +1,4 @@
-(function (jsOMS, undefined)
+(function (jsOMS)
 {
     jsOMS.Chart.PieChart = function (id)
     {

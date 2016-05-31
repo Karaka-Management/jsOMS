@@ -1,4 +1,4 @@
-(function (jsOMS, undefined) {
+(function (jsOMS) {
     jsOMS.TableView = function () {
         this.table = null;
     };

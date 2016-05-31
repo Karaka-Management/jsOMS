@@ -1,4 +1,4 @@
-(function (jsOMS, undefined) {
+(function (jsOMS) {
     jsOMS.ViewAbstract = function ()
     {
         this.element = null;
