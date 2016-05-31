@@ -48,18 +48,6 @@
         }
     };
 
-    jsOMS.hasProperty = function(obj) {
-        let args = Array.prototype.slice.call(arguments, 1);
-
-        for (let i = 0; i < args.length; i++) {
-            if (!obj || !obj.hasOwnProperty(args[i])) {
-                return false;
-            }
-            obj = obj[args[i]];
-        }
-        return true;
-    };
-
     /**
      * Remove class
      *
@@ -168,13 +156,27 @@
         }
     };
 
+    /**
+     * Integer hash
+     *
+     * @param {string} str String to hash
+     *
+     * @return {int}
+     *
+     * @function
+     *
+     * @since  1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.hash = function (str)
     {
         var res = 0,
             len = str.length;
+
         for (var i = 0; i < len; i++) {
             res = res * 31 + str.charCodeAt(i);
         }
+
         return res;
     };
 
