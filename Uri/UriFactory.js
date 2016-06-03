@@ -9,6 +9,8 @@
  */
 (function (jsOMS)
 {
+    "use strict";
+
     /** @namespace jsOMS.Uri.UriFactory */
     jsOMS.Autoloader.defineNamespace('jsOMS.Uri.UriFactory');
 

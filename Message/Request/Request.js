@@ -9,6 +9,8 @@
  */
 (function (jsOMS)
 {
+    "use strict";
+
     /** @namespace jsOMS.Message.Request */
     jsOMS.Autoloader.defineNamespace('jsOMS.Message.Request');
 
@@ -251,7 +253,7 @@
      */
     jsOMS.Message.Request.Request.prototype.getData = function ()
     {
-        return this.data
+        return this.data;
     };
 
     /**
@@ -343,7 +345,7 @@
                 // todo: server is handling request
             } else {
                 // todo: create handler for error returns
-                console.log(self.xhr)
+                console.log(self.xhr);
             }
         };
 

@@ -10,6 +10,7 @@
 (function (jsOMS)
 {
     "use strict";
+    
     /** @namespace jsOMS.UI.Input*/
     jsOMS.Autoloader.defineNamespace('jsOMS.UI.Input');
 
@@ -123,7 +124,7 @@
                     }
                 }
             } catch (exception) {
-                self.app.logger.error('Invalid JSON object: ' + xhr, 'FormManager')
+                self.app.logger.error('Invalid JSON object: ' + xhr, 'FormManager');
                 return false;
             }
         });

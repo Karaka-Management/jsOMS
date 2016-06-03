@@ -9,6 +9,8 @@
  */
 (function (jsOMS)
 {
+    "use strict";
+
     /** @namespace jsOMS.Config */
     jsOMS.Autoloader.defineNamespace('jsOMS.Config');
 

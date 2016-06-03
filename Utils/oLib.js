@@ -7,6 +7,7 @@
  */
 (function (jsOMS)
 {
+    "use strict";
 
     /**
      * Class finder
@@ -64,7 +65,7 @@
     jsOMS.removeClass = function (ele, cls)
     {
         if (jsOMS.hasClass(ele, cls)) {
-            var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+            var reg       = new RegExp('(\\s|^)' + cls + '(\\s|$)');
             ele.className = ele.className.replace(reg, '');
         }
     };
@@ -271,20 +272,17 @@
         let out = jsOMS.clone(target);
 
         for (let p in source) {
-            try {
+            if (source.hasOwnProperty(p)) {
                 // Property in destination object set; update its value.
-                if ( source[p].constructor==Object ) {
+                if (typeof source[p] === 'object') {
                     out[p] = jsOMS.merge(out[p], source[p]);
 
                 } else {
                     out[p] = source[p];
 
                 }
-
-            } catch(e) {
-                // Property in destination object not set; create it and set its value.
+            } else {
                 out[p] = source[p];
-
             }
         }
 
@@ -299,5 +297,5 @@
     jsOMS.clone = function (obj)
     {
         return obj;
-    }
+    };
 }(window.jsOMS = window.jsOMS || {}));

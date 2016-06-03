@@ -9,6 +9,8 @@
  */
 (function (jsOMS)
 {
+    "use strict";
+
     /** @namespace jsOMS.UI.Input */
     jsOMS.Autoloader.defineNamespace('jsOMS.UI.Input');
 

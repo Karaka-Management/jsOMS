@@ -9,6 +9,8 @@
  */
 (function (jsOMS)
 {
+    "use strict";
+
     /** @namespace jsOMS.UI.Input.Touch */
     jsOMS.Autoloader.defineNamespace('jsOMS.UI.Input.Touch');
 

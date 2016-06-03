@@ -9,6 +9,8 @@
  */
 (function (jsOMS)
 {
+    "use strict";
+    
     jsOMS.Autoloader            = {};
     jsOMS.Autoloader.loaded     = [];
     jsOMS.Autoloader.namespaced = [];
