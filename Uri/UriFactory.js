@@ -25,24 +25,34 @@
     /**
      * Parse uri
      *
+     * @param {string} str Url to parse
+     * @param {string} mode Parsing mode
+     *
      * @return {Object}
+     *
+     * @throws {Error}
      *
      * @function
      *
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Uri.UriFactory.parseUrl = function (str)
+    jsOMS.Uri.UriFactory.parseUrl = function (str, mode)
     {
+        mode = typeof mode === 'undefined' ? 'php' : mode;
+
         let query, key = ['source', 'scheme', 'authority', 'userInfo', 'user', 'pass', 'host', 'port',
                 'relative', 'path', 'directory', 'file', 'query', 'fragment'
             ],
-            mode       = 'php',
             parser     = {
                 php: /^(?:([^:\/?#]+):)?(?:\/\/()(?:(?:()(?:([^:@]*):?([^:@]*))?@)?([^:\/?#]*)(?::(\d*))?))?()(?:(()(?:(?:[^?#\/]*\/)*)()(?:[^?#]*))(?:\?([^#]*))?(?:#(.*))?)/,
                 strict: /^(?:([^:\/?#]+):)?(?:\/\/((?:(([^:@]*):?([^:@]*))?@)?([^:\/?#]*)(?::(\d*))?))?((((?:[^?#\/]*\/)*)([^?#]*))(?:\?([^#]*))?(?:#(.*))?)/,
                 loose: /^(?:(?![^:@]+:[^:@\/]*@)([^:\/?#.]+):)?(?:\/\/\/?)?((?:(([^:@]*):?([^:@]*))?@)?([^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/ // Added one optional slash to post-scheme to catch file:/// (should restrict this)
             };
+
+        if(!parser.hasOwnProperty(mode)) {
+            throw new Error('Unexpected parsing mode.', 'UriFactory', 52);
+        }
 
         let m   = parser[mode].exec(str),
             uri = {},
@@ -100,7 +110,7 @@
     {
         overwrite = typeof overwrite !== 'undefined' ? overwrite : true;
 
-        if (overwrite || !jsOMS.Uri.UriFactory.uri.hasProperty(key)) {
+        if (overwrite || !jsOMS.Uri.UriFactory.uri.hasOwnProperty(key)) {
             jsOMS.Uri.UriFactory.uri[key] = value;
 
             return true;
