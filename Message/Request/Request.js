@@ -30,7 +30,7 @@
         this.data          = {};
 
         /** global: XMLHttpRequest */
-        this.xhr           = new XMLHttpRequest();
+        this.xhr = new XMLHttpRequest();
     };
 
     /**
@@ -339,9 +339,9 @@
         {
             if (self.xhr.readyState === 4 && self.xhr.status === 200) {
                 self.success(self.xhr);
-            } else if(self.xhr.readyState === 2) {
+            } else if (self.xhr.readyState === 2) {
                 // todo: handle server received request
-            } else if(self.xhr.readyState === 3) {
+            } else if (self.xhr.readyState === 3) {
                 // todo: server is handling request
             } else {
                 // todo: create handler for error returns

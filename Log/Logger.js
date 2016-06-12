@@ -7,10 +7,10 @@
  * @license    OMS License 1.0
  * @version    1.0.0 * @since      1.0.0
  */
- (function (jsOMS)
- {
+(function (jsOMS)
+{
     "use strict";
-     /** @namespace jsOMS.Log */
+    /** @namespace jsOMS.Log */
     jsOMS.Autoloader.defineNamespace('jsOMS.Log');
 
     /**
@@ -22,44 +22,46 @@
     jsOMS.Log.Logger = function (verbose, ui, remote)
     {
         this.verbose = typeof verbose !== 'undefined' ? verbose : true;
-        this.ui = typeof ui !== 'undefined' ? ui : true;
-        this.remote = typeof remote !== 'undefined' ? remote : false;
+        this.ui      = typeof ui !== 'undefined' ? ui : true;
+        this.remote  = typeof remote !== 'undefined' ? remote : false;
     };
 
     jsOMS.Log.Logger.layout = '{datetime}; {level}; {version}; {os}; {browser}; {path}; {message}';
 
-    jsOMS.Log.Logger.prototype.interpolate = function(message, context, level)
+    jsOMS.Log.Logger.prototype.interpolate = function (message, context, level)
     {
         let newMessage = jsOMS.Log.Logger.layout;
 
-        for(let replace in context) {
-            newMessage = newMessage.replace('{'+replace+'}', context[replace]);
+        for (let replace in context) {
+            if (context.hasOwnProperty(replace)) {
+                newMessage = newMessage.replace('{' + replace + '}', context[replace]);
+            }
         }
 
         return newMessage;
     };
 
-    jsOMS.Log.Logger.prototype.createContext = function(message, context, level)
+    jsOMS.Log.Logger.prototype.createContext = function (message, context, level)
     {
-        context['datetime'] = (new Date()).toISOString();
-        context['version'] = '1.0.0';
-        context['os'] = jsOMS.Message.Request.Request.getOS();
-        context['browser'] = jsOMS.Message.Request.Request.getBrowser();
-        context['path'] = window.location.href;
-        context['level'] = level;
-        context['message'] = message;
+        context.datetime = (new Date()).toISOString();
+        context.version  = '1.0.0';
+        context.os       = jsOMS.Message.Request.Request.getOS();
+        context.browser  = jsOMS.Message.Request.Request.getBrowser();
+        context.path     = window.location.href;
+        context.level    = level;
+        context.message  = message;
 
         return context;
     };
 
-    jsOMS.Log.Logger.prototype.write = function(message, context, level)
+    jsOMS.Log.Logger.prototype.write = function (message, context, level)
     {
         context = this.createContext(message, context, level);
 
-        if(this.verbose) {
+        if (this.verbose) {
             let color = '000';
 
-            switch(level) {
+            switch (level) {
                 case 'info':
                 case 'notice':
                 case 'log':
@@ -82,89 +84,91 @@
             console.log('%c' + this.interpolate(message, context, level), 'color: #' + color);
         }
 
-        if(this.ui) {
+        if (this.ui) {
             // todo: fill log box, set class and initiate animation
         }
 
-        if(this.remote) {
+        if (this.remote) {
             let request = new jsOMS.Message.Request.Request();
             request.setData(context);
             request.setType(jsOMS.Message.Response.Response.ResponseType.JSON);
             request.setUri('/{/lang}/api/log');
             request.setMethod(jsOMS.Message.Request.Request.RequestMethod.POST);
             request.setRequestHeader('Content-Type', 'application/json');
-            request.setSuccess(function (xhr) {});
+            request.setSuccess(function (xhr)
+            {
+            });
             request.send();
         }
     };
 
-    jsOMS.Log.Logger.prototype.emergency = function(message, context)
+    jsOMS.Log.Logger.prototype.emergency = function (message, context)
     {
         context = typeof context === 'undefined' ? {} : context;
 
-        this.write(message, context, jsOMS.Log.LogLevel.EMERGENCY)
+        this.write(message, context, jsOMS.Log.LogLevel.EMERGENCY);
     };
 
-    jsOMS.Log.Logger.prototype.alert = function(message, context)
+    jsOMS.Log.Logger.prototype.alert = function (message, context)
     {
         context = typeof context === 'undefined' ? {} : context;
 
-        this.write(message, context, jsOMS.Log.LogLevel.ALERT)
+        this.write(message, context, jsOMS.Log.LogLevel.ALERT);
     };
 
-    jsOMS.Log.Logger.prototype.critical = function(message, context)
+    jsOMS.Log.Logger.prototype.critical = function (message, context)
     {
         context = typeof context === 'undefined' ? {} : context;
 
-        this.write(message, context, jsOMS.Log.LogLevel.CRITICAL)
+        this.write(message, context, jsOMS.Log.LogLevel.CRITICAL);
     };
 
-    jsOMS.Log.Logger.prototype.error = function(message, context)
+    jsOMS.Log.Logger.prototype.error = function (message, context)
     {
         context = typeof context === 'undefined' ? {} : context;
 
-        this.write(message, context, jsOMS.Log.LogLevel.ERROR)
+        this.write(message, context, jsOMS.Log.LogLevel.ERROR);
     };
 
-    jsOMS.Log.Logger.prototype.warning = function(message, context)
+    jsOMS.Log.Logger.prototype.warning = function (message, context)
     {
         context = typeof context === 'undefined' ? {} : context;
 
-        this.write(message, context, jsOMS.Log.LogLevel.WARNING)
+        this.write(message, context, jsOMS.Log.LogLevel.WARNING);
     };
 
-    jsOMS.Log.Logger.prototype.notice = function(message, context)
+    jsOMS.Log.Logger.prototype.notice = function (message, context)
     {
         context = typeof context === 'undefined' ? {} : context;
 
-        this.write(message, context, jsOMS.Log.LogLevel.NOTICE)
+        this.write(message, context, jsOMS.Log.LogLevel.NOTICE);
     };
 
-    jsOMS.Log.Logger.prototype.info = function(message, context)
+    jsOMS.Log.Logger.prototype.info = function (message, context)
     {
         context = typeof context === 'undefined' ? {} : context;
 
-        this.write(message, context, jsOMS.Log.LogLevel.INFO)
+        this.write(message, context, jsOMS.Log.LogLevel.INFO);
     };
 
-    jsOMS.Log.Logger.prototype.debug = function(message, context)
+    jsOMS.Log.Logger.prototype.debug = function (message, context)
     {
         context = typeof context === 'undefined' ? {} : context;
 
-        this.write(message, context, jsOMS.Log.LogLevel.DEBUG)
+        this.write(message, context, jsOMS.Log.LogLevel.DEBUG);
     };
 
-    jsOMS.Log.Logger.prototype.log = function(level, message, context)
+    jsOMS.Log.Logger.prototype.log = function (level, message, context)
     {
         context = typeof context === 'undefined' ? {} : context;
 
-        this.write(message, context, context)
+        this.write(message, context, context);
     };
 
-    jsOMS.Log.Logger.prototype.console = function(level, message, context)
+    jsOMS.Log.Logger.prototype.console = function (level, message, context)
     {
         context = typeof context === 'undefined' ? {} : context;
 
-        this.write(message, context, jsOMS.Log.LogLevel.INFO)
+        this.write(message, context, jsOMS.Log.LogLevel.INFO);
     };
 }(window.jsOMS = window.jsOMS || {}));

@@ -23,7 +23,7 @@
     jsOMS.UI.Button.prototype.bind = function (id)
     {
         if (typeof id !== 'undefined') {
-            this.bindButton(id)
+            this.bindButton(id);
         } else {
             let buttons = document.getElementsByTagName('button'),
                 length  = buttons.length;
@@ -45,8 +45,8 @@
 
         // todo: carefull this means a type has to be unique in a button. no multiple actions with same type!!! CHANGE!
         for (let i = 1; i < actionLength; i++) {
-            this.app.eventManager.addGroup(actions[i - 1]['type'], id + actions[i - 1]['type']);
-            this.app.eventManager.setDone(id + actions[i - 1]['type'], function ()
+            this.app.eventManager.addGroup(actions[i - 1].type, id + actions[i - 1].type);
+            this.app.eventManager.setDone(id + actions[i - 1].type, function ()
             {
                 // todo: how to pass result from previous action to next action?!
                 self.runAction(document.getElementById(id), actions[i]);
@@ -68,9 +68,12 @@
     {
         let self = this;
 
-        this.actions[action['type']](action, function ()
+        // todo: why am i accessing this.actions? shouldn't the callback be stored in the event manager?
+        // todo: what happens if i click the same button again? isn't it now removed from the eventmanager?
+        this.actions[action.type](action, function ()
         {
-            self.app.eventManager.triggerDone(e.getAttribute('id'), e.getAttribute('id') + action['type']);
+            // todo: the event manager needs optional parameter to pass data to the callback.
+            self.app.eventManager.triggerDone(e.getAttribute('id'), e.getAttribute('id') + action.type);
         });
     };
 }(window.jsOMS = window.jsOMS || {}));

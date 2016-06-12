@@ -77,7 +77,7 @@
     jsOMS.UI.FormManager.prototype.bind = function (id)
     {
         if (typeof id !== 'undefined' && typeof this.ignore[id] === 'undefined') {
-            this.bindForm(id)
+            this.bindForm(id);
         } else {
             let forms  = document.getElementsByTagName('form'),
                 length = forms.length;
@@ -158,17 +158,20 @@
             counter = 0;
 
         for (let property in injects) {
-            counter++;
-            this.app.eventManager.addGroup(counter, form.getId());
-
-            injects[property](form.getElement(), counter, form.getId());
+            if (injects.hasOwnProperty(property)) {
+                counter++;
+                this.app.eventManager.addGroup(counter, form.getId());
+                injects[property](form.getElement(), counter, form.getId());
+            } else {
+                this.app.logger.warning('Invalid property.');
+            }
         }
 
-        this.app.eventManager.setDone(form.getId(), function ()
+        this.app.eventManager.attach(form.getId(), function ()
         {
             self.submitForm(form);
         });
-        this.app.eventManager.triggerDone('?', form.getId());
+        this.app.eventManager.trigger('?', form.getId());
     };
 
     /**

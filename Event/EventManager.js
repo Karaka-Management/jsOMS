@@ -11,6 +11,8 @@
  */
 (function (jsOMS)
 {
+    "use strict";
+
     jsOMS.Autoloader.defineNamespace('jsOMS.Event');
 
     /**
@@ -19,51 +21,56 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Event.EventManager = function ()
+    jsOMS.Event.EventManager = function (logger)
     {
-        this.groups = {};
+        this.logger    = logger;
+        this.groups    = {};
         this.callbacks = {};
     };
 
-    jsOMS.Event.EventManager.prototype.addGroup = function(id, group)
+    jsOMS.Event.EventManager.prototype.addGroup = function (id, group)
     {
-        if(typeof this.groups[group] == 'undefined') {
+        if (typeof this.groups[group] === 'undefined') {
             this.groups[group] = {};
         }
 
         this.groups[group][id] = false;
     };
 
-    jsOMS.Event.EventManager.prototype.hasOutstanding = function(group)
+    jsOMS.Event.EventManager.prototype.hasOutstanding = function (group)
     {
-        if(typeof this.groups[group] === 'undefined') {
+        if (typeof this.groups[group] === 'undefined') {
             return false;
         }
 
         for (let id  in this.groups[group]) {
-            if (!this.groups[group][id]) {
+            if (this.groups[group].hasOwnProperty(id)) {
                 return true;
+            } else {
+                this.app.logger.warning('Invalid property.');
             }
         }
 
         return false;
     };
 
-    jsOMS.Event.EventManager.prototype.triggerDone = function(id, group)
+    jsOMS.Event.EventManager.prototype.trigger = function (id, group)
     {
-        if(typeof this.groups[group] !== 'undefined') {
+        if (typeof this.groups[group] !== 'undefined') {
             this.groups[group][id] = true;
         }
 
-        if(!this.hasOutstanding(group)) {
-            this.callbacks[group]();
+        if (!this.hasOutstanding(group)) {
+            this.callbacks[group].func();
             delete this.callbacks[group];
             delete this.groups[group];
         }
     };
 
-    jsOMS.Event.EventManager.prototype.setDone = function(group, callback)
+    jsOMS.Event.EventManager.prototype.attach = function (group, callback, remove)
     {
-        this.callbacks[group] = callback;
+        remove = typeof remove === 'undefined' ? false : remove;
+
+        this.callbacks[group] = {remove: remove, func: callback};
     };
 }(window.jsOMS = window.jsOMS || {}));
