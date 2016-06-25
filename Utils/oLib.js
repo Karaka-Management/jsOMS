@@ -255,6 +255,27 @@
     };
 
     /**
+     * Adding event listener to multiple elements
+     *
+     * @param e DOM Elements
+     * @param {string} event Event name
+     * @param {function} callback Event callback
+     *
+     * @function
+     *
+     * @since  1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
+    jsOMS.addEventListenerToAll = function(e, event, callback)
+    {
+        let length = e.length;
+
+        for(let i = 0; i < length; i++) {
+            e[i].addEventListener(event, callback);
+        }
+    };
+
+    /**
      * Merging two arrays recursively
      *
      * @param target Target array
