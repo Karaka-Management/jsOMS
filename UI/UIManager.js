@@ -13,7 +13,7 @@
 
     /** @namespace jsOMS.UI */
     jsOMS.Autoloader.defineNamespace('jsOMS.UI');
-    
+
     /**
      * @constructor
      *
@@ -24,11 +24,11 @@
      */
     jsOMS.UI.UIManager = function (app)
     {
-        this.app = app;
-        this.formManager = new jsOMS.UI.FormManager(this.app);
-        this.tabManager = new jsOMS.UI.TabManager(this.app.responseManager);
+        this.app          = app;
+        this.formManager  = new jsOMS.UI.FormManager(this.app);
+        this.tabManager   = new jsOMS.UI.TabManager(this.app.responseManager);
         this.tableManager = new jsOMS.UI.TableManager(this.app.responseManager);
-        this.button = new jsOMS.UI.Button(this.app);
+        this.button       = new jsOMS.UI.Button(this.app);
     };
 
     /**
@@ -51,7 +51,7 @@
         } else {
             let tag = document.getElementById(id);
 
-            switch(tag.tagName) {
+            switch (tag.tagName) {
                 case 'form':
                     this.formManager.bind(id);
                     break;

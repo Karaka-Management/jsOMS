@@ -13,6 +13,7 @@
     window.addEventListener('error', function (e)
     {
         console.log(e.error);
+        
         return false;
     });
 }(window.jsOMS = window.jsOMS || {}));
