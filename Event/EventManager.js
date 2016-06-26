@@ -28,6 +28,19 @@
         this.callbacks = {};
     };
 
+    /**
+     * Add event group (element)
+     *
+     * Adding the same event overwrites the existing one as "waiting"
+     *
+     * @param {string|int} id Event id
+     * @param {string|int} group Group id
+     *
+     * @method
+     *
+     * @since 1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.Event.EventManager.prototype.addGroup = function (id, group)
     {
         if (typeof this.groups[group] === 'undefined') {
@@ -37,6 +50,18 @@
         this.groups[group][id] = false;
     };
 
+    /**
+     * Does group have outstanding events
+     *
+     * @param {string|int} group Group id
+     *
+     * @return {boolean}
+     *
+     * @method
+     *
+     * @since 1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.Event.EventManager.prototype.hasOutstanding = function (group)
     {
         if (typeof this.groups[group] === 'undefined') {
@@ -54,6 +79,21 @@
         return false;
     };
 
+    /**
+     * Trigger event finished
+     *
+     * Executes the callback specified for this group if all events are finished
+     *
+     * @param {string|int} id Event id
+     * @param {string|int} group Group id
+     *
+     * @return {boolean}
+     *
+     * @method
+     *
+     * @since 1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.Event.EventManager.prototype.trigger = function (id, group)
     {
         if (typeof this.groups[group] !== 'undefined') {
@@ -62,11 +102,28 @@
 
         if (!this.hasOutstanding(group)) {
             this.callbacks[group].func();
-            delete this.callbacks[group];
-            delete this.groups[group];
+
+            if (this.callbacks[group].remove) {
+                delete this.callbacks[group];
+                delete this.groups[group];
+            }
         }
     };
 
+    /**
+     * Attach callback to event group
+     *
+     * @param {string|int} group Group id
+     * @param {function} callback Callback
+     * @param {boolean} remove Should be removed after execution
+     *
+     * @return {boolean}
+     *
+     * @method
+     *
+     * @since 1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.Event.EventManager.prototype.attach = function (group, callback, remove)
     {
         remove = typeof remove === 'undefined' ? false : remove;
