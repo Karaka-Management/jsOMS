@@ -11,8 +11,7 @@
 {
     "use strict";
 
-    /** @namespace jsOMS.Asset */
-    jsOMS.Autoloader.defineNamespace('jsOMS.Asset');
+    jsOMS.Asset = {};
 
     /**
      * @constructor
@@ -29,7 +28,6 @@
      * Load asset.
      *
      * @param {string} path Asset path
-     * @param {string} filename Name of the asset
      * @param {string} filetype Filetype of the asset
      * @param {requestCallback} [callback] Callback after load
      *
@@ -40,37 +38,37 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Asset.AssetManager.prototype.load = function (path, filename, filetype, callback)
+    jsOMS.Asset.AssetManager.prototype.load = function (path, filetype, callback)
     {
-        var hash;
+        let hash;
 
-        if (!this.assets[(hash = jsOMS.hash(path + '/' + filename))]) {
-            var fileref = null;
+        if (!this.assets[(hash = jsOMS.hash(path))]) {
+            let fileref = null;
 
             if (filetype === 'js') {
                 fileref = document.createElement('script');
                 fileref.setAttribute('type', 'text/javascript');
-                fileref.setAttribute('src', path + '/' + filename);
+                fileref.setAttribute('src', path);
 
                 if (typeof fileref !== 'undefined') {
                     document.getElementsByTagName('head')[0].appendChild(fileref);
                 }
 
-                this.assets[hash] = path + '/' + filename;
+                this.assets[hash] = path;
             } else if (filetype === 'css') {
                 fileref = document.createElement('link');
                 fileref.setAttribute('rel', 'stylesheet');
                 fileref.setAttribute('type', 'text/css');
-                fileref.setAttribute('href', path + '/' + filename);
+                fileref.setAttribute('href', path);
 
                 if (typeof fileref !== 'undefined') {
                     document.getElementsByTagName('head')[0].appendChild(fileref);
                 }
 
-                this.assets[hash] = path + '/' + filename;
+                this.assets[hash] = path;
             } else if (filetype === 'img') {
                 this.assets[hash]     = new Image();
-                this.assets[hash].src = path + '/' + filename;
+                this.assets[hash].src = path;
             } else if (filetype === 'audio') {
                 // TODO: implement audio asset
             } else if (filetype === 'video') {
@@ -80,7 +78,7 @@
             if (callback) {
                 fileref.onreadystatechange = function ()
                 {
-                    if (this.readyState == 'complete') {
+                    if (this.readyState === 'complete') {
                         callback();
                     }
                 };

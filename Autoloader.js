@@ -10,10 +10,11 @@
 (function (jsOMS)
 {
     "use strict";
-    
-    jsOMS.Autoloader            = {};
-    jsOMS.Autoloader.loaded     = [];
-    jsOMS.Autoloader.namespaced = [];
+
+    jsOMS.Autoloader             = {};
+    jsOMS.Autoloader.loaded      = [];
+    jsOMS.Autoloader.namespaced  = [];
+    jsOMS.Autoloader.assetLoader = new jsOMS.Asset.AssetManager();
 
     /**
      * Define namespace
@@ -85,7 +86,7 @@
      * Include script
      *
      * @param {string} file Script URI
-     * @param {callback} callback Callback after script loading
+     * @param {function} callback Callback after script loading
      *
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
@@ -96,7 +97,7 @@
 
         for (let i = 0; i < length; i++) {
             if (jsOMS.Autoloader.loaded.indexOf(file) === -1) {
-                // todo: implement asset loading and pass callback
+                this.assetLoader.load(file, 'js');
 
                 jsOMS.Autoloader.loaded.push(file);
             }
