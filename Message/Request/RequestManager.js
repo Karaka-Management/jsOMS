@@ -41,7 +41,7 @@
      */
     jsOMS.Message.Request.RequestManager.prototype.addGroup = function (id, group)
     {
-        if (typeof this.groups[group] == 'undefined') {
+        if (typeof this.groups[group] === 'undefined') {
             this.groups[group] = {};
         }
 
@@ -103,7 +103,7 @@
      * Create callback for request pool.
      *
      * @return {string} group Group id
-     * @return {callback} callback Callback
+     * @return {function} callback Callback
      *
      * @method
      *
