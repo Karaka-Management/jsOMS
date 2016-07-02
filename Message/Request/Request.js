@@ -25,9 +25,15 @@
         this.uri           = typeof uri !== 'undefined' ? uri : null;
         this.method        = typeof method !== 'undefined' ? method : jsOMS.Message.Request.RequestMethod.GET;
         this.requestHeader = [];
-        this.success       = null;
+        this.result        = {};
         this.type          = typeof type !== 'undefined' ? type : jsOMS.Message.Response.ResponseType.JSON;
         this.data          = {};
+
+        // todo: create log;
+        this.result[0] = function ()
+        {
+            console.log('invalid response');
+        };
 
         /** global: XMLHttpRequest */
         this.xhr = new XMLHttpRequest();
@@ -75,8 +81,10 @@
     jsOMS.Message.Request.Request.getOS = function ()
     {
         for (let os in jsOMS.Message.Request.OSType) {
-            if (navigator.appVersion.toLowerCase().indexOf(jsOMS.Message.Request.OSType[os]) !== -1) {
-                return jsOMS.Message.Request.OSType[os];
+            if (jsOMS.Message.Request.OSType.hasOwnProperty(os)) {
+                if (navigator.appVersion.toLowerCase().indexOf(jsOMS.Message.Request.OSType[os]) !== -1) {
+                    return jsOMS.Message.Request.OSType[os];
+                }
             }
         }
     };
@@ -223,7 +231,23 @@
      */
     jsOMS.Message.Request.Request.prototype.setSuccess = function (callback)
     {
-        this.success = callback;
+        this.result[200] = callback;
+    };
+
+    /**
+     * Set result callback.
+     *
+     * @param {int} status Http response status
+     * @param {function} callback Callback
+     *
+     * @method
+     *
+     * @since  1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
+    jsOMS.Message.Request.Request.prototype.setResultCallback = function (status, callback)
+    {
+        this.result[status] = callback;
     };
 
     /**
@@ -337,15 +361,23 @@
 
         self.xhr.onreadystatechange = function ()
         {
-            if (self.xhr.readyState === 4 && self.xhr.status === 200) {
-                self.success(self.xhr);
-            } else if (self.xhr.readyState === 2) {
-                // todo: handle server received request
-            } else if (self.xhr.readyState === 3) {
-                // todo: server is handling request
-            } else {
-                // todo: create handler for error returns
-                console.log(self.xhr);
+            switch (self.xhr.readyState) {
+                case 4:
+                    if (typeof this.result[self.xhr.status] === 'undefined') {
+                        self.result[0](self.xhr);
+                    } else {
+                        self.result[self.xhr.status](self.xhr);
+                    }
+                    break;
+                case 2:
+                    // todo: handle server received request
+                    break;
+                case 3:
+                    // todo: server is handling request
+                    break;
+                default:
+                    // todo: create handler for error returns
+                    console.log(self.xhr);
             }
         };
 
