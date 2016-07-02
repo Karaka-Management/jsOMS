@@ -363,7 +363,7 @@
         {
             switch (self.xhr.readyState) {
                 case 4:
-                    if (typeof this.result[self.xhr.status] === 'undefined') {
+                    if (typeof self.result[self.xhr.status] === 'undefined') {
                         self.result[0](self.xhr);
                     } else {
                         self.result[self.xhr.status](self.xhr);
