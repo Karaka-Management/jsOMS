@@ -1,4 +1,6 @@
 (function (jsOMS) {
+    "use strict";
+    
     jsOMS.Client = function (ip, port, protocol) {
         this.port = port;
         this.ip = ip;
@@ -30,7 +32,7 @@
             var msg = JSON.parse(event.data);
 
             self.messages[msg.type](msg);
-        }
+        };
     };
 
     jsOMS.Client.prototype.send = function(msg) {
@@ -39,5 +41,5 @@
 
     jsOMS.Client.prototype.close = function() {
         this.connection.close();
-    }
+    };
 }(window.jsOMS = window.jsOMS || {}));

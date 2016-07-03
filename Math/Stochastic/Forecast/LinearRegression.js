@@ -24,7 +24,7 @@
 
         for (let i = 0; i < count; i++) {
             sum1 += (y[i] - meanY) * (x[i] - meanX);
-            sum2 += (x[i] - meanX) ** 2;
+            sum2 += Math.pow(x[i] - meanX, 2);
         }
 
         b1 = sum1 / sum2;

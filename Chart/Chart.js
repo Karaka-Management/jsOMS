@@ -1,5 +1,7 @@
 (function (jsOMS)
 {
+    "use strict";
+    
     jsOMS.Chart = function (id)
     {
         this.chartId = id;
@@ -226,7 +228,7 @@
                 {
                     return t[id];
                 });
-            })
+            });
         }
     };
 

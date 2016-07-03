@@ -74,5 +74,5 @@
         } else {
             console.log('does not exist');
         }
-    }
+    };
 }(window.jsOMS = window.jsOMS || {}));

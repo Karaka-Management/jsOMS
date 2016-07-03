@@ -9,6 +9,8 @@
  */
 (function (jsOMS)
 {
+    "use strict";
+    
     jsOMS.Autoloader.defineNamespace('jsOMS.Account');
     
     /**

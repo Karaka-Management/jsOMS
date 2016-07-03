@@ -1,4 +1,6 @@
 (function (jsOMS) {
+    "use strict";
+
     jsOMS.Account = function () {
         this.login = '';
         this.password = '';

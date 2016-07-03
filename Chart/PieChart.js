@@ -1,5 +1,7 @@
 (function (jsOMS)
 {
+    "use strict";
+    
     jsOMS.Chart.PieChart = function (id)
     {
         this.chart = new jsOMS.Chart(id);
@@ -71,7 +73,7 @@
                 .sort(null)
                 .value(function (d)
                 {
-                    return d.value
+                    return d.value;
                 });
 
         dataPoint = svg.selectAll(".dataPoint").data(this.chart.dataset, function (c)

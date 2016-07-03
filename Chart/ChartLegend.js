@@ -1,4 +1,6 @@
 (function (jsOMS) {
+    "use strict";
+
     jsOMS.Chart.Legend = function () {
         this.position = {x: 0, y: 0};
         this.relative = true;

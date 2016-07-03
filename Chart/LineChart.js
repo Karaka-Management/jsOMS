@@ -1,5 +1,7 @@
 (function (jsOMS)
 {
+    "use strict";
+    
     jsOMS.Chart.LineChart = function (id)
     {
         this.chart = new jsOMS.Chart(id);
