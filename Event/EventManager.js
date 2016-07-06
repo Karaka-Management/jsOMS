@@ -97,7 +97,7 @@
     jsOMS.Event.EventManager.prototype.trigger = function (id, group)
     {
         if (typeof this.groups[group] !== 'undefined') {
-            this.groups[group][id] = true;
+            delete this.groups[group][id];
         }
 
         if (!this.hasOutstanding(group)) {
