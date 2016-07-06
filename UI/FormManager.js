@@ -157,6 +157,14 @@
             injects = form.getSubmitInjects(),
             counter = 0;
 
+        // todo: test if attach necessary (maybe already attached in event manager)
+        // Register normal form behavior
+        this.app.eventManager.attach(form.getId(), function ()
+        {
+            self.submitForm(form);
+        });
+
+        // Run all injects first
         for (let property in injects) {
             if (injects.hasOwnProperty(property)) {
                 counter++;
@@ -166,12 +174,6 @@
                 this.app.logger.warning('Invalid property.');
             }
         }
-
-        this.app.eventManager.attach(form.getId(), function ()
-        {
-            self.submitForm(form);
-        });
-        this.app.eventManager.trigger('?', form.getId());
     };
 
     /**
@@ -186,6 +188,7 @@
      */
     jsOMS.UI.FormManager.prototype.submitForm = function (form)
     {
+        console.log('triggered');
         if (!form.isValid()) {
             this.app.logger.debug('Form "' + form.getId() + '" has invalid values.');
             return;
@@ -220,7 +223,6 @@
                     }
                 }
             } catch (e) {
-                console.log(e);
                 self.app.logger.error('Invalid form response. \n' +
                     'URL: ' + form.getAction() + '\n' +
                     'Request: ' + JSON.stringify(form.getData()) + '\n' +
