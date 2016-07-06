@@ -10,7 +10,8 @@
 (function (jsOMS)
 {
     "use strict";
-    
+
+    /** @namespace jsOMS.Module */
     jsOMS.Autoloader.defineNamespace('jsOMS.Module');
 
     /**
