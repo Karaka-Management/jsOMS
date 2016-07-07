@@ -174,6 +174,10 @@
                 this.app.logger.warning('Invalid property.');
             }
         }
+
+        if(counter === 0) {
+            this.app.eventManager.trigger('?', form.getId());
+        }
     };
 
     /**
@@ -188,7 +192,6 @@
      */
     jsOMS.UI.FormManager.prototype.submitForm = function (form)
     {
-        console.log('triggered');
         if (!form.isValid()) {
             this.app.logger.debug('Form "' + form.getId() + '" has invalid values.');
             return;
