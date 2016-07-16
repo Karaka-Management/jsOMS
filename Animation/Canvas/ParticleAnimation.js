@@ -27,26 +27,40 @@
         this.width  = screen.width;
         this.height = screen.height;
 
-        this.canvas.width  = width;
-        this.canvas.height = height;
+        this.canvas.width  = this.width;
+        this.canvas.height = this.height;
 
-        this.particles = [];
+        this.particles   = [];
         this.maxDistance = 70;
         this.gravitation = 10000000;
+
+        for (let i = 0; i < this.width * this.height / 3000; i++) {
+            this.particles.push(new jsOMS.Animation.Canvas.Particle(
+                Math.random() * this.width,
+                Math.random() * this.height,
+                -1 + Math.random() * 2,
+                -1 + Math.random() * 2,
+                1
+            ));
+        }
     };
 
-    jsOMS.Animation.Canvas.ParticleAnimation.prototype.draw = function ()
+    jsOMS.Animation.Canvas.ParticleAnimation.prototype.draw = function (self)
     {
-        this.invalidate();
+        self = typeof self !== 'undefined' ? self : this;
+        self.invalidate();
 
-        let length = this.particles.length;
+        let length = self.particles.length;
 
         for (let i = 0; i < length; i++) {
-            this.particles[i].draw(this.ctx);
+            self.particles[i].draw(self.ctx);
         }
 
-        this.updateParticles();
-        jsOMS.Animation.Animation.requestAnimationFrame(this.draw);
+        self.updateParticles();
+        jsOMS.Animation.Animation.requestAnimationFrame.call(window, function ()
+        {
+            self.draw(self);
+        });
     };
 
     jsOMS.Animation.Canvas.ParticleAnimation.prototype.invalidate = function ()
@@ -63,7 +77,7 @@
             radius;
 
         for (let i = 0; i < length; i++) {
-            particle = particles[i];
+            particle = this.particles[i];
             pos      = particle.getPosition();
             vel      = particle.getVelocity();
             radius   = particle.getRadius();
@@ -73,7 +87,7 @@
 
             // Change on wall hit
             if (pos.x + radius > this.width) {
-                pos.x = this.width - radius;
+                pos.x = radius;
             } else if (pos.x - radius < 0) {
                 pos.x = this.width - radius;
             }
@@ -85,9 +99,10 @@
             }
 
             particle.setPosition(pos.x, pos.y);
+            particle.setVelocity(vel.x, vel.y);
 
             for (let j = i + 1; j < length; j++) {
-                this.updateDistance(particle, particles[j]);
+                this.updateDistance(particle, this.particles[j]);
             }
         }
     };

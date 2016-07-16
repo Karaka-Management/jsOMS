@@ -11,8 +11,8 @@
 {
     "use strict";
 
-    /** @namespace jsOMS.Animation */
-    jsOMS.Autoloader.defineNamespace('jsOMS.Animation');
+    /** @namespace jsOMS.Animation.Animation */
+    jsOMS.Autoloader.defineNamespace('jsOMS.Animation.Animation');
 
     jsOMS.Animation.Animation.requestAnimationFrame = (function ()
     {
