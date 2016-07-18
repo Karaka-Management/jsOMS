@@ -14,6 +14,16 @@
     /** @namespace jsOMS.Animation.Animation */
     jsOMS.Autoloader.defineNamespace('jsOMS.Animation.Animation');
 
+    /**
+     * requestAnimationFrame wrapper
+     *
+     * @return {function} 
+     *
+     * @method
+     *
+     * @since 1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.Animation.Animation.requestAnimationFrame = (function ()
     {
         return window.requestAnimationFrame ||
