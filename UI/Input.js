@@ -36,8 +36,12 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.UI.Input.bind = function (input)
+    jsOMS.UI.Input.bindElement = function (input)
     {
+        if(typeof input === 'undefined') {
+            throw 'Input element required'
+        }
+
         let self = this;
 
         input.addEventListener('change', function changeBind(event)
