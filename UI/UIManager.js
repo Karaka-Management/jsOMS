@@ -29,6 +29,7 @@
         this.tabManager   = new jsOMS.UI.TabManager(this.app.responseManager);
         this.tableManager = new jsOMS.UI.TableManager(this.app.responseManager);
         this.button       = new jsOMS.UI.Button(this.app);
+        this.input        = new jsOMS.UI.Input();
     };
 
     /**
@@ -47,7 +48,7 @@
             this.formManager.bind();
             this.tabManager.bind();
             this.tableManager.bind();
-            this.button.bind();
+            this.bindAction();
         } else {
             let tag = document.getElementById(id);
 
@@ -58,9 +59,30 @@
                 case 'table':
                     this.tableManager.bind(id);
                     break;
+                default:
+                    this.bindAction(tag);
+            }
+        }
+    };
+
+    jsOMS.UI.UIManager.prototype.bindAction = function(e)
+    {
+        let uiElements = typeof e === 'undefined' ? jsOMS.getAll('input, select, textarea, button', document) : [e],
+            length = uiElements.length;
+
+        for(let i = 0; i < length; i++) {
+            switch(uiElements.tagName) {
+                case 'input':
+                    this.input.bind(uiElements[i]);
+                    break;
+                case 'select':
+                    this.select.bind(uiElements[i]);
+                    break;
                 case 'button':
-                case 'a':
-                    this.button.bind(id);
+                    this.button.bind(uiElements[i]);
+                    break;
+                case 'textarea':
+                    this.textarea.bind(uiElements[i]);
                     break;
             }
         }
