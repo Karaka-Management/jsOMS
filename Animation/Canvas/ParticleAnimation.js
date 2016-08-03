@@ -1,5 +1,5 @@
 /**
- * Particle class.
+ * Particle animation class.
  *
  * @author     OMS Development Team <dev@oms.com>
  * @author     Dennis Eichhorn <d.eichhorn@oms.com>
@@ -15,6 +15,9 @@
     jsOMS.Autoloader.defineNamespace('jsOMS.Animation.Canvas');
 
     /**
+     *
+     * @param {object} canvas Canvas
+     *
      * @constructor
      *
      * @since 1.0.0
@@ -45,6 +48,18 @@
         }
     };
 
+    /**
+     * Draw everything
+     *
+     * @param {object} self Object reference for self invoke
+     *
+     * @return {void} 
+     *
+     * @method
+     *
+     * @since 1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.Animation.Canvas.ParticleAnimation.prototype.draw = function (self)
     {
         self = typeof self !== 'undefined' ? self : this;
@@ -63,11 +78,31 @@
         });
     };
 
+    /**
+     * Invalidate/clean canvas
+     *
+     * @return {void} 
+     *
+     * @method
+     *
+     * @since 1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.Animation.Canvas.ParticleAnimation.prototype.invalidate = function ()
     {
         this.ctx.clearRect(0, 0, this.width, this.height);
     };
 
+    /**
+     * Update particle
+     *
+     * @return {void} 
+     *
+     * @method
+     *
+     * @since 1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.Animation.Canvas.ParticleAnimation.prototype.updateParticles = function ()
     {
         let particle,
@@ -107,6 +142,19 @@
         }
     };
 
+    /**
+     * Handle distance between particles
+     *
+     * @param {Particle} p1 Particle 
+     * @param {Particle} p2 Particle
+     *
+     * @return {void} 
+     *
+     * @method
+     *
+     * @since 1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.Animation.Canvas.ParticleAnimation.prototype.updateDistance = function (p1, p2)
     {
         let pos1 = p1.getPosition(),
