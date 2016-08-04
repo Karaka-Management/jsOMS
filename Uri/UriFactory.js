@@ -122,6 +122,14 @@
     /**
      * Build uri
      *
+     * # = DOM id
+     * . = DOM class
+     * / = Current path
+     * ? = Current query
+     * # = Current fragment
+     * @ = 
+     * $ = Other data
+     *
      * @param {string} uri Raw uri
      * @param {Object} toMatch Key/value pair to replace in raw
      *
@@ -143,9 +151,9 @@
             } else if (jsOMS.Uri.UriFactory.uri[match] !== 'undefined') {
                 return jsOMS.Uri.UriFactory.uri[match];
             } else if (match.indexOf('#') === 0) {
-                return document.getElementById(match.substring(1, match.length)).value;
+                return document.getElementById(match.substr(1)).value;
             } else if (match.indexOf('?') === 0) {
-                return jsOMS.Uri.UriFactory.getUriQueryParameter(current.query, match.substring(1, match.length));
+                return jsOMS.Uri.UriFactory.getUriQueryParameter(current.query, match.substr(1));
             } else if (match.indexOf('/') === 0) {
                 // todo: second match should return second path
                 return 'ERROR PATH';
