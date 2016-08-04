@@ -126,7 +126,6 @@
      * . = DOM class
      * / = Current path
      * ? = Current query
-     * # = Current fragment
      * @ = 
      * $ = Other data
      *
