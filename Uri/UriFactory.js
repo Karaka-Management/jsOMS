@@ -50,7 +50,7 @@
                 loose: /^(?:(?![^:@]+:[^:@\/]*@)([^:\/?#.]+):)?(?:\/\/\/?)?((?:(([^:@]*):?([^:@]*))?@)?([^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/ // Added one optional slash to post-scheme to catch file:/// (should restrict this)
             };
 
-        if(!parser.hasOwnProperty(mode)) {
+        if (!parser.hasOwnProperty(mode)) {
             throw new Error('Unexpected parsing mode.', 'UriFactory', 52);
         }
 
@@ -120,14 +120,58 @@
     };
 
     /**
+     * Remove multiple definitions of the same parameter
+     *
+     * The parameters will be recognized from right to left since it's easier to push at the end.
+     *
+     * @param {string} url Url
+     *
+     * @return {string}
+     *
+     * @function
+     *
+     * @since 1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
+    jsOMS.Uri.UriFactory.unique = function (url)
+    {
+        let parts = url.split('?');
+
+        if (parts.length >= 2) {
+            let full = parts[1],
+                pars  = full.split('&'),
+                comps = {},
+                spl   = null,
+                length = pars.length;
+
+            for (let i = 0; i < length; i++) {
+                spl           = pars[i].split('=');
+                comps[spl[0]] = spl[1];
+            }
+
+            pars = [];
+            for (let a in comps) {
+                if (comps.hasOwnProperty(a)) {
+                    pars.push(a + '=' + comps[a]);
+                }
+            }
+
+            url = parts[0] + '?' + pars.join('&');
+        }
+
+        return url;
+    };
+
+    /**
      * Build uri
      *
      * # = DOM id
      * . = DOM class
      * / = Current path
      * ? = Current query
-     * @ = 
+     * @ =
      * $ = Other data
+     * % = Current url
      *
      * @param {string} uri Raw uri
      * @param {Object} toMatch Key/value pair to replace in raw
@@ -139,26 +183,35 @@
      */
     jsOMS.Uri.UriFactory.build = function (uri, toMatch)
     {
-        let current = jsOMS.Uri.UriFactory.parseUrl(window.location.href);
+        let current = jsOMS.Uri.UriFactory.parseUrl(window.location.href),
+            parsed  = uri.replace(new RegExp('\{[\/#\?%@\.\$][a-zA-Z0-9\-]*\}', 'g'), function (match)
+            {
+                match = match.substr(1, match.length - 2);
 
-        return uri.replace(new RegExp('\{[\/#\?@\.\$][a-zA-Z0-9]*\}', 'g'), function (match)
-        {
-            match = match.substr(1, match.length - 2);
+                if (typeof toMatch !== 'undefined' && toMatch.hasProperty(match)) {
+                    return toMatch[match];
+                } else if (typeof jsOMS.Uri.UriFactory.uri[match] !== 'undefined') {
+                    return jsOMS.Uri.UriFactory.uri[match];
+                } else if (match.indexOf('#') === 0) {
+                    return document.getElementById(match.substr(1)).value;
+                } else if (match.indexOf('?') === 0) {
+                    return jsOMS.Uri.UriFactory.getUriQueryParameter(current.query, match.substr(1));
+                } else if (match.indexOf('/') === 0) {
+                    // todo: second match should return second path
+                    return 'ERROR PATH';
+                } else if (match === '%') {
+                    return window.location.href;
+                } else {
+                    return match;
+                }
+            });
 
-            if (typeof toMatch !== 'undefined' && toMatch.hasProperty(match)) {
-                return toMatch[match];
-            } else if (jsOMS.Uri.UriFactory.uri[match] !== 'undefined') {
-                return jsOMS.Uri.UriFactory.uri[match];
-            } else if (match.indexOf('#') === 0) {
-                return document.getElementById(match.substr(1)).value;
-            } else if (match.indexOf('?') === 0) {
-                return jsOMS.Uri.UriFactory.getUriQueryParameter(current.query, match.substr(1));
-            } else if (match.indexOf('/') === 0) {
-                // todo: second match should return second path
-                return 'ERROR PATH';
-            } else {
-                return match;
-            }
-        });
+        if (parsed.indexOf('?') === -1) {
+            parsed = parsed.replace('&', '?');
+        }
+
+        parsed = jsOMS.Uri.UriFactory.unique(parsed);
+
+        return parsed;
     };
 }(window.jsOMS = window.jsOMS || {}));
