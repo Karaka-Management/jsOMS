@@ -104,10 +104,29 @@
             this.callbacks[group].func();
 
             if (this.callbacks[group].remove) {
-                delete this.callbacks[group];
-                delete this.groups[group];
+                this.detach(group);
             }
         }
+    };
+
+    /**
+     * Detach event
+     *
+     * @param {string|int} group Group id
+     * @param {function} callback Callback
+     * @param {boolean} remove Should be removed after execution
+     *
+     * @return {void}
+     *
+     * @method
+     *
+     * @since 1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
+    jsOMS.Event.EventManager.prototype.detach = function (group)
+    {
+        delete this.callbacks[group];
+        delete this.groups[group];
     };
 
     /**
@@ -117,7 +136,7 @@
      * @param {function} callback Callback
      * @param {boolean} remove Should be removed after execution
      *
-     * @return {boolean}
+     * @return {void}
      *
      * @method
      *
@@ -129,5 +148,20 @@
         remove = typeof remove === 'undefined' ? false : remove;
 
         this.callbacks[group] = {remove: remove, func: callback};
+    };
+
+    /**
+     * Count events
+     *
+     * @return {int}
+     *
+     * @method
+     *
+     * @since 1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
+    jsOMS.Event.EventManager.prototype.count = function ()
+    {
+        return this.callbacks.length;
     };
 }(window.jsOMS = window.jsOMS || {}));
