@@ -33,15 +33,15 @@
      *
      * Adding the same event overwrites the existing one as "waiting"
      *
-     * @param {string|int} id Event id
      * @param {string|int} group Group id
+     * @param {string|int} id Event id
      *
      * @method
      *
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Event.EventManager.prototype.addGroup = function (id, group)
+    jsOMS.Event.EventManager.prototype.addGroup = function (group, id)
     {
         if (typeof this.groups[group] === 'undefined') {
             this.groups[group] = {};
@@ -84,8 +84,8 @@
      *
      * Executes the callback specified for this group if all events are finished
      *
-     * @param {string|int} id Event id
      * @param {string|int} group Group id
+     * @param {string|int} id Event id
      *
      * @return {boolean}
      *
@@ -94,8 +94,10 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Event.EventManager.prototype.trigger = function (id, group)
+    jsOMS.Event.EventManager.prototype.trigger = function (group, id)
     {
+        id = typeof id !== 'undefined' ? id : 0;
+
         if (typeof this.groups[group] !== 'undefined') {
             delete this.groups[group][id];
         }
@@ -145,9 +147,15 @@
      */
     jsOMS.Event.EventManager.prototype.attach = function (group, callback, remove)
     {
+        if(this.callbacks.hasOwnProperty(group)) {
+            return false;
+        }
+
         remove = typeof remove === 'undefined' ? false : remove;
 
         this.callbacks[group] = {remove: remove, func: callback};
+
+        return true;
     };
 
     /**
