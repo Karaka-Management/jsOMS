@@ -26,11 +26,22 @@
         this.remote  = typeof remote !== 'undefined' ? remote : false;
     };
 
-    jsOMS.Log.Logger.layout = '{datetime}; {level}; {version}; {os}; {browser}; {path}; {message}';
+    jsOMS.Log.Logger.instance = null;
+
+    jsOMS.Log.Logger.getInstance = function(verbose, ui, remote) 
+    {
+        if(!jsOMS.Log.Logger.instance) {
+            jsOMS.Log.Logger.instance = new jsOMS.Log.Logger(verbose, ui, remote);
+        }
+
+        return jsOMS.Log.Logger.instance;
+    };
+
+    jsOMS.Log.Logger.MSG_FULL = '{datetime}; {level}; {version}; {os}; {browser}; {path}; {message}';
 
     jsOMS.Log.Logger.prototype.interpolate = function (message, context, level)
     {
-        let newMessage = jsOMS.Log.Logger.layout;
+        let newMessage = jsOMS.Log.Logger.MSG_FULL;
 
         for (let replace in context) {
             if (context.hasOwnProperty(replace)) {
