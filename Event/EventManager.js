@@ -21,9 +21,9 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Event.EventManager = function (logger)
+    jsOMS.Event.EventManager = function ()
     {
-        this.logger    = logger;
+        this.logger    = jsOMS.Log.Logger.getInstance();
         this.groups    = {};
         this.callbacks = {};
     };

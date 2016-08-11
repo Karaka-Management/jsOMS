@@ -168,7 +168,7 @@
         for (let property in injects) {
             if (injects.hasOwnProperty(property)) {
                 counter++;
-                this.app.eventManager.addGroup(counter, form.getId());
+                this.app.eventManager.addGroup(form.getId(), counter);
                 injects[property](form.getElement(), counter, form.getId());
             } else {
                 this.app.logger.warning('Invalid property.');
@@ -176,7 +176,7 @@
         }
 
         if(counter === 0) {
-            this.app.eventManager.trigger('?', form.getId());
+            this.app.eventManager.trigger(form.getId());
         }
     };
 

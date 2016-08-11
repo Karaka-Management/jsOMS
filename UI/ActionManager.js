@@ -75,7 +75,7 @@
 
             for (let j = 1; j < actionLength; j++) {
                 // todo: right now one event type can only exist once... needs fixing!!!
-                this.app.eventManager.addGroup(listeners[i].action[j - 1].type, e.id + listeners[i].action[j - 1].type);
+                this.app.eventManager.addGroup(e.id + listeners[i].action[j - 1].type, listeners[i].action[j - 1].type);
                 this.app.eventManager.setDone(e.id + listeners[i].action[j - 1].type, function ()
                 {
                     // todo: how to pass result from previous action to next action?!
@@ -111,7 +111,7 @@
 
         this.actions[action.type](action, function ()
         {
-            self.app.eventManager.trigger(e.id, e.id + action.type, false);
+            self.app.eventManager.trigger(e.id + action.type, e.id);
         });
     };
 
