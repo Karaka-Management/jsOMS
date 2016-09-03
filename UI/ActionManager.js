@@ -109,6 +109,11 @@
         console.log(action.type);
         console.log(this.actions);
 
+        if (!this.actions.hasOwnProperty(action.type)) {
+            console.log('Undefined action ' + action.type);
+            return;
+        }
+
         this.actions[action.type](action, function ()
         {
             self.app.eventManager.trigger(e.id + action.type, e.id);

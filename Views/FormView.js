@@ -81,7 +81,7 @@
      */
     jsOMS.Views.FormView.prototype.getSubmit = function ()
     {
-        return document.getElementById(this.id).querySelectorAll('input[type=submit]')[0];
+        return document.getElementById(this.id).querySelectorAll('input[type=submit]');
     };
 
     /**

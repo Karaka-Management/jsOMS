@@ -110,11 +110,16 @@
 
         this.unbind(id);
 
-        this.forms[id].getSubmit().addEventListener('click', function (event)
-        {
-            jsOMS.preventAll(event);
-            self.submit(self.forms[id]);
-        });
+        let submits = this.forms[id].getSubmit(),
+            length = submits.length;
+
+        for(let i = 0; i < length; i++) {
+            submits[i].addEventListener('click', function (event)
+            {
+                jsOMS.preventAll(event);
+                self.submit(self.forms[id]);
+            });
+        }
     };
 
     /**
