@@ -23,7 +23,6 @@
      */
     jsOMS.Event.EventManager = function ()
     {
-        this.logger    = jsOMS.Log.Logger.getInstance();
         this.groups    = {};
         this.callbacks = {};
     };
