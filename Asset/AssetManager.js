@@ -22,6 +22,27 @@
     jsOMS.Asset.AssetManager = function ()
     {
         this.assets = {};
+        this.registerLoadedAssets();
+    };
+
+    /**
+     * Register all loaded assets.
+     *
+     * @return {void}
+     *
+     * @method
+     *
+     * @since 1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
+    jsOMS.Asset.AssetManager.prototype.registerLoadedAssets = function ()
+    {
+        let scripts = document.getElementsByTagName('script'),
+            length  = scripts.length;
+
+        for (let i = 0; i < length; i++) {
+            this.assets[jsOMS.hash(scripts[i].src)] = scripts[i].src;
+        }
     };
 
     /**
