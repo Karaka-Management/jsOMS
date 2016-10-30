@@ -23,76 +23,6 @@
     jsOMS.Uri.UriFactory.uri = {};
 
     /**
-     * Parse uri
-     *
-     * @param {string} str Url to parse
-     * @param {string} mode Parsing mode
-     *
-     * @return {Object}
-     *
-     * @throws {Error}
-     *
-     * @function
-     *
-     * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
-     */
-    jsOMS.Uri.UriFactory.parseUrl = function (str, mode)
-    {
-        mode = typeof mode === 'undefined' ? 'php' : mode;
-
-        let query, key = ['source', 'scheme', 'authority', 'userInfo', 'user', 'pass', 'host', 'port',
-                'relative', 'path', 'directory', 'file', 'query', 'fragment'
-            ],
-            parser     = {
-                php: /^(?:([^:\/?#]+):)?(?:\/\/()(?:(?:()(?:([^:@]*):?([^:@]*))?@)?([^:\/?#]*)(?::(\d*))?))?()(?:(()(?:(?:[^?#\/]*\/)*)()(?:[^?#]*))(?:\?([^#]*))?(?:#(.*))?)/,
-                strict: /^(?:([^:\/?#]+):)?(?:\/\/((?:(([^:@]*):?([^:@]*))?@)?([^:\/?#]*)(?::(\d*))?))?((((?:[^?#\/]*\/)*)([^?#]*))(?:\?([^#]*))?(?:#(.*))?)/,
-                loose: /^(?:(?![^:@]+:[^:@\/]*@)([^:\/?#.]+):)?(?:\/\/\/?)?((?:(([^:@]*):?([^:@]*))?@)?([^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/ // Added one optional slash to post-scheme to catch file:/// (should restrict this)
-            };
-
-        if (!parser.hasOwnProperty(mode)) {
-            throw new Error('Unexpected parsing mode.', 'UriFactory', 52);
-        }
-
-        let m   = parser[mode].exec(str),
-            uri = {},
-            i   = 14;
-
-        while (i--) {
-            if (m[i]) {
-                uri[key[i]] = m[i];
-            }
-        }
-
-        delete uri.source;
-
-        return uri;
-    };
-
-    /**
-     * Get Uri query parameters.
-     *
-     * @param {string} query Uri query
-     * @param {string} name Name of the query to return
-     *
-     * @return {null|string}
-     *
-     * @method
-     *
-     * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
-     */
-    jsOMS.Uri.UriFactory.getUriQueryParameter = function (query, name)
-    {
-        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-
-        let regex   = new RegExp("[\\?&]*" + name + "=([^&#]*)"),
-            results = regex.exec(query);
-
-        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-    };
-
-    /**
      * Set uri query
      *
      * @param {string} key Query key
@@ -183,8 +113,8 @@
      */
     jsOMS.Uri.UriFactory.build = function (uri, toMatch)
     {
-        let current = jsOMS.Uri.UriFactory.parseUrl(window.location.href),
-            parsed  = uri.replace(new RegExp('\{[\/#\?%@\.\$][a-zA-Z0-9\-]*\}', 'g'), function (match)
+        let current = jsOMS.Uri.Http.parseUrl(window.location.href);
+        let parsed  = uri.replace(new RegExp('\{[\/#\?%@\.\$][a-zA-Z0-9\-]*\}', 'g'), function (match)
             {
                 match = match.substr(1, match.length - 2);
 
@@ -195,7 +125,7 @@
                 } else if (match.indexOf('#') === 0) {
                     return document.getElementById(match.substr(1)).value;
                 } else if (match.indexOf('?') === 0) {
-                    return jsOMS.Uri.UriFactory.getUriQueryParameter(current.query, match.substr(1));
+                    return jsOMS.Uri.Http.getUriQueryParameter(current.query, match.substr(1));
                 } else if (match.indexOf('/') === 0) {
                     // todo: second match should return second path
                     return 'ERROR PATH';
