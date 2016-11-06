@@ -265,7 +265,7 @@
     {
         this.clean();
 
-        this.method = document.getElementById(this.id).method;
+        this.method = document.getElementById(this.id).attributes['method'].value;
         this.action = document.getElementById(this.id).action;
 
         let elements = this.getFormElements(),
