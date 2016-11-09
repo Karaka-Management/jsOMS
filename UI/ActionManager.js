@@ -42,7 +42,7 @@
      */
     jsOMS.UI.ActionManager.prototype.bind = function (id)
     {
-        let uiElements = typeof e === 'undefined' ? document.querySelectorAll('input, select, textarea, button') : [e],
+        let uiElements = typeof e === 'undefined' ? document.querySelectorAll('input, select, textarea, button, data') : [e],
             length     = uiElements.length;
 
         for (let i = 0; i < length; i++) {
@@ -74,6 +74,7 @@
             actionLength = listeners[i].action.length;
 
             for (let j = 1; j < actionLength; j++) {
+                // todo: handle onload action right after registering everything. this will be used for onload api calls in order to get content such as lists or models. Maybe in the main application after registering a invoke('onload') should be called if the application wants to execute the onload elements
                 // todo: right now one event type can only exist once... needs fixing!!!
                 this.app.eventManager.addGroup(e.id + listeners[i].action[j - 1].type, listeners[i].action[j - 1].type);
                 this.app.eventManager.setDone(e.id + listeners[i].action[j - 1].type, function ()

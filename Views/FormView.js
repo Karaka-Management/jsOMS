@@ -154,10 +154,17 @@
     {
         let data     = {},
             elements = this.getFormElements(),
-            length   = elements.length;
+            length   = elements.length,
+            value = null;
 
         for (let i = 0; i < length; i++) {
-            data[jsOMS.Views.FormView.getElementId(elements[i])] = elements[i].value;
+            if(elements[i].tagName.toLowerCase() === 'canvas') {
+                value = elements[i].toDataUrl();
+            } else {
+                value = elements[i].value;
+            }
+
+            data[jsOMS.Views.FormView.getElementId(elements[i])] = value;
         }
 
         return data;
