@@ -49,6 +49,39 @@
         return false;
     };
 
+    jsOMS.Uri.UriFactory.clearAll = function() 
+    {
+        jsOMS.Uri.UriFactory.uri = {};
+
+        return true;
+    };
+
+    jsOMS.Uri.UriFactory.clear = function(key)
+    {
+        if(jsOMS.Uri.UriFactory.uri.hasOwnProperty(key)) {
+            delete jsOMS.Uri.UriFactory.uri[key];
+
+            return true;
+        }
+
+        return false;
+    };
+
+    jsOMS.Uri.UriFactory.clearLike = function(pattern) 
+    {
+        let success = false,
+            regexp = new Regexp(pattern);
+
+        for(let key in jsOMS.Uri.UriFactory.uri) {
+            if(jsOMS.Uri.UriFactory.uri.hasOwnProperty(key) && regexp.test(key)) {
+                delete jsOMS.Uri.UriFactory.uri[key];
+                success = true;
+            }
+        }
+
+        return success;
+    };
+
     /**
      * Remove multiple definitions of the same parameter
      *
