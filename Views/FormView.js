@@ -159,7 +159,7 @@
 
         for (let i = 0; i < length; i++) {
             if(elements[i].tagName.toLowerCase() === 'canvas') {
-                value = elements[i].toDataUrl();
+                value = elements[i].toDataURL('image/png');
             } else {
                 value = elements[i].value;
             }
