@@ -29,7 +29,7 @@
         this.tabManager    = new jsOMS.UI.TabManager(this.app.responseManager);
         this.tableManager  = new jsOMS.UI.TableManager(this.app.responseManager);
         this.actionManager = new jsOMS.UI.ActionManager(this.app);
-
+        this.dragNDrop     = new jsOMS.UI.DragNDrop(this.app);
     };
 
     /**
@@ -49,6 +49,7 @@
             this.tabManager.bind();
             this.tableManager.bind();
             this.actionManager.bind();
+            this.dragNDrop.bind();
         } else {
             let tag = document.getElementById(id);
 
@@ -88,6 +89,11 @@
     jsOMS.UI.UIManager.prototype.getActionManager = function ()
     {
         return this.actionManager;
+    };
+
+    jsOMS.UI.UIManager.prototype.getDragNDrop = function ()
+    {
+        return this.dragNDrop;
     };
 
     /**
