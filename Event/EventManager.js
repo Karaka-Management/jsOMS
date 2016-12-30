@@ -93,7 +93,7 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Event.EventManager.prototype.trigger = function (group, id)
+    jsOMS.Event.EventManager.prototype.trigger = function (group, id, reset)
     {
         id = typeof id !== 'undefined' ? id : 0;
 
