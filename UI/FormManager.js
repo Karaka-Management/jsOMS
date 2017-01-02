@@ -79,7 +79,7 @@
         if (typeof id !== 'undefined' && typeof this.ignore[id] === 'undefined') {
             this.bindForm(id);
         } else {
-            let forms  = document.getElementsByTagName('form'),
+            const forms  = document.getElementsByTagName('form'),
                 length = forms.length;
 
             for (var i = 0; i < length; i++) {
@@ -105,12 +105,12 @@
             return;
         }
 
-        let self       = this;
+        const self       = this;
         this.forms[id] = new jsOMS.Views.FormView(id);
 
         this.unbind(id);
 
-        let submits = this.forms[id].getSubmit(),
+        const submits = this.forms[id].getSubmit(),
             length = submits.length;
 
         for(let i = 0; i < length; i++) {
@@ -158,9 +158,9 @@
     jsOMS.UI.FormManager.prototype.submit = function (form)
     {
         /* Handle injects */
-        let self    = this,
-            injects = form.getSubmitInjects(),
-            counter = 0;
+        const self    = this,
+            injects = form.getSubmitInjects();
+        let counter = 0;
 
         // todo: test if attach necessary (maybe already attached in event manager)
         // Register normal form behavior
@@ -203,7 +203,7 @@
         }
 
         /* Handle default submit */
-        let request = new jsOMS.Message.Request.Request(),
+        const request = new jsOMS.Message.Request.Request(),
             self    = this;
 
         request.setData(form.getData());
@@ -214,10 +214,10 @@
         request.setSuccess(function (xhr)
         {
             try {
-                let o              = JSON.parse(xhr.response),
+                const o              = JSON.parse(xhr.response),
                     response       = new jsOMS.Message.Response.Response(o),
-                    responseLength = response.count(),
-                    tempResponse   = null,
+                    responseLength = response.count();
+                let tempResponse   = null,
                     success        = null;
 
                 /* Handle responses (can be multiple response object) */

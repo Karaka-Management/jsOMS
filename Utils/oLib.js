@@ -268,7 +268,7 @@
      */
     jsOMS.addEventListenerToAll = function (e, event, callback)
     {
-        let length = e.length;
+        const length = e.length;
 
         for (let i = 0; i < length; i++) {
             e[i].addEventListener(event, callback);
@@ -290,7 +290,7 @@
      */
     jsOMS.merge = function (target, source)
     {
-        let out = jsOMS.clone(target);
+        const out = jsOMS.clone(target);
 
         for (let p in source) {
             if (source.hasOwnProperty(p)) {

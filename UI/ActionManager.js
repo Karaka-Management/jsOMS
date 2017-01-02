@@ -42,7 +42,7 @@
      */
     jsOMS.UI.ActionManager.prototype.bind = function (id)
     {
-        let uiElements = typeof e === 'undefined' ? document.querySelectorAll('input, select, textarea, button, data') : [e],
+        const uiElements = typeof e === 'undefined' ? document.querySelectorAll('input, select, textarea, button, data') : [e],
             length     = uiElements.length;
 
         for (let i = 0; i < length; i++) {
@@ -64,10 +64,11 @@
      */
     jsOMS.UI.ActionManager.prototype.bindElement = function (e)
     {
-        let listeners      = JSON.parse(e.getAttribute('data-action')),
+        const listeners      = JSON.parse(e.getAttribute('data-action')),
             listenerLength = listeners.length,
-            actionLength   = 0,
             self           = this;
+
+        let actionLength   = 0;
 
         // For everey action an event is registered
         for (let i = 0; i < listenerLength; i++) {
@@ -105,7 +106,7 @@
      */
     jsOMS.UI.ActionManager.prototype.runAction = function (e, action)
     {
-        let self = this;
+        const self = this;
 
         console.log(action.type);
         console.log(this.actions);

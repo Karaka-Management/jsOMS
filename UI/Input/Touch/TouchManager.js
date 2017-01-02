@@ -52,12 +52,12 @@
      */
     jsOMS.UI.Input.Touch.TouchManager.prototype.add = function (surface)
     {
-        let e    = document.getElementById(surface),
+        const e    = document.getElementById(surface),
             self = this;
 
         e.addEventListener('touchstart', function (event)
         {
-            let touch = this.changedTouches[0];
+            const touch = this.changedTouches[0];
 
             self.activeSwipe.startX = touch.pageX;
             self.activeSwipe.startY = touch.pageY;
@@ -73,7 +73,7 @@
 
         e.addEventListener('touchend', function (event)
         {
-            let touch       = this.changedTouches[0],
+            const touch       = this.changedTouches[0],
                 distX       = touch.pageX - self.activeSwipe.startX,
                 distY       = touch.pageY - self.activeSwipe.startY,
                 elapsedTime = new Date().getTime() - self.activeSwipe.time;
@@ -105,7 +105,7 @@
                 
                 document.dispatchEvent(rightClick);
             } else if (elapsedTime < 500) {
-                let e = new Event('keyup');
+                const e = new Event('keyup');
 
                 if (distY > 100) {
                     e.keyCode = 38;

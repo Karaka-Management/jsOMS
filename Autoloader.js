@@ -30,8 +30,8 @@
             let paths = namespace.split('.');
             paths.splice(0, 1);
 
-            let length  = paths.length,
-                current = jsOMS;
+            const length  = paths.length;
+            let current = jsOMS;
 
             for (let i = 0; i < length; i++) {
                 if (typeof current[paths[i]] === 'undefined') {
@@ -53,7 +53,7 @@
      */
     jsOMS.Autoloader.initPreloaded = function ()
     {
-        let scripts = document.getElementsByTagName('script'),
+        const scripts = document.getElementsByTagName('script'),
             length  = scripts.length;
 
         for (let i = 0; i < length; i++) {
@@ -93,7 +93,7 @@
      */
     jsOMS.Autoloader.include = function (file, callback)
     {
-        let length = file.length;
+        const length = file.length;
 
         for (let i = 0; i < length; i++) {
             if (jsOMS.Autoloader.loaded.indexOf(file) === -1) {

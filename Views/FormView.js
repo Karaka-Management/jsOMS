@@ -133,7 +133,7 @@
      */
     jsOMS.Views.FormView.prototype.getFormElements = function ()
     {
-        let form      = document.getElementById(this.id),
+        const form      = document.getElementById(this.id),
             selects   = form.getElementsByTagName('select'),
             textareas = form.getElementsByTagName('textarea'),
             inputs    = form.getElementsByTagName('input'),
@@ -152,10 +152,11 @@
      */
     jsOMS.Views.FormView.prototype.getData = function ()
     {
-        let data     = {},
+        const data     = {},
             elements = this.getFormElements(),
-            length   = elements.length,
-            value = null;
+            length   = elements.length;
+
+        let value = null;
 
         for (let i = 0; i < length; i++) {
             if(elements[i].tagName.toLowerCase() === 'canvas') {
@@ -193,7 +194,7 @@
      */
     jsOMS.Views.FormView.prototype.isValid = function ()
     {
-        let elements = this.getFormElements(),
+        const elements = this.getFormElements(),
             length   = elements.length;
 
         try {
@@ -275,7 +276,7 @@
         this.method = document.getElementById(this.id).attributes['method'].value;
         this.action = document.getElementById(this.id).action;
 
-        let elements = this.getFormElements(),
+        const elements = this.getFormElements(),
             length   = elements.length;
 
         for (let i = 0; i < length; i++) {
@@ -304,7 +305,7 @@
      */
     jsOMS.Views.FormView.prototype.unbind = function ()
     {
-        let elements = this.getFormElements(),
+        const elements = this.getFormElements(),
             length   = elements.length;
 
         for (let i = 0; i < length; i++) {

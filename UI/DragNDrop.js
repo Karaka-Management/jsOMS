@@ -51,7 +51,7 @@
          if (typeof id !== 'undefined') {
             this.bindElement(id);
         } else {
-            let elements = document.querySelectorAll('[draggable]'),
+            const elements = document.querySelectorAll('[draggable]'),
                 length = elements.length;
 
             for (var i = 0; i < length; i++) {
@@ -72,7 +72,7 @@
      */
     jsOMS.UI.DragNDrop.prototype.bindElement = function (id)
     {
-        let element = document.getElementById(id);
+        const element = document.getElementById(id);
         console.log(id);
 
         element.addEventListener('dragstart', function(event) {

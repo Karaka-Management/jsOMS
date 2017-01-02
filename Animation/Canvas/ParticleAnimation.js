@@ -65,7 +65,7 @@
         self = typeof self !== 'undefined' ? self : this;
         self.invalidate();
 
-        let length = self.particles.length;
+        const length = self.particles.length;
 
         for (let i = 0; i < length; i++) {
             self.particles[i].draw(self.ctx);
@@ -106,10 +106,11 @@
     jsOMS.Animation.Canvas.ParticleAnimation.prototype.updateParticles = function ()
     {
         let particle,
-            length = this.particles.length,
             pos,
             vel,
             radius;
+
+        const length = this.particles.length;
 
         for (let i = 0; i < length; i++) {
             particle = this.particles[i];
@@ -157,12 +158,13 @@
      */
     jsOMS.Animation.Canvas.ParticleAnimation.prototype.updateDistance = function (p1, p2)
     {
-        let pos1 = p1.getPosition(),
+        const pos1 = p1.getPosition(),
             pos2 = p2.getPosition(),
             dx   = pos1.x - pos2.x,
             dy   = pos1.y - pos2.y,
-            dist = Math.sqrt(dx * dx + dy * dy),
-            vel1 = p1.getVelocity(),
+            dist = Math.sqrt(dx * dx + dy * dy);
+
+        let vel1 = p1.getVelocity(),
             vel2 = p2.getVelocity();
 
         // Draw line if particles are close

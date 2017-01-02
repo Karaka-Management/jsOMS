@@ -59,12 +59,12 @@
      */
     jsOMS.UI.TabManager.prototype.bindElement = function (e)
     {
-        var nodes = e.querySelectorAll('.tab-links a');
+        const nodes = e.querySelectorAll('.tab-links a');
 
         nodes.addEventListener('click', function (evt)
         {
             /* Change Tab */
-            var attr = this.getAttribute('href').substring(1),
+            const attr = this.getAttribute('href').substring(1),
                 cont = this.parentNode.parentNode.parentNode.children[1];
 
             jsOMS.removeClass(jsOMS.getByClass(this.parentNode.parentNode, 'active'), 'active');

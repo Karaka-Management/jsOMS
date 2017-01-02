@@ -51,7 +51,7 @@
             this.actionManager.bind();
             this.dragNDrop.bind();
         } else {
-            let tag = document.getElementById(id);
+            const tag = document.getElementById(id);
 
             switch (tag.tagName) {
                 case 'form':

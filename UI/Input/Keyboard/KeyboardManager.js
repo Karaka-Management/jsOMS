@@ -57,7 +57,7 @@
      */
     jsOMS.UI.Input.Keyboard.KeyboardManager.prototype.bind = function (element)
     {
-        let self = this;
+        const self = this;
 
         // todo: implement keyboard for selected elements right now only global hotkeys possible
         document.addEventListener('keydown', function keyBind(event)
@@ -89,10 +89,10 @@
             throw 'Unexpected elmenet!';
         }
 
-        let actions   = this.elements[element],
+        const actions   = this.elements[element],
             length    = actions.length,
-            keyLength = this.down.length,
-            match     = false;
+            keyLength = this.down.length;
+        let match     = false;
 
         for (let i = 0; i < length; i++) {
             for (let j = 0; j < keyLength; j++) {

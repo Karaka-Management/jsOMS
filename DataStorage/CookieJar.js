@@ -41,9 +41,9 @@
      */
     jsOMS.DataStorage.CookieJar.prototype.setCookie = function (cName, value, exdays, domain, path)
     {
-        var exdate = new Date();
+        const exdate = new Date();
         exdate.setDate(exdate.getDate() + exdays);
-        var cValue = encodeURI(value) + ((exdays === null) ? "" : "; expires=" + exdate.toUTCString()) + ";domain=" + domain + ";path=" + path;
+        const cValue = encodeURI(value) + ((exdays === null) ? "" : "; expires=" + exdate.toUTCString()) + ";domain=" + domain + ";path=" + path;
         document.cookie = cName + "=" + cValue;
     };
 
@@ -61,8 +61,8 @@
      */
     jsOMS.DataStorage.CookieJar.prototype.getCookie = function (cName)
     {
-        var cValue = document.cookie;
-        var cStart = cValue.indexOf(" " + cName + "=");
+        let cValue = document.cookie,
+            cStart = cValue.indexOf(" " + cName + "=");
 
         if (cStart === -1) {
             cStart = cValue.indexOf(cName + "=");
@@ -72,7 +72,7 @@
             cValue = null;
         } else {
             cStart = cValue.indexOf("=", cStart) + 1;
-            var cEnd = cValue.indexOf(";", cStart);
+            let cEnd = cValue.indexOf(";", cStart);
 
             if (cEnd === -1) {
                 cEnd = cValue.length;

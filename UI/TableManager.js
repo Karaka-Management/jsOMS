@@ -39,7 +39,7 @@
         if (typeof id !== 'undefined') {
             this.bindElement(document.getElementById(id));
         } else {
-            var tables = document.querySelectorAll('.tables');
+            const tables = document.querySelectorAll('.tables');
 
             for (var i = 0; i < tables.length; i++) {
                 this.bindElement(tables[i]);

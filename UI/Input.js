@@ -42,7 +42,7 @@
             throw 'Input element required'
         }
 
-        let self = this;
+        const self = this;
 
         input.addEventListener('change', function changeBind(event)
         {
@@ -96,7 +96,7 @@
     {
         this.clearDatalistOptions(datalist);
 
-        let request = new jsOMS.Message.Request();
+        const request = new jsOMS.Message.Request();
         request.setData(input.value);
         request.setType(jsOMS.Message.Response.ResponseType.JSON);
         request.setUri(datalist.getAttribute('data-list-src'));
@@ -105,10 +105,10 @@
         request.setSuccess(function (xhr)
         {
             try {
-                let o              = JSON.parse(xhr.response),
+                const o              = JSON.parse(xhr.response),
                     response       = new jsOMS.Message.Response(o),
-                    responseLength = response.count(),
-                    tempResponse   = null,
+                    responseLength = response.count();
+                let tempResponse   = null,
                     success        = null;
 
                 for (let k = 0; k < responseLength; k++) {
@@ -146,7 +146,7 @@
      */
     jsOMS.UI.Input.clearDatalistOptions = function (datalist)
     {
-        let length = datalist.options.length;
+        const length = datalist.options.length;
 
         for (let i = 0; i < length; i++) {
             datalist.remove(0);

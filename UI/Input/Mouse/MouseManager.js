@@ -59,7 +59,7 @@
      */
     jsOMS.UI.Input.Mouse.MouseManager.prototype.bind = function (element, type)
     {
-        let self = this,
+        const self = this,
             e    = document.getElementById(element);
 
         if (e === null) {
@@ -79,7 +79,7 @@
 
             e.addEventListener('mouseup', function (event)
             {
-                let duration = new Date().getTime() - self.click.time;
+                const duration = new Date().getTime() - self.click.time;
 
                 if (duration > 650) {
                     self.run(element, event);
@@ -110,7 +110,7 @@
             throw 'Unexpected elmenet!';
         }
 
-        let actions = this.elements[element],
+        const actions = this.elements[element],
             length  = actions.length;
 
         for (let i = 0; i < length; i++) {

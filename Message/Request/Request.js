@@ -326,12 +326,13 @@
      */
     jsOMS.Message.Request.Request.prototype.queryfy = function (obj)
     {
-        let str = [];
+        const str = [];
         for (let p in obj) {
             if (obj.hasOwnProperty(p)) {
                 str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
             }
         }
+        
         return str.join("&");
     };
 
@@ -347,7 +348,7 @@
      */
     jsOMS.Message.Request.Request.prototype.send = function ()
     {
-        let self = this;
+        const self = this;
 
         if (self.xhr.readyState !== 1) {
             self.xhr.open(this.method, jsOMS.Uri.UriFactory.build(this.uri));

@@ -55,7 +55,7 @@
     {
         mode = typeof mode === 'undefined' ? 'php' : mode;
 
-        let query, key = ['source', 'scheme', 'authority', 'userInfo', 'user', 'pass', 'host', 'port',
+        const key = ['source', 'scheme', 'authority', 'userInfo', 'user', 'pass', 'host', 'port',
                 'relative', 'path', 'directory', 'file', 'query', 'fragment'
             ],
             parser     = {
@@ -68,9 +68,9 @@
             throw new Error('Unexpected parsing mode.', 'UriFactory', 52);
         }
 
-        let m   = parser[mode].exec(str),
-            uri = {},
-            i   = 14;
+        const m   = parser[mode].exec(str),
+            uri = {};
+        let i   = 14;
 
         while (i--) {
             if (m[i]) {
@@ -100,7 +100,7 @@
     {
         name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
 
-        let regex   = new RegExp("[\\?&]*" + name + "=([^&#]*)"),
+        const regex   = new RegExp("[\\?&]*" + name + "=([^&#]*)"),
             results = regex.exec(query);
 
         return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
@@ -108,15 +108,15 @@
 
     jsOMS.Uri.Http.getAllUriQueryParameters = function (query)
     {
-        let keyValPairs = [],
-            params      = {},
-            pairNum     = null;
+        const keyValPairs = [],
+            params      = {};
+        let pairNum     = null;
 
         if (query.length) {
             keyValPairs = query.split('&');
 
             for (pairNum in keyValPairs) {
-                let key = keyValPairs[pairNum].split('=')[0];
+                const key = keyValPairs[pairNum].split('=')[0];
 
                 if (!key.length) {
                     continue;
@@ -137,7 +137,7 @@
     {
         this.uri = uri;
 
-        let parsed = jsOMS.Uri.Http.parseUrl(this.uri, 'php');
+        const parsed = jsOMS.Uri.Http.parseUrl(this.uri, 'php');
 
         this.scheme = parsed['scheme'];
         this.host   = parsed['host'];
