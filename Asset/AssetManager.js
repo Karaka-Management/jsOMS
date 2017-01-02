@@ -37,7 +37,7 @@
      */
     jsOMS.Asset.AssetManager.prototype.registerLoadedAssets = function ()
     {
-        let scripts = document.getElementsByTagName('script'),
+        const scripts = document.getElementsByTagName('script'),
             length  = scripts.length;
 
         for (let i = 0; i < length; i++) {
