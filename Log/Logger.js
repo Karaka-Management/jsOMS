@@ -15,6 +15,10 @@
 
     /**
      * @constructor
+     * 
+     * @param {boolean} verbose Verbose logging
+     * @param {boolean} ui Ui logging
+     * @param {boolean} remote Remote logging
      *
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
@@ -28,6 +32,20 @@
 
     jsOMS.Log.Logger.instance = null;
 
+    /**
+     * Get logging instance
+     *
+     * @param {boolean} verbose Verbose logging
+     * @param {boolean} ui Ui logging
+     * @param {boolean} remote Remote logging
+     * 
+     * @return {Object}
+     *
+     * @method
+     *
+     * @since  1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.Log.Logger.getInstance = function(verbose, ui, remote) 
     {
         if(!jsOMS.Log.Logger.instance) {
@@ -39,6 +57,20 @@
 
     jsOMS.Log.Logger.MSG_FULL = '{datetime}; {level}; {version}; {os}; {browser}; {path}; {message}';
 
+    /**
+     * Interpolate message
+     *
+     * @param {string} message Message structure
+     * @param {Object} context Context to put into message
+     * @param {string} level Log level
+     * 
+     * @return {string}
+     *
+     * @method
+     *
+     * @since  1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.Log.Logger.prototype.interpolate = function (message, context, level)
     {
         let newMessage = jsOMS.Log.Logger.MSG_FULL;
@@ -52,6 +84,20 @@
         return newMessage;
     };
 
+    /**
+     * Create context
+     *
+     * @param {string} message Message to display
+     * @param {Object} context Context to put into message
+     * @param {string} level Log level
+     * 
+     * @return {Object}
+     *
+     * @method
+     *
+     * @since  1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.Log.Logger.prototype.createContext = function (message, context, level)
     {
         context.datetime = (new Date()).toISOString();
@@ -65,6 +111,20 @@
         return context;
     };
 
+    /**
+     * Create log message
+     *
+     * @param {string} message Message to display
+     * @param {Object} context Context to put into message
+     * @param {string} level Log level
+     * 
+     * @return {void}
+     *
+     * @method
+     *
+     * @since  1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.Log.Logger.prototype.write = function (message, context, level)
     {
         context = this.createContext(message, context, level);
@@ -113,6 +173,19 @@
         }
     };
 
+    /**
+     * Create log message
+     *
+     * @param {string} message Message to display
+     * @param {Object} context Context to put into message
+     * 
+     * @return {void}
+     *
+     * @method
+     *
+     * @since  1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.Log.Logger.prototype.emergency = function (message, context)
     {
         context = typeof context === 'undefined' ? {} : context;
@@ -120,6 +193,19 @@
         this.write(message, context, jsOMS.Log.LogLevel.EMERGENCY);
     };
 
+    /**
+     * Create log message
+     *
+     * @param {string} message Message to display
+     * @param {Object} context Context to put into message
+     * 
+     * @return {void}
+     *
+     * @method
+     *
+     * @since  1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.Log.Logger.prototype.alert = function (message, context)
     {
         context = typeof context === 'undefined' ? {} : context;
@@ -127,6 +213,19 @@
         this.write(message, context, jsOMS.Log.LogLevel.ALERT);
     };
 
+    /**
+     * Create log message
+     *
+     * @param {string} message Message to display
+     * @param {Object} context Context to put into message
+     * 
+     * @return {void}
+     *
+     * @method
+     *
+     * @since  1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.Log.Logger.prototype.critical = function (message, context)
     {
         context = typeof context === 'undefined' ? {} : context;
@@ -134,6 +233,19 @@
         this.write(message, context, jsOMS.Log.LogLevel.CRITICAL);
     };
 
+    /**
+     * Create log message
+     *
+     * @param {string} message Message to display
+     * @param {Object} context Context to put into message
+     * 
+     * @return {void}
+     *
+     * @method
+     *
+     * @since  1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.Log.Logger.prototype.error = function (message, context)
     {
         context = typeof context === 'undefined' ? {} : context;
@@ -141,6 +253,19 @@
         this.write(message, context, jsOMS.Log.LogLevel.ERROR);
     };
 
+    /**
+     * Create log message
+     *
+     * @param {string} message Message to display
+     * @param {Object} context Context to put into message
+     * 
+     * @return {void}
+     *
+     * @method
+     *
+     * @since  1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.Log.Logger.prototype.warning = function (message, context)
     {
         context = typeof context === 'undefined' ? {} : context;
@@ -148,6 +273,19 @@
         this.write(message, context, jsOMS.Log.LogLevel.WARNING);
     };
 
+    /**
+     * Create log message
+     *
+     * @param {string} message Message to display
+     * @param {Object} context Context to put into message
+     * 
+     * @return {void}
+     *
+     * @method
+     *
+     * @since  1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.Log.Logger.prototype.notice = function (message, context)
     {
         context = typeof context === 'undefined' ? {} : context;
@@ -155,6 +293,19 @@
         this.write(message, context, jsOMS.Log.LogLevel.NOTICE);
     };
 
+    /**
+     * Create log message
+     *
+     * @param {string} message Message to display
+     * @param {Object} context Context to put into message
+     * 
+     * @return {void}
+     *
+     * @method
+     *
+     * @since  1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.Log.Logger.prototype.info = function (message, context)
     {
         context = typeof context === 'undefined' ? {} : context;
@@ -162,6 +313,19 @@
         this.write(message, context, jsOMS.Log.LogLevel.INFO);
     };
 
+    /**
+     * Create log message
+     *
+     * @param {string} message Message to display
+     * @param {Object} context Context to put into message
+     * 
+     * @return {void}
+     *
+     * @method
+     *
+     * @since  1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.Log.Logger.prototype.debug = function (message, context)
     {
         context = typeof context === 'undefined' ? {} : context;
@@ -169,6 +333,20 @@
         this.write(message, context, jsOMS.Log.LogLevel.DEBUG);
     };
 
+    /**
+     * Create log message
+     *
+     * @param {string} level Log level
+     * @param {string} message Message to display
+     * @param {Object} context Context to put into message
+     * 
+     * @return {void}
+     *
+     * @method
+     *
+     * @since  1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.Log.Logger.prototype.log = function (level, message, context)
     {
         context = typeof context === 'undefined' ? {} : context;
@@ -176,6 +354,19 @@
         this.write(message, context, context);
     };
 
+    /**
+     * Create log message
+     *
+     * @param {string} message Message to display
+     * @param {Object} context Context to put into message
+     * 
+     * @return {void}
+     *
+     * @method
+     *
+     * @since  1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.Log.Logger.prototype.console = function (level, message, context)
     {
         context = typeof context === 'undefined' ? {} : context;

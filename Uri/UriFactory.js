@@ -49,6 +49,16 @@
         return false;
     };
 
+    /**
+     * Clear all uri components
+     *
+     * @return {boolean}
+     *
+     * @method
+     *
+     * @since  1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.Uri.UriFactory.clearAll = function() 
     {
         jsOMS.Uri.UriFactory.uri = {};
@@ -56,6 +66,18 @@
         return true;
     };
 
+    /**
+     * Clear uri component
+     *
+     * @param {string} key Uri key for component
+     * 
+     * @return {boolean}
+     *
+     * @method
+     *
+     * @since  1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.Uri.UriFactory.clear = function(key)
     {
         if(jsOMS.Uri.UriFactory.uri.hasOwnProperty(key)) {
@@ -67,6 +89,18 @@
         return false;
     };
 
+    /**
+     * Clear uri components that follow a certain pattern
+     *
+     * @param {string} pattern Uri key pattern to remove
+     * 
+     * @return {boolean}
+     *
+     * @method
+     *
+     * @since  1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.Uri.UriFactory.clearLike = function(pattern) 
     {
         let success = false;

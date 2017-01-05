@@ -81,16 +81,31 @@
         return this.formManager;
     };
 
-    jsOMS.UI.UIManager.prototype.getButton = function ()
-    {
-        return this.button;
-    };
-
+    /**
+     * Get action manager.
+     *
+     * @return {Object}
+     *
+     * @method
+     *
+     * @since  1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.UI.UIManager.prototype.getActionManager = function ()
     {
         return this.actionManager;
     };
 
+    /**
+     * Get drag and drop manager.
+     *
+     * @return {Object}
+     *
+     * @method
+     *
+     * @since  1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.UI.UIManager.prototype.getDragNDrop = function ()
     {
         return this.dragNDrop;

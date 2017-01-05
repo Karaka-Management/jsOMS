@@ -106,6 +106,18 @@
         return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
     };
 
+    /**
+     * Get all uri query parameters.
+     *
+     * @param {string} query Uri query
+     *
+     * @return {Object}
+     *
+     * @method
+     *
+     * @since  1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.Uri.Http.getAllUriQueryParameters = function (query)
     {
         const keyValPairs = [],
@@ -133,6 +145,18 @@
         return params;
     };
 
+    /**
+     * Set uri.
+     *
+     * @param {string} uri Uri string
+     *
+     * @return {void}
+     *
+     * @method
+     *
+     * @since  1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.Uri.Http.prototype.set = function (uri)
     {
         this.uri = uri;
@@ -162,6 +186,16 @@
         this.setupUriBuilder();
     };
 
+    /**
+     * Set uri builder components.
+     *
+     * @return {void}
+     *
+     * @method
+     *
+     * @since  1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.Uri.Http.prototype.setupUriBuilder = function ()
     {
         jsOMS.Uri.UriFactory.setQuery('/scheme', this.scheme);
