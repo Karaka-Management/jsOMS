@@ -1,8 +1,11 @@
 (function (jsOMS)
 {
     "use strict";
+
+    /** @namespace jsOMS.Chart */
+    jsOMS.Autoloader.defineNamespace('jsOMS.Chart');
     
-    jsOMS.Chart = function (id)
+    jsOMS.Chart.ChartAbstract = function (id)
     {
         this.chartId = id;
         this.chartSelect = d3.select('#' + this.chartId);
@@ -59,7 +62,7 @@
         this.clean();
     };
 
-    jsOMS.Chart.prototype.calculateHorizontalPosition = function (position)
+    jsOMS.Chart.ChartAbstract.prototype.calculateHorizontalPosition = function (position)
     {
         let x = 0;
         if (position === 'center') {
@@ -77,7 +80,7 @@
         return x;
     };
 
-    jsOMS.Chart.prototype.calculateVerticalPosition = function (position)
+    jsOMS.Chart.ChartAbstract.prototype.calculateVerticalPosition = function (position)
     {
         let y = 0;
         if (position === 'center') {
@@ -97,17 +100,17 @@
         return y;
     };
 
-    jsOMS.Chart.prototype.setColor = function (color)
+    jsOMS.Chart.ChartAbstract.prototype.setColor = function (color)
     {
         this.color = color;
     };
 
-    jsOMS.Chart.prototype.getColor = function ()
+    jsOMS.Chart.ChartAbstract.prototype.getColor = function ()
     {
         return this.color;
     };
 
-    jsOMS.Chart.prototype.setAxis = function (id, axis)
+    jsOMS.Chart.ChartAbstract.prototype.setAxis = function (id, axis)
     {
         this.axis[id] = jsOMS.merge(this.axis[id], axis);
 
@@ -123,95 +126,95 @@
         }
     };
 
-    jsOMS.Chart.prototype.setMargin = function (top, right, bottom, left)
+    jsOMS.Chart.ChartAbstract.prototype.setMargin = function (top, right, bottom, left)
     {
         this.margin = {top: top, right: right, bottom: bottom, left: left};
     };
 
-    jsOMS.Chart.prototype.setDimension = function (width, height)
+    jsOMS.Chart.ChartAbstract.prototype.setDimension = function (width, height)
     {
         this.dimension = {width: width, height: height};
     };
 
-    jsOMS.Chart.prototype.getDimension = function ()
+    jsOMS.Chart.ChartAbstract.prototype.getDimension = function ()
     {
         return this.dimension;
     };
 
-    jsOMS.Chart.prototype.setDimensionRelative = function (relative)
+    jsOMS.Chart.ChartAbstract.prototype.setDimensionRelative = function (relative)
     {
         this.relative = relative;
     };
 
-    jsOMS.Chart.prototype.setTitle = function (title)
+    jsOMS.Chart.ChartAbstract.prototype.setTitle = function (title)
     {
         this.title = jsOMS.merge(this.title, title);
     };
 
-    jsOMS.Chart.prototype.getTitle = function ()
+    jsOMS.Chart.ChartAbstract.prototype.getTitle = function ()
     {
         return this.title;
     };
 
-    jsOMS.Chart.prototype.setSubtitle = function (subtitle)
+    jsOMS.Chart.ChartAbstract.prototype.setSubtitle = function (subtitle)
     {
         this.subtitle = subtitle;
     };
 
-    jsOMS.Chart.prototype.getSubtitle = function ()
+    jsOMS.Chart.ChartAbstract.prototype.getSubtitle = function ()
     {
         return this.subtitle;
     };
 
-    jsOMS.Chart.prototype.setFooter = function (footer)
+    jsOMS.Chart.ChartAbstract.prototype.setFooter = function (footer)
     {
         this.footer = footer;
     };
 
-    jsOMS.Chart.prototype.getFooter = function ()
+    jsOMS.Chart.ChartAbstract.prototype.getFooter = function ()
     {
         return this.footer;
     };
 
-    jsOMS.Chart.prototype.setSubtype = function (subtype)
+    jsOMS.Chart.ChartAbstract.prototype.setSubtype = function (subtype)
     {
         this.subtype = subtype;
     };
 
-    jsOMS.Chart.prototype.getSubtype = function ()
+    jsOMS.Chart.ChartAbstract.prototype.getSubtype = function ()
     {
         return this.subtype;
     };
 
-    jsOMS.Chart.prototype.setLegend = function (legend)
+    jsOMS.Chart.ChartAbstract.prototype.setLegend = function (legend)
     {
         this.legend = jsOMS.merge(this.legend, legend);
     };
 
-    jsOMS.Chart.prototype.getLegend = function ()
+    jsOMS.Chart.ChartAbstract.prototype.getLegend = function ()
     {
         if (!this.legend) {
-            this.legend = new jsOMS.ChartLegend();
+            this.legend = new jsOMS.Chart.ChartAbstractLegend();
         }
 
         return this.legend;
     };
 
-    jsOMS.Chart.prototype.addDataset = function (dataset)
+    jsOMS.Chart.ChartAbstract.prototype.addDataset = function (dataset)
     {
         this.dataset.push(dataset);
 
         this.findAxisDomain();
     };
 
-    jsOMS.Chart.prototype.setData = function (data)
+    jsOMS.Chart.ChartAbstract.prototype.setData = function (data)
     {
         this.dataset = data;
 
         this.findAxisDomain();
     };
 
-    jsOMS.Chart.prototype.findAxisDomain = function ()
+    jsOMS.Chart.ChartAbstract.prototype.findAxisDomain = function ()
     {
         for (let id in this.axis) {
             this.axis[id].max = d3.max(this.dataset, function (m)
@@ -232,12 +235,12 @@
         }
     };
 
-    jsOMS.Chart.prototype.getData = function ()
+    jsOMS.Chart.ChartAbstract.prototype.getData = function ()
     {
         return this.dataset;
     };
 
-    jsOMS.Chart.prototype.drawLegend = function (svg, dataPointEnter, dataPoint)
+    jsOMS.Chart.ChartAbstract.prototype.drawLegend = function (svg, dataPointEnter, dataPoint)
     {
         let self = this;
 
@@ -281,7 +284,7 @@
         }
     };
 
-    jsOMS.Chart.prototype.drawMarker = function (svg, x, y, dataPointEnter, dataPoint)
+    jsOMS.Chart.ChartAbstract.prototype.drawMarker = function (svg, x, y, dataPointEnter, dataPoint)
     {
         let self = this, temp;
 
@@ -329,7 +332,7 @@
         }
     };
 
-    jsOMS.Chart.prototype.drawText = function (svg)
+    jsOMS.Chart.ChartAbstract.prototype.drawText = function (svg)
     {
         let temp, pos = 0, topmargin = 0;
 
@@ -402,7 +405,7 @@
         }
     };
 
-    jsOMS.Chart.prototype.drawAxis = function (svg, xAxis1, yAxis1)
+    jsOMS.Chart.ChartAbstract.prototype.drawAxis = function (svg, xAxis1, yAxis1)
     {
         // draw clipper
         let defs = svg.append('svg').attr('width', 0).attr('height', 0).append('defs'), pos = 0, temp;
@@ -478,7 +481,7 @@
         }
     };
 
-    jsOMS.Chart.prototype.drawGrid = function (svg, xGrid, yGrid)
+    jsOMS.Chart.ChartAbstract.prototype.drawGrid = function (svg, xGrid, yGrid)
     {
         if (this.grid.x !== undefined && this.grid.x.visible) {
             svg.append("g")
@@ -494,7 +497,7 @@
         }
     };
 
-    jsOMS.Chart.prototype.clean = function ()
+    jsOMS.Chart.ChartAbstract.prototype.clean = function ()
     {
         this.margin = {top: 0, right: 0, bottom: 0, left: 0};
         this.dimension = {width: 0, height: 0};

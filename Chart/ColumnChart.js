@@ -4,7 +4,7 @@
     
     jsOMS.Chart.ColumnChart = function (id)
     {
-        this.chart = new jsOMS.Chart(id);
+        this.chart = new jsOMS.Chart.ChartAbstract(id);
 
         // Setting default chart values
         this.chart.margin = {top: 5, right: 0, bottom: 0, left: 0};
@@ -60,6 +60,11 @@
     jsOMS.Chart.ColumnChart.prototype.getChart = function ()
     {
         return this.chart;
+    };
+
+    jsOMS.Chart.ColumnChart.prototype.setData = function (data)
+    {
+        this.chart.setData(data);
     };
 
     jsOMS.Chart.ColumnChart.prototype.draw = function ()
@@ -288,48 +293,3 @@
             .attr("width", x.rangeBand());
     };
 }(window.jsOMS = window.jsOMS || {}));
-
-var chart;
-
-var n      = 3, // number of layers
-    m      = 30, // number of samples per layer
-    stack  = d3.layout.stack(),
-    layers = stack(d3.range(n).map(function ()
-    {
-        return bumpLayer(m, .1);
-    }));
-
-function bumpLayer(n, o)
-{
-    function bump(a)
-    {
-        var x = 1 / (.1 + Math.random()),
-            y = 2 * Math.random() - .5,
-            z = 10 / (.1 + Math.random());
-
-        for (var i = 0; i < n; i++) {
-            var w = (i / n - y) * z;
-            a[i] += x * Math.exp(-w * w);
-        }
-    }
-
-    var a = [], i;
-    for (i = 0; i < n; ++i) a[i] = o + o * Math.random();
-    for (i = 0; i < 5; ++i) bump(a);
-    return a.map(function (d, i)
-    {
-        return {x: i, y: Math.max(0, d)};
-    });
-}
-
-for (let i = 0; i < layers.length; i++) {
-    layers[i] = {
-        id: i,
-        name: 'Dataset ' + i,
-        points: layers[i]
-    };
-}
-
-var mychart = new jsOMS.Chart.ColumnChart('chart');
-mychart.getChart().setData(layers);
-mychart.draw();

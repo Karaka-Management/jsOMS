@@ -4,7 +4,7 @@
     
     jsOMS.Chart.LineChart = function (id)
     {
-        this.chart = new jsOMS.Chart(id);
+        this.chart = new jsOMS.Chart.ChartAbstract(id);
 
         // Setting default chart values
         this.chart.margin = {top: 5, right: 0, bottom: 0, left: 0};
@@ -59,6 +59,11 @@
     jsOMS.Chart.LineChart.prototype.getChart = function ()
     {
         return this.chart;
+    };
+
+    jsOMS.Chart.LineChart.prototype.setData = function (data)
+    {
+        this.chart.setData(data);
     };
 
     jsOMS.Chart.LineChart.prototype.draw = function ()
@@ -279,62 +284,3 @@
             ).call(zoom);
     };
 }(window.jsOMS = window.jsOMS || {}));
-
-var c, chart, data, dataGen, i, k, count;
-
-dataGen = (function ()
-{
-    return (function (id)
-    {
-        return function ()
-        {
-            var tempData, j, nums, y1Seed;
-            nums     = Math.ceil(Math.random() * 50) + 4;
-            y1Seed   = Math.round(Math.random() * 20);
-            tempData = {
-                id: id,
-                name: "Dataset " + id,
-                points: (function ()
-                {
-                    var k, ref, results, prev, counter = 0;
-                    results                            = [];
-                    for (j = k = 1, ref = nums; 1 <= ref ? k <= ref : k >= ref; j = 1 <= ref ? ++k : --k) {
-                        if (data.length > 0) {
-                            if (typeof data[count - 2].points !== 'undefined' && data[count - 2].points.length > counter && typeof data[count - 2].points[counter].y !== 'undefined') {
-                                prev = data[count - 2].points[counter].y;
-                            } else {
-                                prev = 0;
-                            }
-                        } else {
-                            prev = 0;
-                        }
-
-                        counter++;
-
-                        results.push({
-                            x: j,
-                            y: y1Seed + Math.round(Math.random() * 5),
-                            y0: prev
-                        });
-                    }
-
-                    return results;
-                })()
-            };
-            id       = id + 1;
-            return tempData;
-        };
-    })(1);
-})();
-
-data = [];
-
-for (i = k = 1; k <= 3; i = ++k) {
-    count = i;
-    data.push(dataGen());
-}
-/*
-var mychart = new jsOMS.Chart.LineChart('chart');
-mychart.getChart().setData(data);
-mychart.draw();
-*/
