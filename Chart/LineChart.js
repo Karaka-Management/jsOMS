@@ -70,7 +70,7 @@
     {
         let line, svg, x, xAxis1, xAxis2, y, yAxis1, yAxis2, xGrid, yGrid, zoom, self = this;
 
-        this.chart.calculateDimension('linear');
+        this.chart.calculateDimension();
 
         x = this.chart.createXScale('linear');
         y = this.chart.createYScale('linear');

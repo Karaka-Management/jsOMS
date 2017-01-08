@@ -41,18 +41,22 @@
                 },
                 min: 0,
                 max: 0
+            },
+            y0: {
+                min: 0,
+                max: 0
             }
         };
 
         this.chart.grid = {
             x: {
-                visible: false
+                visible: true
             },
             y: {
                 visible: true
             }
         };
-        this.chart.subtype = 'waterfall';
+        this.chart.subtype = 'candlestick';
     };
 
     jsOMS.Chart.CandlestickChart.prototype.getChart = function ()
@@ -62,17 +66,16 @@
 
     jsOMS.Chart.CandlestickChart.prototype.setData = function (data)
     {
-        this.chart.setData(dataset);
+        this.chart.setData(data);
     };
 
     jsOMS.Chart.CandlestickChart.prototype.draw = function ()
     {
-        let bar, svg, x, xAxis1, xAxis2, y, yAxis1, yAxis2, xGrid, yGrid, zoom, self = this, box = this.chart.chartSelect.node().getBoundingClientRect();
+        let bar, svg, x, xAxis1, xAxis2, y, yAxis1, yAxis2, xGrid, yGrid, zoom, self = this;
 
-        this.chart.dimension = {
-            width: box.width,
-            height: box.height
-        };
+        let mm = 50;
+
+        this.chart.calculateDimension();
 
         x = this.chart.createXScale('linear');
         y = this.chart.createYScale('linear');
@@ -81,8 +84,8 @@
         xGrid = this.chart.createXGrid(x);
         yGrid = this.chart.createYGrid(y);
 
-        x.domain([this.chart.axis.x.min, this.chart.axis.x.max + 1]);
-        y.domain([this.chart.axis.y.min - 1, this.chart.axis.y.max + 1]);
+        x.domain([this.chart.axis.x.min - 1, this.chart.axis.x.max + 1]);
+        y.domain([this.chart.axis.y0.min - 1, this.chart.axis.y.max + 1]);
 
         svg = this.chart.chartSelect.append("svg")
             .attr("width", this.chart.dimension.width)
@@ -92,11 +95,25 @@
                 + (this.chart.margin.top) + ")");
 
         this.chart.drawGrid(svg, xGrid, yGrid);
-        
-        let dataPoint, dataPointEnter,
-            temp       = this.drawData(svg, x, y, dataPointEnter, dataPoint);
-        dataPointEnter = temp[0];
-        dataPoint      = temp[1];
+
+        svg.selectAll("rect")
+        .data(this.chart.dataset[0].points)
+        .enter().append("svg:rect")
+        .attr("x", function(d) { return x(d.x)-mm/10; })
+        .attr("y", function(d) {return y(Math.max(d.open, d.close));})		  
+        .attr("height", function(d) { return Math.max(1, y(Math.min(d.open, d.close))-y(Math.max(d.open, d.close)));})
+        .attr("width", function(d) { return 0.5 * (self.chart.dimension.width - 4*mm)/self.chart.dataset[0].points.length; })
+        .attr("fill",function(d) { return d.open > d.close ? "red" : "green" ;});
+
+        svg.selectAll("line.stem")
+          .data(this.chart.dataset[0].points)
+          .enter().append("svg:line")
+          .attr("class", "stem")
+          .attr("x1", function(d) { return x(d.x);})
+          .attr("x2", function(d) { return x(d.x);})		    
+          .attr("y1", function(d) { return y(d.y);})
+          .attr("y2", function(d) { return y(d.y0); })
+          .attr("stroke", function(d){ return d.open > d.close ? "red" : "green"; });
 
         this.chart.drawText(svg);
         this.chart.drawAxis(svg, xAxis1, yAxis1);
@@ -111,21 +128,5 @@
         this.chart.shouldRedraw = false;
         this.chart.chartSelect.select("*").remove();
         this.draw();
-    };
-
-    jsOMS.Chart.CandlestickChart.prototype.drawData = function (svg, x, y, dataPointEnter, dataPoint)
-    {
-        let self = this;
-
-        dataPoint = svg.selectAll(".dataPoint").data(this.chart.dataset[0].points, function (c)
-        {
-            return c.id;
-        });
-
-        dataPointEnter = dataPoint.enter().append("g")
-            .attr("class", function(d) { return "dataPoint " + (d.y < d.y0 ? 'negative' : 'positive'); })
-            .attr("transform", function(d) { return "translate(" + x(d.name) + ",0)"; });
-
-        return [dataPointEnter, dataPoint];
     };
 }(window.jsOMS = window.jsOMS || {}));
