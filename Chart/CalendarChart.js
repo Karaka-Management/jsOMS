@@ -29,14 +29,9 @@
     {
         let percent = d3.format(".1%"),
             format = d3.time.format("%Y-%m-%d"),
-            box = this.chart.chartSelect.node().getBoundingClientRect(),
             svg, self = this;
 
-        this.chart.dimension = {
-            width: box.width,
-            height: box.height
-        };
-
+        this.chart.calculateDimension();
         this.chart.cellSize = Math.min(this.chart.dimension.width / (12*5), this.chart.dimension.height / (8));
 
         document.getElementById(this.chart.chartId).style.height = (this.chart.dimension.height * this.chart.dataset.length) + 'px';

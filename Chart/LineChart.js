@@ -68,12 +68,9 @@
 
     jsOMS.Chart.LineChart.prototype.draw = function ()
     {
-        let line, svg, x, xAxis1, xAxis2, y, yAxis1, yAxis2, xGrid, yGrid, zoom, self = this, box = this.chart.chartSelect.node().getBoundingClientRect();
+        let line, svg, x, xAxis1, xAxis2, y, yAxis1, yAxis2, xGrid, yGrid, zoom, self = this;
 
-        this.chart.dimension = {
-            width: box.width,
-            height: box.height
-        };
+        this.chart.calculateDimension('linear');
 
         x = this.chart.createXScale('linear');
         y = this.chart.createYScale('linear');

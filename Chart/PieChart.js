@@ -21,12 +21,9 @@
 
     jsOMS.Chart.PieChart.prototype.draw = function ()
     {
-        let svg, arc, box = this.chart.chartSelect.node().getBoundingClientRect();
+        let svg, arc;
 
-        this.chart.dimension = {
-            width: box.width,
-            height: box.height
-        };
+        this.chart.calculateDimension();
 
         let radius = (
             Math.min(this.chart.dimension.width, this.chart.dimension.height) / 2

@@ -67,12 +67,9 @@
 
     jsOMS.Chart.ScatterplotChart.prototype.draw = function ()
     {
-        let bar, svg, x, xAxis1, xAxis2, y, yAxis1, yAxis2, xGrid, yGrid, zoom, self = this, box = this.chart.chartSelect.node().getBoundingClientRect();
+        let bar, svg, x, xAxis1, xAxis2, y, yAxis1, yAxis2, xGrid, yGrid, zoom, self = this;
 
-        this.chart.dimension = {
-            width: box.width,
-            height: box.height
-        };
+        this.chart.calculateDimension('linear');
 
         x = this.chart.createXScale('linear');
         y = this.chart.createYScale('linear');

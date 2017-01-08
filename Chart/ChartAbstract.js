@@ -546,7 +546,7 @@
             return self.axis.x.tick.prefix + d;
         }).orient("bottom").outerTickSize(self.axis.x.tick.size)
         .innerTickSize(self.axis.x.tick.size).tickPadding(7);
-    }
+    };
 
     jsOMS.Chart.ChartAbstract.prototype.createYAxis = function (y) {
         let self = this;
@@ -556,7 +556,7 @@
             return self.axis.y.tick.prefix + d;
         }).orient("left").outerTickSize(this.axis.y.tick.size)
         .innerTickSize(this.axis.y.tick.size).tickPadding(7);
-    }
+    };
 
     jsOMS.Chart.ChartAbstract.prototype.createXGrid = function (x) {
         return d3.svg.axis()
@@ -568,7 +568,7 @@
                 - this.margin.top - 10
                 - this.margin.bottom), 0, 0)
             .tickFormat("");
-    }
+    };
 
     jsOMS.Chart.ChartAbstract.prototype.createYGrid = function (y) {
         return d3.svg.axis()
@@ -580,7 +580,17 @@
                 + this.margin.right
                 + this.margin.left, 0, 0)
             .tickFormat("");
-    }
+    };
+
+    jsOMS.Chart.ChartAbstract.prototype.calculateDimension = function ()
+    {
+        let box = this.chartSelect.node().getBoundingClientRect()
+
+        this.dimension = {
+            width: box.width,
+            height: box.height
+        };
+    };
 
     jsOMS.Chart.ChartAbstract.prototype.clean = function ()
     {

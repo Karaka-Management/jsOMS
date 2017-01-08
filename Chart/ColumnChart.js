@@ -69,7 +69,7 @@
 
     jsOMS.Chart.ColumnChart.prototype.draw = function ()
     {
-        let rect, svg, x, xAxis1, xAxis2, y, yAxis1, yAxis2, xGrid, yGrid, zoom, self = this, box = this.chart.chartSelect.node().getBoundingClientRect();
+        let rect, svg, x, xAxis1, xAxis2, y, yAxis1, yAxis2, xGrid, yGrid, zoom, self = this;
 
         if (this.chart.subtype === 'grouped') {
             this.chart.axis.y.max = d3.max(this.chart.dataset, function (layer)
@@ -89,10 +89,7 @@
             });
         }
 
-        this.chart.dimension = {
-            width: box.width,
-            height: box.height
-        };
+        this.chart.calculateDimension();
 
         x = this.chart.createXScale('ordinal');
         y = this.chart.createYScale('linear');

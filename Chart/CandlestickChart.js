@@ -74,54 +74,15 @@
             height: box.height
         };
 
-        x = d3.scale.linear().range([
-            0,
-            this.chart.dimension.width
-            - this.chart.margin.right
-            - this.chart.margin.left
-        ]);
+        x = this.chart.createXScale('linear');
+        y = this.chart.createYScale('linear');
+        xAxis1 = this.chart.createXAxis(x);
+        yAxis1 = this.chart.createYAxis(y);
+        xGrid = this.chart.createXGrid(x);
+        yGrid = this.chart.createYGrid(y);
 
-        y = d3.scale.linear().range([
-            this.chart.dimension.height
-            - this.chart.margin.top
-            - this.chart.margin.bottom,
-            10
-        ]);
-
-        xAxis1 = d3.svg.axis().scale(x).tickFormat(function (d)
-        {
-            return self.chart.axis.x.tick.prefix + d;
-        }).orient("bottom").outerTickSize(this.chart.axis.x.tick.size)
-        .innerTickSize(this.chart.axis.x.tick.size).tickPadding(7);
-
-        yAxis1 = d3.svg.axis().scale(y).tickFormat(function (d)
-        {
-            return self.chart.axis.y.tick.prefix + d;
-        }).orient("left").outerTickSize(this.chart.axis.y.tick.size)
-        .innerTickSize(this.chart.axis.y.tick.size).tickPadding(7);
-
-        xGrid = d3.svg.axis()
-            .scale(x)
-            .orient("bottom")
-            //.ticks(0)
-            .tickSize(
-                -(this.chart.dimension.height
-                - this.chart.margin.top - 10
-                - this.chart.margin.bottom), 0, 0)
-            .tickFormat("");
-
-        yGrid = d3.svg.axis()
-            .scale(y)
-            .orient("left")
-            //.ticks(0)
-            .tickSize(
-                -this.chart.dimension.width
-                + this.chart.margin.right
-                + this.chart.margin.left, 0, 0)
-            .tickFormat("");
-
-        x.domain(this.chart.dataset[0].points.map(function(d) { return d.name; }));
-        y.domain([0, d3.max(this.chart.dataset[0].points, function(d) { return d.y*1.05; })]);
+        x.domain([this.chart.axis.x.min, this.chart.axis.x.max + 1]);
+        y.domain([this.chart.axis.y.min - 1, this.chart.axis.y.max + 1]);
 
         svg = this.chart.chartSelect.append("svg")
             .attr("width", this.chart.dimension.width)
@@ -164,24 +125,6 @@
         dataPointEnter = dataPoint.enter().append("g")
             .attr("class", function(d) { return "dataPoint " + (d.y < d.y0 ? 'negative' : 'positive'); })
             .attr("transform", function(d) { return "translate(" + x(d.name) + ",0)"; });
-
-        dataPointEnter.append("rect")
-            .attr("y", function(d) { return y( Math.max(d.y0, d.y) ); })
-            .attr("height", function(d) { return Math.abs( y(d.y0) - y(d.y) ); })
-            .attr("width", x.rangeBand());
-
-        dataPointEnter.append("text")
-            .attr("x", x.rangeBand() / 2)
-            .attr("y", function(d) { return y(d.y) + 5; })
-            .attr("dy", function(d) { return ((d.y < d.y0) ? '-' : '') + ".75em" })
-            .text(function(d) { return d.y - d.y0; });
-
-        dataPointEnter.filter(function(d) { return d.class != "total" }).append("line")
-            .attr("class", "connector")
-            .attr("x1", x.rangeBand() + 5 )
-            .attr("y1", function(d) { return y(d.y) } )
-            .attr("x2", x.rangeBand() / ( 1 - 5) - 5 )
-            .attr("y2", function(d) { return y(d.y) } );
 
         return [dataPointEnter, dataPoint];
     };
