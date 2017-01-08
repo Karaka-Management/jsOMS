@@ -25,16 +25,6 @@
 
         this.chart.calculateDimension();
 
-        let radius = (
-            Math.min(this.chart.dimension.width, this.chart.dimension.height) / 2
-            - Math.max(this.chart.margin.right + this.chart.margin.left,
-                this.chart.margin.top + this.chart.margin.bottom)
-            );
-
-        arc = d3.svg.arc()
-            .outerRadius(radius)
-            .innerRadius(radius - radius*this.chart.dataSettings.style.strokewidth);
-
         svg = this.chart.chartSelect.append("svg")
             .attr("width", this.chart.dimension.width)
             .attr("height", this.chart.dimension.height)
@@ -43,7 +33,7 @@
                 + (this.chart.margin.top) + ")");
 
         let dataPoint, dataPointEnter,
-            temp       = this.drawData(svg, arc, dataPointEnter, dataPoint);
+            temp       = this.drawData(svg, dataPointEnter, dataPoint);
         dataPointEnter = temp[0];
         dataPoint      = temp[1];
 
@@ -68,7 +58,7 @@
         this.draw();
     };
 
-    jsOMS.Chart.PieChart.prototype.drawData = function (svg, arc, dataPointEnter, dataPoint)
+    jsOMS.Chart.PieChart.prototype.drawData = function (svg, dataPointEnter, dataPoint)
     {
         let self = this,
             pie  = d3.layout.pie()
@@ -76,15 +66,21 @@
                 .value(function (d)
                 {
                     return d.value;
-                });
+                }),
+            radius = (
+            Math.min(this.chart.dimension.width, this.chart.dimension.height) / 2
+            - Math.max(this.chart.margin.right + this.chart.margin.left,
+                this.chart.margin.top + this.chart.margin.bottom)
+            ),
+            innerRadius = radius - radius*self.chart.dataSettings.style.strokewidth,
+            arc = d3.svg.arc()
+                .outerRadius(function() { return radius; })
+                .innerRadius(function() { return innerRadius; });
 
-        dataPoint = svg.selectAll(".dataPoint").data(this.chart.dataset, function (c)
-        {
-            return c.id;
-        });
-
+        dataPoint = svg.selectAll(".dataPoint").data(this.chart.dataset);
+        
         dataPoint.enter().append("g").attr("class", "dataPoint");
-
+        
         dataPointEnter = dataPoint.selectAll("path")
             .data(function (d)
             {

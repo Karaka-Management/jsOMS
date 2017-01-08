@@ -2,7 +2,7 @@
 {
     "use strict";
     
-    jsOMS.Chart.WaterfallChart = function (id)
+    jsOMS.Chart.VWaterfallChart = function (id)
     {
         this.chart = new jsOMS.Chart.ChartAbstract(id);
 
@@ -55,12 +55,12 @@
         this.chart.subtype = 'waterfall';
     };
 
-    jsOMS.Chart.WaterfallChart.prototype.getChart = function ()
+    jsOMS.Chart.VWaterfallChart.prototype.getChart = function ()
     {
         return this.chart;
     };
 
-    jsOMS.Chart.WaterfallChart.prototype.setData = function (data)
+    jsOMS.Chart.VWaterfallChart.prototype.setData = function (data)
     {
         let dataset = [{id: 1, name: 'Dataset', points: []}],
             length = data.length,
@@ -77,7 +77,7 @@
         this.chart.setData(dataset);
     };
 
-    jsOMS.Chart.WaterfallChart.prototype.draw = function ()
+    jsOMS.Chart.VWaterfallChart.prototype.draw = function ()
     {
         let bar, svg, x, xAxis1, xAxis2, y, yAxis1, yAxis2, xGrid, yGrid, zoom, self = this;
 
@@ -115,14 +115,14 @@
         }
     };
 
-    jsOMS.Chart.WaterfallChart.prototype.redraw = function ()
+    jsOMS.Chart.VWaterfallChart.prototype.redraw = function ()
     {
         this.chart.shouldRedraw = false;
         this.chart.chartSelect.select("*").remove();
         this.draw();
     };
 
-    jsOMS.Chart.WaterfallChart.prototype.drawData = function (svg, x, y, dataPointEnter, dataPoint)
+    jsOMS.Chart.VWaterfallChart.prototype.drawData = function (svg, x, y, dataPointEnter, dataPoint)
     {
         let self = this;
 
