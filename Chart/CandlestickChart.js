@@ -96,14 +96,34 @@
 
         this.chart.drawGrid(svg, xGrid, yGrid);
 
-        svg.selectAll("rect")
-        .data(this.chart.dataset[0].points)
-        .enter().append("svg:rect")
-        .attr("x", function(d) { return x(d.x)-mm/10; })
-        .attr("y", function(d) {return y(Math.max(d.open, d.close));})		  
-        .attr("height", function(d) { return Math.max(1, y(Math.min(d.open, d.close))-y(Math.max(d.open, d.close)));})
-        .attr("width", function(d) { return 0.5 * (self.chart.dimension.width - 4*mm)/self.chart.dataset[0].points.length; })
-        .attr("fill",function(d) { return d.open > d.close ? "red" : "green" ;});
+        if(this.chart.subtype === 'candlestick') {
+            svg.selectAll("rect")
+            .data(this.chart.dataset[0].points)
+            .enter().append("svg:rect")
+            .attr("x", function(d) { return x(d.x)-mm/10; })
+            .attr("y", function(d) {return y(Math.max(d.open, d.close));})		  
+            .attr("height", function(d) { return Math.max(1, y(Math.min(d.open, d.close))-y(Math.max(d.open, d.close)));})
+            .attr("width", function(d) { return 0.5 * (self.chart.dimension.width - 4*mm)/self.chart.dataset[0].points.length; })
+            .attr("fill",function(d) { return d.open > d.close ? "red" : "green" ;});
+        } else {
+            let datapoint = svg.selectAll("rect")
+            .data(this.chart.dataset[0].points)
+            .enter();
+            
+            datapoint.append("svg:rect")
+            .attr("x", function(d) { return x(d.x)-mm/10; })
+            .attr("y", function(d) {return y(d.open);})		  
+            .attr("height", function(d) { return 1;})
+            .attr("width", function(d) { return 0.25 * (self.chart.dimension.width - 4*mm)/self.chart.dataset[0].points.length; })
+            .attr("fill",function(d) { return d.open > d.close ? "red" : "green" ;});
+            
+            datapoint.append("svg:rect")
+            .attr("x", function(d) { return x(d.x); })
+            .attr("y", function(d) {return y(d.close);})		  
+            .attr("height", function(d) { return 1;})
+            .attr("width", function(d) { return 0.25 * (self.chart.dimension.width - 4*mm)/self.chart.dataset[0].points.length; })
+            .attr("fill",function(d) { return d.open > d.close ? "red" : "green" ;});
+        }
 
         svg.selectAll("line.stem")
           .data(this.chart.dataset[0].points)
