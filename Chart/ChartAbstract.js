@@ -55,6 +55,9 @@
             interpolate: "linear" /* splines interpolation? */
         };
 
+        this.dimension = {width: 0, height: 0};
+        this.margin = {top: 0, right: 0, bottom: 0, left: 0};
+
         this.axis = {};
         this.grid = {};
         this.subtype = '';
@@ -496,6 +499,88 @@
                 .call(yGrid);
         }
     };
+
+    jsOMS.Chart.ChartAbstract.prototype.createXScale = function (type)
+    {
+        if(type === 'ordinal') {
+            return d3.scale.ordinal().rangeRoundBands([
+                0,
+                this.dimension.width
+                - this.margin.right
+                - this.margin.left
+            ], 0.3);
+        } else {
+            return d3.scale.linear().range([
+                0,
+                this.dimension.width
+                - this.margin.right
+                - this.margin.left
+            ]);
+        }
+    };
+
+    jsOMS.Chart.ChartAbstract.prototype.createYScale = function (type)
+    {
+        if(type === 'ordinal') {
+            return d3.scale.ordinal().rangeRoundBands([
+                0,
+                this.dimension.height
+                - this.margin.top
+                - this.margin.bottom,
+            ], 0.3);
+        } else {
+            return d3.scale.linear().range([
+                this.dimension.height
+                - this.margin.top
+                - this.margin.bottom,
+                10
+            ]);
+        }
+    };
+
+    jsOMS.Chart.ChartAbstract.prototype.createXAxis = function (x) {
+        let self = this;
+
+        return d3.svg.axis().scale(x).tickFormat(function (d)
+        {
+            return self.axis.x.tick.prefix + d;
+        }).orient("bottom").outerTickSize(self.axis.x.tick.size)
+        .innerTickSize(self.axis.x.tick.size).tickPadding(7);
+    }
+
+    jsOMS.Chart.ChartAbstract.prototype.createYAxis = function (y) {
+        let self = this;
+
+        return d3.svg.axis().scale(y).tickFormat(function (d)
+        {
+            return self.axis.y.tick.prefix + d;
+        }).orient("left").outerTickSize(this.axis.y.tick.size)
+        .innerTickSize(this.axis.y.tick.size).tickPadding(7);
+    }
+
+    jsOMS.Chart.ChartAbstract.prototype.createXGrid = function (x) {
+        return d3.svg.axis()
+            .scale(x)
+            .orient("bottom")
+            //.ticks(0)
+            .tickSize(
+                -(this.dimension.height
+                - this.margin.top - 10
+                - this.margin.bottom), 0, 0)
+            .tickFormat("");
+    }
+
+    jsOMS.Chart.ChartAbstract.prototype.createYGrid = function (y) {
+        return d3.svg.axis()
+            .scale(y)
+            .orient("left")
+            //.ticks(0)
+            .tickSize(
+                -this.dimension.width
+                + this.margin.right
+                + this.margin.left, 0, 0)
+            .tickFormat("");
+    }
 
     jsOMS.Chart.ChartAbstract.prototype.clean = function ()
     {

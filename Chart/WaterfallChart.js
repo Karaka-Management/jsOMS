@@ -86,51 +86,12 @@
             height: box.height
         };
 
-        x = d3.scale.ordinal().rangeRoundBands([
-            0,
-            this.chart.dimension.width
-            - this.chart.margin.right
-            - this.chart.margin.left
-            ], 0.3);
-
-        y = d3.scale.linear().range([
-            this.chart.dimension.height
-            - this.chart.margin.top
-            - this.chart.margin.bottom,
-            10
-        ]);
-
-        xAxis1 = d3.svg.axis().scale(x).tickFormat(function (d)
-        {
-            return self.chart.axis.x.tick.prefix + d;
-        }).orient("bottom").outerTickSize(this.chart.axis.x.tick.size)
-        .innerTickSize(this.chart.axis.x.tick.size).tickPadding(7);
-
-        yAxis1 = d3.svg.axis().scale(y).tickFormat(function (d)
-        {
-            return self.chart.axis.y.tick.prefix + d;
-        }).orient("left").outerTickSize(this.chart.axis.y.tick.size)
-        .innerTickSize(this.chart.axis.y.tick.size).tickPadding(7);
-
-        xGrid = d3.svg.axis()
-            .scale(x)
-            .orient("bottom")
-            //.ticks(0)
-            .tickSize(
-                -(this.chart.dimension.height
-                - this.chart.margin.top - 10
-                - this.chart.margin.bottom), 0, 0)
-            .tickFormat("");
-
-        yGrid = d3.svg.axis()
-            .scale(y)
-            .orient("left")
-            //.ticks(0)
-            .tickSize(
-                -this.chart.dimension.width
-                + this.chart.margin.right
-                + this.chart.margin.left, 0, 0)
-            .tickFormat("");
+        x = this.chart.createXScale('ordinal');
+        y = this.chart.createYScale('linear');
+        xAxis1 = this.chart.createXAxis(x);
+        yAxis1 = this.chart.createYAxis(y);
+        xGrid = this.chart.createXGrid(x);
+        yGrid = this.chart.createYGrid(y);
 
         x.domain(this.chart.dataset[0].points.map(function(d) { return d.name; }));
         y.domain([0, d3.max(this.chart.dataset[0].points, function(d) { return d.y*1.05; })]);
