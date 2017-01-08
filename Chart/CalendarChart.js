@@ -11,7 +11,6 @@
         this.chart.color  = d3.scale.quantize()
             .domain([-.05, .05])
             .range(d3.range(11).map(function(d) { return "q" + d + "-11"; }));
-        this.chart.cellSize = 17;
 
         this.chart.subtype = 'calendar';
     };
@@ -37,6 +36,8 @@
             width: box.width,
             height: box.height
         };
+
+        this.chart.cellSize = Math.min(this.chart.dimension.width / (12*5), this.chart.dimension.height / (8));
 
         document.getElementById(this.chart.chartId).style.height = (this.chart.dimension.height * this.chart.dataset.length) + 'px';
 
