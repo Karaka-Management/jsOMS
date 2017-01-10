@@ -41,6 +41,11 @@
                 },
                 min: 0,
                 max: 0
+            },
+            y0: {
+                visible: false,
+                min: 0,
+                max: 0
             }
         };
 
@@ -87,6 +92,18 @@
             {
                 return x(d.x);
             }).y0(this.chart.getDimension().height).y1(function (d)
+            {
+                return y(d.y);
+            });
+        } else if (this.chart.subtype === 'diffarea') {
+            y.domain([this.chart.axis.y0.min - 1, this.chart.axis.y.max + 1]);
+
+            line = d3.svg.area().interpolate(this.chart.dataSettings.interpolate).x(function (d)
+            {
+                return x(d.x);
+            }).y0(function (d) {
+                return y(d.y0);
+            }).y1(function (d)
             {
                 return y(d.y);
             });
