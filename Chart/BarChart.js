@@ -91,15 +91,15 @@
 
         this.chart.calculateDimension();
 
-        x = this.chart.createXScale('ordinal');
-        y = this.chart.createYScale('linear');
+        x = this.chart.createXScale('linear');
+        y = this.chart.createYScale('ordinal');
         xAxis1 = this.chart.createXAxis(x);
         yAxis1 = this.chart.createYAxis(y);
         xGrid = this.chart.createXGrid(x);
         yGrid = this.chart.createYGrid(y);
 
-        x.domain(d3.range(this.chart.dataset[0].points.length)).rangeRoundBands([0, this.chart.dimension.width - this.chart.margin.right - this.chart.margin.left], .1);
-        y.domain([0, this.chart.axis.y.max + 1]);
+        x.domain([0, this.chart.axis.y.max + 1]);
+        y.domain(d3.range(this.chart.dataset[0].points.length)).rangeRoundBands([0, this.chart.dimension.height - this.chart.margin.top - this.chart.margin.bottom], .1);
 
         svg = this.chart.chartSelect.append("svg")
             .attr("width", this.chart.dimension.width)
@@ -152,13 +152,13 @@
                 return d.points;
             })
             .enter().append("rect")
-            .attr("x", function (d)
+            .attr("y", function (d)
             {
-                return x(d.x);
+                return y(d.x);
             })
-            .attr("y", this.chart.dimension.height - this.chart.margin.top - this.chart.margin.bottom)
-            .attr("width", x.rangeBand())
-            .attr("height", 0);
+            .attr("x", 0)
+            .attr("width", 0)
+            .attr("height", y.rangeBand());
 
         if(this.chart.subtype === 'stacked') {
             rect.transition()
@@ -166,14 +166,16 @@
                 {
                     return i * 10;
                 })
-                .attr("y", function (d)
+                .attr("x", function (d)
                 {
-                    return y(d.y0 + d.y);
+                    return x(d.y0);
                 })
-                .attr("height", function (d)
+                .attr("width", function (d)
                 {
-                    return y(d.y0) - y(d.y0 + d.y);
+                    return x(d.y);
                 });
+
+                console.log(this.chart.dataset);
         } else {
             rect.transition()
                 .duration(500)
@@ -181,19 +183,16 @@
                 {
                     return i * 10;
                 })
-                .attr("x", function (d, i, j)
+                .attr("y", function (d, i, j)
                 {
-                    return x(d.x) + x.rangeBand() / self.chart.dataset.length * j;
+                    return y(d.x) + y.rangeBand() / self.chart.dataset.length * j;
                 })
-                .attr("width", x.rangeBand() /self.chart.dataset.length)
+                .attr("height", y.rangeBand() /self.chart.dataset.length)
                 .transition()
-                .attr("y", function (d)
+                .attr("x", 0)
+                .attr("width", function (d)
                 {
-                    return y(d.y);
-                })
-                .attr("height", function (d)
-                {
-                    return self.chart.dimension.height - self.chart.margin.top - self.chart.margin.bottom - y(d.y);
+                    return x(d.y);
                 });
         }
 
