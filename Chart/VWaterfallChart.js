@@ -52,7 +52,7 @@
                 visible: true
             }
         };
-        this.chart.subtype = 'waterfall';
+        this.chart.subtype = 'vwaterfall';
     };
 
     jsOMS.Chart.VWaterfallChart.prototype.getChart = function ()
@@ -83,15 +83,15 @@
 
         this.chart.calculateDimension();
 
-        x = this.chart.createXScale('ordinal');
-        y = this.chart.createYScale('linear');
+        x = this.chart.createXScale('linear');
+        y = this.chart.createYScale('ordinal');
         xAxis1 = this.chart.createXAxis(x);
         yAxis1 = this.chart.createYAxis(y);
         xGrid = this.chart.createXGrid(x);
         yGrid = this.chart.createYGrid(y);
 
-        x.domain(this.chart.dataset[0].points.map(function(d) { return d.name; }));
-        y.domain([0, d3.max(this.chart.dataset[0].points, function(d) { return d.y*1.05; })]);
+        x.domain([0, d3.max(this.chart.dataset[0].points, function(d) { return d.y*1.05; })]);
+        y.domain(this.chart.dataset[0].points.map(function(d) { return d.name; }));
 
         svg = this.chart.chartSelect.append("svg")
             .attr("width", this.chart.dimension.width)
@@ -133,25 +133,19 @@
 
         dataPointEnter = dataPoint.enter().append("g")
             .attr("class", function(d) { return "dataPoint " + (d.y < d.y0 ? 'negative' : 'positive'); })
-            .attr("transform", function(d) { return "translate(" + x(d.name) + ",0)"; });
+            .attr("transform", function(d) { return "translate(0," + y(d.name) + ")"; });
 
         dataPointEnter.append("rect")
-            .attr("y", function(d) { return y( Math.max(d.y0, d.y) ); })
-            .attr("height", function(d) { return Math.abs( y(d.y0) - y(d.y) ); })
-            .attr("width", x.rangeBand());
-
-        dataPointEnter.append("text")
-            .attr("x", x.rangeBand() / 2)
-            .attr("y", function(d) { return y(d.y) + 5; })
-            .attr("dy", function(d) { return ((d.y < d.y0) ? '-' : '') + ".75em" })
-            .text(function(d) { return d.y - d.y0; });
+            .attr("x", function(d) { return x( Math.min(d.y0, d.y) ); })
+            .attr("width", function(d) { return Math.abs( x(d.y0) - x(d.y) ); })
+            .attr("height", y.rangeBand());
 
         dataPointEnter.filter(function(d) { return d.class != "total" }).append("line")
             .attr("class", "connector")
-            .attr("x1", x.rangeBand() + 5 )
-            .attr("y1", function(d) { return y(d.y) } )
-            .attr("x2", x.rangeBand() / ( 1 - 5) - 5 )
-            .attr("y2", function(d) { return y(d.y) } );
+            .attr("x1", y.rangeBand() + 5 )
+            .attr("y1", function(d) { return x(d.y) } )
+            .attr("x2", y.rangeBand() / ( 1 - 5) - 5 )
+            .attr("y2", function(d) { return x(d.y) } );
 
         return [dataPointEnter, dataPoint];
     };

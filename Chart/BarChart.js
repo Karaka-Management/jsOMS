@@ -174,8 +174,6 @@
                 {
                     return x(d.y);
                 });
-
-                console.log(this.chart.dataset);
         } else {
             rect.transition()
                 .duration(500)
