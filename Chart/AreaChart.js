@@ -5,6 +5,7 @@
     jsOMS.Chart.AreaChart = function (id)
     {
         this.chart = new jsOMS.Chart.LineChart(id);
+        this.chart.getChart().dataSettings.marker.visible = false;
         this.chart.getChart().subtype = 'area';
     };
 
