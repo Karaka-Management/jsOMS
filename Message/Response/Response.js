@@ -28,12 +28,11 @@
 
     jsOMS.Message.Response.Response.prototype.getByIndex = function (index)
     {
-        //return this.responses[Object.keys(this.responses).sort()[index]];
-        return this.responses;
+        return this.responses[index];
     };
 
     jsOMS.Message.Response.Response.prototype.count = function ()
     {
-        return 1;
+        return this.responses.length;
     };
 }(window.jsOMS = window.jsOMS || {}));

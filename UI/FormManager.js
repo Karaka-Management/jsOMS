@@ -214,7 +214,7 @@
         request.setSuccess(function (xhr)
         {
             try {
-                const o              = JSON.parse(xhr.response),
+                const o            = JSON.parse(xhr.response),
                     response       = new jsOMS.Message.Response.Response(o),
                     responseLength = response.count();
                 let tempResponse   = null,
