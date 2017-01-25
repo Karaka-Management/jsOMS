@@ -199,7 +199,7 @@
 
         try {
             for (let i = 0; i < length; i++) {
-                if ((elements[i].required && elements[i].value === '') || (typeof elements[i].pattern !== 'undefined' && elements[i].pattern !== '' && (new RegExp(elements[i].pattern)).test(elements[i].value))) {
+                if ((elements[i].required && elements[i].value === '') || (typeof elements[i].pattern !== 'undefined' && elements[i].pattern !== '' && !(new RegExp(elements[i].pattern)).test(elements[i].value))) {
                     return false;
                 }
             }
