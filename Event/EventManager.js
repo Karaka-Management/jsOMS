@@ -5,7 +5,7 @@
  *
  * @author     OMS Development Team <dev@oms.com>
  * @author     Dennis Eichhorn <d.eichhorn@oms.com>
- * @copyright  2013 Dennis Eichhorn
+ * @copyright  Dennis Eichhorn
  * @license    OMS License 1.0
  * @version    1.0.0 * @since      1.0.0
  */
@@ -23,6 +23,7 @@
      */
     jsOMS.Event.EventManager = function ()
     {
+        this.logger    = jsOMS.Log.Logger.getInstance();
         this.groups    = {};
         this.callbacks = {};
     };
@@ -50,6 +51,27 @@
     };
 
     /**
+     * Resets the group status
+     *
+     * @param {string|int} group Group id
+     *
+     * @return {void}
+     *
+     * @method
+     *
+     * @since 1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
+    jsOMS.Event.EventManager.prototype.reset = function (group)
+    {
+        for (let id  in this.groups[group]) {
+            if (this.groups[group].hasOwnProperty(id)) {
+                this.groups[group][id] = false;
+            } 
+        }
+    };
+
+    /**
      * Does group have outstanding events
      *
      * @param {string|int} group Group id
@@ -68,10 +90,8 @@
         }
 
         for (let id  in this.groups[group]) {
-            if (this.groups[group].hasOwnProperty(id)) {
+            if (this.groups[group].hasOwnProperty(id) && this.groups[group][id]) {
                 return true;
-            } else {
-                this.app.logger.warning('Invalid property.');
             }
         }
 
@@ -93,12 +113,12 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Event.EventManager.prototype.trigger = function (group, id, reset)
+    jsOMS.Event.EventManager.prototype.trigger = function (group, id)
     {
         id = typeof id !== 'undefined' ? id : 0;
 
         if (typeof this.groups[group] !== 'undefined') {
-            delete this.groups[group][id];
+            this.groups[group][id] = true;
         }
 
         if (!this.hasOutstanding(group)) {
@@ -106,6 +126,8 @@
 
             if (this.callbacks[group].remove) {
                 this.detach(group);
+            } else if(this.callbacks[group].reset) {
+                this.reset(group);
             }
         }
     };
@@ -136,6 +158,7 @@
      * @param {string|int} group Group id
      * @param {function} callback Callback
      * @param {boolean} remove Should be removed after execution
+     * @param {boolean} remove Reset after triggering
      *
      * @return {void}
      *
@@ -144,15 +167,16 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Event.EventManager.prototype.attach = function (group, callback, remove)
+    jsOMS.Event.EventManager.prototype.attach = function (group, callback, remove, reset)
     {
         if(this.callbacks.hasOwnProperty(group)) {
             return false;
         }
 
         remove = typeof remove === 'undefined' ? false : remove;
+        reset = typeof reset === 'undefined' ? false : reset;
 
-        this.callbacks[group] = {remove: remove, func: callback};
+        this.callbacks[group] = {remove: remove, reset: reset, func: callback};
 
         return true;
     };
