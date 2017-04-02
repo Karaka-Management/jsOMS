@@ -37,11 +37,16 @@
     jsOMS.UI.TableManager.prototype.bind = function (id)
     {
         if (typeof id !== 'undefined') {
-            this.bindElement(document.getElementById(id));
-        } else {
-            const tables = document.querySelectorAll('.tables');
+            const e = document.getElementById(id);
 
-            for (var i = 0; i < tables.length; i++) {
+            if(e) {
+                this.bindElement(e);
+            }
+        } else {
+            const tables = document.querySelectorAll('.tables'),
+                length = !tables ? 0 : tables.length;
+
+            for (var i = 0; i < length; i++) {
                 this.bindElement(tables[i]);
             }
         }

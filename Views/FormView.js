@@ -81,7 +81,13 @@
      */
     jsOMS.Views.FormView.prototype.getSubmit = function ()
     {
-        return document.getElementById(this.id).querySelectorAll('input[type=submit]');
+        const e = document.getElementById(this.id);
+
+        if(!e) {
+            return null;
+        }
+
+        return e.querySelectorAll('input[type=submit]');
     };
 
     /**
@@ -133,8 +139,13 @@
      */
     jsOMS.Views.FormView.prototype.getFormElements = function ()
     {
-        const form      = document.getElementById(this.id),
-            selects   = form.getElementsByTagName('select'),
+        const form = document.getElementById(this.id)
+
+        if(!form) {
+            return [];
+        }
+
+        const selects   = form.getElementsByTagName('select'),
             textareas = form.getElementsByTagName('textarea'),
             inputs    = form.getElementsByTagName('input'),
             external  = document.querySelectorAll('[form=' + this.id + ']');
@@ -235,13 +246,13 @@
     {
         let id = e.getAttribute('name');
 
-        if (id === null) {
+        if (!id) {
             id = e.getAttribute('id');
         } else {
             return id;
         }
 
-        if (id === null) {
+        if (!id) {
             id = e.getAttribute('type');
         } else {
             return id;
@@ -273,8 +284,14 @@
     {
         this.clean();
 
-        this.method = document.getElementById(this.id).attributes['method'].value;
-        this.action = document.getElementById(this.id).action;
+        const e = document.getElementById(this.id);
+
+        if(!e) {
+            return;
+        }
+
+        this.method = e.attributes['method'].value;
+        this.action = e.action;
 
         const elements = this.getFormElements(),
             length   = elements.length;

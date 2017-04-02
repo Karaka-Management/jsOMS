@@ -37,11 +37,16 @@
     jsOMS.UI.TabManager.prototype.bind = function (id)
     {
         if (typeof id !== 'undefined') {
-            this.bindElement(document.getElementById(id));
-        } else {
-            var tabs = document.querySelectorAll('.tabview');
+            const e = document.getElementById(id);
 
-            for (var i = 0; i < tabs.length; i++) {
+            if(e) {
+                this.bindElement();
+            }
+        } else {
+            var tabs = document.querySelectorAll('.tabview'),
+                length = !tabs ? 0 : tabs.length;
+
+            for (var i = 0; i < length; i++) {
                 this.bindElement(tabs[i]);
             }
         }

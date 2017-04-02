@@ -63,6 +63,10 @@
             if (typeof (ref = this.getAttribute('data-ref')) !== 'undefined') {
                 let e = document.getElementById(ref);
 
+                if(!e) {
+                    return;
+                }
+
                 switch (e.tagName) {
                     case 'ul':
                         break;
@@ -76,7 +80,11 @@
         if (typeof (dataButton = input.getAttribute('data-button')) !== 'undefined') {
             this.app.inputManager.getKeyboardManager().bind(input, 13, function ()
             {
-                document.getElementById(dataButton).click();
+                const db = document.getElementById(dataButton);
+
+                if(db) { 
+                    db.click();
+                }
             });
         }
     };

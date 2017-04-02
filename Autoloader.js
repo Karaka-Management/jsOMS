@@ -54,7 +54,7 @@
     jsOMS.Autoloader.initPreloaded = function ()
     {
         const scripts = document.getElementsByTagName('script'),
-            length  = scripts.length;
+            length  = !scripts ? 0 : scripts.length;
 
         for (let i = 0; i < length; i++) {
             /** global: URL */

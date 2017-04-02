@@ -57,7 +57,7 @@
         {
             /* Handle remote datalist/autocomplete input element */
             let listId, list;
-            if (typeof (listId = this.getAttribute('list')) !== 'undefined' && (list = document.getElementById(listId)).getAttribute('data-list-src') !== 'undefined') {
+            if (typeof (listId = this.getAttribute('list')) !== 'undefined' && (list = document.getElementById(listId)) && list.getAttribute('data-list-src') !== 'undefined') {
                 self.addRemoteDatalistOptions(this, list);
             }
 
@@ -72,6 +72,10 @@
             if (typeof (ref = this.getAttribute('data-ref')) !== 'undefined') {
                 let e = document.getElementById(ref);
 
+                if(!e) {
+                    return;
+                }
+
                 switch (e.tagName) {
                     case 'ul':
                         break;
@@ -85,7 +89,11 @@
         if (typeof (dataButton = input.getAttribute('data-button')) !== 'undefined') {
             this.app.inputManager.getKeyboardManager().bind(input, 13, function ()
             {
-                document.getElementById(dataButton).click();
+                const db = document.getElementById(dataButton);
+
+                if(db) {
+                    db.click();
+                }
             });
         }
     };

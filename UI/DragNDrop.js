@@ -52,7 +52,7 @@
             this.bindElement(id);
         } else {
             const elements = document.querySelectorAll('[draggable]'),
-                length = elements.length;
+                length = !elements ? 0 : elements.length;
 
             for (var i = 0; i < length; i++) {
                 if (typeof elements[i].getAttribute('id') !== 'undefined' && elements[i].getAttribute('id') !== null) {
@@ -74,6 +74,10 @@
     {
         const element = document.getElementById(id);
         console.log(id);
+
+        if(!element) {
+            return;
+        }
 
         element.addEventListener('dragstart', function(event) {
             // todo: 

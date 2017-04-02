@@ -80,7 +80,7 @@
             this.bindForm(id);
         } else {
             const forms  = document.getElementsByTagName('form'),
-                length = forms.length;
+                length = !forms ? 0 : forms.length;
 
             for (var i = 0; i < length; i++) {
                 if (typeof forms[i].getAttribute('id') !== 'undefined' && forms[i].getAttribute('id') !== null && typeof this.ignore[forms[i].getAttribute('id')] === 'undefined') {

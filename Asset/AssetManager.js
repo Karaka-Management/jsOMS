@@ -38,7 +38,7 @@
     jsOMS.Asset.AssetManager.prototype.registerLoadedAssets = function ()
     {
         const scripts = document.getElementsByTagName('script'),
-            length  = scripts.length;
+            length = !scripts ? 0 : scripts.length;
 
         for (let i = 0; i < length; i++) {
             this.assets[jsOMS.hash(scripts[i].src)] = scripts[i].src;
@@ -72,7 +72,11 @@
                 fileref.setAttribute('src', path);
 
                 if (typeof fileref !== 'undefined') {
-                    document.getElementsByTagName('head')[0].appendChild(fileref);
+                    const head = document.getElementsByTagName('head');
+
+                    if(head) {
+                        head[0].appendChild(fileref);
+                    }
                 }
 
                 this.assets[hash] = path;
@@ -83,7 +87,11 @@
                 fileref.setAttribute('href', path);
 
                 if (typeof fileref !== 'undefined') {
-                    document.getElementsByTagName('head')[0].appendChild(fileref);
+                    const head = document.getElementsByTagName('head');
+
+                    if(head) {
+                        head[0].appendChild(fileref);
+                    }
                 }
 
                 this.assets[hash] = path;

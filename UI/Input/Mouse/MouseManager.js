@@ -62,7 +62,7 @@
         const self = this,
             e    = document.getElementById(element);
 
-        if (e === null) {
+        if (!e) {
             return;
         }
 

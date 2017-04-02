@@ -53,6 +53,10 @@
         } else {
             const tag = document.getElementById(id);
 
+            if(!tag) {
+                return;
+            }
+
             switch (tag.tagName) {
                 case 'form':
                     this.formManager.bind(id);

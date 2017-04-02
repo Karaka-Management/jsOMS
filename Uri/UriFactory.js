@@ -190,7 +190,13 @@
                 } else if (typeof jsOMS.Uri.UriFactory.uri[match] !== 'undefined') {
                     return jsOMS.Uri.UriFactory.uri[match];
                 } else if (match.indexOf('#') === 0) {
-                    return document.getElementById(match.substr(1)).value;
+                    const e = document.getElementById(match.substr(1));
+
+                    if(e) {
+                        return e.value;
+                    }
+
+                    return '';
                 } else if (match.indexOf('?') === 0) {
                     return jsOMS.Uri.Http.getUriQueryParameter(current.query, match.substr(1));
                 } else if (match.indexOf('/') === 0) {

@@ -55,6 +55,10 @@
         const e    = document.getElementById(surface),
             self = this;
 
+        if(!e) {
+            return;
+        }
+
         e.addEventListener('touchstart', function (event)
         {
             const touch = this.changedTouches[0];
