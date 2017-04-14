@@ -42,7 +42,7 @@
      */
     jsOMS.UI.ActionManager.prototype.bind = function (id)
     {
-        const uiElements = typeof e === 'undefined' ? document.querySelectorAll('input, select, textarea, button, data') : [e],
+        const uiElements = typeof id === 'undefined' ? document.querySelectorAll('[data-action]') : (typeof id.length !== 'undefined' ? id : [id]),
             length     = uiElements.length;
 
         for (let i = 0; i < length; i++) {
@@ -77,9 +77,9 @@
             for (let j = 1; j < actionLength; j++) {
                 this.app.eventManager.attach(e.id + listeners[i].action[j - 1].type, function (data)
                 {
-                    // todo: how to pass result from previous action to next action?!
                     self.runAction(e, listeners[i].action[j], data);
                 }, false, true);
+                // todo the true here is a memory leak since it should be removed at some point?!
                 // todo: handle onload action right after registering everything. this will be used for onload api calls in order to get content such as lists or models. Maybe in the main application after registering a invoke('onload') should be called if the application wants to execute the onload elements
                 // todo: right now one event type can only exist once... needs fixing!!!
                 //this.app.eventManager.addGroup(e.id + listeners[i].action[j - 1].type, listeners[i].action[j - 1].type);
