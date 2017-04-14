@@ -90,7 +90,7 @@
         }
 
         for (let id  in this.groups[group]) {
-            if (this.groups[group].hasOwnProperty(id) && this.groups[group][id]) {
+            if (!this.groups[group].hasOwnProperty(id) || !this.groups[group][id]) {
                 return true;
             }
         }
@@ -116,6 +116,10 @@
     jsOMS.Event.EventManager.prototype.trigger = function (group, id)
     {
         id = typeof id !== 'undefined' ? id : 0;
+
+        if(!this.callbacks.hasOwnProperty(group)) {
+            return;
+        }
 
         if (typeof this.groups[group] !== 'undefined') {
             this.groups[group][id] = true;

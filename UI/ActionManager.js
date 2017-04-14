@@ -75,14 +75,14 @@
             actionLength = listeners[i].action.length;
 
             for (let j = 1; j < actionLength; j++) {
-                // todo: handle onload action right after registering everything. this will be used for onload api calls in order to get content such as lists or models. Maybe in the main application after registering a invoke('onload') should be called if the application wants to execute the onload elements
-                // todo: right now one event type can only exist once... needs fixing!!!
-                this.app.eventManager.addGroup(e.id + listeners[i].action[j - 1].type, listeners[i].action[j - 1].type);
-                this.app.eventManager.setDone(e.id + listeners[i].action[j - 1].type, function ()
+                this.app.eventManager.attach(e.id + listeners[i].action[j - 1].type, function ()
                 {
                     // todo: how to pass result from previous action to next action?!
                     self.runAction(e, listeners[i].action[j]);
-                });
+                }, false, true);
+                // todo: handle onload action right after registering everything. this will be used for onload api calls in order to get content such as lists or models. Maybe in the main application after registering a invoke('onload') should be called if the application wants to execute the onload elements
+                // todo: right now one event type can only exist once... needs fixing!!!
+                //this.app.eventManager.addGroup(e.id + listeners[i].action[j - 1].type, listeners[i].action[j - 1].type);
             }
 
             // Register event for first action
