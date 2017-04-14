@@ -75,10 +75,10 @@
             actionLength = listeners[i].action.length;
 
             for (let j = 1; j < actionLength; j++) {
-                this.app.eventManager.attach(e.id + listeners[i].action[j - 1].type, function ()
+                this.app.eventManager.attach(e.id + listeners[i].action[j - 1].type, function (data)
                 {
                     // todo: how to pass result from previous action to next action?!
-                    self.runAction(e, listeners[i].action[j]);
+                    self.runAction(e, listeners[i].action[j], data);
                 }, false, true);
                 // todo: handle onload action right after registering everything. this will be used for onload api calls in order to get content such as lists or models. Maybe in the main application after registering a invoke('onload') should be called if the application wants to execute the onload elements
                 // todo: right now one event type can only exist once... needs fixing!!!
@@ -104,21 +104,22 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.UI.ActionManager.prototype.runAction = function (e, action)
+    jsOMS.UI.ActionManager.prototype.runAction = function (e, action, data)
     {
         const self = this;
 
         console.log(action.type);
-        console.log(this.actions);
 
         if (!this.actions.hasOwnProperty(action.type)) {
             console.log('Undefined action ' + action.type);
             return;
         }
 
-        this.actions[action.type](action, function ()
+        action.data = data;
+
+        this.actions[action.type](action, function (data)
         {
-            self.app.eventManager.trigger(e.id + action.type, e.id);
+            self.app.eventManager.trigger(e.id + action.type, e.id, data);
         });
     };
 

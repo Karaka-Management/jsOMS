@@ -113,7 +113,7 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.Event.EventManager.prototype.trigger = function (group, id)
+    jsOMS.Event.EventManager.prototype.trigger = function (group, id, data)
     {
         id = typeof id !== 'undefined' ? id : 0;
 
@@ -126,7 +126,7 @@
         }
 
         if (!this.hasOutstanding(group)) {
-            this.callbacks[group].func();
+            this.callbacks[group].func(data);
 
             if (this.callbacks[group].remove) {
                 this.detach(group);
