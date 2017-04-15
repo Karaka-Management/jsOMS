@@ -217,4 +217,35 @@
 
         return parsed;
     };
+
+    /**
+     * Set uri builder components.
+     *
+     * @return {void}
+     *
+     * @method
+     *
+     * @since  1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
+    jsOMS.Uri.UriFactory.setupUriBuilder = function (uri)
+    {
+        jsOMS.Uri.UriFactory.setQuery('/scheme', uri.getScheme());
+        jsOMS.Uri.UriFactory.setQuery('/host', uri.getHost());
+        jsOMS.Uri.UriFactory.setQuery('/base', uri.getBase());
+        jsOMS.Uri.UriFactory.setQuery('?', uri.getQuery());
+        jsOMS.Uri.UriFactory.setQuery('%', uri.getUri());
+        jsOMS.Uri.UriFactory.setQuery('#', uri.getFragment());
+        jsOMS.Uri.UriFactory.setQuery('/', uri.getPath());
+        jsOMS.Uri.UriFactory.setQuery(':user', uri.getUser());
+        jsOMS.Uri.UriFactory.setQuery(':pass', uri.getPass());
+
+        const query = uri.getQuery();
+
+        for (let key in query) {
+            if (query.hasOwnProperty(key)) {
+                jsOMS.Uri.UriFactory.setQuery('?' + key, query[key]);
+            }
+        }
+    };
 }(window.jsOMS = window.jsOMS || {}));

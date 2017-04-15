@@ -174,44 +174,65 @@
             this.path = this.path.substr(0, -4);
         }
 
-        this.queryString = parsed['query'];
+        this.queryString = typeof parsed['query'] !== 'undefined' ? parsed['query'] : [];
 
         if (this.queryString !== null) {
             this.query = jsOMS.Uri.Http.getAllUriQueryParameters(this.queryString);
         }
 
-        this.fragment = parsed['fragment'];
+        this.fragment = typeof parsed['fragment'] !== 'undefined' ? parsed['fragment'] : '';
+
+        // todo: needs + rootPath at the end but how to define? maybe look at inline js uri is defined there?!
         this.base     = this.scheme + '://' + this.host;
-
-        this.setupUriBuilder();
     };
 
-    /**
-     * Set uri builder components.
-     *
-     * @return {void}
-     *
-     * @method
-     *
-     * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
-     */
-    jsOMS.Uri.Http.prototype.setupUriBuilder = function ()
+    jsOMS.Uri.Http.prototype.getBase = function()
     {
-        jsOMS.Uri.UriFactory.setQuery('/scheme', this.scheme);
-        jsOMS.Uri.UriFactory.setQuery('/host', this.host);
-        jsOMS.Uri.UriFactory.setQuery('/base', this.base);
-        jsOMS.Uri.UriFactory.setQuery('?', this.queryString);
-        jsOMS.Uri.UriFactory.setQuery('%', this.uri);
-        jsOMS.Uri.UriFactory.setQuery('#', this.fragment);
-        jsOMS.Uri.UriFactory.setQuery('/', this.path);
-        jsOMS.Uri.UriFactory.setQuery(':user', this.user);
-        jsOMS.Uri.UriFactory.setQuery(':pass', this.pass);
+        return this.base;
+    }
 
-        for (let key in this.query) {
-            if (this.query.hasOwnProperty(key)) {
-                jsOMS.Uri.UriFactory.setQuery('?' + key, this.query[key]);
-            }
-        }
-    };
+    jsOMS.Uri.Http.prototype.getScheme = function()
+    {
+        return this.scheme;
+    }
+
+    jsOMS.Uri.Http.prototype.getHost = function()
+    {
+        return this.host;
+    }
+
+    jsOMS.Uri.Http.prototype.getPort = function()
+    {
+        return this.port;
+    }
+
+    jsOMS.Uri.Http.prototype.getUser = function()
+    {
+        return this.user;
+    }
+
+    jsOMS.Uri.Http.prototype.getPass = function()
+    {
+        return this.pass;
+    }
+
+    jsOMS.Uri.Http.prototype.getQuery = function()
+    {
+        return this.queryString;
+    }
+
+    jsOMS.Uri.Http.prototype.getUri = function()
+    {
+        return this.uri;
+    }
+
+    jsOMS.Uri.Http.prototype.getFragment = function()
+    {
+        return this.fragment;
+    }
+
+    jsOMS.Uri.Http.prototype.getPath = function()
+    {
+        return this.path;
+    }
 }(window.jsOMS = window.jsOMS || {}));
