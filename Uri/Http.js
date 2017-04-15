@@ -120,9 +120,9 @@
      */
     jsOMS.Uri.Http.getAllUriQueryParameters = function (query)
     {
-        const keyValPairs = [],
-            params      = {};
-        let pairNum     = null;
+        const params      = {};
+        let keyValPairs = [],
+            pairNum     = null;
 
         if (query.length) {
             keyValPairs = query.split('&');
