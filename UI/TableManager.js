@@ -43,7 +43,7 @@
                 this.bindElement(e);
             }
         } else {
-            const tables = document.querySelectorAll('.tables'),
+            const tables = document.getElementsByTagName('table'),
                 length = !tables ? 0 : tables.length;
 
             for (var i = 0; i < length; i++) {
@@ -64,5 +64,14 @@
      */
     jsOMS.UI.TableManager.prototype.bindElement = function (e)
     {
+        const rows = e.querySelectorAll('[data-href]'),
+            length = rows.length;
+
+        for(let i = 0; i < length; i++) {
+            rows[i].addEventListener('click', function(event) {
+                jsOMS.preventAll(event);
+                window.location = jsOMS.Uri.UriFactory.build(this.getAttribute('data-href'));
+            });
+        }
     };
 }(window.jsOMS = window.jsOMS || {}));
