@@ -12,7 +12,7 @@
     "use strict";
 
     /** @namespace jsOMS.UI */
-    jsOMS.Autoloader.defineNamespace('jsOMS.UI');
+    jsOMS.Autoloader.defineNamespace('jsOMS.UI.Component');
 
     /**
      * @constructor
@@ -20,7 +20,7 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.UI.FormManager = function (app)
+    jsOMS.UI.Component.Form = function (app)
     {
         this.app    = app;
         this.forms  = {};
@@ -35,7 +35,7 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.UI.FormManager.prototype.get = function (id)
+    jsOMS.UI.Component.Form.prototype.get = function (id)
     {
         return this.forms[id];
     };
@@ -48,7 +48,7 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.UI.FormManager.prototype.isIgnored = function (id)
+    jsOMS.UI.Component.Form.prototype.isIgnored = function (id)
     {
         return this.ignore.indexOf(id) !== -1;
     };
@@ -61,7 +61,7 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.UI.FormManager.prototype.unbind = function (id)
+    jsOMS.UI.Component.Form.prototype.unbind = function (id)
     {
 
     };
@@ -74,7 +74,7 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.UI.FormManager.prototype.bind = function (id)
+    jsOMS.UI.Component.Form.prototype.bind = function (id)
     {
         if (typeof id !== 'undefined' && typeof this.ignore[id] === 'undefined') {
             this.bindForm(id);
@@ -98,7 +98,7 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.UI.FormManager.prototype.bindForm = function (id)
+    jsOMS.UI.Component.Form.prototype.bindForm = function (id)
     {
         if (typeof id === 'undefined' || !id) {
             this.app.logger.info('A form doesn\'t have an ID.');
@@ -130,7 +130,7 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.UI.FormManager.prototype.unbindForm = function (id)
+    jsOMS.UI.Component.Form.prototype.unbindForm = function (id)
     {
         // todo: do i need the findex? can't i just use id?
         let findex = 0;
@@ -155,7 +155,7 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.UI.FormManager.prototype.submit = function (form)
+    jsOMS.UI.Component.Form.prototype.submit = function (form)
     {
         /* Handle injects */
         const self    = this,
@@ -195,7 +195,7 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.UI.FormManager.prototype.submitForm = function (form)
+    jsOMS.UI.Component.Form.prototype.submitForm = function (form)
     {
         if (!form.isValid()) {
             this.app.logger.debug('Form "' + form.getId() + '" has invalid values.');
@@ -252,7 +252,7 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.UI.FormManager.prototype.count = function ()
+    jsOMS.UI.Component.Form.prototype.count = function ()
     {
         return this.forms.length;
     };

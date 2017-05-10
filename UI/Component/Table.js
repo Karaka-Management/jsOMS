@@ -1,5 +1,5 @@
 /**
- * Tab manager class.
+ * Table manager class.
  *
  * @author     OMS Development Team <dev@oms.com>
  * @author     Dennis Eichhorn <d.eichhorn@oms.com>
@@ -11,7 +11,7 @@
 {
     "use strict";
     
-    jsOMS.Autoloader.defineNamespace('jsOMS.UI');
+    jsOMS.Autoloader.defineNamespace('jsOMS.UI.Component');
     
     /**
      * @constructor
@@ -19,7 +19,7 @@
      * @since 1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.UI.TabManager = function (responseManager)
+    jsOMS.UI.Component.Table = function (responseManager)
     {
         this.responseManager = responseManager;
     };
@@ -34,20 +34,20 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.UI.TabManager.prototype.bind = function (id)
+    jsOMS.UI.Component.Table.prototype.bind = function (id)
     {
         if (typeof id !== 'undefined') {
             const e = document.getElementById(id);
 
             if(e) {
-                this.bindElement();
+                this.bindElement(e);
             }
         } else {
-            var tabs = document.querySelectorAll('.tabview'),
-                length = !tabs ? 0 : tabs.length;
+            const tables = document.getElementsByTagName('table'),
+                length = !tables ? 0 : tables.length;
 
             for (var i = 0; i < length; i++) {
-                this.bindElement(tabs[i]);
+                this.bindElement(tables[i]);
             }
         }
     };
@@ -62,24 +62,16 @@
      * @since  1.0.0
      * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
-    jsOMS.UI.TabManager.prototype.bindElement = function (e)
+    jsOMS.UI.Component.Table.prototype.bindElement = function (e)
     {
-        const nodes = e.querySelectorAll('.tab-links a');
+        const rows = e.querySelectorAll('[data-href]'),
+            length = rows.length;
 
-        nodes.addEventListener('click', function (evt)
-        {
-            /* Change Tab */
-            const attr = this.getAttribute('href').substring(1),
-                cont = this.parentNode.parentNode.parentNode.children[1];
-
-            jsOMS.removeClass(jsOMS.getByClass(this.parentNode.parentNode, 'active'), 'active');
-            jsOMS.addClass(this.parentNode, 'active');
-            jsOMS.removeClass(jsOMS.getByClass(cont, 'active'), 'active');
-            jsOMS.addClass(jsOMS.getByClass(cont, attr), 'active');
-
-            /* Modify url */
-
-            jsOMS.preventAll(evt);
-        });
+        for(let i = 0; i < length; i++) {
+            rows[i].addEventListener('click', function(event) {
+                jsOMS.preventAll(event);
+                window.location = jsOMS.Uri.UriFactory.build(this.getAttribute('data-href'));
+            });
+        }
     };
 }(window.jsOMS = window.jsOMS || {}));
