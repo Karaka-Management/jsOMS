@@ -30,6 +30,15 @@
         this.tableManager  = new jsOMS.UI.Component.Table(this.app.responseManager);
         this.actionManager = new jsOMS.UI.ActionManager(this.app);
         this.dragNDrop     = new jsOMS.UI.DragNDrop(this.app);
+
+        let self = this;
+        this.domObserver = new MutationObserver(function(mutations) {
+            const length = mutations.length;
+
+            for(let i = 0; i < length; i++) {
+                self.app.eventManager.trigger(mutations[i].target.id + mutations[i].type, 0, mutations[i]);
+            }
+        });
     };
 
     /**
@@ -143,5 +152,20 @@
     jsOMS.UI.UIManager.prototype.getTableManager = function ()
     {
         return this.tabManager;
+    };
+
+    /**
+     * Get DOM observer
+     *
+     * @return {Object}
+     *
+     * @method
+     *
+     * @since  1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
+    jsOMS.UI.UIManager.prototype.getDOMObserver = function ()
+    {
+        return this.domObserver;
     };
 }(window.jsOMS = window.jsOMS || {}));

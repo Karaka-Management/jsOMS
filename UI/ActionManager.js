@@ -66,30 +66,60 @@
     {
         const listeners      = JSON.parse(e.getAttribute('data-action')),
             listenerLength = listeners.length,
-            self           = this;
-
-        let actionLength   = 0;
+            self = this;
 
         // For everey action an event is registered
         for (let i = 0; i < listenerLength; i++) {
-            actionLength = listeners[i].action.length;
+            let c = [e], hasSelector = false;
 
-            for (let j = 1; j < actionLength; j++) {
-                console.log(e);
-                this.app.eventManager.attach(e.id + listeners[i].action[j - 1].key, function (data)
-                {
-                    self.runAction(e, listeners[i].action[j], data);
-                }, false, true);
-                // todo: the true here is a memory leak since it should be removed at some point?!
-                // todo: handle onload action right after registering everything. this will be used for onload api calls in order to get content such as lists or models. Maybe in the main application after registering a invoke('onload') should be called if the application wants to execute the onload elements
+            if(listener.hasOwnProperty('selector')) {
+                c = documents.querySelectorAll(listenrs[i].selector);
+                hasSelector = true;
             }
 
-            // Register event for first action
-            e.addEventListener(listeners[i].listener, function ()
-            {
-                self.runAction(this, listeners[i].action[0]);
-            });
+            let childLength = c.length;
+
+            for(let j = 0; j < childLength; j++) {
+                this.bindListener(c[j], listeners[i]);
+            }
+
+            // if it has selector then a listener for child events must be implemented since these can potentially changed without any knowledge
+            // todo: what if the selector parent is different from "e"? then this doesn't make sense! Maybe this isn't allowed to happen!
+            if(hasSelector) {
+                this.app.eventManager.attach(e.id + 'childList', function(data) {
+                    const length = data.addedNodes.length;
+
+                    for(let j = 0; j < length; j++) {
+                        self.bindListener(data.addedNodes[j], listeners[i]);
+                    }
+                });
+                this.app.uiManager.getDOMObserver().observe(e, {childList: true, subtree: true});
+            }
         }
+    };
+
+    jsOMS.UI.ActionManager.prototype.bindListener = function(e, listener) 
+    {
+        const self = this,
+            actionLength = listener.action.length;
+
+        for (let j = 1; j < actionLength; j++) {
+            console.log(e);
+
+            this.app.eventManager.attach(e.id + listener.action[j - 1].key, function (data)
+            {
+                self.runAction(e, listener.action[j], data);
+            }, false, true);
+        }
+        // todo: the true here is a memory leak since it should be removed at some point?!
+        // todo: handle onload action right after registering everything. this will be used for onload api calls in order to get content such as lists or models. Maybe in the main application after registering a invoke('onload') should be called if the application wants to execute the onload elements
+
+        // only if this element is registered/no selector is specified
+        // Register event for first action
+        e.addEventListener(listener.listener, function ()
+        {
+            self.runAction(this, listener.action[0]);
+        });
     };
 
     /**
