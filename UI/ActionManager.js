@@ -72,7 +72,7 @@
         for (let i = 0; i < listenerLength; i++) {
             let c = [e], hasSelector = false;
 
-            if(listener.hasOwnProperty('selector')) {
+            if(listeners[i].hasOwnProperty('selector')) {
                 c = documents.querySelectorAll(listenrs[i].selector);
                 hasSelector = true;
             }
@@ -104,8 +104,6 @@
             actionLength = listener.action.length;
 
         for (let j = 1; j < actionLength; j++) {
-            console.log(e);
-
             this.app.eventManager.attach(e.id + listener.action[j - 1].key, function (data)
             {
                 self.runAction(e, listener.action[j], data);
@@ -114,7 +112,6 @@
         // todo: the true here is a memory leak since it should be removed at some point?!
         // todo: handle onload action right after registering everything. this will be used for onload api calls in order to get content such as lists or models. Maybe in the main application after registering a invoke('onload') should be called if the application wants to execute the onload elements
 
-        // only if this element is registered/no selector is specified
         // Register event for first action
         e.addEventListener(listener.listener, function ()
         {
