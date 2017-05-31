@@ -232,7 +232,7 @@
     {
         jsOMS.Uri.UriFactory.setQuery('/scheme', uri.getScheme());
         jsOMS.Uri.UriFactory.setQuery('/host', uri.getHost());
-        jsOMS.Uri.UriFactory.setQuery('/base', uri.getBase());
+        jsOMS.Uri.UriFactory.setQuery('/base', jsOMS.rtrim(uri.getBase(), '/'));
         jsOMS.Uri.UriFactory.setQuery('?', uri.getQuery());
         jsOMS.Uri.UriFactory.setQuery('%', uri.getUri());
         jsOMS.Uri.UriFactory.setQuery('#', uri.getFragment());
