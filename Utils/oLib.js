@@ -8,6 +8,21 @@
 (function (jsOMS)
 {
     "use strict";
+    
+    jsOMS.trim = function(str, char)
+    {
+        return jsOMS.ltrim(jsOMS.rtrim(str, char), char);
+    };
+
+    jsOMS.rtrim = function(str, char)
+    {
+        return str.replace(new RegExp("[" + char + "]*$"), '');
+    };
+
+    jsOMS.ltrim = function(str, char)
+    {
+        return str.replace(new RegExp("^[" + char + "]*"), '');
+    };
 
     /**
      * Class finder
