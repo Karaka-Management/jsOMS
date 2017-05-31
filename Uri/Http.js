@@ -185,6 +185,12 @@
         // todo: needs + rootPath at the end but how to define? maybe look at inline js uri is defined there?!
         this.base     = this.scheme + '://' + this.host;
     };
+    
+    jsOMS.Uri.Http.prototype.setRootPath = function(rootPath)
+    {
+        this.root = rootPath;
+        this.set(this.uri);
+    };
 
     jsOMS.Uri.Http.prototype.getBase = function()
     {
