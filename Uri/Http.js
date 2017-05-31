@@ -32,6 +32,7 @@
         this.queryString = '';
         this.fragment    = '';
         this.base        = '';
+        this.root        = '/';
 
         this.set(uri);
     };
@@ -181,9 +182,7 @@
         }
 
         this.fragment = typeof parsed['fragment'] !== 'undefined' ? parsed['fragment'] : '';
-
-        // todo: needs + rootPath at the end but how to define? maybe look at inline js uri is defined there?!
-        this.base     = this.scheme + '://' + this.host;
+        this.base     = this.scheme + '://' + this.host + this.root;
     };
     
     jsOMS.Uri.Http.prototype.setRootPath = function(rootPath)
@@ -195,50 +194,55 @@
     jsOMS.Uri.Http.prototype.getBase = function()
     {
         return this.base;
-    }
+    };
 
     jsOMS.Uri.Http.prototype.getScheme = function()
     {
         return this.scheme;
-    }
+    };
 
     jsOMS.Uri.Http.prototype.getHost = function()
     {
         return this.host;
-    }
+    };
 
     jsOMS.Uri.Http.prototype.getPort = function()
     {
         return this.port;
-    }
+    };
 
     jsOMS.Uri.Http.prototype.getUser = function()
     {
         return this.user;
-    }
+    };
 
     jsOMS.Uri.Http.prototype.getPass = function()
     {
         return this.pass;
-    }
+    };
 
     jsOMS.Uri.Http.prototype.getQuery = function()
     {
         return this.queryString;
-    }
+    };
 
     jsOMS.Uri.Http.prototype.getUri = function()
     {
         return this.uri;
-    }
+    };
 
     jsOMS.Uri.Http.prototype.getFragment = function()
     {
         return this.fragment;
-    }
+    };
 
     jsOMS.Uri.Http.prototype.getPath = function()
     {
         return this.path;
-    }
+    };
+    
+    jsOMS.Uri.Http.prototype.getPathOffset = function()
+    {
+        return jsOMS.substr_count(this.root, '/') - 1;
+    };
 }(window.jsOMS = window.jsOMS || {}));
