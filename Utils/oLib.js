@@ -9,21 +9,73 @@
 {
     "use strict";
     
+    /**
+     * Trim char from string
+     *
+     * @param {string} str String to trim from
+     * @param {string} char Char to trim
+     *
+     * @return {string}
+     *
+     * @function
+     *
+     * @since  1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.trim = function(str, char)
     {
         return jsOMS.ltrim(jsOMS.rtrim(str, char), char);
     };
 
+    /**
+     * Trim char from right part of string
+     *
+     * @param {string} str String to trim from
+     * @param {string} char Char to trim
+     *
+     * @return {string}
+     *
+     * @function
+     *
+     * @since  1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.rtrim = function(str, char)
     {
         return str.replace(new RegExp("[" + char + "]*$"), '');
     };
 
+    /**
+     * Trim char from left part of string
+     *
+     * @param {string} str String to trim from
+     * @param {string} char Char to trim
+     *
+     * @return {string}
+     *
+     * @function
+     *
+     * @since  1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.ltrim = function(str, char)
     {
         return str.replace(new RegExp("^[" + char + "]*"), '');
     };
     
+    /**
+     * Count string in string
+     *
+     * @param {string} str String to inspect
+     * @param {string} substr Substring to count
+     *
+     * @return {int}
+     *
+     * @function
+     *
+     * @since  1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
     jsOMS.substr_count = function(str, substr) {
         str += '';
         substr += '';
