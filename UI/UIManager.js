@@ -31,6 +31,7 @@
         this.tableManager  = new jsOMS.UI.Component.Table(this.app.responseManager);
         this.actionManager = new jsOMS.UI.ActionManager(this.app);
         this.dragNDrop     = new jsOMS.UI.DragNDrop(this.app);
+        this.generalUI     = new jsOMS.UI.GeneralUI();
 
         let self = this;
         this.domObserver = new MutationObserver(function(mutations) {
@@ -60,8 +61,10 @@
             this.tableManager.bind();
             this.actionManager.bind();
             this.dragNDrop.bind();
+            this.generalUI.bind();
         } else {
             const tag = document.getElementById(id);
+            this.generalUI.bind(tag);
 
             if(!tag) {
                 return;
@@ -168,5 +171,20 @@
     jsOMS.UI.UIManager.prototype.getDOMObserver = function ()
     {
         return this.domObserver;
+    };
+    
+    /**
+     * Get general UI
+     *
+     * @return {Object}
+     *
+     * @method
+     *
+     * @since  1.0.0
+     * @author Dennis Eichhorn <d.eichhorn@oms.com>
+     */
+    jsOMS.UI.UIManager.prototype.getGeneralUI = function ()
+    {
+        return this.generalUI;
     };
 }(window.jsOMS = window.jsOMS || {}));
