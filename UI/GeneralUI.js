@@ -57,8 +57,8 @@
      */
     jsOMS.UI.GeneralUI.prototype.bindHref = function (e)
     {
-        const e = e !== null ? e.querySelectorAll('[data-href]') : document.querySelectorAll('[data-href]'),
-            length = e.length;
+        e = e !== null ? e.querySelectorAll('[data-href]') : document.querySelectorAll('[data-href]');
+        const length = e.length;
 
         for(let i = 0; i < length; i++) {
             e[i].addEventListener('click', function(event) {
