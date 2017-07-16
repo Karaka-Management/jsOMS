@@ -25,6 +25,7 @@
     {
         this.app    = app;
         this.draggable  = {};
+        this.dragging = null;
     };
 
     /**
@@ -73,44 +74,72 @@
      */
     jsOMS.UI.DragNDrop.prototype.bindElement = function (id)
     {
-        const element = document.getElementById(id);
+        const element = document.getElementById(id),
+            self = this;
+
         console.log(id);
 
         if(!element) {
             return;
         }
 
-        element.addEventListener('dragstart', function(event) {
-            // todo: 
-            console.log('drag start');
-        });
+        element.addEventListener('dragstart', function(e) {
+            if(self.dragging === null) {
+                self.dragging = this;
+                e.dataTransfer.effectAllowed = 'move';
+                e.dataTransfer.setData('text/html', this.innerHTML);
 
-        element.addEventListener('dragenter', function(event) {
+                console.log(self.dragging);
+            }
+
+            console.log('drag start');
+        }, false);
+
+        element.addEventListener('dragenter', function(e) {
             // todo: highlight
             console.log('drag enter');
-        });
+        }, false);
 
-        element.addEventListener('dragover', function(event) {
-            // todo: highlight if not already highlight
+        element.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            
+            e.dataTransfer.dropEffect = 'move';
+            
             console.log('drag over');
-        });
+        }, false);
 
-        element.addEventListener('dragleave', function(event) {
+        element.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+
             // todo: don't highlight
             console.log('drag leave');
-        });
+        }, false);
 
-        element.addEventListener('dragend', function(event) {
+        element.addEventListener('dragend', function(e) {
+            e.preventDefault();
+
             // todo: reset all changes
             console.log('drag end');
-        });
+        }, false);
 
-        //element.addEventListener('drag', function(event) {});
-        element.addEventListener('drop', function(event) {
+        //element.addEventListener('drag', function(e) {});
+        element.addEventListener('drop', function(e) {
+            e.stopPropagation();
+            e.preventDefault();
+
+            if(self.dragging === this) {
+                return;
+            }
+
+            self.dragging.innerHTML = this.innerHTML;
+            this.innerHTML = e.dataTransfer.getData('text/html');
+
             // todo: add to now destination
             // todo: remove from old destination
             console.log('drag drop');
-        });
+
+            self.dragging = null;
+        }, false);
     }
 
 }(window.jsOMS = window.jsOMS || {}));
