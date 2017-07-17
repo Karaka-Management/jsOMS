@@ -74,7 +74,7 @@
             let c = [e], hasSelector = false;
 
             if(listeners[i].hasOwnProperty('selector')) {
-                c = documents.querySelectorAll(listenrs[i].selector);
+                c = document.querySelectorAll(listeners[i].selector);
                 hasSelector = true;
             }
 
