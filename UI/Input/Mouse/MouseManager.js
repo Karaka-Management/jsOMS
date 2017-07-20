@@ -2,7 +2,6 @@
  * Mouse manager class.
  *
  * @author     OMS Development Team <dev@oms.com>
- * @author     Dennis Eichhorn <d.eichhorn@oms.com>
  * @copyright  2013 Dennis Eichhorn
  * @license    OMS License 1.0
  * @version    1.0.0
@@ -19,7 +18,6 @@
      * @constructor
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.Input.Mouse.MouseManager = function ()
     {
@@ -37,7 +35,6 @@
      * @param {bool} exact ??? todo: can't remember why this was important oO!!!
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.Input.Mouse.MouseManager.prototype.add = function (element, type, button, callback, exact)
     {
@@ -56,7 +53,6 @@
      * @param {int} type Action type
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.Input.Mouse.MouseManager.prototype.bind = function (element, type)
     {
@@ -103,7 +99,6 @@
      * @param {Object} event Click event
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.Input.Mouse.MouseManager.prototype.run = function (element, event)
     {

@@ -2,7 +2,6 @@
  * Uri factory.
  *
  * @author     OMS Development Team <dev@oms.com>
- * @author     Dennis Eichhorn <d.eichhorn@oms.com>
  * @copyright  2013 Dennis Eichhorn
  * @license    OMS License 1.0
  * @version    1.0.0
@@ -19,7 +18,6 @@
      * @constructor
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Uri.Http = function (uri)
     {
@@ -51,7 +49,6 @@
      * @function
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Uri.Http.parseUrl = function (str, mode)
     {
@@ -96,7 +93,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Uri.Http.getUriQueryParameter = function (query, name)
     {
@@ -118,7 +114,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Uri.Http.getAllUriQueryParameters = function (query)
     {
@@ -157,7 +152,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Uri.Http.prototype.set = function (uri)
     {

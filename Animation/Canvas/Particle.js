@@ -2,7 +2,6 @@
  * Particle class.
  *
  * @author     OMS Development Team <dev@oms.com>
- * @author     Dennis Eichhorn <d.eichhorn@oms.com>
  * @copyright  2013 Dennis Eichhorn
  * @license    OMS License 1.0
  * @version    1.0.0
@@ -19,7 +18,6 @@
      * @constructor
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Animation.Canvas.Particle = function (posX, posY, velX, velY, radius)
     {
@@ -41,7 +39,6 @@
      * @method
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Animation.Canvas.Particle.prototype.getRadius = function ()
     {
@@ -59,7 +56,6 @@
      * @method
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Animation.Canvas.Particle.prototype.setPosition = function (posX, posY)
     {
@@ -75,7 +71,6 @@
      * @method
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Animation.Canvas.Particle.prototype.getPosition = function ()
     {
@@ -93,7 +88,6 @@
      * @method
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Animation.Canvas.Particle.prototype.setVelocity = function (velX, velY)
     {
@@ -109,7 +103,6 @@
      * @method
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Animation.Canvas.Particle.prototype.getVelocity = function ()
     {
@@ -126,7 +119,6 @@
      * @method
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Animation.Canvas.Particle.prototype.draw = function (ctx)
     {

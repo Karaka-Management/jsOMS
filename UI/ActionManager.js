@@ -2,7 +2,6 @@
  * Form manager class.
  *
  * @author     OMS Development Team <dev@oms.com>
- * @author     Dennis Eichhorn <d.eichhorn@oms.com>
  * @copyright  2013 Dennis Eichhorn
  * @license    OMS License 1.0
  * @version    1.0.0
@@ -23,7 +22,6 @@
      * @method
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.ActionManager = function (app)
     {
@@ -39,7 +37,6 @@
      * @method
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.ActionManager.prototype.bind = function (id)
     {
@@ -61,7 +58,6 @@
      * @method
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.ActionManager.prototype.bindElement = function (e)
     {
@@ -129,7 +125,6 @@
      * @method
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.ActionManager.prototype.runAction = function (e, action, data)
     {
@@ -159,7 +154,6 @@
      * @method
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.ActionManager.prototype.add = function (name, callback)
     {

@@ -4,7 +4,6 @@
  * Used for auto handling different responses.
  *
  * @author     OMS Development Team <dev@oms.com>
- * @author     Dennis Eichhorn <d.eichhorn@oms.com>
  * @copyright  2013 Dennis Eichhorn
  * @license    OMS License 1.0
  * @version    1.0.0
@@ -21,7 +20,6 @@
      * @constructor
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Message.Response.ResponseManager = function ()
     {
@@ -40,7 +38,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Message.Response.ResponseManager.prototype.add = function (key, message, request)
     {
@@ -64,7 +61,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Message.Response.ResponseManager.prototype.run = function (key, data, request)
     {

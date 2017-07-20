@@ -2,7 +2,6 @@
  * Tab manager class.
  *
  * @author     OMS Development Team <dev@oms.com>
- * @author     Dennis Eichhorn <d.eichhorn@oms.com>
  * @copyright  2013 Dennis Eichhorn
  * @license    OMS License 1.0
  * @version    1.0.0
@@ -18,7 +17,6 @@
      * @constructor
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.Component.Tab = function (responseManager)
     {
@@ -33,7 +31,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.Component.Tab.prototype.bind = function (id)
     {
@@ -61,7 +58,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.Component.Tab.prototype.bindElement = function (e)
     {

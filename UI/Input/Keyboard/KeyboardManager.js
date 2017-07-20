@@ -2,7 +2,6 @@
  * Keyboard manager class.
  *
  * @author     OMS Development Team <dev@oms.com>
- * @author     Dennis Eichhorn <d.eichhorn@oms.com>
  * @copyright  2013 Dennis Eichhorn
  * @license    OMS License 1.0
  * @version    1.0.0
@@ -19,7 +18,6 @@
      * @constructor
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.Input.Keyboard.KeyboardManager = function ()
     {
@@ -35,7 +33,6 @@
      * @param {callback} callback Callback
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.Input.Keyboard.KeyboardManager.prototype.add = function (element, keys, callback)
     {
@@ -54,7 +51,6 @@
      * @param {string} element Container id
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.Input.Keyboard.KeyboardManager.prototype.bind = function (element)
     {
@@ -82,7 +78,6 @@
      * @param {Object} event Key event
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.Input.Keyboard.KeyboardManager.prototype.run = function (element, event)
     {

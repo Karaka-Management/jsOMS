@@ -2,7 +2,6 @@
  * Touch manager class.
  *
  * @author     OMS Development Team <dev@oms.com>
- * @author     Dennis Eichhorn <d.eichhorn@oms.com>
  * @copyright  2013 Dennis Eichhorn
  * @license    OMS License 1.0
  * @version    1.0.0
@@ -21,7 +20,6 @@
      * @param {Object} app Application
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.Input.Touch.TouchManager = function (app)
     {
@@ -36,7 +34,6 @@
      * This is called in between swipes in order to reset previous swipe data.
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.Input.Touch.TouchManager.prototype.resetSwipe = function ()
     {
@@ -49,7 +46,6 @@
      * Forwarding swipe to arrow keyes.
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.Input.Touch.TouchManager.prototype.add = function (surface)
     {

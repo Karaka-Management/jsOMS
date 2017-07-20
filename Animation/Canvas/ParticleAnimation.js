@@ -2,7 +2,6 @@
  * Particle animation class.
  *
  * @author     OMS Development Team <dev@oms.com>
- * @author     Dennis Eichhorn <d.eichhorn@oms.com>
  * @copyright  2013 Dennis Eichhorn
  * @license    OMS License 1.0
  * @version    1.0.0
@@ -22,7 +21,6 @@
      * @constructor
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Animation.Canvas.ParticleAnimation = function (canvas)
     {
@@ -59,7 +57,6 @@
      * @method
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Animation.Canvas.ParticleAnimation.prototype.draw = function (self)
     {
@@ -87,7 +84,6 @@
      * @method
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Animation.Canvas.ParticleAnimation.prototype.invalidate = function ()
     {
@@ -102,7 +98,6 @@
      * @method
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Animation.Canvas.ParticleAnimation.prototype.updateParticles = function ()
     {
@@ -155,7 +150,6 @@
      * @method
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Animation.Canvas.ParticleAnimation.prototype.updateDistance = function (p1, p2)
     {

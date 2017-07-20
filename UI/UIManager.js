@@ -2,7 +2,6 @@
  * UI manager for handling basic ui elements.
  *
  * @author     OMS Development Team <dev@oms.com>
- * @author     Dennis Eichhorn <d.eichhorn@oms.com>
  * @copyright  2013 Dennis Eichhorn
  * @license    OMS License 1.0
  * @version    1.0.0
@@ -21,7 +20,6 @@
      * @param {Object} app Application object
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.UIManager = function (app)
     {
@@ -51,7 +49,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.UIManager.prototype.bind = function (id)
     {
@@ -91,7 +88,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.UIManager.prototype.getFormManager = function ()
     {
@@ -106,7 +102,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.UIManager.prototype.getActionManager = function ()
     {
@@ -121,7 +116,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.UIManager.prototype.getDragNDrop = function ()
     {
@@ -136,7 +130,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.UIManager.prototype.getTabManager = function ()
     {
@@ -151,7 +144,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.UIManager.prototype.getTableManager = function ()
     {
@@ -166,7 +158,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.UIManager.prototype.getDOMObserver = function ()
     {
@@ -181,7 +172,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.UIManager.prototype.getGeneralUI = function ()
     {

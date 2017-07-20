@@ -2,7 +2,6 @@
  * Request class.
  *
  * @author     OMS Development Team <dev@oms.com>
- * @author     Dennis Eichhorn <d.eichhorn@oms.com>
  * @copyright  2013 Dennis Eichhorn
  * @license    OMS License 1.0
  * @version    1.0.0
@@ -19,7 +18,6 @@
      * @constructor
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Message.Request.Request = function (uri, method, type)
     {
@@ -48,7 +46,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Message.Request.Request.getBrowser = function ()
     {
@@ -77,7 +74,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Message.Request.Request.getOS = function ()
     {
@@ -100,7 +96,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Message.Request.Request.prototype.setMethod = function (method)
     {
@@ -117,7 +112,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Message.Request.Request.prototype.getMethod = function ()
     {
@@ -134,7 +128,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Message.Request.Request.prototype.setResponseType = function (type)
     {
@@ -151,7 +144,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Message.Request.Request.prototype.getResponseType = function ()
     {
@@ -167,7 +159,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Message.Request.Request.prototype.setRequestHeader = function (type, header)
     {
@@ -182,7 +173,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Message.Request.Request.prototype.getRequestHeader = function ()
     {
@@ -197,7 +187,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Message.Request.Request.prototype.setUri = function (uri)
     {
@@ -212,7 +201,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Message.Request.Request.prototype.getUri = function ()
     {
@@ -228,7 +216,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Message.Request.Request.prototype.setSuccess = function (callback)
     {
@@ -244,7 +231,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Message.Request.Request.prototype.setResultCallback = function (status, callback)
     {
@@ -259,7 +245,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Message.Request.Request.prototype.setData = function (data)
     {
@@ -274,7 +259,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Message.Request.Request.prototype.getData = function ()
     {
@@ -291,7 +275,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Message.Request.Request.prototype.setType = function (type)
     {
@@ -308,7 +291,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Message.Request.Request.prototype.getType = function ()
     {
@@ -323,7 +305,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Message.Request.Request.prototype.queryfy = function (obj)
     {
@@ -345,7 +326,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Message.Request.Request.prototype.send = function ()
     {

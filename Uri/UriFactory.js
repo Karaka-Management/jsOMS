@@ -2,7 +2,6 @@
  * Uri factory.
  *
  * @author     OMS Development Team <dev@oms.com>
- * @author     Dennis Eichhorn <d.eichhorn@oms.com>
  * @copyright  2013 Dennis Eichhorn
  * @license    OMS License 1.0
  * @version    1.0.0
@@ -35,7 +34,6 @@
      * @function
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Uri.UriFactory.setQuery = function (key, value, overwrite)
     {
@@ -58,7 +56,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Uri.UriFactory.clearAll = function() 
     {
@@ -77,7 +74,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Uri.UriFactory.clear = function(key)
     {
@@ -100,7 +96,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Uri.UriFactory.clearLike = function(pattern) 
     {
@@ -129,7 +124,6 @@
      * @function
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Uri.UriFactory.unique = function (url)
     {
@@ -177,7 +171,6 @@
      * @function
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Uri.UriFactory.build = function (uri, toMatch)
     {
@@ -227,7 +220,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Uri.UriFactory.setupUriBuilder = function (uri)
     {

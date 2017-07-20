@@ -4,7 +4,6 @@
  * Used for pooling requests.
  *
  * @author     OMS Development Team <dev@oms.com>
- * @author     Dennis Eichhorn <d.eichhorn@oms.com>
  * @copyright  Dennis Eichhorn
  * @license    OMS License 1.0
  * @version    1.0.0
@@ -20,7 +19,6 @@
      * @constructor
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Event.EventManager = function ()
     {
@@ -40,7 +38,6 @@
      * @method
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Event.EventManager.prototype.addGroup = function (group, id)
     {
@@ -61,7 +58,6 @@
      * @method
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Event.EventManager.prototype.reset = function (group)
     {
@@ -82,7 +78,6 @@
      * @method
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Event.EventManager.prototype.hasOutstanding = function (group)
     {
@@ -112,7 +107,6 @@
      * @method
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Event.EventManager.prototype.trigger = function (group, id, data)
     {
@@ -149,7 +143,6 @@
      * @method
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Event.EventManager.prototype.detach = function (group)
     {
@@ -170,7 +163,6 @@
      * @method
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Event.EventManager.prototype.attach = function (group, callback, remove, reset)
     {
@@ -194,7 +186,6 @@
      * @method
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Event.EventManager.prototype.count = function ()
     {

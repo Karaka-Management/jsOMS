@@ -2,7 +2,6 @@
  * Auth class.
  *
  * @author     OMS Development Team <dev@oms.com>
- * @author     Dennis Eichhorn <d.eichhorn@oms.com>
  * @copyright  2013 Dennis Eichhorn
  * @license    OMS License 1.0
  * @version    1.0.0
@@ -18,7 +17,6 @@
      * @constructor
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Auth.Auth = function (uri)
     {
@@ -34,7 +32,6 @@
      * @method
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Auth.Auth.prototype.setAccount = function (account)
     {
@@ -49,7 +46,6 @@
      * @method
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Auth.Auth.prototype.getAccount = function ()
     {
@@ -62,7 +58,6 @@
      * @method
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Auth.Auth.prototype.login = function ()
     {
@@ -85,7 +80,6 @@
      * @method
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Auth.Auth.prototype.logout = function ()
     {
@@ -98,7 +92,6 @@
      * @method
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Auth.Auth.prototype.loginResult = function (xhr)
     {

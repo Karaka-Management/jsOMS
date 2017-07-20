@@ -2,7 +2,6 @@
  * Form view.
  *
  * @author     OMS Development Team <dev@oms.com>
- * @author     Dennis Eichhorn <d.eichhorn@oms.com>
  * @copyright  2013 Dennis Eichhorn
  * @license    OMS License 1.0
  * @version    1.0.0
@@ -20,7 +19,6 @@
      * @param {string} id Form id
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Views.FormView = function (id)
     {
@@ -37,7 +35,6 @@
      * Pulled out since this is used in a cleanup process
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Views.FormView.prototype.initializeMembers = function ()
     {
@@ -52,7 +49,6 @@
      * @return {string}
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Views.FormView.prototype.getMethod = function ()
     {
@@ -65,7 +61,6 @@
      * @return {string}
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Views.FormView.prototype.getAction = function ()
     {
@@ -78,7 +73,6 @@
      * @return {Object}
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Views.FormView.prototype.getSubmit = function ()
     {
@@ -97,7 +91,6 @@
      * @return {callback}
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Views.FormView.prototype.getSuccess = function ()
     {
@@ -110,7 +103,6 @@
      * @param {callback} callback Callback
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Views.FormView.prototype.setSuccess = function (callback)
     {
@@ -123,7 +115,6 @@
      * @param {callback} callback Callback
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Views.FormView.prototype.injectSubmit = function (callback)
     {
@@ -136,7 +127,6 @@
      * @return {Array}
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Views.FormView.prototype.getFormElements = function ()
     {
@@ -160,7 +150,6 @@
      * @return {Object}
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Views.FormView.prototype.getData = function ()
     {
@@ -189,7 +178,6 @@
      * @return {string}
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Views.FormView.prototype.getId = function ()
     {
@@ -202,7 +190,6 @@
      * @return {boolean}
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Views.FormView.prototype.isValid = function ()
     {
@@ -228,7 +215,6 @@
      * @return {Object}
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Views.FormView.prototype.getElement = function ()
     {
@@ -241,7 +227,6 @@
      * @return {string}
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Views.FormView.getElementId = function (e)
     {
@@ -268,7 +253,6 @@
      * @return {Object}
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Views.FormView.prototype.getSubmitInjects = function ()
     {
@@ -279,7 +263,6 @@
      * Bind form
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Views.FormView.prototype.bind = function ()
     {
@@ -319,7 +302,6 @@
      * Unbind form
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Views.FormView.prototype.unbind = function ()
     {
@@ -348,7 +330,6 @@
      * Clean form
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Views.FormView.prototype.clean = function ()
     {

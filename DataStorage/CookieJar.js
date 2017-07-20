@@ -2,7 +2,6 @@
  * CookieJar class.
  *
  * @author     OMS Development Team <dev@oms.com>
- * @author     Dennis Eichhorn <d.eichhorn@oms.com>
  * @copyright  2013 Dennis Eichhorn
  * @license    OMS License 1.0
  * @version    1.0.0
@@ -18,7 +17,6 @@
      * @constructor
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.DataStorage.CookieJar = function ()
     {
@@ -38,7 +36,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.DataStorage.CookieJar.prototype.setCookie = function (cName, value, exdays, domain, path)
     {
@@ -58,7 +55,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.DataStorage.CookieJar.prototype.getCookie = function (cName)
     {

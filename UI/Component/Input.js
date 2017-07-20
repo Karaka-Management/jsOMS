@@ -2,7 +2,6 @@
  * Form manager class.
  *
  * @author     OMS Development Team <dev@oms.com>
- * @author     Dennis Eichhorn <d.eichhorn@oms.com>
  * @copyright  2013 Dennis Eichhorn
  * @license    OMS License 1.0
  * @version    1.0.0
@@ -21,7 +20,6 @@
      * @param {Object} input Input element
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.Input.unbind = function (input)
     {
@@ -35,7 +33,6 @@
      * @param {Object} input Input elment
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.Input.bindElement = function (input)
     {
@@ -99,7 +96,6 @@
      * @param {Object} datalist Datalist elment
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.Input.addRemoteDatalistOptions = function (input, datalist)
     {
@@ -151,7 +147,6 @@
      * @param {Object} datalist Datalist elment
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.Input.clearDatalistOptions = function (datalist)
     {

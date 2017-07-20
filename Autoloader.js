@@ -2,7 +2,6 @@
  * Autoloader.
  *
  * @author     OMS Development Team <dev@oms.com>
- * @author     Dennis Eichhorn <d.eichhorn@oms.com>
  * @copyright  2013 Dennis Eichhorn
  * @license    OMS License 1.0
  * @version    1.0.0
@@ -23,7 +22,6 @@
      * @param {string} namespace Namespace
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Autoloader.defineNamespace = function (namespace)
     {
@@ -50,7 +48,6 @@
      * Collect all loaded javascript files
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Autoloader.initPreloaded = function ()
     {
@@ -74,7 +71,6 @@
      * @param {string} file Script URI
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Autoloader.addPreloaded = function (file)
     {
@@ -90,7 +86,6 @@
      * @param {function} callback Callback after script loading
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Autoloader.include = function (file, callback)
     {

@@ -2,7 +2,6 @@
  * Logger class.
  *
  * @author     OMS Development Team <dev@oms.com>
- * @author     Dennis Eichhorn <d.eichhorn@oms.com>
  * @copyright  2013 Dennis Eichhorn
  * @license    OMS License 1.0
  * @version    1.0.0
@@ -22,7 +21,6 @@
      * @param {boolean} remote Remote logging
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Log.Logger = function (verbose, ui, remote)
     {
@@ -45,7 +43,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Log.Logger.getInstance = function(verbose, ui, remote) 
     {
@@ -70,7 +67,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Log.Logger.prototype.interpolate = function (message, context, level)
     {
@@ -97,7 +93,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Log.Logger.prototype.createContext = function (message, context, level)
     {
@@ -124,7 +119,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Log.Logger.prototype.write = function (message, context, level)
     {
@@ -185,7 +179,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Log.Logger.prototype.emergency = function (message, context)
     {
@@ -205,7 +198,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Log.Logger.prototype.alert = function (message, context)
     {
@@ -225,7 +217,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Log.Logger.prototype.critical = function (message, context)
     {
@@ -245,7 +236,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Log.Logger.prototype.error = function (message, context)
     {
@@ -265,7 +255,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Log.Logger.prototype.warning = function (message, context)
     {
@@ -285,7 +274,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Log.Logger.prototype.notice = function (message, context)
     {
@@ -305,7 +293,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Log.Logger.prototype.info = function (message, context)
     {
@@ -325,7 +312,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Log.Logger.prototype.debug = function (message, context)
     {
@@ -346,7 +332,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Log.Logger.prototype.log = function (level, message, context)
     {
@@ -366,7 +351,6 @@
      * @method
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.Log.Logger.prototype.console = function (level, message, context)
     {

@@ -2,7 +2,6 @@
  * Drag and drop class.
  *
  * @author     OMS Development Team <dev@oms.com>
- * @author     Dennis Eichhorn <d.eichhorn@oms.com>
  * @copyright  2013 Dennis Eichhorn
  * @license    OMS License 1.0
  * @version    1.0.0
@@ -19,7 +18,6 @@
      * @constructor
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.DragNDrop = function (app)
     {
@@ -34,7 +32,6 @@
      * @param {Object} element DOM element
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.DragNDrop.prototype.unbind = function (element)
     {
@@ -46,7 +43,6 @@
      * @param {Object} id DOM element
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.DragNDrop.prototype.bind = function (id)
     {
@@ -70,7 +66,6 @@
      * @param {Object} id DOM elment
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.DragNDrop.prototype.bindElement = function (id)
     {

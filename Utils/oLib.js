@@ -20,7 +20,6 @@
      * @function
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.trim = function(str, char)
     {
@@ -38,7 +37,6 @@
      * @function
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.rtrim = function(str, char)
     {
@@ -56,7 +54,6 @@
      * @function
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.ltrim = function(str, char)
     {
@@ -74,7 +71,6 @@
      * @function
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.substr_count = function(str, substr) {
         str += '';
@@ -115,7 +111,6 @@
      * @function
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.hasClass = function (ele, cls)
     {
@@ -133,7 +128,6 @@
      * @function
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.addClass = function (ele, cls)
     {
@@ -153,7 +147,6 @@
      * @function
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.removeClass = function (ele, cls)
     {
@@ -171,7 +164,6 @@
      * @function
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.watcher = function ()
     {
@@ -193,7 +185,6 @@
      * @function
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.preventAll = function (event)
     {
@@ -216,7 +207,6 @@
      * @function
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.ready = function (func)
     {
@@ -241,7 +231,6 @@
      * @function
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.empty = function (ele)
     {
@@ -260,7 +249,6 @@
      * @function
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.hash = function (str)
     {
@@ -286,7 +274,6 @@
      * @function
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.isNode = function (ele)
     {
@@ -309,7 +296,6 @@
      * @function
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.isElement = function (o)
     {
@@ -332,7 +318,6 @@
      * @function
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.getByClass = function (ele, cls)
     {
@@ -357,7 +342,6 @@
      * @function
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.addEventListenerToAll = function (e, event, callback)
     {
@@ -379,7 +363,6 @@
      * @function
      *
      * @since  1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.merge = function (target, source)
     {

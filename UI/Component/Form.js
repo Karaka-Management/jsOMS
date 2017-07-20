@@ -2,7 +2,6 @@
  * Form manager class.
  *
  * @author     OMS Development Team <dev@oms.com>
- * @author     Dennis Eichhorn <d.eichhorn@oms.com>
  * @copyright  2013 Dennis Eichhorn
  * @license    OMS License 1.0
  * @version    1.0.0
@@ -19,7 +18,6 @@
      * @constructor
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.Component.Form = function (app)
     {
@@ -34,7 +32,6 @@
      * @param {string} id Form Id
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.Component.Form.prototype.get = function (id)
     {
@@ -47,7 +44,6 @@
      * @param {string} id Form Id
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.Component.Form.prototype.isIgnored = function (id)
     {
@@ -60,7 +56,6 @@
      * @param {string} id Form Id
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.Component.Form.prototype.unbind = function (id)
     {
@@ -73,7 +68,6 @@
      * @param {string} id Form Id (optional)
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.Component.Form.prototype.bind = function (id)
     {
@@ -97,7 +91,6 @@
      * @param {string} id Form Id
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.Component.Form.prototype.bindForm = function (id)
     {
@@ -129,7 +122,6 @@
      * @param {string} id Form Id
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.Component.Form.prototype.unbindForm = function (id)
     {
@@ -154,7 +146,6 @@
      * @param {Object} form Form object
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.Component.Form.prototype.submit = function (form)
     {
@@ -194,7 +185,6 @@
      * @param {Object} form Form object
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.Component.Form.prototype.submitForm = function (form)
     {
@@ -251,7 +241,6 @@
      * @return {number}
      *
      * @since 1.0.0
-     * @author Dennis Eichhorn <d.eichhorn@oms.com>
      */
     jsOMS.UI.Component.Form.prototype.count = function ()
     {
