@@ -1,8 +1,7 @@
 /**
  * Form manager class.
  *
- * @author     OMS Development Team <dev@oms.com>
- * @copyright  2013 Dennis Eichhorn
+ * @copyright  Dennis Eichhorn
  * @license    OMS License 1.0
  * @version    1.0.0
  * @since      1.0.0
@@ -30,9 +29,11 @@
     };
 
     /**
-     * Bind button.
+     * Bind element.
      *
-     * @param {string} [id] Button id (optional)
+     * @param {string} [id] Element id (optional)
+     *
+     * @return {void}
      *
      * @method
      *
@@ -51,9 +52,11 @@
     };
 
     /**
-     * Bind button.
+     * Bind element.
      *
-     * @param {Element} e Button element
+     * @param {Element} e Element to bind
+     *
+     * @return {void}
      *
      * @method
      *
@@ -95,6 +98,18 @@
         }
     };
 
+    /**
+     * Bind listener for object
+     *
+     * @param {Element} e Element to bind
+     * @param {object} listener Listener object
+     *
+     * @return {void}
+     *
+     * @method
+     *
+     * @since  1.0.0
+     */
     jsOMS.UI.ActionManager.prototype.bindListener = function(e, listener) 
     {
         const self = this,
@@ -121,6 +136,8 @@
      *
      * @param {Element} e Button
      * @param {Object} action Action
+     *
+     * @return {void}
      *
      * @method
      *
@@ -150,6 +167,8 @@
      *
      * @param {string} name Action identifier
      * @param {function} callback Action callback
+     *
+     * @return {void}
      *
      * @method
      *

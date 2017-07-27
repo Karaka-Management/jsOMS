@@ -1,8 +1,10 @@
 /**
  * Options class.
  *
- * @author     OMS Development Team <dev@oms.com>
- * @copyright  2013 Dennis Eichhorn
+ * This is a generic options class for storing options. This is usefull for handling options in other modules
+ * without redefining the same behaviour multiple times.
+ *
+ * @copyright  Dennis Eichhorn
  * @license    OMS License 1.0
  * @version    1.0.0
  * @since      1.0.0
@@ -39,7 +41,7 @@
      */
     jsOMS.Config.Options.prototype.set = function (key, value, overwrite)
     {
-        overwrite = typeof overwrite === bool ? overwrite : true;
+        overwrite = typeof overwrite === 'bool' ? overwrite : false;
 
         if (overwrite || typeof this.options[key] === 'undefined') {
             this.options[key] = value;
@@ -67,7 +69,7 @@
             return this.options[key];
         }
 
-        return undefined;
+        return null;
     };
 
     /**

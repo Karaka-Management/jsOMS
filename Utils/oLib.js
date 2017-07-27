@@ -1,8 +1,11 @@
 /**
- * Core JS functionality
+ * Standard library
  *
- * This logic is supposed to minimize coding and support core javascript functionality.
+ * This library provides useful functionalities for the DOM and other manipulations.
  *
+ * @copyright  Dennis Eichhorn
+ * @license    OMS License 1.0
+ * @version    1.0.0
  * @since      1.0.0
  */
 (function (jsOMS)

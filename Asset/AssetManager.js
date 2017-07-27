@@ -1,8 +1,7 @@
 /**
  * Asset manager.
  *
- * @author     OMS Development Team <dev@oms.com>
- * @copyright  2013 Dennis Eichhorn
+ * @copyright  Dennis Eichhorn
  * @license    OMS License 1.0
  * @version    1.0.0
  * @since      1.0.0
@@ -37,6 +36,8 @@
     {
         const scripts = document.getElementsByTagName('script'),
             length = !scripts ? 0 : scripts.length;
+
+        this.assets = {};
 
         for (let i = 0; i < length; i++) {
             this.assets[jsOMS.hash(scripts[i].src)] = scripts[i].src;
@@ -121,7 +122,7 @@
     /**
      * Get asset.
      *
-     * @param {string} id Id of the asset (hash)
+     * @param {string} key Key of the asset
      *
      * @return
      *
@@ -129,19 +130,21 @@
      *
      * @since 1.0.0
      */
-    jsOMS.Asset.AssetManager.prototype.get = function (id)
+    jsOMS.Asset.AssetManager.prototype.get = function (key)
     {
-        if (this.assets[id]) {
-            return this.assets[id];
+        key = jsOMS.hash(key);
+
+        if (this.assets[key]) {
+            return this.assets[key];
         }
 
-        return undefined;
+        return null;
     };
 
     /**
      * Remove asset.
      *
-     * @param {string} key Key of the asset (hash)
+     * @param {string} key Key of the asset
      *
      * @return {boolean}
      *
@@ -149,8 +152,10 @@
      *
      * @since 1.0.0
      */
-    jsOMS.Asset.AssetManager.prototype.remove = function (key)
+    jsOMS.Asset.AssetManager.prototype.remove = function (key, isHashed)
     {
+        key = jsOMS.hash(key);
+
         if (typeof this.assets[key] !== 'undefined') {
             delete this.assets[key];
 

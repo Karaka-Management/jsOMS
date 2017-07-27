@@ -1,8 +1,11 @@
 /**
  * Form view.
  *
- * @author     OMS Development Team <dev@oms.com>
- * @copyright  2013 Dennis Eichhorn
+ * The form view contains a single form and it's data elements. Form actions are no longer handled by
+ * the browser but through this view. The view also provides additional functionality for non-default
+ * form elements such as canvas etc.
+ *
+ * @copyright  Dennis Eichhorn
  * @license    OMS License 1.0
  * @version    1.0.0
  * @since      1.0.0
@@ -139,6 +142,7 @@
         const selects   = form.getElementsByTagName('select'),
             textareas = form.getElementsByTagName('textarea'),
             inputs    = form.getElementsByTagName('input'),
+            canvas    = form.getElementsByTagName('canvas'),
             external  = document.querySelectorAll('[form=' + this.id + ']');
 
         return Array.prototype.slice.call(inputs).concat(Array.prototype.slice.call(selects), Array.prototype.slice.call(textareas), Array.prototype.slice.call(external));

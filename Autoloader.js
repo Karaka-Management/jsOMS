@@ -1,8 +1,12 @@
 /**
  * Autoloader.
  *
- * @author     OMS Development Team <dev@oms.com>
- * @copyright  2013 Dennis Eichhorn
+ * The autoloader is responsible for defining namespaces and dynamically loading javascript 
+ * files that are not yet included. The intention is to provide a similar functionality as 
+ * include, import etc. Contrary to it's name the autoloader is not able to truely autoload 
+ * referenced classes.
+ *
+ * @copyright  Dennis Eichhorn
  * @license    OMS License 1.0
  * @version    1.0.0
  * @since      1.0.0

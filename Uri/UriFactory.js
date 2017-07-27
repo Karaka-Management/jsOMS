@@ -1,8 +1,7 @@
 /**
  * Uri factory.
  *
- * @author     OMS Development Team <dev@oms.com>
- * @copyright  2013 Dennis Eichhorn
+ * @copyright  Dennis Eichhorn
  * @license    OMS License 1.0
  * @version    1.0.0
  * @since      1.0.0
@@ -46,6 +45,26 @@
         }
 
         return false;
+    };
+
+    /**
+     * Get query
+     *
+     * @param {string} key
+     * 
+     * @return {string}|null
+     *
+     * @method
+     *
+     * @since  1.0.0
+     */
+    jsOMS.Uri.UriFactory.getQuery = function (key)
+    {
+        if (!jsOMS.Uri.UriFactory.uri.hasOwnProperty(key)) {
+            return null;
+        }
+
+        return jsOMS.Uri.UriFactory.uri[key];
     };
 
     /**

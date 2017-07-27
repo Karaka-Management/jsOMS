@@ -1,8 +1,9 @@
 /**
- * Uri factory.
+ * Http Uri.
  *
- * @author     OMS Development Team <dev@oms.com>
- * @copyright  2013 Dennis Eichhorn
+ * This class is for creating, modifying and analysing http uris.
+ *
+ * @copyright  Dennis Eichhorn
  * @license    OMS License 1.0
  * @version    1.0.0
  * @since      1.0.0
@@ -180,62 +181,172 @@
         this.base     = this.scheme + '://' + this.host + this.root;
     };
     
+    /**
+     * Set root path.
+     *
+     * @param {string} rootPath Uri root path
+     *
+     * @return {void}
+     *
+     * @method
+     *
+     * @since  1.0.0
+     */
     jsOMS.Uri.Http.prototype.setRootPath = function(rootPath)
     {
         this.root = rootPath;
         this.set(this.uri);
     };
 
+    /**
+     * Get Uri base
+     *
+     * @return {string}
+     *
+     * @method
+     *
+     * @since  1.0.0
+     */
     jsOMS.Uri.Http.prototype.getBase = function()
     {
         return this.base;
     };
 
+    /**
+     * Get Uri scheme
+     *
+     * @return {string}
+     *
+     * @method
+     *
+     * @since  1.0.0
+     */
     jsOMS.Uri.Http.prototype.getScheme = function()
     {
         return this.scheme;
     };
 
+    /**
+     * Get Uri host
+     *
+     * @return {string}
+     *
+     * @method
+     *
+     * @since  1.0.0
+     */
     jsOMS.Uri.Http.prototype.getHost = function()
     {
         return this.host;
     };
 
+    /**
+     * Get Uri port
+     *
+     * @return {string}
+     *
+     * @method
+     *
+     * @since  1.0.0
+     */
     jsOMS.Uri.Http.prototype.getPort = function()
     {
         return this.port;
     };
 
+    /**
+     * Get Uri user
+     *
+     * @return {string}
+     *
+     * @method
+     *
+     * @since  1.0.0
+     */
     jsOMS.Uri.Http.prototype.getUser = function()
     {
         return this.user;
     };
 
+    /**
+     * Get Uri pass
+     *
+     * @return {string}
+     *
+     * @method
+     *
+     * @since  1.0.0
+     */
     jsOMS.Uri.Http.prototype.getPass = function()
     {
         return this.pass;
     };
 
+    /**
+     * Get Uri query
+     *
+     * @return {string}
+     *
+     * @method
+     *
+     * @since  1.0.0
+     */
     jsOMS.Uri.Http.prototype.getQuery = function()
     {
         return this.queryString;
     };
 
+    /**
+     * Get Uri
+     *
+     * @return {string}
+     *
+     * @method
+     *
+     * @since  1.0.0
+     */
     jsOMS.Uri.Http.prototype.getUri = function()
     {
         return this.uri;
     };
 
+    /**
+     * Get Uri fragment
+     *
+     * @return {string}
+     *
+     * @method
+     *
+     * @since  1.0.0
+     */
     jsOMS.Uri.Http.prototype.getFragment = function()
     {
         return this.fragment;
     };
 
+    /**
+     * Get Uri path
+     *
+     * @return {string}
+     *
+     * @method
+     *
+     * @since  1.0.0
+     */
     jsOMS.Uri.Http.prototype.getPath = function()
     {
         return this.path;
     };
     
+    /**
+     * Get Uri path offset
+     *
+     * @return {string}
+     *
+     * @method
+     *
+     * @since  1.0.0
+     */
     jsOMS.Uri.Http.prototype.getPathOffset = function()
     {
         return jsOMS.substr_count(this.root, '/') - 1;
