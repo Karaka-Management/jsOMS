@@ -117,7 +117,7 @@
      */
     jsOMS.hasClass = function (ele, cls)
     {
-        return ele !== undefined && ele !== null && ele.className !== undefined && ele.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
+        return typeof ele !== 'undefined' && ele !== null && typeof ele.className !== 'undefined' && ele.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
     };
 
     /**

@@ -247,7 +247,7 @@
     {
         let self = this;
 
-        if (this.legend !== undefined && this.legend.visible) {
+        if (typeof this.legend !== 'undefined' && this.legend.visible) {
             dataPointEnter.append("text").attr('class', 'dataPoint-name');
             dataPoint.select("text.dataPoint-name").attr("x",
                 this.dimension.width
@@ -340,7 +340,7 @@
         let temp, pos = 0, topmargin = 0;
 
         /* No subtitle without title */
-        if (this.subtitle !== undefined && this.subtitle.text !== '' && this.subtitle.visible && this.title !== undefined && this.title.text !== '' && this.title.visible) {
+        if (typeof this.subtitle !== 'undefined' && this.subtitle.text !== '' && this.subtitle.visible && typeof this.title !== 'undefined' && this.title.text !== '' && this.title.visible) {
             pos = this.calculateHorizontalPosition(this.subtitle.position);
 
             temp = svg.append("text")
@@ -361,7 +361,7 @@
             }
         }
 
-        if (this.title !== undefined && this.title.text !== '' && this.title.visible) {
+        if (typeof this.title !== 'undefined' && this.title.text !== '' && this.title.visible) {
             pos = this.calculateHorizontalPosition(this.title.position);
 
             temp = svg.append("text")
@@ -379,7 +379,7 @@
             }
         }
 
-        if (this.footer !== undefined && this.footer.text !== '' && this.footer.visible) {
+        if (typeof this.footer !== 'undefined' && this.footer.text !== '' && this.footer.visible) {
             let spacer = 0;
 
             // if no x axis available an element less will be drawn and the footer
@@ -424,7 +424,7 @@
                 - this.margin.bottom
             );
 
-        if (this.axis.x !== undefined && this.axis.x.visible) {
+        if (typeof this.axis.x !== 'undefined' && this.axis.x.visible) {
             temp = svg.append("g")
                 .attr("class", "x axis")
                 .attr("transform", "translate(0," + (
@@ -451,7 +451,7 @@
             }
         }
 
-        if (this.axis.y !== undefined && this.axis.y.visible) {
+        if (typeof this.axis.y !== 'undefined' && this.axis.y.visible) {
             temp = svg.append("g")
                 .attr("class", "y axis")
                 .attr("transform", "translate(0,0)")
@@ -475,25 +475,25 @@
             }
         }
 
-        if (this.axis.x2 !== undefined) {
+        if (typeof this.axis.x2 !== 'undefined') {
 
         }
 
-        if (this.axis.y2 !== undefined) {
+        if (typeof this.axis.y2 !== 'undefined') {
 
         }
     };
 
     jsOMS.Chart.ChartAbstract.prototype.drawGrid = function (svg, xGrid, yGrid)
     {
-        if (this.grid.x !== undefined && this.grid.x.visible) {
+        if (typeof this.grid.x !== 'undefined' && this.grid.x.visible) {
             svg.append("g")
                 .attr("class", "x grid")
                 .attr("transform", "translate(0," + (this.dimension.height - this.margin.top - this.margin.bottom) + ")")
                 .call(xGrid);
         }
 
-        if (this.grid.y !== undefined && this.grid.y.visible) {
+        if (typeof this.grid.y !== 'undefined' && this.grid.y.visible) {
             svg.append("g")
                 .attr("class", "y grid")
                 .call(yGrid);
