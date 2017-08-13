@@ -127,6 +127,10 @@
         // Register event for first action
         e.addEventListener(listener.listener, function (event)
         {
+            if(listener.preventDefault) {
+                event.preventDefault();
+            }
+
             self.runAction(this, listener, listener.action[0], event);
         });
     };
