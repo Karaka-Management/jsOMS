@@ -116,18 +116,18 @@
             actionLength = listener.action.length;
 
         for (let j = 1; j < actionLength; j++) {
-            this.app.eventManager.attach(e.id + listener.action[j - 1].key, function (data)
+            this.app.eventManager.attach(e.id + listener.key + listener.action[j - 1].key, function (data)
             {
-                self.runAction(e, listener.action[j], data);
+                self.runAction(e, listener, listener.action[j], data);
             }, false, true);
         }
         // todo: the true here is a memory leak since it should be removed at some point?!
         // todo: handle onload action right after registering everything. this will be used for onload api calls in order to get content such as lists or models. Maybe in the main application after registering a invoke('onload') should be called if the application wants to execute the onload elements
 
         // Register event for first action
-        e.addEventListener(listener.listener, function ()
+        e.addEventListener(listener.listener, function (event)
         {
-            self.runAction(this, listener.action[0]);
+            self.runAction(this, listener, listener.action[0], event);
         });
     };
 
@@ -143,7 +143,7 @@
      *
      * @since 1.0.0
      */
-    jsOMS.UI.ActionManager.prototype.runAction = function (e, action, data)
+    jsOMS.UI.ActionManager.prototype.runAction = function (e, listener, action, data)
     {
         const self = this;
 
@@ -158,7 +158,7 @@
 
         this.actions[action.type](action, function (data)
         {
-            self.app.eventManager.trigger(e.id + action.key, e.id, data);
+            self.app.eventManager.trigger(e.id + listener.key + action.key, e.id, data);
         });
     };
 
