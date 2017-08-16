@@ -119,7 +119,7 @@
     jsOMS.Uri.UriFactory.clearLike = function(pattern) 
     {
         let success = false;
-        const regexp = new Regexp(pattern);
+        const regexp = new RegExp(pattern);
 
         for(let key in jsOMS.Uri.UriFactory.uri) {
             if(jsOMS.Uri.UriFactory.uri.hasOwnProperty(key) && regexp.test(key)) {
@@ -198,7 +198,7 @@
             {
                 match = match.substr(1, match.length - 2);
 
-                if (typeof toMatch !== 'undefined' && toMatch.hasProperty(match)) {
+                if (typeof toMatch !== 'undefined' && toMatch.hasOwnProperty(match)) {
                     return toMatch[match];
                 } else if (typeof jsOMS.Uri.UriFactory.uri[match] !== 'undefined') {
                     return jsOMS.Uri.UriFactory.uri[match];
