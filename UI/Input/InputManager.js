@@ -18,10 +18,11 @@
      *
      * @since 1.0.0
      */
-    jsOMS.UI.Input.InputManager = function ()
+    jsOMS.UI.Input.InputManager = function (app)
     {
-        this.keyBoardManager = new jsOMS.UI.Input.Keyboard.KeyboardManager();
+        this.keyboardManager = new jsOMS.UI.Input.Keyboard.KeyboardManager();
         this.mouseManager    = new jsOMS.UI.Input.Mouse.MouseManager();
+        this.voiceManager    = new jsOMS.UI.Input.Voice.VoiceManager(app);
     };
 
     /**
@@ -33,7 +34,7 @@
      */
     jsOMS.UI.Input.InputManager.prototype.getKeyboardManager = function ()
     {
-        return this.keyBoardManager;
+        return this.keyboardManager;
     };
 
     /**
@@ -46,5 +47,17 @@
     jsOMS.UI.Input.InputManager.prototype.getMouseManager = function ()
     {
         return this.mouseManager;
+    };
+
+    /**
+     * Get voice manager.
+     *
+     * @return {Object}
+     *
+     * @since  1.0.0
+     */
+    jsOMS.UI.Input.InputManager.prototype.getVoiceManager = function ()
+    {
+        return this.voiceManager;
     };
 }(window.jsOMS = window.jsOMS || {}));
