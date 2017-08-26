@@ -28,7 +28,7 @@
         this.app = app;
         this.recognition = new SpeechRecognition();
         this.speechRecognitionList = new SpeechGrammarList();
-        this.commands = commands;
+        this.commands = typeof commands === 'undefined' ? {} : commands;
         this.lang = typeof lang === 'undefined' ? 'en-US' : lang;      
     };
 
@@ -39,20 +39,21 @@
         this.recognition.lang = this.lang;
         this.recognition.interimResults = false;
         this.recognition.maxAlternatives = 1;
+        this.recognition.continuous = true;
+        this.recognition.lang = this.lang;
 
         if(typeof this.commands !== 'undefined') {
-            this.speechRecognitionList.addFromString(this.commands, 1);
-            recognition.grammars = this.speechRecognitionList;
+            this.speechRecognitionList.addFromString(this.getCommandsString(), 1);
+            this.recognition.grammars = this.speechRecognitionList;
         }
 
+        this.recognition.onstart = function() {}
+
         this.recognition.onresult = function(event) {
-
-
-            console.log(event.results[0][0].transcript);
+            console.log(event.results[event.resultIndex][0].transcript);
         }
 
         this.recognition.onspeechend = function() {
-            self.recognition.stop();
         }
 
         this.recognition.onnomatch = function(event) {
@@ -64,17 +65,20 @@
         }
     };
 
+    jsOMS.UI.Input.Voice.VoiceManager.prototype.getCommandsString = function()
+    {
+        return '#JSGF V1.0; grammar phrase; public <phrase> = ' + Object.keys(this.commands).join(' | ') + ' ;';
+    };
+
     jsOMS.UI.Input.Voice.VoiceManager.prototype.setLanguage = function(lang)
     {
         // todo: eventually restart
         this.recognition.lang = lang;
     };
 
-    jsOMS.UI.Input.Voice.VoiceManager.prototype.setCommands = function(commands)
+    jsOMS.UI.Input.Voice.VoiceManager.prototype.add = function(command, callback)
     {
-        // todo: eventually restart
-        this.speechRecognitionList.addFromString(commands, 1);
-        recognition.grammars = this.speechRecognitionList;
+        this.commands[command] = callback;
     };
 
     jsOMS.UI.Input.Voice.VoiceManager.prototype.start = function()

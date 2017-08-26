@@ -23,18 +23,20 @@
      *
      * @since 1.0.0
      */
-    jsOMS.UI.Input.Voice.ReadManager = function ()
+    jsOMS.UI.Input.Voice.ReadManager = function (lang)
     {
         this.pitch = 1;
         this.rate = 1;
-        this.voice = 'en-US';
+        this.lang = typeof lang === 'undefined' ? 'en-US' : lang;    
         
         this.voices = window.speechSynthesis.getVoices();
+        this.voice = this.voices[0];
     };
 
     jsOMS.UI.Input.Voice.ReadManager.prototype.read = function(text)
     {
         let utter = new SpeechSynthesisUtterance(text);
+        utter.lang = this.lang;
         utter.voice = this.voice;
         utter.pitch = this.pitch;
         utter.rate = this.rate;
