@@ -25,7 +25,7 @@
 
     jsOMS.Message.Notification.Browser.BrowserNotification.prototype.requestPermission = function()
     {
-        let self = this;
+        const self = this;
 
         if(Notification.permission !== 'granted' && Notification.permission !== 'denied') {
             Notification.requestPermission(function(permission) {

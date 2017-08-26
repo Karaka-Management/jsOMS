@@ -133,7 +133,8 @@
 
     jsOMS.Chart.BarChart.prototype.drawData = function (svg, x, y, dataPointEnter, dataPoint)
     {
-        let self = this, rect;
+        const self = this;
+        let rect;
 
         dataPoint = svg.selectAll(".dataPoint").data(this.chart.dataset, function (c)
         {

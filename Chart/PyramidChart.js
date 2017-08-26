@@ -166,7 +166,7 @@
 
     jsOMS.Chart.PyramidChart.prototype.drawData = function (svg, x, y, dataPointEnter, dataPoint)
     {
-        let self = this;
+        const self = this;
 
         dataPoint = svg.selectAll(".dataPoint").data(this.chart.dataset[0].points, function (c)
         {

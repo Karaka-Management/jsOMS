@@ -60,8 +60,8 @@
 
     jsOMS.Chart.PieChart.prototype.drawData = function (svg, dataPointEnter, dataPoint)
     {
-        let self = this,
-            pie  = d3.layout.pie()
+        const self = this;
+        let pie  = d3.layout.pie()
                 .sort(null)
                 .value(function (d)
                 {

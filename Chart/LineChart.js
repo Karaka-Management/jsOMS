@@ -214,7 +214,7 @@
 
     jsOMS.Chart.LineChart.prototype.drawData = function (svg, line, dataPointEnter, dataPoint)
     {
-        let self = this;
+        const self = this;
 
         dataPoint = svg.selectAll(".dataPoint").data(this.chart.dataset, function (c)
         {

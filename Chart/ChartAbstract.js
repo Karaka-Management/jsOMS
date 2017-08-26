@@ -245,7 +245,7 @@
 
     jsOMS.Chart.ChartAbstract.prototype.drawLegend = function (svg, dataPointEnter, dataPoint)
     {
-        let self = this;
+        const self = this;
 
         if (typeof this.legend !== 'undefined' && this.legend.visible) {
             dataPointEnter.append("text").attr('class', 'dataPoint-name');
@@ -289,7 +289,8 @@
 
     jsOMS.Chart.ChartAbstract.prototype.drawMarker = function (svg, x, y, dataPointEnter, dataPoint)
     {
-        let self = this, temp;
+        const self = this;
+        let temp;
 
         if (this.dataSettings.marker.visible) {
             temp = dataPointEnter.append('g').attr('class', 'dots').attr('clip-path', 'url(#clipper1)').selectAll('circle').data(function (d)
@@ -539,7 +540,7 @@
     };
 
     jsOMS.Chart.ChartAbstract.prototype.createXAxis = function (x) {
-        let self = this;
+        const self = this;
 
         return d3.svg.axis().scale(x).tickFormat(function (d)
         {
@@ -549,7 +550,7 @@
     };
 
     jsOMS.Chart.ChartAbstract.prototype.createYAxis = function (y) {
-        let self = this;
+        const self = this;
 
         return d3.svg.axis().scale(y).tickFormat(function (d)
         {

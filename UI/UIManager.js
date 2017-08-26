@@ -30,7 +30,7 @@
         this.dragNDrop     = new jsOMS.UI.DragNDrop(this.app);
         this.generalUI     = new jsOMS.UI.GeneralUI();
 
-        let self = this;
+        const self = this;
         this.domObserver = new MutationObserver(function(mutations) {
             const length = mutations.length;
 
