@@ -34,7 +34,7 @@
 
     jsOMS.UI.Input.Voice.VoiceManager.prototype.setup = function()
     {
-        let self = this;
+        const self = this;
 
         this.recognition.lang = this.lang;
         this.recognition.interimResults = false;
@@ -51,6 +51,10 @@
 
         this.recognition.onresult = function(event) {
             console.log(event.results[event.resultIndex][0].transcript);
+
+            if(self.commands.hasOwnProperty(event.results[event.resultIndex][0].transcript)) {
+                self.commands[event.results[event.resultIndex][0].transcript]();
+            }
         }
 
         this.recognition.onspeechend = function() {
