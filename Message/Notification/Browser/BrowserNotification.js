@@ -27,19 +27,19 @@
     {
         let self = this;
 
-        if(Notification.permission !== 'granted') {
+        if(Notification.permission !== 'granted' && Notification.permission !== 'denied') {
             Notification.requestPermission(function(permission) {
                 if(permission === 'granted') {
                     let msg = new jsOMS.Message.Notification.NotificationMessage();
 
-                    self.notify(msg);
+                    self.send(msg);
                 }
             });
         }
     };
 
-    jsOMS.Message.Notification.Browser.BrowserNotification.prototype.notify = function(msg)
+    jsOMS.Message.Notification.Browser.BrowserNotification.prototype.send = function(msg)
     {
-
+        let n = new Notification(/* ... */);
     };
 }(window.jsOMS = window.jsOMS || {}));
