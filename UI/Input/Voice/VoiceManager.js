@@ -32,6 +32,13 @@
         this.lang = typeof lang === 'undefined' ? 'en-US' : lang;      
     };
 
+    /**
+     * Setup or re-initialize voice manager.
+     *
+     * @method
+     *
+     * @since  1.0.0
+     */
     jsOMS.UI.Input.Voice.VoiceManager.prototype.setup = function()
     {
         const self = this;
@@ -69,27 +76,67 @@
         }
     };
 
+    /**
+     * Create commands/grammar string from commands
+     *
+     * @return {string}
+     *
+     * @since  1.0.0
+     */
     jsOMS.UI.Input.Voice.VoiceManager.prototype.getCommandsString = function()
     {
         return '#JSGF V1.0; grammar phrase; public <phrase> = ' + Object.keys(this.commands).join(' | ') + ' ;';
     };
 
+    /**
+     * Set language
+     *
+     * @param {string} lang Language code (e.g. en-US)
+     * 
+     * @return {void}
+     *
+     * @since  1.0.0
+     */
     jsOMS.UI.Input.Voice.VoiceManager.prototype.setLanguage = function(lang)
     {
         // todo: eventually restart
         this.recognition.lang = lang;
     };
 
+    /**
+     * Add command/grammar and callback.
+     *
+     * @param {string} command Command id
+     * @param {Callback} callback Callback for command
+     * 
+     * @return {void}
+     *
+     * @since  1.0.0
+     */
     jsOMS.UI.Input.Voice.VoiceManager.prototype.add = function(command, callback)
     {
         this.commands[command] = callback;
     };
 
+    /**
+     * Start voice listener.
+     *
+     * @return {void}
+     *
+     * @since  1.0.0
+     */
     jsOMS.UI.Input.Voice.VoiceManager.prototype.start = function()
     {
         this.recognition.start();
     };
 
+    /**
+     * Stop voice listener.
+     *
+     * @return {void}
+     *
+     * @since  1.0.0
+     */
     jsOMS.UI.Input.Voice.VoiceManager.prototype.stop = function()
     {
         this.recognition.stop();

@@ -33,6 +33,15 @@
         this.voice = this.voices[0];
     };
 
+    /**
+     * Read text.
+     * 
+     * @param {string} text Text to read
+     *
+     * @return {void}
+     *
+     * @since  1.0.0
+     */
     jsOMS.UI.Input.Voice.ReadManager.prototype.read = function(text)
     {
         let utter = new SpeechSynthesisUtterance(text);
@@ -43,21 +52,55 @@
         window.speechSynthesis.speak(utter);
     };
 
+    /**
+     * Set Language.
+     * 
+     * @param {string} lang Language id (e.g. en-US)
+     *
+     * @return {void}
+     *
+     * @since  1.0.0
+     */
     jsOMS.UI.Input.Voice.ReadManager.prototype.setLanguage = function(lang)
     {
         this.lang = lang;
     };
 
+    /**
+     * Set pitch.
+     * 
+     * @param {int} pitch Pitch
+     *
+     * @return {void}
+     *
+     * @since  1.0.0
+     */
     jsOMS.UI.Input.Voice.ReadManager.prototype.setPitch = function(pitch)
     {
         this.pitch = pitch;
     };
 
+    /**
+     * Set rate.
+     * 
+     * @param {int} rate Rate
+     *
+     * @return {void}
+     *
+     * @since  1.0.0
+     */
     jsOMS.UI.Input.Voice.ReadManager.prototype.setRate = function(rate)
     {
         this.rate = rate;
     };
 
+    /**
+     * Get supported voices.
+     * 
+     * @return {array}
+     *
+     * @since  1.0.0
+     */
     jsOMS.UI.Input.Voice.ReadManager.prototype.getVoices = function()
     {
         return this.voices;
