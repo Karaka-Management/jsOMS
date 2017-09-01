@@ -14,9 +14,9 @@
     jsOMS.Autoloader.defineNamespace('jsOMS.UI.Input.Voice');
 
     // todo: remove once obsolete
-    var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
-    var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList
-    var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent
+    var SpeechRecognition = typeof SpeechRecognition !== 'undefined' ? SpeechRecognition : typeof webkitSpeechRecognition !== 'undefined' ? webkitSpeechRecognition : null;
+    var SpeechGrammarList = typeof SpeechGrammarList !== 'undefined' ? SpeechGrammarList : typeof webkitSpeechGrammarList !== 'undefined' ? webkitSpeechGrammarList : null;
+    var SpeechRecognitionEvent = typeof SpeechRecognitionEvent !== 'undefined' ? SpeechRecognitionEvent : typeof webkitSpeechRecognitionEvent !== 'undefined' ? webkitSpeechRecognitionEvent : null;
 
     /**
      * @constructor
@@ -26,10 +26,15 @@
     jsOMS.UI.Input.Voice.VoiceManager = function (app, commands, lang)
     {
         this.app = app;
-        this.recognition = new SpeechRecognition();
-        this.speechRecognitionList = new SpeechGrammarList();
         this.commands = typeof commands === 'undefined' ? {} : commands;
-        this.lang = typeof lang === 'undefined' ? 'en-US' : lang;      
+        this.lang = typeof lang === 'undefined' ? 'en-US' : lang;
+        this.recognition = null;
+        this.speechRecognitionList = null;
+
+        if(SpeechRecognition !== null) {
+            this.recognition = new SpeechRecognition();
+            this.speechRecognitionList = new SpeechGrammarList();
+        }
     };
 
     /**
@@ -41,6 +46,10 @@
      */
     jsOMS.UI.Input.Voice.VoiceManager.prototype.setup = function()
     {
+        if(SpeechRecognition === null) {
+            return;
+        }
+
         const self = this;
 
         this.recognition.lang = this.lang;
@@ -127,6 +136,10 @@
      */
     jsOMS.UI.Input.Voice.VoiceManager.prototype.start = function()
     {
+        if(SpeechRecognition === null) {
+            return;
+        }
+
         this.recognition.start();
     };
 
@@ -139,6 +152,10 @@
      */
     jsOMS.UI.Input.Voice.VoiceManager.prototype.stop = function()
     {
+        if(SpeechRecognition === null) {
+            return;
+        }
+        
         this.recognition.stop();
     };
 }(window.jsOMS = window.jsOMS || {}));

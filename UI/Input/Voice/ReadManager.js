@@ -14,9 +14,9 @@
     jsOMS.Autoloader.defineNamespace('jsOMS.UI.Input.Voice');
 
     // todo: remove once obsolete
-    var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
-    var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList
-    var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent
+    var SpeechRecognition = typeof SpeechRecognition !== 'undefined' ? SpeechRecognition : typeof webkitSpeechRecognition !== 'undefined' ? webkitSpeechRecognition : null;
+    var SpeechGrammarList = typeof SpeechGrammarList !== 'undefined' ? SpeechGrammarList : typeof webkitSpeechGrammarList !== 'undefined' ? webkitSpeechGrammarList : null;
+    var SpeechRecognitionEvent = typeof SpeechRecognitionEvent !== 'undefined' ? SpeechRecognitionEvent : typeof webkitSpeechRecognitionEvent !== 'undefined' ? webkitSpeechRecognitionEvent : null;
 
     /**
      * @constructor
@@ -28,9 +28,13 @@
         this.pitch = 1;
         this.rate = 1;
         this.lang = typeof lang === 'undefined' ? 'en-US' : lang;    
-        
-        this.voices = window.speechSynthesis.getVoices();
-        this.voice = this.voices[0];
+        this.voices = [];
+        this.voice = null;
+
+        if(SpeechRecognition !== null) {
+            this.voices = window.speechSynthesis.getVoices();
+            this.voice = this.voices[0];
+        }
     };
 
     /**
