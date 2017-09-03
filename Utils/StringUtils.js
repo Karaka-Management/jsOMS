@@ -26,6 +26,8 @@
      */
     jsOMS.trim = function(str, char)
     {
+        char = typeof char === 'undefined' ? ' ' : char;
+
         return jsOMS.ltrim(jsOMS.rtrim(str, char), char);
     };
 
@@ -43,6 +45,8 @@
      */
     jsOMS.rtrim = function(str, char)
     {
+        char = typeof char === 'undefined' ? ' ' : char;
+
         return str.replace(new RegExp("[" + char + "]*$"), '');
     };
 
@@ -60,6 +64,8 @@
      */
     jsOMS.ltrim = function(str, char)
     {
+        char = typeof char === 'undefined' ? ' ' : char;
+        
         return str.replace(new RegExp("^[" + char + "]*"), '');
     };
     

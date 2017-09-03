@@ -66,10 +66,13 @@
         this.recognition.onstart = function() {}
 
         this.recognition.onresult = function(event) {
-            console.log(event.results[event.resultIndex][0].transcript);
+            let result = jsOMS.trim(event.results[event.resultIndex][0].transcript);
 
-            if(self.commands.hasOwnProperty(event.results[event.resultIndex][0].transcript)) {
-                self.commands[event.results[event.resultIndex][0].transcript]();
+            console.log('.' + result + '.');
+
+            if(self.commands.hasOwnProperty(result)) {
+                console.log('found');
+                self.commands[result]();
             }
         }
 
