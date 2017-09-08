@@ -221,7 +221,7 @@
                     }
                 }
             } catch (e) {
-                self.app.logger.error('Invalid form response. \n' +
+                jsOMS.Log.Logger.instance.error('Invalid form response. \n' +
                     'URL: ' + form.getAction() + '\n' +
                     'Request: ' + JSON.stringify(form.getData()) + '\n' +
                     'Response: ' + xhr.response

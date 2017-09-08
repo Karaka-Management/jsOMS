@@ -80,11 +80,11 @@
         }
 
         this.recognition.onnomatch = function(event) {
-            console.log('Couldn\'t recognize speech');
+            jsOMS.Log.Logger.instance.warning('Couldn\'t recognize speech');
         }
 
         this.recognition.onerror = function(event) {
-            console.log('Error during speech recognition: ' + event.error);
+            jsOMS.Log.Logger.instance.warning('Error during speech recognition: ' + event.error);
         }
     };
 

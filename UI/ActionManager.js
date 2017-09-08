@@ -154,7 +154,7 @@
         console.log(action.type);
 
         if (!this.actions.hasOwnProperty(action.type)) {
-            console.log('Undefined action ' + action.type);
+            jsOMS.Log.Logger.instance.warning('Undefined action ' + action.type);
             return;
         }
 

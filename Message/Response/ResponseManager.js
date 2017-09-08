@@ -68,7 +68,7 @@
         } else if (typeof this.messages[key] !== 'undefined') {
             this.messages[key].any(data);
         } else {
-            console.log('does not exist');
+            jsOMS.Log.Logger.instance.warning('Undefined type: ' + key);
         }
     };
 }(window.jsOMS = window.jsOMS || {}));

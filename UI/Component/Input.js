@@ -132,7 +132,7 @@
                     }
                 }
             } catch (exception) {
-                self.app.logger.error('Invalid JSON object: ' + xhr, 'FormManager');
+                jsOMS.Log.Logger.instance.error('Invalid JSON object: ' + xhr, 'FormManager');
                 return false;
             }
         });

@@ -207,7 +207,7 @@
                 }
             }
         } catch (e) {
-            console.log(e);
+            jsOMS.Log.Logger.instance.error(e);
         }
 
         return true;

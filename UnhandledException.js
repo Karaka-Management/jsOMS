@@ -13,7 +13,7 @@
     "use strict";
     window.addEventListener('error', function (e)
     {
-        console.log(e.error);
+        jsOMS.Log.Logger.instance.error(e.error);
         
         return false;
     });
