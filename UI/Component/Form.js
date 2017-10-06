@@ -94,7 +94,7 @@
     jsOMS.UI.Component.Form.prototype.bindForm = function (id)
     {
         if (typeof id === 'undefined' || !id) {
-            window.logger.info('A form doesn\'t have an ID.');
+            jsOMS.Log.Logger.instance.info('A form doesn\'t have an ID.');
             return;
         }
 
@@ -167,7 +167,7 @@
                 window.eventManager.addGroup(form.getId(), counter);
                 injects[property](form.getElement(), counter, form.getId());
             } else {
-                window.logger.warning('Invalid property.');
+                jsOMS.Log.Logger.instance.warning('Invalid property.');
             }
         }
 
@@ -188,7 +188,7 @@
     jsOMS.UI.Component.Form.prototype.submitForm = function (form)
     {
         if (!form.isValid()) {
-            window.logger.debug('Form "' + form.getId() + '" has invalid values.');
+            jsOMS.Log.Logger.instance.debug('Form "' + form.getId() + '" has invalid values.');
             return;
         }
 
