@@ -85,7 +85,7 @@
             return null;
         }
 
-        return e.querySelectorAll('input[type=submit]');
+        return document.querySelectorAll('#' + this.id + ' input[type=submit], button[form=' + this.id + '][type=submit]');
     };
 
     /**
