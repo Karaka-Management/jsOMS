@@ -94,7 +94,7 @@
     jsOMS.UI.Component.Form.prototype.bindForm = function (id)
     {
         if (typeof id === 'undefined' || !id) {
-            this.app.logger.info('A form doesn\'t have an ID.');
+            window.logger.info('A form doesn\'t have an ID.');
             return;
         }
 
@@ -155,7 +155,7 @@
 
         // todo: test if attach necessary (maybe already attached in event manager)
         // Register normal form behavior
-        this.app.eventManager.attach(form.getId(), function ()
+        window.eventManager.attach(form.getId(), function ()
         {
             self.submitForm(form);
         });
@@ -164,15 +164,15 @@
         for (let property in injects) {
             if (injects.hasOwnProperty(property)) {
                 counter++;
-                this.app.eventManager.addGroup(form.getId(), counter);
+                window.eventManager.addGroup(form.getId(), counter);
                 injects[property](form.getElement(), counter, form.getId());
             } else {
-                this.app.logger.warning('Invalid property.');
+                window.logger.warning('Invalid property.');
             }
         }
 
         if(counter === 0) {
-            this.app.eventManager.trigger(form.getId());
+            window.eventManager.trigger(form.getId());
         }
     };
 
@@ -188,7 +188,7 @@
     jsOMS.UI.Component.Form.prototype.submitForm = function (form)
     {
         if (!form.isValid()) {
-            this.app.logger.debug('Form "' + form.getId() + '" has invalid values.');
+            window.logger.debug('Form "' + form.getId() + '" has invalid values.');
             return;
         }
 
