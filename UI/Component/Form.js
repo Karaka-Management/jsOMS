@@ -155,7 +155,7 @@
 
         // todo: test if attach necessary (maybe already attached in event manager)
         // Register normal form behavior
-        window.eventManager.attach(form.getId(), function ()
+        this.app.eventManager.attach(form.getId(), function ()
         {
             self.submitForm(form);
         });
@@ -164,15 +164,19 @@
         for (let property in injects) {
             if (injects.hasOwnProperty(property)) {
                 counter++;
-                window.eventManager.addGroup(form.getId(), counter);
-                injects[property](form.getElement(), counter, form.getId());
+                this.app.eventManager.addGroup(form.getId(), counter);
+                const result = injects[property](form, counter, form.getId());
+
+                if(result === false) {
+                    return;
+                }
             } else {
                 jsOMS.Log.Logger.instance.warning('Invalid property.');
             }
         }
 
         if(counter === 0) {
-            window.eventManager.trigger(form.getId());
+            this.app.eventManager.trigger(form.getId());
         }
     };
 

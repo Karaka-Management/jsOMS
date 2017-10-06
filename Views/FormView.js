@@ -79,12 +79,6 @@
      */
     jsOMS.Views.FormView.prototype.getSubmit = function ()
     {
-        const e = document.getElementById(this.id);
-
-        if(!e) {
-            return null;
-        }
-
         return document.querySelectorAll('#' + this.id + ' input[type=submit], button[form=' + this.id + '][type=submit]');
     };
 
