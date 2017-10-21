@@ -86,13 +86,14 @@
             // if it has selector then a listener for child events must be implemented since these can potentially changed without any knowledge
             // todo: what if the selector parent is different from "e"? then this doesn't make sense! Maybe this isn't allowed to happen!
             if(hasSelector) {
-                this.app.eventManager.attach('ACTION_MANAGER:' + e.id + 'childList', function(data) {
+                this.app.eventManager.attach(e.id + 'childList', function(data) {
                     const length = data.addedNodes.length;
 
                     for(let j = 0; j < length; j++) {
                         self.bindListener(data.addedNodes[j], listeners[i]);
                     }
                 });
+
                 this.app.uiManager.getDOMObserver().observe(e, {childList: true, subtree: true});
             }
         }
@@ -116,7 +117,7 @@
             actionLength = listener.action.length;
 
         for (let j = 1; j < actionLength; j++) {
-            this.app.eventManager.attach('ACTION_MANAGER:' + e.id + listener.key + listener.action[j - 1].key, function (data)
+            this.app.eventManager.attach(e.id + listener.key + listener.action[j - 1].key, function (data)
             {
                 self.runAction(e, listener, listener.action[j], data);
             }, false, true);
@@ -151,8 +152,6 @@
     {
         const self = this;
 
-        console.log(action.type);
-
         if (!this.actions.hasOwnProperty(action.type)) {
             jsOMS.Log.Logger.instance.warning('Undefined action ' + action.type);
             return;
@@ -162,8 +161,8 @@
 
         this.actions[action.type](action, function (data)
         {
-            self.app.eventManager.trigger('ACTION_MANAGER:' + e.id + listener.key + action.key, e.id, data);
-        });
+            self.app.eventManager.trigger(e.id + listener.key + action.key, e.id, data);
+        }, e);
     };
 
     /**
