@@ -11,6 +11,31 @@
 (function (jsOMS)
 {
     "use strict";
+
+    /**
+     * Trim char from string
+     *
+     * @param {string} path Array path
+     * @param {obj} data Object
+     * @param {string} delim Path delimiter
+     *
+     * @return {mixed}
+     *
+     * @function
+     *
+     * @since  1.0.0
+     */
+    jsOMS.getArray = function(path, data, delim)
+    {
+        const pathParts = path.split(delim);
+        let current = data;
+
+        for(let key in pathParts) {
+            current = current[pathParts[key]];
+        }
+
+        return current;
+    };
     
     /**
      * Trim char from string
