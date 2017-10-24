@@ -31,6 +31,10 @@
         let current = data;
 
         for(let key in pathParts) {
+            if(current === null) {
+                return null;
+            }
+            
             current = current[pathParts[key]];
         }
 
