@@ -85,17 +85,31 @@
 
             // if it has selector then a listener for child events must be implemented since these can potentially changed without any knowledge
             // todo: what if the selector parent is different from "e"? then this doesn't make sense! Maybe this isn't allowed to happen!
+            // todo: careful this could cause bugs if there is another component relying on a listener for this dom element. Maybe create actionManager domlistener? 
+            //       Maybe just use this listener for ALL action listeners and check if delete, then remove otherwise do current stuff.
+            //       Problem is, the listener doesn't work for the node itself only for children and listening to ALL document nodes might be a bad idea?!?!?!
+            const observeConfig = {childList: false, attributes: true, subtree: false};
+
             if(hasSelector) {
                 this.app.eventManager.attach(e.id + 'childList', function(data) {
+                    console.log(data);
+
                     const length = data.addedNodes.length;
 
                     for(let j = 0; j < length; j++) {
                         self.bindListener(data.addedNodes[j], listeners[i]);
                     }
-                });
 
-                this.app.uiManager.getDOMObserver().observe(e, {childList: true, subtree: true});
+                    observeConfig.childList = true;
+                    observeConfig.subtree = true;
+                });
             }
+
+            this.app.eventManager.attach(e.id + 'attributes', function(data) {
+                console.log(data);
+            });
+
+            this.app.uiManager.getDOMObserver().observe(e, observeConfig);
         }
     };
 
