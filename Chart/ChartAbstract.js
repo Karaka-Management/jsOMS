@@ -7,6 +7,7 @@
     
     jsOMS.Chart.ChartAbstract = function (id)
     {
+        /** global: d3 */
         this.chartId = id;
         this.chartSelect = d3.select('#' + this.chartId);
 
