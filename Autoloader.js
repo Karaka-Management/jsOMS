@@ -102,5 +102,9 @@
                 jsOMS.Autoloader.loaded.push(file);
             }
         }
+
+        if(typeof callback !== 'undefined' && callback !== null) {
+            callback();
+        }
     };
 }(window.jsOMS = window.jsOMS || {}));
