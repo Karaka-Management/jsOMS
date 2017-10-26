@@ -153,7 +153,7 @@
      * @param {string|int} group Group id
      * @param {function} callback Callback
      * @param {boolean} remove Should be removed after execution
-     * @param {boolean} remove Reset after triggering
+     * @param {boolean} reset Reset after triggering
      *
      * @return {void}
      *

@@ -27,6 +27,7 @@
     {
         const self = this;
 
+        /** global: Notification */
         if(Notification.permission !== 'granted' && Notification.permission !== 'denied') {
             Notification.requestPermission(function(permission) {
                 if(permission === 'granted') {
@@ -40,6 +41,7 @@
 
     jsOMS.Message.Notification.Browser.BrowserNotification.prototype.send = function(msg)
     {
+        /** global: Notification */
         let n = new Notification(/* ... */);
     };
 }(window.jsOMS = window.jsOMS || {}));

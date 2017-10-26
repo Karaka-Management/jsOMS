@@ -80,6 +80,7 @@
         e = e !== null ? e.querySelectorAll('[data-lazyload]') : document.querySelectorAll('[data-lazyload]');
         const length = e.length;
 
+        /** global: IntersectionObserver */
         if(!this.visObs && window.IntersectionObserver) {
             this.visObs = new IntersectionObserver(function(eles, obs) {
                 eles.forEach(ele => {

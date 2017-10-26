@@ -94,7 +94,7 @@
                     touch.pageX, // screenX - the page X coordinate
                     touch.pageY, // screenY - the page Y coordinate
                     touch.pageX, // clientX - the window X coordinate
-                    toch.pageY,  // clientY - the window Y coordinate
+                    touch.pageY,  // clientY - the window Y coordinate
                     false,       // ctrlKey
                     false,       // altKey
                     false,       // shiftKey
@@ -105,6 +105,7 @@
                 
                 document.dispatchEvent(rightClick);
             } else if (elapsedTime < 500) {
+                /** global: Event */
                 const e = new Event('keyup');
 
                 if (distY > 100) {

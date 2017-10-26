@@ -25,6 +25,8 @@
     {
         this.canvas = canvas;
         this.ctx    = canvas.getContext('2d');
+        
+        /** global: screen */
         this.width  = screen.width;
         this.height = screen.height;
 

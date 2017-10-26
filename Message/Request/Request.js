@@ -48,6 +48,8 @@
      */
     jsOMS.Message.Request.Request.getBrowser = function ()
     {
+        /** global: InstallTrigger */
+        /** global: navigator */
         if ((!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0) {
             return jsOMS.Message.Request.BrowserType.OPERA;
         } else if (typeof InstallTrigger !== 'undefined') {
@@ -78,11 +80,14 @@
     {
         for (let os in jsOMS.Message.Request.OSType) {
             if (jsOMS.Message.Request.OSType.hasOwnProperty(os)) {
+                /** global: navigator */
                 if (navigator.appVersion.toLowerCase().indexOf(jsOMS.Message.Request.OSType[os]) !== -1) {
                     return jsOMS.Message.Request.OSType[os];
                 }
             }
         }
+
+        return jsOMS.Message.Request.OSType.UNKNOWN;
     };
 
     /**

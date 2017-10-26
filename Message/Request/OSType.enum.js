@@ -37,6 +37,7 @@
         IPAD: 'ipad', /* IPad */
         ANDROID: 'android', /* Android */
         BLACKBERRY: 'blackberry', /* Blackberry */
-        MOBILE: 'webos' /* Mobile */
+        MOBILE: 'webos', /* Mobile */
+        UNKNOWN: 'UNKNOWN' /* Unknown */
     });
 }(window.jsOMS = window.jsOMS || {}));

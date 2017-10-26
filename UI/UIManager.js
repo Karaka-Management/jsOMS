@@ -31,6 +31,7 @@
         this.generalUI     = new jsOMS.UI.GeneralUI();
 
         const self = this;
+        /** global: MutationObserver */
         this.domObserver = new MutationObserver(function(mutations) {
             const length = mutations.length;
 

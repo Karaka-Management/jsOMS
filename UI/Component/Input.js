@@ -23,6 +23,7 @@
     jsOMS.UI.Input.unbind = function (input)
     {
         this.app.inputManager.getKeyboardManager().unbind(input);
+        /** global: changeBind */
         input.removeEventListener('change', changeBind, false);
     };
 
@@ -69,6 +70,7 @@
                         break;
                     case 'table':
                         break;
+                    default:
                 }
             }
         });
@@ -133,7 +135,6 @@
                 }
             } catch (exception) {
                 jsOMS.Log.Logger.instance.error('Invalid JSON object: ' + xhr, 'FormManager');
-                return false;
             }
         });
 

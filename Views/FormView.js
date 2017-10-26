@@ -292,6 +292,7 @@
                 case 'button':
                     this.bindButton(elements[i]);
                     break;
+                default:
             }
         }
     };
@@ -320,6 +321,7 @@
                 case 'button':
                     this.bindButton(elements[i]);
                     break;
+                default:
             }
         }
     };
