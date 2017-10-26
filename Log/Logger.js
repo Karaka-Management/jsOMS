@@ -144,6 +144,7 @@
                 case 'emergency':
                     color = 'CF304A';
                     break;
+                default:
             }
 
             console.log('%c' + this.interpolate(message, context, level), 'color: #' + color);
