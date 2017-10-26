@@ -94,6 +94,7 @@
 
                 this.assets[hash] = path;
             } else if (filetype === 'img') {
+                /** global: Image */
                 this.assets[hash]     = new Image();
                 this.assets[hash].src = path;
             } else if (filetype === 'audio') {
