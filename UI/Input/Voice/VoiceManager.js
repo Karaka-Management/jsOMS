@@ -14,8 +14,16 @@
     jsOMS.Autoloader.defineNamespace('jsOMS.UI.Input.Voice');
 
     // todo: remove once obsolete
+    /** global: webkitSpeechRecognition */
+    /** global: SpeechRecognition */
     var SpeechRecognition = typeof SpeechRecognition !== 'undefined' ? SpeechRecognition : typeof webkitSpeechRecognition !== 'undefined' ? webkitSpeechRecognition : null;
+    
+    /** global: webkitSpeechGrammarList */
+    /** global: SpeechGrammarList */
     var SpeechGrammarList = typeof SpeechGrammarList !== 'undefined' ? SpeechGrammarList : typeof webkitSpeechGrammarList !== 'undefined' ? webkitSpeechGrammarList : null;
+    
+    /** global: webkitSpeechRecognitionEvent */
+    /** global: SpeechRecognitionEvent */
     var SpeechRecognitionEvent = typeof SpeechRecognitionEvent !== 'undefined' ? SpeechRecognitionEvent : typeof webkitSpeechRecognitionEvent !== 'undefined' ? webkitSpeechRecognitionEvent : null;
 
     /**
