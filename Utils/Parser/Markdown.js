@@ -1,6 +1,6 @@
+// todo: strict type not possible because of octal escape, fix!
 (function (jsOMS)
 {
-    "use strict";
     /** @namespace jsOMS.Views */
     jsOMS.Autoloader.defineNamespace('jsOMS.Utils.Parser.Markdown');
 
@@ -20,7 +20,6 @@
         '8': ['List'],
         '9': ['List'],
         ':': ['Table'],
-        '<': [],
         '=': ['SetextHeader'],
         '>': ['Quote'],
         '[': ['Reference'],
@@ -152,7 +151,7 @@
             text = indent > 0 ? line.substr(indent) : line;
             let lineArray = {body: line, indent: indent, text: text};
 
-            if (typeof currentBlock['continuable'] !== 'undefined') {
+            if (typeof currentblock !== 'undefined' && typeof currentBlock['continuable'] !== 'undefined') {
                 let block = jsOMS.Utils.Parser.Markdown['block' + currentBlock['type'] + 'Continue'](lineArray, currentBlock);
 
                 if (typeof block !== 'undefined') {
@@ -174,10 +173,12 @@
             }
 
             for (let blockType in blockTypes) {
+                blockType = blockTypes[blockType];
+
                 let block = jsOMS.Utils.Parser.Markdown['block' + blockType](lineArray, currentBlock);
 
                 if (typeof block !== 'undefined') {
-                    block['type'] = blocktype;
+                    block['type'] = blockType;
 
                     if (typeof block['identified'] === 'undefined') {
                         blocks.push(currentBlock);
@@ -185,7 +186,7 @@
                         block['identified'] = true;
                     }
 
-                    if (jsOMS.Utils.Parser.Markdown.continuable.indexof(blockType) !== -1) {
+                    if (jsOMS.Utils.Parser.Markdown.continuable.indexOf(blockType) !== -1) {
                         block['continuable'] = true;
                     }
 
@@ -195,7 +196,7 @@
                 }
             }
 
-            if (typeof currentBlock !== 'undefined' 
+            if (jsOMS.isset(currentBlock) 
                 && typeof currentBlock['type'] === 'undefined'
                 && typeof currentBlock['interrupted'] === 'undefined'
             ) {
@@ -207,7 +208,7 @@
             }
         }
 
-        if (typeof currentBlock['continuable'] !== 'undefined' && jsOMS.Utils.Parser.Markdown.completable.indexOf(currentBlock['type']) !== -1) {
+        if (currentBlock !== null && typeof currentBlock['continuable'] !== 'undefined' && jsOMS.Utils.Parser.Markdown.completable.indexOf(currentBlock['type']) !== -1) {
             currentBlock = jsOMS.Utils.Parser.Markdown['block' + currentBlock['type'] + 'Complete'](currentBlock);
         }
 
@@ -233,7 +234,7 @@
 
     jsOMS.Utils.Parser.Markdown.blockCode = function(lineArray, block)
     {
-        if (typeof block !== 'undefined' && typeof block['type'] === 'undefined' && typeof block['interrputed'] === 'undefined') {
+        if (jsOMS.isset(block) && typeof block['type'] === 'undefined' && typeof block['interrputed'] === 'undefined') {
             return;
         }
 
@@ -1100,7 +1101,7 @@
 
     jsOMS.Utils.Parser.Markdown.escape = function (text, allowQuotes) 
     {
-        allowQuotes = typeof allowQuotes === 'undefined' ? false : true;
+        allowQuotes = typeof allowQuotes !== 'undefined';
 
         return jsOMS.htmlspecialchars(text, allowQuotes);
     };
