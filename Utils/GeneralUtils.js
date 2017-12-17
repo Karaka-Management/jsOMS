@@ -74,4 +74,9 @@
     {
         return obj;
     };
+
+    jsOMS.isset = function (variable)
+    {
+        return typeof variable !== 'undefined' && variable !== null;
+    };
 }(window.jsOMS = window.jsOMS || {}));

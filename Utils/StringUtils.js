@@ -129,4 +129,33 @@
 
         return res;
     };
+
+    jsOMS.strpbrk = function (haystack, chars) 
+    {
+        const length = haystack.length;
+        for (let i = 0; i < length; ++i) {
+            if (chars.indexOf(haystack.charAt(i)) >= 0) {
+                return haystack.slice(i);
+            }
+        }
+
+        return false;
+    };
+
+    jsOMS.htmlspecialchars = function (text, quotes) {
+        let map = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;'
+        };
+
+        if (quotes) {
+            map['"'] = '"';
+            map["'"] = "'";
+        }
+          
+        return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+    };
 }(window.jsOMS = window.jsOMS || {}));
