@@ -35,7 +35,7 @@
                 continue;
             }
 
-            if(current === null) {
+            if (typeof current === 'undefined' || !current.hasOwnProperty(pathParts[key])) {
                 return null;
             }
             
