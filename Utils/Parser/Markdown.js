@@ -873,15 +873,15 @@
         let remainder = excerpt['text'];
         let matches = null;
 
-        if ((matches = remainder.match(/\[((?:[^][]++|(?R))*+)\]/)) === null) {
-            return;
-        }
+        //if ((matches = remainder.match(/\[((?:[^][]++|(?R))*+)\]/)) === null) {
+        //    return;
+        //}
 
         element['text'] = matches[1];
         extent += matches[0].length;
         remainder = remainder.substr(extent);
 
-        if ((matches = remainder.match(/^[(]\s*+((?:[^ ()]++|[(][^ )]+[)])++)(?:[ ]+("[^"]*"|\'[^\']*\'))?\s*[)]/)) !== null) {
+        /*if ((matches = remainder.match(/^[(]\s*+((?:[^ ()]++|[(][^ )]+[)])++)(?:[ ]+("[^"]*"|\'[^\']*\'))?\s*[)]/)) !== null) {
             element['attributes']['href'] = matches[1];
             
             if (typeof matches[2] !== 'undefined') {
@@ -906,7 +906,7 @@
             let def = jsOMS.Utils.Parser.Markdown.definitionData['Reference'][definition];
             element['attributes']['href'] = def['url'];
             element['attributes']['title'] = def['title'];
-        }
+        }*/
 
         return {
             extent: extent,
@@ -940,9 +940,9 @@
         }
 
         let matches = null;
-        if (excerpt['text'][1] !== '~' || (matches = excerpt['text'].match(/^~~(?=\S)(.+?)(?<=\S)~~/)) === null) {
-            return;
-        }
+        //if (excerpt['text'][1] !== '~' || (matches = excerpt['text'].match(/^~~(?=\S)(.+?)(?<=\S)~~/)) === null) {
+        //    return;
+        //}
 
         return {
             extent: matches[0].length,
@@ -1073,11 +1073,11 @@
 
         if (typeof element['attributes'] !== 'undefined' && element['attributes'] !== null && element['attributes'] !== '') {
             for (let att in element['attributs']) {
-                if (att.match(/^[a-zA-Z0-9][a-zA-Z0-9-_]*+$/) === null) {
-                    delete element['attributes'][att]
-                } else if (jsOMS.Utils.Parser.Markdown.striAtStart(att, 'on')) {
-                    delete element['attributes'][att];
-                }
+                //if (att.match(/^[a-zA-Z0-9][a-zA-Z0-9-_]*+$/) === null) {
+                //    delete element['attributes'][att]
+                //} else if (jsOMS.Utils.Parser.Markdown.striAtStart(att, 'on')) {
+                //    delete element['attributes'][att];
+                //}
             }
         }
 
