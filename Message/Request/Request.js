@@ -320,7 +320,7 @@
                 str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
             }
         }
-        
+
         return str.join("&");
     };
 

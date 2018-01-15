@@ -25,7 +25,7 @@
     {
         this.canvas = canvas;
         this.ctx    = canvas.getContext('2d');
-        
+
         /** global: screen */
         this.width  = screen.width;
         this.height = screen.height;
@@ -53,7 +53,7 @@
      *
      * @param {object} self Object reference for self invoke
      *
-     * @return {void} 
+     * @return {void}
      *
      * @method
      *
@@ -80,7 +80,7 @@
     /**
      * Invalidate/clean canvas
      *
-     * @return {void} 
+     * @return {void}
      *
      * @method
      *
@@ -94,7 +94,7 @@
     /**
      * Update particle
      *
-     * @return {void} 
+     * @return {void}
      *
      * @method
      *
@@ -143,10 +143,10 @@
     /**
      * Handle distance between particles
      *
-     * @param {Particle} p1 Particle 
+     * @param {Particle} p1 Particle
      * @param {Particle} p2 Particle
      *
-     * @return {void} 
+     * @return {void}
      *
      * @method
      *

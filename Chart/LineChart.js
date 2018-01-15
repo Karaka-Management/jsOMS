@@ -1,7 +1,7 @@
 (function (jsOMS)
 {
     "use strict";
-    
+
     jsOMS.Chart.LineChart = function (id)
     {
         this.chart = new jsOMS.Chart.ChartAbstract(id);
@@ -192,7 +192,7 @@
         //svg.selectAll('.x.axis').transition().duration(500).call(xAxis1);
         //svg.selectAll('.y.axis').transition().duration(500).call(yAxis1);
 
-        let dataPoint = null, 
+        let dataPoint = null,
             dataPointEnter = null,
             temp       = this.drawData(svg, line, dataPointEnter, dataPoint);
 

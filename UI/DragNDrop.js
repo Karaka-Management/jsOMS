@@ -89,7 +89,7 @@
 
         element.addEventListener('dragover', function(e) {
             e.preventDefault();
-            
+
             e.dataTransfer.dropEffect = 'move';
         }, false);
 

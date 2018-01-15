@@ -1,7 +1,7 @@
 (function (jsOMS)
 {
     "use strict";
-    
+
     jsOMS.Chart.DiffAreaChart = function (id)
     {
         this.chart = new jsOMS.Chart.LineChart(id);

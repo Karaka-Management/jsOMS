@@ -11,7 +11,7 @@
 (function (jsOMS)
 {
     "use strict";
-    
+
     /**
      * Trim char from string
      *
@@ -65,10 +65,10 @@
     jsOMS.ltrim = function(str, char)
     {
         char = typeof char === 'undefined' ? ' ' : char;
-        
+
         return str.replace(new RegExp("^[" + char + "]*"), '');
     };
-    
+
     /**
      * Count string in string
      *
@@ -84,8 +84,8 @@
     jsOMS.substr_count = function(str, substr) {
         str += '';
         substr += '';
-        
-        if (substr.length <= 0) { 
+
+        if (substr.length <= 0) {
             return (str.length + 1);
         }
 
@@ -95,7 +95,7 @@
 
         while (true) {
             pos = str.indexOf(substr, pos);
-            
+
             if (pos >= 0) {
                 ++n;
                 pos += step;
@@ -103,7 +103,7 @@
                 break;
             }
         }
-        
+
         return n;
     };
 
@@ -130,7 +130,7 @@
         return res;
     };
 
-    jsOMS.strpbrk = function (haystack, chars) 
+    jsOMS.strpbrk = function (haystack, chars)
     {
         const length = haystack.length;
         for (let i = 0; i < length; ++i) {
@@ -155,7 +155,7 @@
             map['"'] = '"';
             map["'"] = "'";
         }
-          
+
         return text.replace(/[&<>"']/g, function(m) { return map[m]; });
     };
 }(window.jsOMS = window.jsOMS || {}));

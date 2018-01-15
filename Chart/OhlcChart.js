@@ -1,7 +1,7 @@
 (function (jsOMS)
 {
     "use strict";
-    
+
     jsOMS.Chart.OhlcChart = function (id)
     {
         this.chart = new jsOMS.Chart.CandlestickChart(id);

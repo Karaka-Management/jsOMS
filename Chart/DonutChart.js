@@ -1,7 +1,7 @@
 (function (jsOMS)
 {
     "use strict";
-    
+
     jsOMS.Chart.DonutChart = function (id)
     {
         this.chart = new jsOMS.Chart.PieChart(id);

@@ -11,7 +11,7 @@
 (function (jsOMS)
 {
     "use strict";
-    
+
     /**
      * Trim char from string
      *
@@ -38,7 +38,7 @@
             if (typeof current === 'undefined' || !current.hasOwnProperty(pathParts[key])) {
                 return null;
             }
-            
+
             current = current[key];
         }
 

@@ -33,7 +33,7 @@
     /**
      * Get particle radius
      *
-     * @return {int} 
+     * @return {int}
      *
      * @method
      *
@@ -50,7 +50,7 @@
      * @param {int} posX Position x
      * @param {int} posY Position y
      *
-     * @return {void} 
+     * @return {void}
      *
      * @method
      *
@@ -65,7 +65,7 @@
     /**
      * Get position
      *
-     * @return {Object} 
+     * @return {Object}
      *
      * @method
      *
@@ -82,7 +82,7 @@
      * @param {float} velX Velocity x
      * @param {float} velY Velocity y
      *
-     * @return {void} 
+     * @return {void}
      *
      * @method
      *
@@ -97,7 +97,7 @@
     /**
      * Get velocity
      *
-     * @return {Object} 
+     * @return {Object}
      *
      * @method
      *
@@ -113,7 +113,7 @@
      *
      * @param {object} ctx Canvas
      *
-     * @return {void} 
+     * @return {void}
      *
      * @method
      *

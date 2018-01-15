@@ -9,7 +9,7 @@
 (function (jsOMS)
 {
     "use strict";
-    
+
     /** @namespace jsOMS.UI.Input*/
     jsOMS.Autoloader.defineNamespace('jsOMS.UI.Input');
 
@@ -81,7 +81,7 @@
             {
                 const db = document.getElementById(dataButton);
 
-                if(db) { 
+                if(db) {
                     db.click();
                 }
             });

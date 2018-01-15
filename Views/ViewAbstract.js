@@ -1,6 +1,6 @@
 (function (jsOMS) {
     "use strict";
-    
+
     jsOMS.ViewAbstract = function ()
     {
         this.element = null;

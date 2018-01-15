@@ -9,9 +9,9 @@
 (function (jsOMS)
 {
     "use strict";
-    
+
     jsOMS.Autoloader.defineNamespace('jsOMS.UI.Component');
-    
+
     /**
      * @constructor
      *

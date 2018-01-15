@@ -51,7 +51,7 @@
      * Get query
      *
      * @param {string} key
-     * 
+     *
      * @return {string}
      *
      * @method
@@ -76,7 +76,7 @@
      *
      * @since  1.0.0
      */
-    jsOMS.Uri.UriFactory.clearAll = function() 
+    jsOMS.Uri.UriFactory.clearAll = function()
     {
         jsOMS.Uri.UriFactory.uri = {};
 
@@ -87,7 +87,7 @@
      * Clear uri component
      *
      * @param {string} key Uri key for component
-     * 
+     *
      * @return {boolean}
      *
      * @method
@@ -109,14 +109,14 @@
      * Clear uri components that follow a certain pattern
      *
      * @param {string} pattern Uri key pattern to remove
-     * 
+     *
      * @return {boolean}
      *
      * @method
      *
      * @since  1.0.0
      */
-    jsOMS.Uri.UriFactory.clearLike = function(pattern) 
+    jsOMS.Uri.UriFactory.clearLike = function(pattern)
     {
         let success = false;
         const regexp = new RegExp(pattern);

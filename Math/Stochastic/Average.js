@@ -9,7 +9,7 @@
 (function (jsOMS)
 {
     "use strict";
-    
+
     /** @namespace jsOMS.Math.Stochastic.Average */
     jsOMS.Autoloader.defineNamespace('jsOMS.Math.Stochastic.Average');
 

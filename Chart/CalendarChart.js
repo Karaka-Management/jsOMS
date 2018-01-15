@@ -1,7 +1,7 @@
 (function (jsOMS)
 {
     "use strict";
-    
+
     jsOMS.Chart.CalendarChart = function (id)
     {
         this.chart = new jsOMS.Chart.ChartAbstract(id);
@@ -42,7 +42,7 @@
             .attr("height",  this.chart.dimension.height)
             .attr("class", "RdYlGn")
         .append("g")
-            .attr("transform", "translate(" 
+            .attr("transform", "translate("
             + ((this.chart.dimension.width - this.chart.cellSize * 53) / 2)
             + "," + (this.chart.dimension.height - this.chart.cellSize * 7 - 1) + ")");
 
@@ -81,7 +81,7 @@
             });
 
         // todo: fix the following data filter etc. this is way to much work and slow
-        rect.filter(function(d) { 
+        rect.filter(function(d) {
             let year = d.split('-')[0],
                 length = self.chart.dataset.length;
 
@@ -101,12 +101,12 @@
                     return false;
                 }
 
-              return false; 
+              return false;
         })
             .attr("class", function(d) {
                 let year = d.split('-')[0],
                 length = self.chart.dataset.length;
-                
+
                 for(let i = 0; i < length; i++) {
                     if(self.chart.dataset[i].name != year) {
                         continue;
@@ -116,7 +116,7 @@
 
                     for(let j = 0; j < dataLength; j++) {
                         if(self.chart.dataset[i].points[j].x === d) {
-                             return "day " + self.chart.color(self.chart.dataset[i].points[j].y); 
+                             return "day " + self.chart.color(self.chart.dataset[i].points[j].y);
                         }
                     }
 
@@ -127,7 +127,7 @@
             .text(function(d) {
                 let year = d.split('-')[0],
                 length = self.chart.dataset.length;
-                
+
                 for(let i = 0; i < length; i++) {
                     if(self.chart.dataset[i].name != year) {
                         continue;

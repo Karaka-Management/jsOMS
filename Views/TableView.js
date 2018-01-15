@@ -1,6 +1,6 @@
 (function (jsOMS) {
     "use strict";
-    
+
     jsOMS.TableView = function () {
         this.table = null;
     };

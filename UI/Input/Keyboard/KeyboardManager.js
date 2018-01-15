@@ -96,8 +96,8 @@
                     match = false;
 
                     break;
-                } 
-                
+                }
+
                 match = true;
             }
 

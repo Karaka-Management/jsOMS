@@ -1,6 +1,6 @@
 (function (jsOMS) {
     "use strict";
-    
+
     jsOMS.Client = function (ip, port, protocol) {
         this.port = port;
         this.ip = ip;

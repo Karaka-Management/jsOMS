@@ -100,7 +100,7 @@
                         relatedTarget: null
                     }
                 );
-                
+
                 document.dispatchEvent(rightClick);
             } else if (elapsedTime < 500) {
                 /** global: Event */

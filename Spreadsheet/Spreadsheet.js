@@ -12,7 +12,7 @@
     /** @namespace jsOMS.Spreadsheet */
     jsOMS.Autoloader.defineNamespace('jsOMS.Spreadsheet');
 
-    jsOMS.Spreadsheet.Spreadsheet = function(id, dataset, options) 
+    jsOMS.Spreadsheet.Spreadsheet = function(id, dataset, options)
     {
     	this.spreadsheet = document.getElementById(id);
     	this.title = '';
@@ -24,7 +24,7 @@
     	this.scroll = {h: false, v: false};
     };
 
-    jsOMS.SpreadSheet.prototype.draw = function() 
+    jsOMS.SpreadSheet.prototype.draw = function()
     {
     	let col = 0,
     		row = 0,
@@ -44,7 +44,7 @@
     	}
     };
 
-    jsOMS.SpreadSheet.prototype.drawCell = function() 
+    jsOMS.SpreadSheet.prototype.drawCell = function()
     {
     };
 }(window.jsOMS = window.jsOMS || {}));

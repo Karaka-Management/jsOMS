@@ -31,7 +31,7 @@
         return stack.pop();
     };
 
-    jsOMS.parseValue = function(value) 
+    jsOMS.parseValue = function(value)
     {
         return value.indexOf('.') === -1 ? parseInt(value) : parseFloat(value);
     }
@@ -49,7 +49,7 @@
         let output = [];
 
         equation = equation.replace(/\s+/g, '');
-        equation = equation.split(/([\+\-\*\/\^\(\)])/).filter(function (n) { return n !== '' }); 
+        equation = equation.split(/([\+\-\*\/\^\(\)])/).filter(function (n) { return n !== '' });
 
         let length = equation.length;
         for(let i = 0; i < length; i++) {
@@ -61,7 +61,7 @@
                 let o1 = token;
                 let o2 = stack[stack.length - 1];
 
-                while ('^*/+-'.indexOf(o2) !== -1 && 
+                while ('^*/+-'.indexOf(o2) !== -1 &&
                     (
                         (operators[o1].order === -1 && operators[o1].precedence <= operators[o2].precedence)
                         || (operators[o1].order === 1 && operators[o1].precedence < operators[o2].precedence)

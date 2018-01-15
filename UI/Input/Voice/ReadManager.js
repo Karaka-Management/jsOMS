@@ -17,11 +17,11 @@
     /** global: webkitSpeechRecognition */
     /** global: SpeechRecognition */
     var SpeechRecognition = typeof SpeechRecognition !== 'undefined' ? SpeechRecognition : typeof webkitSpeechRecognition !== 'undefined' ? webkitSpeechRecognition : null;
-    
+
     /** global: webkitSpeechGrammarList */
     /** global: SpeechGrammarList */
     var SpeechGrammarList = typeof SpeechGrammarList !== 'undefined' ? SpeechGrammarList : typeof webkitSpeechGrammarList !== 'undefined' ? webkitSpeechGrammarList : null;
-    
+
     /** global: webkitSpeechRecognitionEvent */
     /** global: SpeechRecognitionEvent */
     var SpeechRecognitionEvent = typeof SpeechRecognitionEvent !== 'undefined' ? SpeechRecognitionEvent : typeof webkitSpeechRecognitionEvent !== 'undefined' ? webkitSpeechRecognitionEvent : null;
@@ -35,7 +35,7 @@
     {
         this.pitch = 1;
         this.rate = 1;
-        this.lang = typeof lang === 'undefined' ? 'en-US' : lang;    
+        this.lang = typeof lang === 'undefined' ? 'en-US' : lang;
         this.voices = [];
         this.voice = null;
 
@@ -47,7 +47,7 @@
 
     /**
      * Read text.
-     * 
+     *
      * @param {string} text Text to read
      *
      * @return {void}
@@ -67,7 +67,7 @@
 
     /**
      * Set Language.
-     * 
+     *
      * @param {string} lang Language id (e.g. en-US)
      *
      * @return {void}
@@ -81,7 +81,7 @@
 
     /**
      * Set pitch.
-     * 
+     *
      * @param {int} pitch Pitch
      *
      * @return {void}
@@ -95,7 +95,7 @@
 
     /**
      * Set rate.
-     * 
+     *
      * @param {int} rate Rate
      *
      * @return {void}
@@ -109,7 +109,7 @@
 
     /**
      * Get supported voices.
-     * 
+     *
      * @return {Array}
      *
      * @since  1.0.0

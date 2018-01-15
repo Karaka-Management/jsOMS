@@ -91,14 +91,14 @@
     ];
 
     jsOMS.Utils.Parser.Markdown.safeLinksWhitelist = [
-        'http://', 'https://', 'ftp://', 'ftps://', 'mailto:', 
-        'data:image/png;base64,', 'data:image/gif;base64,', 'data:image/jpeg;base64,', 
+        'http://', 'https://', 'ftp://', 'ftps://', 'mailto:',
+        'data:image/png;base64,', 'data:image/gif;base64,', 'data:image/jpeg;base64,',
         'irc:', 'ircs:', 'git:', 'ssh:', 'news:', 'steam:',
     ];
 
     jsOMS.Utils.Parser.Markdown.definitionData = {};
 
-    jsOMS.Utils.Parser.Markdown.parse = function(text) 
+    jsOMS.Utils.Parser.Markdown.parse = function(text)
     {
         jsOMS.Utils.Parser.Markdown.definitionData = {};
         text = text.replace("\r\n", "\n").replace("\r", "\n");
@@ -196,7 +196,7 @@
                 }
             }
 
-            if (jsOMS.isset(currentBlock) 
+            if (jsOMS.isset(currentBlock)
                 && typeof currentBlock['type'] === 'undefined'
                 && typeof currentBlock['interrupted'] === 'undefined'
             ) {
@@ -363,7 +363,7 @@
         }
 
         text = jsOMS.trim(lineArray['text'], '# ');
-        
+
         return {
             element: {
                 name: 'h' + Math.min(6, level),
@@ -542,7 +542,7 @@
         };
 
         jsOMS.Utils.Parser.Markdown.definitionData['Reference'][id] = data;
-        
+
         return {hidden: true};
     };
 
@@ -557,7 +557,7 @@
             let divider = lineArray['text'];
             divider = jsOMS.trim(divider);
             divider = jsOMS.trim(divider, '|');
-            
+
             const dividerCells = divider.split('|');
             let dividerLength = dividerCells.length;
 
@@ -694,7 +694,7 @@
     {
         let markup = '';
         let excerpt = null;
-        
+
         outerloop:
         while (excerpt = jsOMS.strpbrk(text, jsOMS.Utils.Parser.Markdown.inlineMarkerList)) {
             let marker = excerpt[0];
@@ -703,7 +703,7 @@
 
             for (let inlineType in jsOMS.Utils.Parser.Markdown.inlineTypes[marker]) {
                 inlineType = jsOMS.Utils.Parser.Markdown.inlineTypes[marker][inlineType];
-                
+
                 let inline = jsOMS.Utils.Parser.Markdown['inline' + inlineType](excerptArray);
 
                 if (typeof inline === 'undefined') {
@@ -883,7 +883,7 @@
 
         /*if ((matches = remainder.match(/^[(]\s*+((?:[^ ()]++|[(][^ )]+[)])++)(?:[ ]+("[^"]*"|\'[^\']*\'))?\s*[)]/)) !== null) {
             element['attributes']['href'] = matches[1];
-            
+
             if (typeof matches[2] !== 'undefined') {
                 element['attributes']['title'] = matches[2].substr(1, -1);
             }
@@ -894,7 +894,7 @@
             if ((matches = remainder.match(/^\s*\[(.*?)\]/)) !== null) {
                 definition = matches[1].length > 0 ? matches[1] : element['text'];
                 definition = definition.toLowerCase();
-                extent += matches[0].length; 
+                extent += matches[0].length;
             } else {
                 definition = element['text'].toLowerCase();
             }
@@ -1084,7 +1084,7 @@
         return element;
     };
 
-    jsOMS.Utils.Parser.Markdown.filterUnsafeUrlInAttribute = function (element, attribute) 
+    jsOMS.Utils.Parser.Markdown.filterUnsafeUrlInAttribute = function (element, attribute)
     {
         const length = jsOMS.Utils.Parser.Markdown.safeLinksWhitelist.length;
 
@@ -1099,7 +1099,7 @@
         return element;
     };
 
-    jsOMS.Utils.Parser.Markdown.escape = function (text, allowQuotes) 
+    jsOMS.Utils.Parser.Markdown.escape = function (text, allowQuotes)
     {
         allowQuotes = typeof allowQuotes !== 'undefined';
 
@@ -1112,7 +1112,7 @@
 
         if(length > string.length) {
             return false;
-        } 
+        }
 
         return string.substr(0, length).toLowerCase() === needle.toLowerCase();
     };

@@ -16,7 +16,7 @@
     /**
      * requestAnimationFrame wrapper
      *
-     * @return {function} 
+     * @return {function}
      *
      * @method
      *

@@ -184,7 +184,7 @@
         this.fragment = typeof parsed['fragment'] !== 'undefined' ? parsed['fragment'] : '';
         this.base     = this.scheme + '://' + this.host + this.root;
     };
-    
+
     /**
      * Set root path.
      *
@@ -341,7 +341,7 @@
     {
         return this.path;
     };
-    
+
     /**
      * Get Uri path offset
      *

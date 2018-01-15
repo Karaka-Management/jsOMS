@@ -63,7 +63,7 @@
         for (let id in this.groups[group]) {
             if (this.groups[group].hasOwnProperty(id)) {
                 this.groups[group][id] = false;
-            } 
+            }
         }
     };
 

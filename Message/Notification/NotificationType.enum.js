@@ -12,7 +12,7 @@
 
     /** @namespace jsOMS.Message.Notification */
     jsOMS.Autoloader.defineNamespace('jsOMS.Message.Notification');
-    
+
     jsOMS.Message.Notification.NotificationType = Object.freeze({
         APP_NOTIFICATION: 1,
         BROWSER_NOTIFICATION: 2

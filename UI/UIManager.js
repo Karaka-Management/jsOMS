@@ -163,7 +163,7 @@
     {
         return this.domObserver;
     };
-    
+
     /**
      * Get general UI
      *

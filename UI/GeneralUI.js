@@ -23,7 +23,7 @@
 
         this.visObs = null;
     };
-    
+
     /**
      * Bind button.
      *
@@ -38,12 +38,12 @@
         let e = null;
         if (typeof id !== 'undefined') {
             e = document.getElementById(id);
-        } 
-        
+        }
+
         this.bindHref(e);
         this.bindLazyLoad(e);
     };
-    
+
     /**
      * Bind & rebind UI element.
      *

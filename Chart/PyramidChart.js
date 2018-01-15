@@ -1,7 +1,7 @@
 (function (jsOMS)
 {
     "use strict";
-    
+
     jsOMS.Chart.PyramidChart = function (id)
     {
         this.chart = new jsOMS.Chart.ChartAbstract(id);
@@ -144,8 +144,8 @@
                 + (this.chart.margin.top) + ")");
 
         this.chart.drawGrid(svg, xGrid, yGrid);
-        
-        let dataPoint = null, 
+
+        let dataPoint = null,
             dataPointEnter = null,
             temp       = this.drawData(svg, x, y, dataPointEnter, dataPoint);
         dataPointEnter = temp[0];

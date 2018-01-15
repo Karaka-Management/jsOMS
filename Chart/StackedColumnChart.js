@@ -1,7 +1,7 @@
 (function (jsOMS)
 {
     "use strict";
-    
+
     jsOMS.Chart.StackedColumnChart = function (id)
     {
         this.chart = new jsOMS.Chart.ColumnChart(id);

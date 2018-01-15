@@ -1,7 +1,7 @@
 (function (jsOMS)
 {
     "use strict";
-    
+
     jsOMS.Chart.CandlestickChart = function (id)
     {
         this.chart = new jsOMS.Chart.ChartAbstract(id);
@@ -102,7 +102,7 @@
             .data(this.chart.dataset[0].points)
             .enter().append("svg:rect")
             .attr("x", function(d) { return x(d.x)-0.5*mm/2; })
-            .attr("y", function(d) {return y(Math.max(d.open, d.close));})		  
+            .attr("y", function(d) {return y(Math.max(d.open, d.close));})		
             .attr("height", function(d) { return Math.max(1, y(Math.min(d.open, d.close))-y(Math.max(d.open, d.close)));})
             .attr("width", function(d) { return 0.5 * mm; })
             .attr("fill",function(d) { return d.open > d.close ? "red" : "green" ;});
@@ -110,17 +110,17 @@
             let datapoint = svg.selectAll("rect")
             .data(this.chart.dataset[0].points)
             .enter();
-            
+
             datapoint.append("svg:rect")
             .attr("x", function(d) { return x(d.x)-0.25*mm/2; })
-            .attr("y", function(d) {return y(d.open);})		  
+            .attr("y", function(d) {return y(d.open);})		
             .attr("height", function(d) { return 1;})
             .attr("width", function(d) { return 0.25 * mm/2; })
             .attr("fill",function(d) { return d.open > d.close ? "red" : "green" ;});
-            
+
             datapoint.append("svg:rect")
             .attr("x", function(d) { return x(d.x); })
-            .attr("y", function(d) {return y(d.close);})		  
+            .attr("y", function(d) {return y(d.close);})		
             .attr("height", function(d) { return 1;})
             .attr("width", function(d) { return 0.25 * mm/2; })
             .attr("fill",function(d) { return d.open > d.close ? "red" : "green" ;});
@@ -131,7 +131,7 @@
           .enter().append("svg:line")
           .attr("class", "stem")
           .attr("x1", function(d) { return x(d.x);})
-          .attr("x2", function(d) { return x(d.x);})		    
+          .attr("x2", function(d) { return x(d.x);})		
           .attr("y1", function(d) { return y(d.y);})
           .attr("y2", function(d) { return y(d.y0); })
           .attr("stroke", function(d){ return d.open > d.close ? "red" : "green"; });

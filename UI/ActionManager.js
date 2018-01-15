@@ -85,7 +85,7 @@
 
             // if it has selector then a listener for child events must be implemented since these can potentially changed without any knowledge
             // todo: what if the selector parent is different from "e"? then this doesn't make sense! Maybe this isn't allowed to happen!
-            // todo: careful this could cause bugs if there is another component relying on a listener for this dom element. Maybe create actionManager domlistener? 
+            // todo: careful this could cause bugs if there is another component relying on a listener for this dom element. Maybe create actionManager domlistener?
             //       Maybe just use this listener for ALL action listeners and check if delete, then remove otherwise do current stuff.
             //       Problem is, the listener doesn't work for the node itself only for children and listening to ALL document nodes might be a bad idea?!?!?!
             const observeConfig = {childList: false, attributes: true, subtree: false};
@@ -121,7 +121,7 @@
      *
      * @since  1.0.0
      */
-    jsOMS.UI.ActionManager.prototype.bindListener = function(e, listener) 
+    jsOMS.UI.ActionManager.prototype.bindListener = function(e, listener)
     {
         const self = this,
             actionLength = listener.action.length;

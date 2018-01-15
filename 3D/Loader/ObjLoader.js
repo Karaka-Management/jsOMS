@@ -323,8 +323,8 @@
         }
 
         let lines = text.split('\n'),
-            line = '', 
-            lineFirstChar = '', 
+            line = '',
+            lineFirstChar = '',
             lineSecondChar = '',
             lineLength = 0,
             result = [],

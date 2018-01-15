@@ -1,7 +1,7 @@
 (function (jsOMS)
 {
     "use strict";
-    
+
     jsOMS.Chart.PieChart = function (id)
     {
         this.chart = new jsOMS.Chart.ChartAbstract(id);
@@ -33,7 +33,7 @@
                 + (this.chart.margin.left) + ","
                 + (this.chart.margin.top) + ")");
 
-        let dataPoint = null, 
+        let dataPoint = null,
             dataPointEnter = null,
             temp       = this.drawData(svg, dataPointEnter, dataPoint);
         dataPointEnter = temp[0];
@@ -80,9 +80,9 @@
                 .innerRadius(function() { return innerRadius; });
 
         dataPoint = svg.selectAll(".dataPoint").data(this.chart.dataset);
-        
+
         dataPoint.enter().append("g").attr("class", "dataPoint");
-        
+
         dataPointEnter = dataPoint.selectAll("path")
             .data(function (d)
             {

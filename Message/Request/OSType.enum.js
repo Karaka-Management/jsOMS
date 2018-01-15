@@ -12,7 +12,7 @@
 
     /** @namespace jsOMS.Message.Request */
     jsOMS.Autoloader.defineNamespace('jsOMS.Message.Request');
-    
+
     jsOMS.Message.Request.OSType = Object.freeze({
         WINDOWS_10: 'windows nt 10.0', /* Windows 10 */
         WINDOWS_81: 'windows nt 6.3', /* Windows 8.1 */

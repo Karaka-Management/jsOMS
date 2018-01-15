@@ -1,7 +1,7 @@
 (function (jsOMS)
 {
     "use strict";
-    
+
     jsOMS.Chart.GroupedBarChart = function (id)
     {
         this.chart = new jsOMS.Chart.BarChart(id);

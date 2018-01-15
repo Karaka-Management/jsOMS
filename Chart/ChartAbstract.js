@@ -4,7 +4,7 @@
 
     /** @namespace jsOMS.Chart */
     jsOMS.Autoloader.defineNamespace('jsOMS.Chart');
-    
+
     jsOMS.Chart.ChartAbstract = function (id)
     {
         /** global: d3 */

@@ -17,11 +17,11 @@
     /** global: webkitSpeechRecognition */
     /** global: SpeechRecognition */
     var SpeechRecognition = typeof SpeechRecognition !== 'undefined' ? SpeechRecognition : typeof webkitSpeechRecognition !== 'undefined' ? webkitSpeechRecognition : null;
-    
+
     /** global: webkitSpeechGrammarList */
     /** global: SpeechGrammarList */
     var SpeechGrammarList = typeof SpeechGrammarList !== 'undefined' ? SpeechGrammarList : typeof webkitSpeechGrammarList !== 'undefined' ? webkitSpeechGrammarList : null;
-    
+
     /** global: webkitSpeechRecognitionEvent */
     /** global: SpeechRecognitionEvent */
     var SpeechRecognitionEvent = typeof SpeechRecognitionEvent !== 'undefined' ? SpeechRecognitionEvent : typeof webkitSpeechRecognitionEvent !== 'undefined' ? webkitSpeechRecognitionEvent : null;
@@ -109,7 +109,7 @@
      * Set language
      *
      * @param {string} lang Language code (e.g. en-US)
-     * 
+     *
      * @return {void}
      *
      * @since  1.0.0
@@ -125,7 +125,7 @@
      *
      * @param {string} command Command id
      * @param {callback} callback Callback for command
-     * 
+     *
      * @return {void}
      *
      * @since  1.0.0
@@ -163,7 +163,7 @@
         if(SpeechRecognition === null) {
             return;
         }
-        
+
         this.recognition.stop();
     };
 }(window.jsOMS = window.jsOMS || {}));

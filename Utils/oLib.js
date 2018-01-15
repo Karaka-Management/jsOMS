@@ -38,13 +38,13 @@
             if(typeof current === 'undefined' || !current.hasOwnProperty(pathParts[key])) {
                 return null;
             }
-            
+
             current = current[pathParts[key]];
         }
 
         return current;
     };
-    
+
     /**
      * Trim char from string
      *
@@ -98,10 +98,10 @@
     jsOMS.ltrim = function(str, char)
     {
         char = typeof char === 'undefined' ? ' ' : char;
-        
+
         return str.replace(new RegExp("^[" + char + "]*"), '');
     };
-    
+
     /**
      * Count string in string
      *
@@ -117,8 +117,8 @@
     jsOMS.substr_count = function(str, substr) {
         str += '';
         substr += '';
-        
-        if (substr.length <= 0) { 
+
+        if (substr.length <= 0) {
             return (str.length + 1);
         }
 
@@ -128,7 +128,7 @@
 
         while (true) {
             pos = str.indexOf(substr, pos);
-            
+
             if (pos >= 0) {
                 ++n;
                 pos += step;
@@ -136,7 +136,7 @@
                 break;
             }
         }
-        
+
         return n;
     };
 
@@ -443,7 +443,7 @@
         return typeof variable !== 'undefined' && variable !== null;
     };
 
-    jsOMS.strpbrk = function (haystack, char_list) 
+    jsOMS.strpbrk = function (haystack, char_list)
     {
         const length = haystack.length;
         for (let i = 0; i < length; ++i) {
@@ -468,7 +468,7 @@
             map['"'] = '"';
             map["'"] = "'";
         }
-          
+
         return text.replace(/[&<>"']/g, function(m) { return map[m]; });
     };
 }(window.jsOMS = window.jsOMS || {}));

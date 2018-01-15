@@ -12,7 +12,7 @@
     /** @namespace jsOMS.Spreadsheet */
     jsOMS.Autoloader.defineNamespace('jsOMS.Spreadsheet');
 
-    jsOMS.Spreadsheet.Cell = function(id, raw) 
+    jsOMS.Spreadsheet.Cell = function(id, raw)
     {
     	this.id = id;
     	this.raw = raw;

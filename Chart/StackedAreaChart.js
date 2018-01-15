@@ -1,7 +1,7 @@
 (function (jsOMS)
 {
     "use strict";
-    
+
     jsOMS.Chart.StackedAreaChart = function (id)
     {
         this.chart = new jsOMS.Chart.LineChart(id);
