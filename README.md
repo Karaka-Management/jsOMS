@@ -1,3 +1,5 @@
+[![Maintainability](https://api.codeclimate.com/v1/badges/084fdca4353fe35c4b8a/maintainability)](https://codeclimate.com/github/Orange-Management/jsOMS/maintainability)
+
 # General
 
 The **jsOMS** framework provides many features to manage and interact with the UI and connect the frontend to the backend for data exchange. Additionally to the framework features it also includes a library that provides additional functionality.
