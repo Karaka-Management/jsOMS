@@ -54,7 +54,7 @@
                 visible: true
             }
         };
-        
+
         this.chart.subtype = 'vwaterfall';
     };
 
@@ -70,7 +70,7 @@
             add     = 0;
 
         // todo: remove value since positive and negative can be checked by looking at the diff of y-y0
-        for (let i = 0; i < length - 1; i++) {
+        for (let i = 0; i < length - 1; ++i) {
             dataset[0].points[i] = { name: data[i].name, y0: add, y: data[i].value + add };
             add                 += data[i].value;
         }

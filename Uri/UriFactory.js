@@ -155,7 +155,7 @@
                 spl    = null,
                 length = pars.length;
 
-            for (let i = 0; i < length; i++) {
+            for (let i = 0; i < length; ++i) {
                 spl           = pars[i].split('=');
                 comps[spl[0]] = spl[1];
             }

@@ -76,7 +76,7 @@
             const forms = document.getElementsByTagName('form'),
                 length  = !forms ? 0 : forms.length;
 
-            for (let i = 0; i < length; i++) {
+            for (let i = 0; i < length; ++i) {
                 if (typeof forms[i].getAttribute('id') !== 'undefined' && forms[i].getAttribute('id') !== null && typeof this.ignore[forms[i].getAttribute('id')] === 'undefined') {
                     this.bindForm(forms[i].getAttribute('id'));
                 }
@@ -106,7 +106,7 @@
         const submits = this.forms[id].getSubmit(),
             length    = submits.length;
 
-        for (let i = 0; i < length; i++) {
+        for (let i = 0; i < length; ++i) {
             submits[i].addEventListener('click', function (event)
             {
                 jsOMS.preventAll(event);

@@ -86,7 +86,7 @@
             let year   = d.split('-')[0],
                 length = self.chart.dataset.length;
 
-                for (let i = 0; i < length; i++) {
+                for (let i = 0; i < length; ++i) {
                     if (self.chart.dataset[i].name != year) {
                         continue;
                     }
@@ -108,7 +108,7 @@
                 let year = d.split('-')[0],
                 length   = self.chart.dataset.length;
 
-                for (let i = 0; i < length; i++) {
+                for (let i = 0; i < length; ++i) {
                     if (self.chart.dataset[i].name != year) {
                         continue;
                     }
@@ -129,7 +129,7 @@
                 let year = d.split('-')[0],
                 length   = self.chart.dataset.length;
 
-                for (let i = 0; i < length; i++) {
+                for (let i = 0; i < length; ++i) {
                     if (self.chart.dataset[i].name != year) {
                         continue;
                     }

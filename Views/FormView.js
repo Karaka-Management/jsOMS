@@ -157,7 +157,7 @@
 
         let value = null;
 
-        for (let i = 0; i < length; i++) {
+        for (let i = 0; i < length; ++i) {
             if (elements[i].tagName.toLowerCase() === 'canvas') {
                 value = elements[i].toDataURL('image/png');
             } else {
@@ -195,7 +195,7 @@
             length     = elements.length;
 
         try {
-            for (let i = 0; i < length; i++) {
+            for (let i = 0; i < length; ++i) {
                 if ((elements[i].required && elements[i].value === '') 
                     || (typeof elements[i].pattern !== 'undefined' 
                     && elements[i].pattern !== '' 
@@ -282,7 +282,7 @@
         const elements = this.getFormElements(),
             length     = elements.length;
 
-        for (let i = 0; i < length; i++) {
+        for (let i = 0; i < length; ++i) {
             switch (elements[i].tagName) {
                 case 'input':
                     jsOMS.UI.Input.bind(elements[i]);
@@ -311,7 +311,7 @@
         const elements = this.getFormElements(),
             length     = elements.length;
 
-        for (let i = 0; i < length; i++) {
+        for (let i = 0; i < length; ++i) {
             switch (elements[i].tagName) {
                 case 'input':
                     jsOMS.UI.Input.unbind(elements[i]);

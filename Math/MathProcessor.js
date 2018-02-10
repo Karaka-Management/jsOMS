@@ -7,7 +7,7 @@
             postfix = jsOMS.shuntingYard(equation);
             length  = postfix.length;
 
-        for (let i = 0; i < length; i++) {
+        for (let i = 0; i < length; ++i) {
             if (!isNaN(parseFloat(postfix[i])) && isFinite(postfix[i])) {
                 stack.push(postfix[i]);
             } else {
@@ -52,7 +52,7 @@
         equation = equation.split(/([\+\-\*\/\^\(\)])/).filter(function (n) { return n !== '' });
 
         let length = equation.length;
-        for (let i = 0; i < length; i++) {
+        for (let i = 0; i < length; ++i) {
             let token = equation[i];
 
             if (!isNaN(parseFloat(token)) && isFinite(token)) {

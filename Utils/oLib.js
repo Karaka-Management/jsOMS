@@ -297,7 +297,7 @@
         let res   = 0;
         const len = str.length;
 
-        for (let i = 0; i < len; i++) {
+        for (let i = 0; i < len; ++i) {
             res = res * 31 + str.charCodeAt(i);
         }
 
@@ -364,7 +364,7 @@
     {
         const length = ele.childNodes.length;
 
-        for (let i = 0; i < length; i++) {
+        for (let i = 0; i < length; ++i) {
             if (jsOMS.hasClass(ele.childNodes[i], cls)) {
                 return ele.childNodes[i];
             }
@@ -388,7 +388,7 @@
     {
         const length = e.length;
 
-        for (let i = 0; i < length; i++) {
+        for (let i = 0; i < length; ++i) {
             e[i].addEventListener(event, callback);
         }
     };

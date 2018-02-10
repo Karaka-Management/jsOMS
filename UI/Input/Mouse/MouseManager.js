@@ -108,7 +108,7 @@
         const actions = this.elements[element],
             length    = actions.length;
 
-        for (let i = 0; i < length; i++) {
+        for (let i = 0; i < length; ++i) {
             if ((!actions[i].exact || event.target.getAttribute('id') === element) 
                 && actions[i].button === event.button
             ) {

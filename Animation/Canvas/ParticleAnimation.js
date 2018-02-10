@@ -37,7 +37,7 @@
         this.maxDistance = 70;
         this.gravitation = 10000000;
 
-        for (let i = 0; i < this.width * this.height / 3000; i++) {
+        for (let i = 0; i < this.width * this.height / 3000; ++i) {
             this.particles.push(new jsOMS.Animation.Canvas.Particle(
                 Math.random() * this.width,
                 Math.random() * this.height,
@@ -66,7 +66,7 @@
 
         const length = self.particles.length;
 
-        for (let i = 0; i < length; i++) {
+        for (let i = 0; i < length; ++i) {
             self.particles[i].draw(self.ctx);
         }
 
@@ -109,7 +109,7 @@
 
         const length = this.particles.length;
 
-        for (let i = 0; i < length; i++) {
+        for (let i = 0; i < length; ++i) {
             particle = this.particles[i];
             pos      = particle.getPosition();
             vel      = particle.getVelocity();

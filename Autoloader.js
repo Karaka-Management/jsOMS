@@ -36,7 +36,7 @@
             const length = paths.length;
             let current  = jsOMS;
 
-            for (let i = 0; i < length; i++) {
+            for (let i = 0; i < length; ++i) {
                 if (typeof current[paths[i]] === 'undefined') {
                     current[paths[i]] = {};
                 }
@@ -58,7 +58,7 @@
         const scripts = document.getElementsByTagName('script'),
             length    = !scripts ? 0 : scripts.length;
 
-        for (let i = 0; i < length; i++) {
+        for (let i = 0; i < length; ++i) {
             /** global: URL */
             /** @var {string} URL */
             scripts[i].src.replace(URL + '/', '');
@@ -95,7 +95,7 @@
     {
         const length = file.length;
 
-        for (let i = 0; i < length; i++) {
+        for (let i = 0; i < length; ++i) {
             if (jsOMS.Autoloader.loaded.indexOf(file) === -1) {
                 this.assetLoader.load(file, 'js');
 

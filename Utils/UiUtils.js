@@ -194,7 +194,7 @@
     {
         const length = ele.childNodes.length;
 
-        for (let i = 0; i < length; i++) {
+        for (let i = 0; i < length; ++i) {
             if (jsOMS.hasClass(ele.childNodes[i], cls)) {
                 return ele.childNodes[i];
             }
@@ -218,7 +218,7 @@
     {
         const length = e.length;
 
-        for (let i = 0; i < length; i++) {
+        for (let i = 0; i < length; ++i) {
             e[i].addEventListener(event, callback);
         }
     };

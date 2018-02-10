@@ -33,7 +33,7 @@
             j                 = 0,
             this.compiledData = this.dataset;
 
-        for (let i = 0; i < cRows; i++) {
+        for (let i = 0; i < cRows; ++i) {
             cCols = this.compiledData[i].length();
 
             for (j = 0; j < cCols; j++) {

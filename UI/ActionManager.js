@@ -44,7 +44,7 @@
         const uiElements = typeof id === 'undefined' ? document.querySelectorAll('[data-action]') : (typeof id.length !== 'undefined' ? id : [id]),
             length       = uiElements.length;
 
-        for (let i = 0; i < length; i++) {
+        for (let i = 0; i < length; ++i) {
             if (uiElements[i] !== null && uiElements[i].hasAttribute('data-action')) {
                 this.bindElement(uiElements[i]);
             }
@@ -69,7 +69,7 @@
             self           = this;
 
         // For everey action an event is registered
-        for (let i = 0; i < listenerLength; i++) {
+        for (let i = 0; i < listenerLength; ++i) {
             let c = [e], hasSelector = false;
 
             if (listeners[i].hasOwnProperty('selector')) {

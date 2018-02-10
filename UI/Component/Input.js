@@ -124,7 +124,7 @@
                         data   = tempResponse.getData(),
                         length = data.length;
 
-                    for (let i = 0; i < length; i++) {
+                    for (let i = 0; i < length; ++i) {
                         option       = document.createElement('option');
                         option.value = tempResponse.value;
                         option.text  = tempResponse.text;
@@ -151,7 +151,7 @@
     {
         const length = datalist.options.length;
 
-        for (let i = 0; i < length; i++) {
+        for (let i = 0; i < length; ++i) {
             datalist.remove(0);
         }
     };

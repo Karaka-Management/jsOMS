@@ -39,7 +39,7 @@
 
         this.assets = {};
 
-        for (let i = 0; i < length; i++) {
+        for (let i = 0; i < length; ++i) {
             this.assets[jsOMS.hash(scripts[i].src)] = scripts[i].src;
         }
     };

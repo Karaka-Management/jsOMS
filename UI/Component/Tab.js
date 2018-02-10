@@ -43,7 +43,7 @@
             const tabs = document.querySelectorAll('.tabview'),
                 length = !tabs ? 0 : tabs.length;
 
-            for (let i = 0; i < length; i++) {
+            for (let i = 0; i < length; ++i) {
                 this.bindElement(tabs[i]);
             }
         }

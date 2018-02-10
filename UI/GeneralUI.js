@@ -58,7 +58,7 @@
         e            = e !== null ? e.querySelectorAll('[data-href]') : document.querySelectorAll('[data-href]');
         const length = e.length;
 
-        for (let i = 0; i < length; i++) {
+        for (let i = 0; i < length; ++i) {
             e[i].addEventListener('click', function(event) {
                 jsOMS.preventAll(event);
                 window.location = jsOMS.Uri.UriFactory.build(this.getAttribute('data-href'));
@@ -93,7 +93,7 @@
             });
         }
 
-        for (let i = 0; i < length; i++) {
+        for (let i = 0; i < length; ++i) {
             if (!this.visObs) {
                 e[i].src = e[i].dataset.lazyload;
                 delete e[i].dataset.lazyload;
