@@ -155,10 +155,10 @@
     jsOMS.Animation.Canvas.ParticleAnimation.prototype.updateDistance = function (p1, p2)
     {
         const pos1 = p1.getPosition(),
-            pos2 = p2.getPosition(),
-            dx   = pos1.x - pos2.x,
-            dy   = pos1.y - pos2.y,
-            dist = Math.sqrt(dx * dx + dy * dy);
+            pos2   = p2.getPosition(),
+            dx     = pos1.x - pos2.x,
+            dy     = pos1.y - pos2.y,
+            dist   = Math.sqrt(dx * dx + dy * dy);
 
         let vel1 = p1.getVelocity(),
             vel2 = p2.getVelocity();

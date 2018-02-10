@@ -33,8 +33,8 @@
             let paths = namespace.split('.');
             paths.splice(0, 1);
 
-            const length  = paths.length;
-            let current = jsOMS;
+            const length = paths.length;
+            let current  = jsOMS;
 
             for (let i = 0; i < length; i++) {
                 if (typeof current[paths[i]] === 'undefined') {
@@ -56,7 +56,7 @@
     jsOMS.Autoloader.initPreloaded = function ()
     {
         const scripts = document.getElementsByTagName('script'),
-            length  = !scripts ? 0 : scripts.length;
+            length    = !scripts ? 0 : scripts.length;
 
         for (let i = 0; i < length; i++) {
             /** global: URL */
@@ -103,7 +103,7 @@
             }
         }
 
-        if(typeof callback !== 'undefined' && callback !== null) {
+        if (typeof callback !== 'undefined' && callback !== null) {
             callback();
         }
     };

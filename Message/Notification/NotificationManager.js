@@ -15,13 +15,13 @@
 
     jsOMS.Message.Notification.NotificationManager = function()
     {
-        this.appNotifier = new jsOMS.Message.Notification.App.AppNotification();
+        this.appNotifier     = new jsOMS.Message.Notification.App.AppNotification();
         this.browserNotifier = new jsOMS.Message.Notification.Browser.BrowserNotification();
     };
 
     jsOMS.Message.Notification.NotificationManager.prototype.send = function(message, type)
     {
-        if(jsOMS.Message.Notification.NotificationType.APP_NOTIFICATION === type) {
+        if (jsOMS.Message.Notification.NotificationType.APP_NOTIFICATION === type) {
             this.appNotifier.send(message);
         } else {
             this.browserNotifier.send(message);

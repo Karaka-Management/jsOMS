@@ -36,12 +36,12 @@
         if (typeof id !== 'undefined') {
             const e = document.getElementById(id);
 
-            if(e) {
+            if (e) {
                 this.bindElement(e);
             }
         } else {
             const tables = document.getElementsByTagName('table'),
-                length = !tables ? 0 : tables.length;
+                length   = !tables ? 0 : tables.length;
 
             for (let i = 0; i < length; i++) {
                 this.bindElement(tables[i]);

@@ -4,9 +4,9 @@
 
     jsOMS.Chart.StackedAreaChart = function (id)
     {
-        this.chart = new jsOMS.Chart.LineChart(id);
+        this.chart                                        = new jsOMS.Chart.LineChart(id);
         this.chart.getChart().dataSettings.marker.visible = false;
-        this.chart.getChart().subtype = 'stacked';
+        this.chart.getChart().subtype                     = 'stacked';
     };
 
     jsOMS.Chart.StackedAreaChart.prototype.getChart = function ()

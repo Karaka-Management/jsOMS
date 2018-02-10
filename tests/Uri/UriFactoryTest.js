@@ -64,7 +64,7 @@ describe('UriFactoryTest', function ()
     {
         it('Testing global queries', function ()
         {
-            let uri = 'www.test-uri.com?id={@ID}&test={.mTest}&two={/path}&hash={#hash}&none=#none&found={/not}&v={/valid2}',
+            let uri  = 'www.test-uri.com?id={@ID}&test={.mTest}&two={/path}&hash={#hash}&none=#none&found={/not}&v={/valid2}',
                 vars = {
                 '@ID'   : 1,
                 '.mTest': 'someString',

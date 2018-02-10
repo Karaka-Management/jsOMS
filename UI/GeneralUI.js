@@ -55,10 +55,10 @@
      */
     jsOMS.UI.GeneralUI.prototype.bindHref = function (e)
     {
-        e = e !== null ? e.querySelectorAll('[data-href]') : document.querySelectorAll('[data-href]');
+        e            = e !== null ? e.querySelectorAll('[data-href]') : document.querySelectorAll('[data-href]');
         const length = e.length;
 
-        for(let i = 0; i < length; i++) {
+        for (let i = 0; i < length; i++) {
             e[i].addEventListener('click', function(event) {
                 jsOMS.preventAll(event);
                 window.location = jsOMS.Uri.UriFactory.build(this.getAttribute('data-href'));
@@ -77,11 +77,11 @@
      */
     jsOMS.UI.GeneralUI.prototype.bindLazyLoad = function (e)
     {
-        e = e !== null ? e.querySelectorAll('[data-lazyload]') : document.querySelectorAll('[data-lazyload]');
+        e            = e !== null ? e.querySelectorAll('[data-lazyload]') : document.querySelectorAll('[data-lazyload]');
         const length = e.length;
 
         /** global: IntersectionObserver */
-        if(!this.visObs && window.IntersectionObserver) {
+        if (!this.visObs && window.IntersectionObserver) {
             this.visObs = new IntersectionObserver(function(eles, obs) {
                 eles.forEach(ele => {
                     if (ele.intersectionRatio > 0) {
@@ -93,8 +93,8 @@
             });
         }
 
-        for(let i = 0; i < length; i++) {
-            if(!this.visObs) {
+        for (let i = 0; i < length; i++) {
+            if (!this.visObs) {
                 e[i].src = e[i].dataset.lazyload;
                 delete e[i].dataset.lazyload;
             } else {

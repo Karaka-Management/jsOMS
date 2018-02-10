@@ -9,7 +9,7 @@
         // Setting default chart values
         this.chart.margin = {top: 5, right: 0, bottom: 0, left: 0};
         /** global: d3 */
-        this.chart.color  = d3.scale.quantize()
+        this.chart.color = d3.scale.quantize()
             .domain([-.05, .05])
             .range(d3.range(11).map(function(d) { return "q" + d + "-11"; }));
 
@@ -28,14 +28,15 @@
 
     jsOMS.Chart.CalendarChart.prototype.draw = function ()
     {
-        let percent = d3.format(".1%"),
-            format = d3.time.format("%Y-%m-%d"),
+        let percent   = d3.format(".1%"),
+            format    = d3.time.format("%Y-%m-%d"),
             svg, self = this;
 
         this.chart.calculateDimension();
-        this.chart.cellSize = Math.min(this.chart.dimension.width / (12*5), this.chart.dimension.height / (8));
+        this.chart.cellSize = Math.min(this.chart.dimension.width / (12 * 5), this.chart.dimension.height / (8));
 
-        document.getElementById(this.chart.chartId).style.height = (this.chart.dimension.height * this.chart.dataset.length) + 'px';
+        document.getElementById(this.chart.chartId)
+            .style.height = (this.chart.dimension.height * this.chart.dataset.length) + 'px';
 
         svg = this.chart.chartSelect.selectAll('svg').data(this.chart.dataset).enter().append("svg")
             .attr("width", this.chart.dimension.width)
@@ -43,8 +44,8 @@
             .attr("class", "RdYlGn")
         .append("g")
             .attr("transform", "translate("
-            + ((this.chart.dimension.width - this.chart.cellSize * 53) / 2)
-            + "," + (this.chart.dimension.height - this.chart.cellSize * 7 - 1) + ")");
+                + ((this.chart.dimension.width - this.chart.cellSize * 53) / 2)
+                + "," + (this.chart.dimension.height - this.chart.cellSize * 7 - 1) + ")");
 
         svg.append("text")
             .attr("transform", "translate(-6," + this.chart.cellSize * 3.5 + ")rotate(-90)")
@@ -82,18 +83,18 @@
 
         // todo: fix the following data filter etc. this is way to much work and slow
         rect.filter(function(d) {
-            let year = d.split('-')[0],
+            let year   = d.split('-')[0],
                 length = self.chart.dataset.length;
 
-                for(let i = 0; i < length; i++) {
-                    if(self.chart.dataset[i].name != year) {
+                for (let i = 0; i < length; i++) {
+                    if (self.chart.dataset[i].name != year) {
                         continue;
                     }
 
                     let dataLength = self.chart.dataset[i].points.length;
 
-                    for(let j = 0; j < dataLength; j++) {
-                        if(self.chart.dataset[i].points[j].x === d) {
+                    for (let j = 0; j < dataLength; j++) {
+                        if (self.chart.dataset[i].points[j].x === d) {
                             return true;
                         }
                     }
@@ -105,17 +106,17 @@
         })
             .attr("class", function(d) {
                 let year = d.split('-')[0],
-                length = self.chart.dataset.length;
+                length   = self.chart.dataset.length;
 
-                for(let i = 0; i < length; i++) {
-                    if(self.chart.dataset[i].name != year) {
+                for (let i = 0; i < length; i++) {
+                    if (self.chart.dataset[i].name != year) {
                         continue;
                     }
 
                     let dataLength = self.chart.dataset[i].points.length;
 
-                    for(let j = 0; j < dataLength; j++) {
-                        if(self.chart.dataset[i].points[j].x === d) {
+                    for (let j = 0; j < dataLength; j++) {
+                        if (self.chart.dataset[i].points[j].x === d) {
                              return "day " + self.chart.color(self.chart.dataset[i].points[j].y);
                         }
                     }
@@ -126,17 +127,17 @@
             .select("title")
             .text(function(d) {
                 let year = d.split('-')[0],
-                length = self.chart.dataset.length;
+                length   = self.chart.dataset.length;
 
-                for(let i = 0; i < length; i++) {
-                    if(self.chart.dataset[i].name != year) {
+                for (let i = 0; i < length; i++) {
+                    if (self.chart.dataset[i].name != year) {
                         continue;
                     }
 
                     let dataLength = self.chart.dataset[i].points.length;
 
-                    for(let j = 0; j < dataLength; j++) {
-                        if(self.chart.dataset[i].points[j].x === d) {
+                    for (let j = 0; j < dataLength; j++) {
+                        if (self.chart.dataset[i].points[j].x === d) {
                              return d + ": " + self.chart.dataset[i].points[j].y;
                         }
                     }

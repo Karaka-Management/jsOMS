@@ -4,7 +4,7 @@
 
     jsOMS.Chart.StackedBarChart = function (id)
     {
-        this.chart = new jsOMS.Chart.BarChart(id);
+        this.chart                    = new jsOMS.Chart.BarChart(id);
         this.chart.getChart().subtype = 'stacked';
     };
 

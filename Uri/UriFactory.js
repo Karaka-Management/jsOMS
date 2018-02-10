@@ -96,7 +96,7 @@
      */
     jsOMS.Uri.UriFactory.clear = function(key)
     {
-        if(jsOMS.Uri.UriFactory.uri.hasOwnProperty(key)) {
+        if (jsOMS.Uri.UriFactory.uri.hasOwnProperty(key)) {
             delete jsOMS.Uri.UriFactory.uri[key];
 
             return true;
@@ -118,11 +118,11 @@
      */
     jsOMS.Uri.UriFactory.clearLike = function(pattern)
     {
-        let success = false;
+        let success  = false;
         const regexp = new RegExp(pattern);
 
-        for(let key in jsOMS.Uri.UriFactory.uri) {
-            if(jsOMS.Uri.UriFactory.uri.hasOwnProperty(key) && regexp.test(key)) {
+        for (let key in jsOMS.Uri.UriFactory.uri) {
+            if (jsOMS.Uri.UriFactory.uri.hasOwnProperty(key) && regexp.test(key)) {
                 delete jsOMS.Uri.UriFactory.uri[key];
                 success = true;
             }
@@ -149,10 +149,10 @@
         const parts = url.split('?');
 
         if (parts.length >= 2) {
-            let full = parts[1],
-                pars  = full.split('&'),
-                comps = {},
-                spl   = null,
+            let full   = parts[1],
+                pars   = full.split('&'),
+                comps  = {},
+                spl    = null,
                 length = pars.length;
 
             for (let i = 0; i < length; i++) {
@@ -194,7 +194,7 @@
     jsOMS.Uri.UriFactory.build = function (uri, toMatch)
     {
         const current = jsOMS.Uri.Http.parseUrl(window.location.href);
-        let parsed  = uri.replace(new RegExp('\{[\/#\?%@\.\$][a-zA-Z0-9\-]*\}', 'g'), function (match)
+        let parsed    = uri.replace(new RegExp('\{[\/#\?%@\.\$][a-zA-Z0-9\-]*\}', 'g'), function (match)
             {
                 match = match.substr(1, match.length - 2);
 
@@ -205,7 +205,7 @@
                 } else if (match.indexOf('#') === 0) {
                     const e = document.getElementById(match.substr(1));
 
-                    if(e) {
+                    if (e) {
                         return e.value;
                     }
 

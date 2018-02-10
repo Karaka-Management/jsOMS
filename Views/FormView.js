@@ -129,11 +129,11 @@
     {
         const form = document.getElementById(this.id);
 
-        if(!form) {
+        if (!form) {
             return [];
         }
 
-        const selects   = form.getElementsByTagName('select'),
+        const selects = form.getElementsByTagName('select'),
             textareas = form.getElementsByTagName('textarea'),
             inputs    = form.getElementsByTagName('input'),
             canvas    = form.getElementsByTagName('canvas'),
@@ -151,14 +151,14 @@
      */
     jsOMS.Views.FormView.prototype.getData = function ()
     {
-        const data     = {},
+        const data   = {},
             elements = this.getFormElements(),
             length   = elements.length;
 
         let value = null;
 
         for (let i = 0; i < length; i++) {
-            if(elements[i].tagName.toLowerCase() === 'canvas') {
+            if (elements[i].tagName.toLowerCase() === 'canvas') {
                 value = elements[i].toDataURL('image/png');
             } else {
                 value = elements[i].value;
@@ -192,11 +192,15 @@
     jsOMS.Views.FormView.prototype.isValid = function ()
     {
         const elements = this.getFormElements(),
-            length   = elements.length;
+            length     = elements.length;
 
         try {
             for (let i = 0; i < length; i++) {
-                if ((elements[i].required && elements[i].value === '') || (typeof elements[i].pattern !== 'undefined' && elements[i].pattern !== '' && !(new RegExp(elements[i].pattern)).test(elements[i].value))) {
+                if ((elements[i].required && elements[i].value === '') 
+                    || (typeof elements[i].pattern !== 'undefined' 
+                    && elements[i].pattern !== '' 
+                    && !(new RegExp(elements[i].pattern)).test(elements[i].value))
+                ) {
                     return false;
                 }
             }
@@ -268,7 +272,7 @@
 
         const e = document.getElementById(this.id);
 
-        if(!e) {
+        if (!e) {
             return;
         }
 
@@ -276,7 +280,7 @@
         this.action = e.action;
 
         const elements = this.getFormElements(),
-            length   = elements.length;
+            length     = elements.length;
 
         for (let i = 0; i < length; i++) {
             switch (elements[i].tagName) {
@@ -305,7 +309,7 @@
     jsOMS.Views.FormView.prototype.unbind = function ()
     {
         const elements = this.getFormElements(),
-            length   = elements.length;
+            length     = elements.length;
 
         for (let i = 0; i < length; i++) {
             switch (elements[i].tagName) {

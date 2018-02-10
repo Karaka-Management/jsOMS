@@ -20,7 +20,7 @@
     jsOMS.Auth.Auth = function (uri)
     {
         this.account = null;
-        this.uri = uri;
+        this.uri     = uri;
     };
 
     /**

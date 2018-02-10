@@ -28,10 +28,10 @@
     jsOMS.getArray = function(path, data, delim)
     {
         const pathParts = path.split(delim);
-        let current = data;
+        let current     = data;
 
-        for(let key in pathParts) {
-            if(!pathParts.hasOwnProperty(key)) {
+        for (let key in pathParts) {
+            if (!pathParts.hasOwnProperty(key)) {
                 continue;
             }
 

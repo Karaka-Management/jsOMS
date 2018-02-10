@@ -82,15 +82,15 @@
      * @since  1.0.0
      */
     jsOMS.substr_count = function(str, substr) {
-        str += '';
+        str    += '';
         substr += '';
 
         if (substr.length <= 0) {
             return (str.length + 1);
         }
 
-        let n = 0,
-            pos = 0,
+        let n    = 0,
+            pos  = 0,
             step = substr.length;
 
         while (true) {
@@ -120,7 +120,7 @@
      */
     jsOMS.hash = function (str)
     {
-        let res = 0
+        let res   = 0
         const len = str.length;
 
         for (let i = 0; i < len; i++) {

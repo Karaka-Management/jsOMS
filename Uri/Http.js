@@ -55,10 +55,10 @@
     {
         mode = typeof mode === 'undefined' ? 'php' : mode;
 
-        const key = ['source', 'scheme', 'authority', 'userInfo', 'user', 'pass', 'host', 'port',
+        const key  = ['source', 'scheme', 'authority', 'userInfo', 'user', 'pass', 'host', 'port',
                 'relative', 'path', 'directory', 'file', 'query', 'fragment'
             ],
-            parser     = {
+            parser = {
                 php: /^(?:([^:\/?#]+):)?(?:\/\/()(?:(?:()(?:([^:@]*):?([^:@]*))?@)?([^:\/?#]*)(?::(\d*))?))?()(?:(()(?:(?:[^?#\/]*\/)*)()(?:[^?#]*))(?:\?([^#]*))?(?:#(.*))?)/,
                 strict: /^(?:([^:\/?#]+):)?(?:\/\/((?:(([^:@]*):?([^:@]*))?@)?([^:\/?#]*)(?::(\d*))?))?((((?:[^?#\/]*\/)*)([^?#]*))(?:\?([^#]*))?(?:#(.*))?)/,
                 loose: /^(?:(?![^:@]+:[^:@\/]*@)([^:\/?#.]+):)?(?:\/\/\/?)?((?:(([^:@]*):?([^:@]*))?@)?([^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/ // Added one optional slash to post-scheme to catch file:/// (should restrict this)
@@ -68,7 +68,7 @@
             throw new Error('Unexpected parsing mode.', 'UriFactory', 52);
         }
 
-        const m   = parser[mode].exec(str),
+        const m = parser[mode].exec(str),
             uri = {};
         let i   = 14;
 
@@ -99,7 +99,7 @@
     {
         name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
 
-        const regex   = new RegExp("[\\?&]*" + name + "=([^&#]*)"),
+        const regex = new RegExp("[\\?&]*" + name + "=([^&#]*)"),
             results = regex.exec(query);
 
         return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
@@ -118,7 +118,7 @@
      */
     jsOMS.Uri.Http.getAllUriQueryParameters = function (query)
     {
-        const params      = {};
+        const params    = {};
         let keyValPairs = [],
             pairNum     = null;
 
@@ -126,7 +126,7 @@
             keyValPairs = query.split('&');
 
             for (pairNum in keyValPairs) {
-                if(!keyValPairs.hasOwnProperty(pairNum)) {
+                if (!keyValPairs.hasOwnProperty(pairNum)) {
                     continue;
                 }
 

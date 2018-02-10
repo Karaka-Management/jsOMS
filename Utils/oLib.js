@@ -28,14 +28,14 @@
     jsOMS.getArray = function(path, data, delim)
     {
         const pathParts = path.split(delim);
-        let current = data;
+        let current     = data;
 
-        for(let key in pathParts) {
-            if(!pathParts.hasOwnProperty(key)) {
+        for (let key in pathParts) {
+            if (!pathParts.hasOwnProperty(key)) {
                 continue;
             }
 
-            if(typeof current === 'undefined' || !current.hasOwnProperty(pathParts[key])) {
+            if (typeof current === 'undefined' || !current.hasOwnProperty(pathParts[key])) {
                 return null;
             }
 
@@ -115,15 +115,15 @@
      * @since  1.0.0
      */
     jsOMS.substr_count = function(str, substr) {
-        str += '';
+        str    += '';
         substr += '';
 
         if (substr.length <= 0) {
             return (str.length + 1);
         }
 
-        let n = 0,
-            pos = 0,
+        let n    = 0,
+            pos  = 0,
             step = substr.length;
 
         while (true) {
@@ -193,7 +193,7 @@
     jsOMS.removeClass = function (ele, cls)
     {
         if (jsOMS.hasClass(ele, cls)) {
-            const reg       = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+            const reg     = new RegExp('(\\s|^)' + cls + '(\\s|$)');
             ele.className = ele.className.replace(reg, '');
         }
     };
@@ -294,7 +294,7 @@
      */
     jsOMS.hash = function (str)
     {
-        let res = 0;
+        let res   = 0;
         const len = str.length;
 
         for (let i = 0; i < len; i++) {
@@ -321,8 +321,7 @@
     {
         /** global: Node */
         return (
-            typeof Node === "object" ? ele instanceof Node :
-            ele && typeof ele === "object" && typeof ele.nodeType === "number" && typeof ele.nodeName === "string"
+            typeof Node === "object" ? ele instanceof Node : ele && typeof ele === "object" && typeof ele.nodeType === "number" && typeof ele.nodeName === "string"
         );
     };
 

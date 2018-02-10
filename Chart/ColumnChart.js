@@ -9,8 +9,8 @@
         // Setting default chart values
         this.chart.margin = {top: 5, right: 0, bottom: 0, left: 0};
         /** global: d3 */
-        this.chart.color  = d3.scale.category10();
-        this.chart.axis   = {
+        this.chart.color = d3.scale.category10();
+        this.chart.axis  = {
             x: {
                 visible: true,
                 label: {
@@ -92,12 +92,12 @@
 
         this.chart.calculateDimension();
 
-        x = this.chart.createXScale('ordinal');
-        y = this.chart.createYScale('linear');
+        x      = this.chart.createXScale('ordinal');
+        y      = this.chart.createYScale('linear');
         xAxis1 = this.chart.createXAxis(x);
         yAxis1 = this.chart.createYAxis(y);
-        xGrid = this.chart.createXGrid(x);
-        yGrid = this.chart.createYGrid(y);
+        xGrid  = this.chart.createXGrid(x);
+        yGrid  = this.chart.createYGrid(y);
 
         x.domain(d3.range(this.chart.dataset[0].points.length)).rangeRoundBands([0, this.chart.dimension.width - this.chart.margin.right - this.chart.margin.left], .1);
         y.domain([0, this.chart.axis.y.max + 1]);
@@ -111,11 +111,12 @@
 
         this.chart.drawGrid(svg, xGrid, yGrid);
 
-        let dataPoint = null,
+        let dataPoint      = null,
             dataPointEnter = null,
-            temp       = this.drawData(svg, x, y, dataPointEnter, dataPoint);
-        dataPointEnter = temp[0];
-        dataPoint      = temp[1];
+            temp           = this.drawData(svg, x, y, dataPointEnter, dataPoint);
+        dataPointEnter     = temp[0];
+        dataPoint          = temp[1];
+
         this.chart.drawMarker(svg, x, y, dataPointEnter, dataPoint);
         this.chart.drawLegend(svg, dataPointEnter, dataPoint);
         this.chart.drawText(svg);
@@ -163,7 +164,7 @@
             .attr("width", x.rangeBand())
             .attr("height", 0);
 
-        if(this.chart.subtype === 'stacked') {
+        if (this.chart.subtype === 'stacked') {
             rect.transition()
                 .delay(function (d, i)
                 {

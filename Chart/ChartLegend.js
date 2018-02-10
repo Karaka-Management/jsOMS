@@ -2,11 +2,11 @@
     "use strict";
 
     jsOMS.Chart.Legend = function () {
-        this.position = {x: 0, y: 0};
-        this.relative = true;
+        this.position   = {x: 0, y: 0};
+        this.relative   = true;
         this.horizontal = false;
-        this.visible = true;
-        this.labels = []; // {title, color, marker}
+        this.visible    = true;
+        this.labels     = []; // {title, color, marker}
     };
 
     jsOMS.Chart.Legend.prototype.addLabel = function(label) {

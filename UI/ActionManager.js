@@ -42,7 +42,7 @@
     jsOMS.UI.ActionManager.prototype.bind = function (id)
     {
         const uiElements = typeof id === 'undefined' ? document.querySelectorAll('[data-action]') : (typeof id.length !== 'undefined' ? id : [id]),
-            length     = uiElements.length;
+            length       = uiElements.length;
 
         for (let i = 0; i < length; i++) {
             if (uiElements[i] !== null && uiElements[i].hasAttribute('data-action')) {
@@ -64,22 +64,22 @@
      */
     jsOMS.UI.ActionManager.prototype.bindElement = function (e)
     {
-        const listeners      = JSON.parse(e.getAttribute('data-action')),
+        const listeners    = JSON.parse(e.getAttribute('data-action')),
             listenerLength = listeners.length,
-            self = this;
+            self           = this;
 
         // For everey action an event is registered
         for (let i = 0; i < listenerLength; i++) {
             let c = [e], hasSelector = false;
 
-            if(listeners[i].hasOwnProperty('selector')) {
-                c = document.querySelectorAll(listeners[i].selector);
+            if (listeners[i].hasOwnProperty('selector')) {
+                c           = document.querySelectorAll(listeners[i].selector);
                 hasSelector = true;
             }
 
             let childLength = c.length;
 
-            for(let j = 0; j < childLength; j++) {
+            for (let j = 0; j < childLength; j++) {
                 this.bindListener(c[j], listeners[i]);
             }
 
@@ -88,23 +88,22 @@
             // todo: careful this could cause bugs if there is another component relying on a listener for this dom element. Maybe create actionManager domlistener?
             //       Maybe just use this listener for ALL action listeners and check if delete, then remove otherwise do current stuff.
             //       Problem is, the listener doesn't work for the node itself only for children and listening to ALL document nodes might be a bad idea?!?!?!
-            const observeConfig = {childList: false, attributes: true, subtree: false};
+            const observeConfig = { childList: false, attributes: true, subtree: false };
 
-            if(hasSelector) {
+            if (hasSelector) {
                 this.app.eventManager.attach(e.id + 'childList', function(data) {
                     const length = data.addedNodes.length;
 
-                    for(let j = 0; j < length; j++) {
+                    for (let j = 0; j < length; j++) {
                         self.bindListener(data.addedNodes[j], listeners[i]);
                     }
 
                     observeConfig.childList = true;
-                    observeConfig.subtree = true;
+                    observeConfig.subtree   = true;
                 });
             }
 
             this.app.eventManager.attach(e.id + 'attributes', function(data) {});
-
             this.app.uiManager.getDOMObserver().observe(e, observeConfig);
         }
     };
@@ -123,7 +122,7 @@
      */
     jsOMS.UI.ActionManager.prototype.bindListener = function(e, listener)
     {
-        const self = this,
+        const self       = this,
             actionLength = listener.action.length;
 
         for (let j = 1; j < actionLength; j++) {
@@ -138,7 +137,7 @@
         // Register event for first action
         e.addEventListener(listener.listener, function (event)
         {
-            if(listener.preventDefault) {
+            if (listener.preventDefault) {
                 event.preventDefault();
             }
 

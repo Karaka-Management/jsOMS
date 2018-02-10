@@ -36,7 +36,7 @@
      */
     jsOMS.UI.Input.bindElement = function (input)
     {
-        if(typeof input === 'undefined') {
+        if (typeof input === 'undefined') {
             throw 'Input element required'
         }
 
@@ -61,7 +61,7 @@
             if (typeof (ref = this.getAttribute('data-ref')) !== 'undefined') {
                 let e = document.getElementById(ref);
 
-                if(!e) {
+                if (!e) {
                     return;
                 }
 
@@ -81,7 +81,7 @@
             {
                 const db = document.getElementById(dataButton);
 
-                if(db) {
+                if (db) {
                     db.click();
                 }
             });
@@ -111,7 +111,7 @@
         request.setSuccess(function (xhr)
         {
             try {
-                const o              = JSON.parse(xhr.response),
+                const o            = JSON.parse(xhr.response),
                     response       = new jsOMS.Message.Response(o),
                     responseLength = response.count();
                 let tempResponse   = null,

@@ -56,7 +56,7 @@
     jsOMS.UI.Input.Mouse.MouseManager.prototype.bind = function (element, type)
     {
         const self = this,
-            e    = document.getElementById(element);
+            e      = document.getElementById(element);
 
         if (!e) {
             return;
@@ -106,10 +106,12 @@
         }
 
         const actions = this.elements[element],
-            length  = actions.length;
+            length    = actions.length;
 
         for (let i = 0; i < length; i++) {
-            if ((!actions[i].exact || event.target.getAttribute('id') === element) && actions[i].button === event.button) {
+            if ((!actions[i].exact || event.target.getAttribute('id') === element) 
+                && actions[i].button === event.button
+            ) {
                 jsOMS.preventAll(event);
                 actions[i].callback();
             }

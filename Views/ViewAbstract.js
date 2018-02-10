@@ -4,7 +4,7 @@
     jsOMS.ViewAbstract = function ()
     {
         this.element = null;
-        this.data = [];
+        this.data    = [];
     };
 
     jsOMS.ViewAbstract.prototype.bind = function (node)
@@ -14,9 +14,9 @@
 
     jsOMS.ViewAbstract.prototype.addData = function(id, data, overwrite)
     {
-        overwrite = typeof overwrite !== 'undefined' ?  overwrite : false;
+        overwrite = typeof overwrite !== 'undefined' ? overwrite : false;
 
-        if(typeof this.data[id] === 'undefined' || overwrite) {
+        if (typeof this.data[id] === 'undefined' || overwrite) {
             this.data[id] = data;
 
             return true;

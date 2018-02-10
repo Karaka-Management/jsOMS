@@ -40,7 +40,13 @@
     {
         const exdate = new Date();
         exdate.setDate(exdate.getDate() + exdays);
-        const cValue = encodeURI(value) + ((exdays === null) ? "" : "; expires=" + exdate.toUTCString()) + ";domain=" + domain + ";path=" + path;
+
+        const cValue = encodeURI(value)
+            + ((exdays === null) ? "" : "; expires="
+            + exdate.toUTCString()) + ";domain=" 
+            + domain + ";path=" 
+            + path;
+
         document.cookie = cName + "=" + cValue;
     };
 
@@ -67,7 +73,7 @@
         if (cStart === -1) {
             cValue = null;
         } else {
-            cStart = cValue.indexOf("=", cStart) + 1;
+            cStart   = cValue.indexOf("=", cStart) + 1;
             let cEnd = cValue.indexOf(";", cStart);
 
             if (cEnd === -1) {

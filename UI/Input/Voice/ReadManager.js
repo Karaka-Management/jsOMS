@@ -33,15 +33,15 @@
      */
     jsOMS.UI.Input.Voice.ReadManager = function (lang)
     {
-        this.pitch = 1;
-        this.rate = 1;
-        this.lang = typeof lang === 'undefined' ? 'en-US' : lang;
+        this.pitch  = 1;
+        this.rate   = 1;
+        this.lang   = typeof lang === 'undefined' ? 'en-US' : lang;
         this.voices = [];
-        this.voice = null;
+        this.voice  = null;
 
-        if(SpeechRecognition !== null) {
+        if (SpeechRecognition !== null) {
             this.voices = window.speechSynthesis.getVoices();
-            this.voice = this.voices[0];
+            this.voice  = this.voices[0];
         }
     };
 
@@ -57,11 +57,12 @@
     jsOMS.UI.Input.Voice.ReadManager.prototype.read = function(text)
     {
         /** global: SpeechSynthesisUtterance */
-        let utter = new SpeechSynthesisUtterance(text);
-        utter.lang = this.lang;
+        let utter   = new SpeechSynthesisUtterance(text);
+        utter.lang  = this.lang;
         utter.voice = this.voice;
         utter.pitch = this.pitch;
-        utter.rate = this.rate;
+        utter.rate  = this.rate;
+
         window.speechSynthesis.speak(utter);
     };
 

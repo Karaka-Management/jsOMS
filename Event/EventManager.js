@@ -112,7 +112,7 @@
     {
         id = typeof id !== 'undefined' ? id : 0;
 
-        if(!this.callbacks.hasOwnProperty(group)) {
+        if (!this.callbacks.hasOwnProperty(group)) {
             return false;
         }
 
@@ -125,7 +125,7 @@
 
             if (this.callbacks[group].remove) {
                 this.detach(group);
-            } else if(this.callbacks[group].reset) {
+            } else if (this.callbacks[group].reset) {
                 this.reset(group);
             }
         }
@@ -166,12 +166,12 @@
      */
     jsOMS.Event.EventManager.prototype.attach = function (group, callback, remove, reset)
     {
-        if(this.callbacks.hasOwnProperty(group)) {
+        if (this.callbacks.hasOwnProperty(group)) {
             return false;
         }
 
         remove = typeof remove === 'undefined' ? false : remove;
-        reset = typeof reset === 'undefined' ? false : reset;
+        reset  = typeof reset === 'undefined' ? false : reset;
 
         this.callbacks[group] = {remove: remove, reset: reset, func: callback};
 

@@ -36,7 +36,7 @@
         if (typeof id !== 'undefined') {
             const e = document.getElementById(id);
 
-            if(e) {
+            if (e) {
                 this.bindElement();
             }
         } else {
@@ -66,7 +66,7 @@
         {
             /* Change Tab */
             const attr = this.getAttribute('href').substring(1),
-                cont = this.parentNode.parentNode.parentNode.children[1];
+                cont   = this.parentNode.parentNode.parentNode.children[1];
 
             jsOMS.removeClass(jsOMS.getByClass(this.parentNode.parentNode, 'active'), 'active');
             jsOMS.addClass(this.parentNode, 'active');

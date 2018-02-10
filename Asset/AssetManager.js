@@ -35,7 +35,7 @@
     jsOMS.Asset.AssetManager.prototype.registerLoadedAssets = function ()
     {
         const scripts = document.getElementsByTagName('script'),
-            length = !scripts ? 0 : scripts.length;
+            length    = !scripts ? 0 : scripts.length;
 
         this.assets = {};
 
@@ -72,7 +72,7 @@
                 if (typeof fileref !== 'undefined') {
                     const head = document.getElementsByTagName('head');
 
-                    if(head) {
+                    if (head) {
                         head[0].appendChild(fileref);
                     }
                 }
@@ -87,7 +87,7 @@
                 if (typeof fileref !== 'undefined') {
                     const head = document.getElementsByTagName('head');
 
-                    if(head) {
+                    if (head) {
                         head[0].appendChild(fileref);
                     }
                 }

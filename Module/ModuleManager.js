@@ -21,7 +21,7 @@
     jsOMS.Module.ModuleManager = function (app)
     {
         this.modules = {};
-        this.app = app;
+        this.app     = app;
     };
 
     /**

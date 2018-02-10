@@ -20,9 +20,9 @@
      */
     jsOMS.UI.DragNDrop = function (app)
     {
-        this.app    = app;
-        this.draggable  = {};
-        this.dragging = null;
+        this.app       = app;
+        this.draggable = {};
+        this.dragging  = null;
     };
 
     /**
@@ -49,7 +49,7 @@
             this.bindElement(id);
         } else {
             const elements = document.querySelectorAll('[draggable]'),
-                length = !elements ? 0 : elements.length;
+                length     = !elements ? 0 : elements.length;
 
             for (let i = 0; i < length; i++) {
                 if (typeof elements[i].getAttribute('id') !== 'undefined' && elements[i].getAttribute('id') !== null) {
@@ -69,15 +69,15 @@
     jsOMS.UI.DragNDrop.prototype.bindElement = function (id)
     {
         const element = document.getElementById(id),
-            self = this;
+            self      = this;
 
-        if(!element) {
+        if (!element) {
             return;
         }
 
         element.addEventListener('dragstart', function(e) {
-            if(self.dragging === null) {
-                self.dragging = this;
+            if (self.dragging === null) {
+                self.dragging                = this;
                 e.dataTransfer.effectAllowed = 'move';
                 e.dataTransfer.setData('text/html', this.innerHTML);
             }
@@ -110,12 +110,12 @@
             e.stopPropagation();
             e.preventDefault();
 
-            if(self.dragging === this) {
+            if (self.dragging === this) {
                 return;
             }
 
             self.dragging.innerHTML = this.innerHTML;
-            this.innerHTML = e.dataTransfer.getData('text/html');
+            this.innerHTML          = e.dataTransfer.getData('text/html');
 
             // todo: add to now destination
             // todo: remove from old destination

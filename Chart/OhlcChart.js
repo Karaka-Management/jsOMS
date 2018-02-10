@@ -4,7 +4,7 @@
 
     jsOMS.Chart.OhlcChart = function (id)
     {
-        this.chart = new jsOMS.Chart.CandlestickChart(id);
+        this.chart                    = new jsOMS.Chart.CandlestickChart(id);
         this.chart.getChart().subtype = 'ohlc';
     };
 

@@ -8,11 +8,12 @@
 
         // Setting default chart values
         this.chart.margin = {top: 5, right: 0, bottom: 0, left: 0};
+
         /** global: d3 */
-        this.chart.color  = d3.scale.category10();
+        this.chart.color                          = d3.scale.category10();
         this.chart.dataSettings.style.strokewidth = 1;
-        this.chart.dataSettings.style.padding = 3;
-        this.chart.subtype = 'pie';
+        this.chart.dataSettings.style.padding     = 3;
+        this.chart.subtype                        = 'pie';
     };
 
     jsOMS.Chart.PieChart.prototype.getChart = function ()
@@ -33,11 +34,11 @@
                 + (this.chart.margin.left) + ","
                 + (this.chart.margin.top) + ")");
 
-        let dataPoint = null,
+        let dataPoint      = null,
             dataPointEnter = null,
-            temp       = this.drawData(svg, dataPointEnter, dataPoint);
-        dataPointEnter = temp[0];
-        dataPoint      = temp[1];
+            temp           = this.drawData(svg, dataPointEnter, dataPoint);
+        dataPointEnter     = temp[0];
+        dataPoint          = temp[1];
 
         // todo: create own legend drawing
         this.chart.drawLegend(svg, dataPointEnter, dataPoint);
@@ -62,20 +63,20 @@
 
     jsOMS.Chart.PieChart.prototype.drawData = function (svg, dataPointEnter, dataPoint)
     {
-        const self = this;
-        let pie  = d3.layout.pie()
+        const self      = this;
+        let pie         = d3.layout.pie()
                 .sort(null)
                 .value(function (d)
                 {
                     return d.value;
                 }),
-            radius = (
+            radius      = (
             Math.min(this.chart.dimension.width, this.chart.dimension.height) / 2
             - Math.max(this.chart.margin.right + this.chart.margin.left,
                 this.chart.margin.top + this.chart.margin.bottom)
             ),
             innerRadius = radius - radius*self.chart.dataSettings.style.strokewidth,
-            arc = d3.svg.arc()
+            arc         = d3.svg.arc()
                 .outerRadius(function() { return radius; })
                 .innerRadius(function() { return innerRadius; });
 

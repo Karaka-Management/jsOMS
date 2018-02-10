@@ -48,10 +48,10 @@
      */
     jsOMS.UI.Input.Touch.TouchManager.prototype.add = function (surface)
     {
-        const e    = document.getElementById(surface),
+        const e  = document.getElementById(surface),
             self = this;
 
-        if(!e) {
+        if (!e) {
             return;
         }
 
@@ -73,7 +73,7 @@
 
         e.addEventListener('touchend', function (event)
         {
-            const touch       = this.changedTouches[0],
+            const touch     = this.changedTouches[0],
                 distX       = touch.pageX - self.activeSwipe.startX,
                 distY       = touch.pageY - self.activeSwipe.startY,
                 elapsedTime = new Date().getTime() - self.activeSwipe.time;

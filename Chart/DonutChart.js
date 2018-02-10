@@ -8,7 +8,7 @@
 
         // Setting default chart values
         this.chart.getChart().dataSettings.style.strokewidth = 0.3;
-        this.chart.getChart().subtype = 'donut';
+        this.chart.getChart().subtype                        = 'donut';
     };
 
     jsOMS.Chart.DonutChart.prototype.getChart = function ()

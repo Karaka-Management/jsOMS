@@ -4,7 +4,7 @@
 
     jsOMS.Chart.GroupedColumnChart = function (id)
     {
-        this.chart = new jsOMS.Chart.ColumnChart(id);
+        this.chart                    = new jsOMS.Chart.ColumnChart(id);
         this.chart.getChart().subtype = 'grouped';
     };
 

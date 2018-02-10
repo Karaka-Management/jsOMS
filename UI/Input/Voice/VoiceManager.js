@@ -33,14 +33,14 @@
      */
     jsOMS.UI.Input.Voice.VoiceManager = function (app, commands, lang)
     {
-        this.app = app;
-        this.commands = typeof commands === 'undefined' ? {} : commands;
-        this.lang = typeof lang === 'undefined' ? 'en-US' : lang;
-        this.recognition = null;
+        this.app                   = app;
+        this.commands              = typeof commands === 'undefined' ? {} : commands;
+        this.lang                  = typeof lang === 'undefined' ? 'en-US' : lang;
+        this.recognition           = null;
         this.speechRecognitionList = null;
 
-        if(SpeechRecognition !== null) {
-            this.recognition = new SpeechRecognition();
+        if (SpeechRecognition !== null) {
+            this.recognition           = new SpeechRecognition();
             this.speechRecognitionList = new SpeechGrammarList();
         }
     };
@@ -54,41 +54,43 @@
      */
     jsOMS.UI.Input.Voice.VoiceManager.prototype.setup = function()
     {
-        if(SpeechRecognition === null) {
+        if (SpeechRecognition === null) {
             return;
         }
 
-        const self = this;
-
-        this.recognition.lang = this.lang;
-        this.recognition.interimResults = false;
+        const self                       = this;
+        this.recognition.lang            = this.lang;
+        this.recognition.interimResults  = false;
         this.recognition.maxAlternatives = 1;
-        this.recognition.continuous = true;
-        this.recognition.lang = this.lang;
+        this.recognition.continuous      = true;
+        this.recognition.lang            = this.lang;
 
-        if(typeof this.commands !== 'undefined') {
+        if (typeof this.commands !== 'undefined') {
             this.speechRecognitionList.addFromString(this.getCommandsString(), 1);
             this.recognition.grammars = this.speechRecognitionList;
         }
 
-        this.recognition.onstart = function() {};
-
-        this.recognition.onresult = function(event) {
+        this.recognition.onstart  = function() {};
+        this.recognition.onresult = function(event) 
+        {
             let result = jsOMS.trim(event.results[event.resultIndex][0].transcript);
 
-            if(self.commands.hasOwnProperty(result)) {
+            if (self.commands.hasOwnProperty(result)) {
                 self.commands[result]();
             }
         };
 
-        this.recognition.onspeechend = function() {
+        this.recognition.onspeechend = function() 
+        {
         };
 
-        this.recognition.onnomatch = function(event) {
+        this.recognition.onnomatch = function(event) 
+        {
             jsOMS.Log.Logger.instance.warning('Couldn\'t recognize speech');
         };
 
-        this.recognition.onerror = function(event) {
+        this.recognition.onerror = function(event) 
+        {
             jsOMS.Log.Logger.instance.warning('Error during speech recognition: ' + event.error);
         };
     };
@@ -144,7 +146,7 @@
      */
     jsOMS.UI.Input.Voice.VoiceManager.prototype.start = function()
     {
-        if(SpeechRecognition === null) {
+        if (SpeechRecognition === null) {
             return;
         }
 
@@ -160,7 +162,7 @@
      */
     jsOMS.UI.Input.Voice.VoiceManager.prototype.stop = function()
     {
-        if(SpeechRecognition === null) {
+        if (SpeechRecognition === null) {
             return;
         }
 

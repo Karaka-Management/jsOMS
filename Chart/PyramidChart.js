@@ -9,8 +9,8 @@
         // Setting default chart values
         this.chart.margin = {top: 5, right: 0, bottom: 0, left: 0};
         /** global: d3 */
-        this.chart.color  = d3.scale.category10();
-        this.chart.axis   = {
+        this.chart.color = d3.scale.category10();
+        this.chart.axis  = {
             x: {
                 visible: true,
                 label: {
@@ -64,13 +64,13 @@
     jsOMS.Chart.PyramidChart.prototype.setData = function (data)
     {
         let dataset = [{id: 1, name: 'Dataset', points: []}],
-            length = data.length,
-            add = 0;
+            length  = data.length,
+            add     = 0;
 
         // todo: remove value since positive and negative can be checked by looking at the diff of y-y0
-        for(let i = 0; i < length - 1; i++) {
+        for (let i = 0; i < length - 1; i++) {
             dataset[0].points[i] = { name: data[i].name, y0: add, y: data[i].value + add };
-            add += data[i].value;
+            add                 += data[i].value;
         }
 
         dataset[0].points[length - 1] = { name: data[length - 1].name, y0: 0, y: add };
@@ -80,7 +80,9 @@
 
     jsOMS.Chart.PyramidChart.prototype.draw = function ()
     {
-        let bar, svg, x, xAxis1, xAxis2, y, yAxis1, yAxis2, xGrid, yGrid, zoom, self = this, box = this.chart.chartSelect.node().getBoundingClientRect();
+        let bar, svg, x, xAxis1, xAxis2, y, yAxis1, yAxis2, xGrid, yGrid, zoom, 
+            self = this, 
+            box  = this.chart.chartSelect.node().getBoundingClientRect();
 
         this.chart.dimension = {
             width: box.width,
@@ -145,11 +147,11 @@
 
         this.chart.drawGrid(svg, xGrid, yGrid);
 
-        let dataPoint = null,
+        let dataPoint      = null,
             dataPointEnter = null,
-            temp       = this.drawData(svg, x, y, dataPointEnter, dataPoint);
-        dataPointEnter = temp[0];
-        dataPoint      = temp[1];
+            temp           = this.drawData(svg, x, y, dataPointEnter, dataPoint);
+        dataPointEnter     = temp[0];
+        dataPoint          = temp[1];
 
         this.chart.drawText(svg);
         this.chart.drawAxis(svg, xAxis1, yAxis1);

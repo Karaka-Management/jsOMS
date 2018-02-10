@@ -8,7 +8,7 @@
     jsOMS.Chart.ChartAbstract = function (id)
     {
         /** global: d3 */
-        this.chartId = id;
+        this.chartId     = id;
         this.chartSelect = d3.select('#' + this.chartId);
 
         this.title = {
@@ -17,23 +17,27 @@
             anchor: "middle",
             position: "center"
         };
+
         this.subtitle = {
             visible: true,
             text: "",
             anchor: "middle",
             position: "center"
         };
+
         this.footer = {
             visible: true,
             text: "",
             anchor: "end",
             position: "right"
         };
+
         this.legend = {
             visible: true
         };
-        this.color = d3.scale.category10();
-        this.dataset = [];
+
+        this.color        = d3.scale.category10();
+        this.dataset      = [];
         this.dataSettings = {
             style: {
                 strokewidth: 3,
@@ -57,10 +61,10 @@
         };
 
         this.dimension = {width: 0, height: 0};
-        this.margin = {top: 0, right: 0, bottom: 0, left: 0};
+        this.margin    = {top: 0, right: 0, bottom: 0, left: 0};
 
-        this.axis = {};
-        this.grid = {};
+        this.axis    = {};
+        this.grid    = {};
         this.subtype = '';
 
         this.clean();
@@ -221,7 +225,7 @@
     jsOMS.Chart.ChartAbstract.prototype.findAxisDomain = function ()
     {
         for (let id in this.axis) {
-            if(!this.axis.hasOwnProperty(id)) {
+            if (!this.axis.hasOwnProperty(id)) {
                 continue;
             }
 
@@ -363,9 +367,9 @@
 
             if (!this.defined.text.subtitle) {
                 this.position.subtitle.top = temp.node().getBoundingClientRect().height / 2;
-                this.margin.top += temp.node().getBoundingClientRect().height / 2 + topmargin;
+                this.margin.top           += temp.node().getBoundingClientRect().height / 2 + topmargin;
                 this.defined.text.subtitle = true;
-                this.shouldRedraw = true;
+                this.shouldRedraw          = true;
             }
         }
 
@@ -381,9 +385,9 @@
 
             if (!this.defined.text.title) {
                 this.position.title.top = 0;
-                this.margin.top += (temp.node().getBoundingClientRect().height) / 2 + this.position.subtitle.top / 2;
+                this.margin.top        += (temp.node().getBoundingClientRect().height) / 2 + this.position.subtitle.top / 2;
                 this.defined.text.title = true;
-                this.shouldRedraw = true;
+                this.shouldRedraw       = true;
             }
         }
 
@@ -393,7 +397,7 @@
             // if no x axis available an element less will be drawn and the footer
             // will be out of bounds.
             // todo: fix this hacky solution!!!
-            if(typeof this.axis.x === 'undefined') {
+            if (typeof this.axis.x === 'undefined') {
                 spacer = -this.margin.top;
             }
 
@@ -455,7 +459,7 @@
             if (!this.defined.axis.x) {
                 this.margin.bottom += 50;
                 this.defined.axis.x = true;
-                this.shouldRedraw = true;
+                this.shouldRedraw   = true;
             }
         }
 
@@ -477,9 +481,9 @@
             }
 
             if (!this.defined.axis.y) {
-                this.margin.left += svg.select('.y.axis .tick').node().getBoundingClientRect().width + 25;
+                this.margin.left   += svg.select('.y.axis .tick').node().getBoundingClientRect().width + 25;
                 this.defined.axis.y = true;
-                this.shouldRedraw = true;
+                this.shouldRedraw   = true;
             }
         }
 
@@ -510,7 +514,7 @@
 
     jsOMS.Chart.ChartAbstract.prototype.createXScale = function (type)
     {
-        if(type === 'ordinal') {
+        if (type === 'ordinal') {
             return d3.scale.ordinal().rangeRoundBands([
                 0,
                 this.dimension.width
@@ -529,7 +533,7 @@
 
     jsOMS.Chart.ChartAbstract.prototype.createYScale = function (type)
     {
-        if(type === 'ordinal') {
+        if (type === 'ordinal') {
             return d3.scale.ordinal().rangeRoundBands([
                 0,
                 this.dimension.height
@@ -602,9 +606,9 @@
 
     jsOMS.Chart.ChartAbstract.prototype.clean = function ()
     {
-        this.margin = {top: 0, right: 0, bottom: 0, left: 0};
+        this.margin    = {top: 0, right: 0, bottom: 0, left: 0};
         this.dimension = {width: 0, height: 0};
-        this.position = {
+        this.position  = {
             title: {
                 top: 0,
                 left: 0
@@ -624,7 +628,7 @@
         };
 
         this.shouldRedraw = false;
-        this.defined = {
+        this.defined      = {
             axis: {
                 x: false,
                 y: false

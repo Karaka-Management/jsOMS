@@ -73,8 +73,8 @@
         if (typeof id !== 'undefined' && typeof this.ignore[id] === 'undefined') {
             this.bindForm(id);
         } else {
-            const forms  = document.getElementsByTagName('form'),
-                length = !forms ? 0 : forms.length;
+            const forms = document.getElementsByTagName('form'),
+                length  = !forms ? 0 : forms.length;
 
             for (let i = 0; i < length; i++) {
                 if (typeof forms[i].getAttribute('id') !== 'undefined' && forms[i].getAttribute('id') !== null && typeof this.ignore[forms[i].getAttribute('id')] === 'undefined') {
@@ -98,15 +98,15 @@
             return;
         }
 
-        const self       = this;
+        const self     = this;
         this.forms[id] = new jsOMS.Views.FormView(id);
 
         this.unbind(id);
 
         const submits = this.forms[id].getSubmit(),
-            length = submits.length;
+            length    = submits.length;
 
-        for(let i = 0; i < length; i++) {
+        for (let i = 0; i < length; i++) {
             submits[i].addEventListener('click', function (event)
             {
                 jsOMS.preventAll(event);
@@ -149,7 +149,7 @@
     jsOMS.UI.Component.Form.prototype.submit = function (form)
     {
         /* Handle injects */
-        const self    = this,
+        const self  = this,
             injects = form.getSubmitInjects();
         let counter = 0;
 
@@ -167,7 +167,7 @@
                 this.app.eventManager.addGroup(form.getId(), counter);
                 const result = injects[property](form, counter, form.getId());
 
-                if(result === false) {
+                if (result === false) {
                     return;
                 }
             } else {
@@ -175,7 +175,7 @@
             }
         }
 
-        if(counter === 0) {
+        if (counter === 0) {
             this.app.eventManager.trigger(form.getId());
         }
     };
@@ -198,7 +198,7 @@
 
         /* Handle default submit */
         const request = new jsOMS.Message.Request.Request(),
-            self    = this;
+            self      = this;
 
         request.setData(form.getData());
         request.setType(jsOMS.Message.Response.ResponseType.JSON);
@@ -225,10 +225,10 @@
                     }
                 }
             } catch (e) {
-                jsOMS.Log.Logger.instance.error('Invalid form response. \n' +
-                    'URL: ' + form.getAction() + '\n' +
-                    'Request: ' + JSON.stringify(form.getData()) + '\n' +
-                    'Response: ' + xhr.response
+                jsOMS.Log.Logger.instance.error('Invalid form response. \n'
+                    + 'URL: ' + form.getAction() + '\n'
+                    + 'Request: ' + JSON.stringify(form.getData()) + '\n'
+                    + 'Response: ' + xhr.response
                 );
             }
         });
