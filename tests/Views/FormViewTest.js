@@ -6,7 +6,7 @@ describe('FormViewTest', function ()
     beforeEach(function ()
     {
         document.body.innerHTML += `
-            <form id=${testId} method="POST" action="{base}/{#testHiddenInputText}">
+            <form id="${testId}" method="POST" action="{base}/{#testHiddenInputText}">
                 <input id="testInputText" value="inputtext" name="testInputTextName">
                 <input id="testInputRequired" value="" name="testInputRequiredName" required>
                 <input id="testInputPattern" value="" name="testInputPatternName" pattern="\d+">
@@ -16,7 +16,7 @@ describe('FormViewTest', function ()
                 <button type="submit" id="buttenSubmit">
             </form>
 
-            <input form=${testId} id="externalInputText" name="externalInputTextName" value="external text">
+            <input form="${testId}" id="externalInputText" name="externalInputTextName" value="external text">
         `;
     });
 
