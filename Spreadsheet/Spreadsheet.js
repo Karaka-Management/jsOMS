@@ -36,7 +36,7 @@
         for (let i = 0; i < cRows; ++i) {
             cCols = this.compiledData[i].length();
 
-            for (j = 0; j < cCols; j++) {
+            for (j = 0; j < cCols; ++j) {
                 this.compiledData[i][j] = Functions.evaluate(this.compiledData[i][j], compiledData);
 
                 this.drawCell(this.compiledData[i][j]);

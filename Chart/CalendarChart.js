@@ -93,7 +93,7 @@
 
                     let dataLength = self.chart.dataset[i].points.length;
 
-                    for (let j = 0; j < dataLength; j++) {
+                    for (let j = 0; j < dataLength; ++j) {
                         if (self.chart.dataset[i].points[j].x === d) {
                             return true;
                         }
@@ -115,7 +115,7 @@
 
                     let dataLength = self.chart.dataset[i].points.length;
 
-                    for (let j = 0; j < dataLength; j++) {
+                    for (let j = 0; j < dataLength; ++j) {
                         if (self.chart.dataset[i].points[j].x === d) {
                              return "day " + self.chart.color(self.chart.dataset[i].points[j].y);
                         }
@@ -136,7 +136,7 @@
 
                     let dataLength = self.chart.dataset[i].points.length;
 
-                    for (let j = 0; j < dataLength; j++) {
+                    for (let j = 0; j < dataLength; ++j) {
                         if (self.chart.dataset[i].points[j].x === d) {
                              return d + ": " + self.chart.dataset[i].points[j].y;
                         }

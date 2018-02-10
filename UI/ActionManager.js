@@ -79,7 +79,7 @@
 
             let childLength = c.length;
 
-            for (let j = 0; j < childLength; j++) {
+            for (let j = 0; j < childLength; ++j) {
                 this.bindListener(c[j], listeners[i]);
             }
 
@@ -94,7 +94,7 @@
                 this.app.eventManager.attach(e.id + 'childList', function(data) {
                     const length = data.addedNodes.length;
 
-                    for (let j = 0; j < length; j++) {
+                    for (let j = 0; j < length; ++j) {
                         self.bindListener(data.addedNodes[j], listeners[i]);
                     }
 
@@ -125,7 +125,7 @@
         const self       = this,
             actionLength = listener.action.length;
 
-        for (let j = 1; j < actionLength; j++) {
+        for (let j = 1; j < actionLength; ++j) {
             this.app.eventManager.attach(e.id + listener.key + listener.action[j - 1].key, function (data)
             {
                 self.runAction(e, listener, listener.action[j], data);

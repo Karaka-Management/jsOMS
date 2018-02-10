@@ -117,7 +117,7 @@
                 let tempResponse   = null,
                     success        = null;
 
-                for (let k = 0; k < responseLength; k++) {
+                for (let k = 0; k < responseLength; ++k) {
                     tempResponse = response.getByIndex(k);
 
                     let option = null,

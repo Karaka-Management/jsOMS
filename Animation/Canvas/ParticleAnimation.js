@@ -134,7 +134,7 @@
             particle.setPosition(pos.x, pos.y);
             particle.setVelocity(vel.x, vel.y);
 
-            for (let j = i + 1; j < length; j++) {
+            for (let j = i + 1; j < length; ++j) {
                 this.updateDistance(particle, this.particles[j]);
             }
         }

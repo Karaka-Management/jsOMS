@@ -8,7 +8,7 @@ SHA1 = function (l)
     l += '';
     for (var n = Math, c = [1518500249, 1859775393, 2400959708, 3395469782, 1732584193, 4023233417, 2562383102, 271733878, 3285377520, 4294967295], s = n.ceil(l.length / 4) + 2, q = n.ceil(s / 16), g = [], a = 0, h = [], j, d, e, f, m, i, b, k; a < q; a++) {
         g[a] = [];
-        for (k = 0; k < 16; k++) {
+        for (k = 0; k < 16; ++k) {
             function o(b, c)
             {
                 return l.charCodeAt(a * 64 + k * 4 + b) << c

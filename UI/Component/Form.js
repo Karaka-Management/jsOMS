@@ -215,7 +215,7 @@
                     success        = null;
 
                 /* Handle responses (can be multiple response object) */
-                for (let k = 0; k < responseLength; k++) {
+                for (let k = 0; k < responseLength; ++k) {
                     tempResponse = response.getByIndex(k);
 
                     if ((success = form.getSuccess()) !== null) {
