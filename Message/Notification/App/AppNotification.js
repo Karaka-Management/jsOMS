@@ -37,6 +37,15 @@
         }
 
         let output = document.importNode(tpl.content, true);
+        output.querySelector('.log-msg').classList.add('log-msg-status-' + msg.status);
+        output.querySelector('.log-msg-title').innerHTML   = msg.title;
+        output.querySelector('.log-msg-content').innerHTML = msg.message;
+
         tpl.parentNode.appendChild(output);
+
+        setTimeout(function () 
+        {
+            document.getElementsByClassName('log-msg')[0].remove();
+        }, 3000);
     };
 }(window.jsOMS = window.jsOMS || {}));

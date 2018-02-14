@@ -222,13 +222,17 @@
                 let tempResponse   = null,
                     success        = null;
 
-                self.app.notifyManager.send(
-                    new jsOMS.Message.Notification.NotificationMessage(
-                        jsOMS.Message.Notification.NotificationLevel,
-                        'Success',
-                        'Successfully created object'
-                    ), jsOMS.Message.Notification.NotificationType.APP_NOTIFICATION
-                );
+                if (typeof document.getElementById(form.getId()).dataset.msg !== 'undefined') {
+                    let msg = JSON.parse(document.getElementById(form.getId()).dataset.msg);
+
+                    self.app.notifyManager.send(
+                        new jsOMS.Message.Notification.NotificationMessage(
+                            jsOMS.Message.Notification.NotificationLevel.OK,
+                            msg.title,
+                            msg.message
+                        ), jsOMS.Message.Notification.NotificationType.APP_NOTIFICATION
+                    );
+                }
 
                 /* Handle responses (can be multiple response object) */
                 for (let k = 0; k < responseLength; ++k) {
@@ -249,6 +253,17 @@
                     + 'Response: ' + xhr.response
                 );
             }
+        });
+
+        request.setResultCallback(0, function (xhr) 
+        {
+            self.app.notifyManager.send(
+                new jsOMS.Message.Notification.NotificationMessage(
+                    jsOMS.Message.Notification.NotificationLevel.ERROR,
+                    'Failure',
+                    'Some failure happend'
+                ), jsOMS.Message.Notification.NotificationType.APP_NOTIFICATION
+            );
         });
 
         request.send();

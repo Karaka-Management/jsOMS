@@ -14,7 +14,7 @@
 
     jsOMS.Message.Notification.NotificationMessage = function (status, title, message) 
     {
-        this.status  = 0;
+        this.status  = status;
         this.title   = title;
         this.message = message;
     };
