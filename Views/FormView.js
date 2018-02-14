@@ -29,7 +29,9 @@
 
         this.initializeMembers();
         this.bind();
-        this.success = null;
+
+        this.success    = null;
+        this.lastSubmit = 0; 
     };
 
     /**
@@ -68,6 +70,16 @@
     jsOMS.Views.FormView.prototype.getAction = function ()
     {
         return this.action;
+    };
+
+    jsOMS.Views.FormView.prototype.getLastSubmit = function ()
+    {
+        return this.lastSubmit;
+    };
+
+    jsOMS.Views.FormView.prototype.updateLastSubmit = function ()
+    {
+        this.lastSubmit = Math.floor(Date.now());
     };
 
     /**
@@ -196,9 +208,9 @@
 
         try {
             for (let i = 0; i < length; ++i) {
-                if ((elements[i].required && elements[i].value === '') 
-                    || (typeof elements[i].pattern !== 'undefined' 
-                    && elements[i].pattern !== '' 
+                if ((elements[i].required && elements[i].value === '')
+                    || (typeof elements[i].pattern !== 'undefined'
+                    && elements[i].pattern !== ''
                     && !(new RegExp(elements[i].pattern)).test(elements[i].value))
                 ) {
                     return false;

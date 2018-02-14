@@ -30,5 +30,13 @@
 
     jsOMS.Message.Notification.App.AppNotification.prototype.send = function(msg)
     {
+        const tpl = document.getElementById('app-message');
+
+        if (tpl === null) {
+            return;
+        }
+
+        let output = document.importNode(tpl.content, true);
+        tpl.parentNode.appendChild(output);
     };
 }(window.jsOMS = window.jsOMS || {}));

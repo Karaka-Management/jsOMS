@@ -196,6 +196,14 @@
             return;
         }
 
+        if (form.getMethod() !== jsOMS.Message.Request.RequestMethod.GET
+            && Math.floor(Date.now()) - form.getLastSubmit() < 500
+        ) {
+            return;
+        }
+
+        form.updateLastSubmit();
+
         /* Handle default submit */
         const request = new jsOMS.Message.Request.Request(),
             self      = this;
@@ -214,6 +222,14 @@
                 let tempResponse   = null,
                     success        = null;
 
+                self.app.notifyManager.send(
+                    new jsOMS.Message.Notification.NotificationMessage(
+                        jsOMS.Message.Notification.NotificationLevel,
+                        'Success',
+                        'Successfully created object'
+                    ), jsOMS.Message.Notification.NotificationType.APP_NOTIFICATION
+                );
+
                 /* Handle responses (can be multiple response object) */
                 for (let k = 0; k < responseLength; ++k) {
                     tempResponse = response.getByIndex(k);
@@ -225,6 +241,8 @@
                     }
                 }
             } catch (e) {
+                console.log(e);
+                
                 jsOMS.Log.Logger.instance.error('Invalid form response. \n'
                     + 'URL: ' + form.getAction() + '\n'
                     + 'Request: ' + JSON.stringify(form.getData()) + '\n'
