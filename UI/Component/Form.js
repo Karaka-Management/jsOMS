@@ -222,14 +222,12 @@
                 let tempResponse   = null,
                     success        = null;
 
-                if (typeof document.getElementById(form.getId()).dataset.msg !== 'undefined') {
-                    let msg = JSON.parse(document.getElementById(form.getId()).dataset.msg);
-
+                if (typeof o.status !== 'undefined') {
                     self.app.notifyManager.send(
                         new jsOMS.Message.Notification.NotificationMessage(
-                            jsOMS.Message.Notification.NotificationLevel.OK,
-                            msg.title,
-                            msg.message
+                            o.status,
+                            o.title,
+                            o.message
                         ), jsOMS.Message.Notification.NotificationType.APP_NOTIFICATION
                     );
                 }
