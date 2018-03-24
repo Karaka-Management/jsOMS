@@ -214,13 +214,12 @@
         request.setSuccess(function (xhr)
         {
             console.log(xhr.response);
-            
+
             try {
                 const o            = JSON.parse(xhr.response),
-                    response       = new jsOMS.Message.Response.Response(o),
-                    responseLength = response.count();
+                    response       = new jsOMS.Message.Response.Response(o);
                 let tempResponse   = null,
-                    success        = null;
+                    successInject  = null;
 
                 if (typeof o.status !== 'undefined') {
                     self.app.notifyManager.send(
@@ -228,15 +227,10 @@
                     );
                 }
 
-                /* Handle responses (can be multiple response object) */
-                for (let k = 0; k < responseLength; ++k) {
-                    tempResponse = response.getByIndex(k);
-
-                    if ((success = form.getSuccess()) !== null) {
-                        success(tempResponse);
-                    } else {
-                        self.app.responseManager.run(tempResponse.type, tempResponse, request);
-                    }
+                if ((successInject = form.getSuccess()) !== null) {
+                    successInject(tempResponse);
+                } else {
+                    self.app.responseManager.run(tempResponse.type, tempResponse, request);
                 }
             } catch (e) {
                 console.log(e);
