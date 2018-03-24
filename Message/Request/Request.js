@@ -337,17 +337,17 @@
     {
         const self = this;
 
-        if (self.xhr.readyState !== 1) {
-            self.xhr.open(this.method, jsOMS.Uri.UriFactory.build(this.uri));
+        if (this.xhr.readyState !== 1) {
+            this.xhr.open(this.method, jsOMS.Uri.UriFactory.build(this.uri));
 
             for (let p in this.requestHeader) {
                 if (this.requestHeader.hasOwnProperty(p)) {
-                    self.xhr.setRequestHeader(p, this.requestHeader[p]);
+                    this.xhr.setRequestHeader(p, this.requestHeader[p]);
                 }
             }
         }
 
-        self.xhr.onreadystatechange = function ()
+        this.xhr.onreadystatechange = function ()
         {
             switch (self.xhr.readyState) {
                 case 4:
@@ -370,12 +370,12 @@
 
         if (this.type === jsOMS.Message.Request.RequestType.JSON) {
             if (typeof this.requestHeader !== 'undefined' && this.requestHeader['Content-Type'] === 'application/json') {
-                self.xhr.send(JSON.stringify(this.data));
+                this.xhr.send(JSON.stringify(this.data));
             } else {
-                self.xhr.send(this.queryfy(this.data));
+                this.xhr.send(this.queryfy(this.data));
             }
         } else if (this.type === jsOMS.Message.Request.RequestType.RAW) {
-            self.xhr.send(this.data);
+            this.xhr.send(this.data);
         }
     };
 }(window.jsOMS = window.jsOMS || {}));

@@ -164,8 +164,8 @@
         for (let property in injects) {
             if (injects.hasOwnProperty(property)) {
                 counter++;
-                this.app.eventManager.addGroup(form.getId(), counter);
-                const result = injects[property](form, counter, form.getId());
+                //this.app.eventManager.addGroup(form.getId(), counter);
+                const result = injects[property](form, form.getId());
 
                 if (result === false) {
                     return;
@@ -175,9 +175,7 @@
             }
         }
 
-        if (counter === 0) {
-            this.app.eventManager.trigger(form.getId());
-        }
+        this.app.eventManager.trigger(form.getId());
     };
 
     /**
@@ -215,6 +213,8 @@
         request.setRequestHeader('Content-Type', 'application/json');
         request.setSuccess(function (xhr)
         {
+            console.log(xhr.response);
+            
             try {
                 const o            = JSON.parse(xhr.response),
                     response       = new jsOMS.Message.Response.Response(o),
@@ -224,11 +224,7 @@
 
                 if (typeof o.status !== 'undefined') {
                     self.app.notifyManager.send(
-                        new jsOMS.Message.Notification.NotificationMessage(
-                            o.status,
-                            o.title,
-                            o.message
-                        ), jsOMS.Message.Notification.NotificationType.APP_NOTIFICATION
+                        new jsOMS.Message.Notification.NotificationMessage(o.status, o.title, o.message), jsOMS.Message.Notification.NotificationType.APP_NOTIFICATION
                     );
                 }
 
