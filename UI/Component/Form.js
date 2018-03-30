@@ -220,8 +220,6 @@
                     response       = new jsOMS.Message.Response.Response(o);
                 let successInject  = null;
 
-                console.log(response);
-
                 if (typeof o.status !== 'undefined') {
                     self.app.notifyManager.send(
                         new jsOMS.Message.Notification.NotificationMessage(o.status, o.title, o.message), jsOMS.Message.Notification.NotificationType.APP_NOTIFICATION
