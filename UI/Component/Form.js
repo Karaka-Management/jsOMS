@@ -218,8 +218,9 @@
             try {
                 const o            = JSON.parse(xhr.response),
                     response       = new jsOMS.Message.Response.Response(o);
-                let tempResponse   = null,
-                    successInject  = null;
+                let successInject  = null;
+
+                console.log(response);
 
                 if (typeof o.status !== 'undefined') {
                     self.app.notifyManager.send(
@@ -228,9 +229,9 @@
                 }
 
                 if ((successInject = form.getSuccess()) !== null) {
-                    successInject(tempResponse);
+                    successInject(response);
                 } else {
-                    self.app.responseManager.run(tempResponse.type, tempResponse, request);
+                    self.app.responseManager.run(response.get(0).type, response.get(0), request);
                 }
             } catch (e) {
                 console.log(e);
