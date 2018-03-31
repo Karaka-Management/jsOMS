@@ -121,6 +121,7 @@
         }
 
         if (!this.hasOutstanding(group)) {
+            // todo if it is route then call dispatcher?
             this.callbacks[group].func(data);
 
             if (this.callbacks[group].remove) {
@@ -154,7 +155,7 @@
      * Attach callback to event group
      *
      * @param {string|int} group Group id
-     * @param {function} callback Callback
+     * @param {function} callback Callback or route for the event
      * @param {boolean} [remove] Should be removed after execution
      * @param {boolean} [reset] Reset after triggering
      *
