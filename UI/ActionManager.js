@@ -88,7 +88,7 @@
             // todo: careful this could cause bugs if there is another component relying on a listener for this dom element. Maybe create actionManager domlistener?
             //       Maybe just use this listener for ALL action listeners and check if delete, then remove otherwise do current stuff.
             //       Problem is, the listener doesn't work for the node itself only for children and listening to ALL document nodes might be a bad idea?!?!?!
-            const observeConfig = { childList: false, attributes: true, subtree: false };
+            const observeConfig = { childList: true, attributes: true, subtree: false };
 
             if (hasSelector) {
                 this.app.eventManager.attach(e.id + 'childList', function(data) {
