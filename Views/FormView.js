@@ -151,7 +151,31 @@
             canvas    = form.getElementsByTagName('canvas'),
             external  = document.querySelectorAll('[form=' + this.id + ']');
 
-        return Array.prototype.slice.call(inputs).concat(Array.prototype.slice.call(selects), Array.prototype.slice.call(textareas), Array.prototype.slice.call(external));
+        return this.getUniqueFormElements(
+            Array.prototype.slice.call(inputs).concat(
+                Array.prototype.slice.call(selects),
+                Array.prototype.slice.call(textareas), 
+                Array.prototype.slice.call(external)
+            )
+        );
+    };
+
+    /**
+     * Get unique form elements
+     * 
+     * @param {Array} arr Form element array
+     *
+     * @return {Array}
+     *
+     * @since 1.0.0
+     */
+    jsOMS.Views.FormView.prototype.getUniqueFormElements = function (arr)
+    {
+        let seen = {};
+
+        return arr.filter(function(item) {
+            return seen.hasOwnProperty(item.name) ? false : (seen[item.name] = true);
+        });
     };
 
     /**
