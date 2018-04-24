@@ -80,7 +80,7 @@
             let childLength = c.length;
 
             for (let j = 0; j < childLength; ++j) {
-                this.bindListener(c[j], listeners[i]);
+                this.bindListener(c[j].id, listeners[i]);
             }
 
             // if it has selector then a listener for child events must be implemented since these can potentially changed without any knowledge
@@ -88,19 +88,19 @@
             // todo: careful this could cause bugs if there is another component relying on a listener for this dom element. Maybe create actionManager domlistener?
             //       Maybe just use this listener for ALL action listeners and check if delete, then remove otherwise do current stuff.
             //       Problem is, the listener doesn't work for the node itself only for children and listening to ALL document nodes might be a bad idea?!?!?!
-            const observeConfig = { childList: true, attributes: true, subtree: false };
+            const observeConfig = { childList: false, attributes: true, subtree: false };
 
             if (hasSelector) {
                 this.app.eventManager.attach(e.id + 'childList', function(data) {
                     const length = data.addedNodes.length;
 
                     for (let j = 0; j < length; ++j) {
-                        self.bindListener(data.addedNodes[j], listeners[i]);
+                        self.bindListener(data.addedNodes[j].id, listeners[i]);
                     }
-
-                    observeConfig.childList = true;
-                    observeConfig.subtree   = true;
                 });
+
+                observeConfig.childList = true;
+                observeConfig.subtree   = true;
             }
 
             this.app.eventManager.attach(e.id + 'attributes', function(data) {});
@@ -111,7 +111,7 @@
     /**
      * Bind listener for object
      *
-     * @param {Element} e Element to bind
+     * @param {string} id Element to bind
      * @param {object} listener Listener object
      *
      * @return {void}
@@ -120,35 +120,39 @@
      *
      * @since  1.0.0
      */
-    jsOMS.UI.ActionManager.prototype.bindListener = function(e, listener)
+    jsOMS.UI.ActionManager.prototype.bindListener = function(id, listener)
     {
         const self       = this,
             actionLength = listener.action.length;
 
         for (let j = 1; j < actionLength; ++j) {
-            this.app.eventManager.attach(e.id + listener.key + listener.action[j - 1].key, function (data)
+            if (typeof id === 'undefined' || typeof listener.key === 'undefined') {
+                throw 'Invalid element id/key.'
+            }
+
+            this.app.eventManager.attach(id + '-' + listener.key + '-' + listener.action[j - 1].key, function (data)
             {
-                self.runAction(e, listener, listener.action[j], data);
+                self.runAction(id, listener, listener.action[j], data);
             }, false, true);
         }
         // todo: the true here is a memory leak since it should be removed at some point?!
         // todo: handle onload action right after registering everything. this will be used for onload api calls in order to get content such as lists or models. Maybe in the main application after registering a invoke('onload') should be called if the application wants to execute the onload elements
 
         // Register event for first action
-        e.addEventListener(listener.listener, function (event)
+        document.getElementById(id).addEventListener(listener.listener, function (event)
         {
             if (listener.preventDefault) {
                 event.preventDefault();
             }
 
-            self.runAction(this, listener, listener.action[0], event);
+            self.runAction(this.id, listener, listener.action[0], event);
         });
     };
 
     /**
      * Run event action.
      *
-     * @param {Element} e Button
+     * @param {string} id Element
      * @param {Object} listener Listener
      * @param {Object} action Action
      * @param {Object} data Data for the next action
@@ -159,9 +163,10 @@
      *
      * @since 1.0.0
      */
-    jsOMS.UI.ActionManager.prototype.runAction = function (e, listener, action, data)
+    jsOMS.UI.ActionManager.prototype.runAction = function (id, listener, action, data)
     {
         const self = this;
+        console.log(action.type)
 
         if (!this.actions.hasOwnProperty(action.type)) {
             jsOMS.Log.Logger.instance.warning('Undefined action ' + action.type);
@@ -172,8 +177,8 @@
 
         this.actions[action.type](action, function (data)
         {
-            self.app.eventManager.trigger(e.id + listener.key + action.key, e.id, data);
-        }, e);
+            self.app.eventManager.trigger(id + '-' + listener.key + '-' + action.key, id, data);
+        }, id);
     };
 
     /**
