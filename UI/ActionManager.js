@@ -166,7 +166,6 @@
     jsOMS.UI.ActionManager.prototype.runAction = function (id, listener, action, data)
     {
         const self = this;
-        console.log(action.type)
 
         if (!this.actions.hasOwnProperty(action.type)) {
             jsOMS.Log.Logger.instance.warning('Undefined action ' + action.type);
