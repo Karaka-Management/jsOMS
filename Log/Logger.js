@@ -180,10 +180,8 @@
      *
      * @since  1.0.0
      */
-    jsOMS.Log.Logger.prototype.emergency = function (message, context)
+    jsOMS.Log.Logger.prototype.emergency = function (message, context = {})
     {
-        context = typeof context === 'undefined' ? {} : context;
-
         this.write(message, context, jsOMS.Log.LogLevel.EMERGENCY);
     };
 
@@ -199,10 +197,8 @@
      *
      * @since  1.0.0
      */
-    jsOMS.Log.Logger.prototype.alert = function (message, context)
+    jsOMS.Log.Logger.prototype.alert = function (message, context = {})
     {
-        context = typeof context === 'undefined' ? {} : context;
-
         this.write(message, context, jsOMS.Log.LogLevel.ALERT);
     };
 
@@ -218,10 +214,8 @@
      *
      * @since  1.0.0
      */
-    jsOMS.Log.Logger.prototype.critical = function (message, context)
+    jsOMS.Log.Logger.prototype.critical = function (message, context = {})
     {
-        context = typeof context === 'undefined' ? {} : context;
-
         this.write(message, context, jsOMS.Log.LogLevel.CRITICAL);
     };
 
@@ -237,10 +231,8 @@
      *
      * @since  1.0.0
      */
-    jsOMS.Log.Logger.prototype.error = function (message, context)
+    jsOMS.Log.Logger.prototype.error = function (message, context = {})
     {
-        context = typeof context === 'undefined' ? {} : context;
-
         this.write(message, context, jsOMS.Log.LogLevel.ERROR);
     };
 
@@ -256,10 +248,8 @@
      *
      * @since  1.0.0
      */
-    jsOMS.Log.Logger.prototype.warning = function (message, context)
+    jsOMS.Log.Logger.prototype.warning = function (message, context = {})
     {
-        context = typeof context === 'undefined' ? {} : context;
-
         this.write(message, context, jsOMS.Log.LogLevel.WARNING);
     };
 
@@ -275,10 +265,8 @@
      *
      * @since  1.0.0
      */
-    jsOMS.Log.Logger.prototype.notice = function (message, context)
+    jsOMS.Log.Logger.prototype.notice = function (message, context = {})
     {
-        context = typeof context === 'undefined' ? {} : context;
-
         this.write(message, context, jsOMS.Log.LogLevel.NOTICE);
     };
 
@@ -294,10 +282,8 @@
      *
      * @since  1.0.0
      */
-    jsOMS.Log.Logger.prototype.info = function (message, context)
+    jsOMS.Log.Logger.prototype.info = function (message, context = {})
     {
-        context = typeof context === 'undefined' ? {} : context;
-
         this.write(message, context, jsOMS.Log.LogLevel.INFO);
     };
 
@@ -313,10 +299,8 @@
      *
      * @since  1.0.0
      */
-    jsOMS.Log.Logger.prototype.debug = function (message, context)
+    jsOMS.Log.Logger.prototype.debug = function (message, context = {})
     {
-        context = typeof context === 'undefined' ? {} : context;
-
         this.write(message, context, jsOMS.Log.LogLevel.DEBUG);
     };
 
@@ -333,10 +317,8 @@
      *
      * @since  1.0.0
      */
-    jsOMS.Log.Logger.prototype.log = function (level, message, context)
+    jsOMS.Log.Logger.prototype.log = function (level, message, context = {})
     {
-        context = typeof context === 'undefined' ? {} : context;
-
         this.write(message, context, level);
     };
 
@@ -353,10 +335,8 @@
      *
      * @since  1.0.0
      */
-    jsOMS.Log.Logger.prototype.console = function (level, message, context)
+    jsOMS.Log.Logger.prototype.console = function (level, message, context = {})
     {
-        context = typeof context === 'undefined' ? {} : context;
-
         this.write(message, context, jsOMS.Log.LogLevel.INFO);
     };
 }(window.jsOMS = window.jsOMS || {}));

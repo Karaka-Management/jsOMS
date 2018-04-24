@@ -31,11 +31,11 @@
      *
      * @since 1.0.0
      */
-    jsOMS.UI.Input.Voice.VoiceManager = function (app, commands, lang)
+    jsOMS.UI.Input.Voice.VoiceManager = function (app, commands = {}, lang = 'en-US')
     {
         this.app                   = app;
-        this.commands              = typeof commands === 'undefined' ? {} : commands;
-        this.lang                  = typeof lang === 'undefined' ? 'en-US' : lang;
+        this.commands              = commands;
+        this.lang                  = lang;
         this.recognition           = null;
         this.speechRecognitionList = null;
 

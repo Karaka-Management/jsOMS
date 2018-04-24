@@ -51,10 +51,8 @@
      *
      * @since 1.0.0
      */
-    jsOMS.Uri.Http.parseUrl = function (str, mode)
+    jsOMS.Uri.Http.parseUrl = function (str, mode = 'php')
     {
-        mode = typeof mode === 'undefined' ? 'php' : mode;
-
         const key  = ['source', 'scheme', 'authority', 'userInfo', 'user', 'pass', 'host', 'port',
                 'relative', 'path', 'directory', 'file', 'query', 'fragment'
             ],

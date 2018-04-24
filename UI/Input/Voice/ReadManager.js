@@ -31,11 +31,11 @@
      *
      * @since 1.0.0
      */
-    jsOMS.UI.Input.Voice.ReadManager = function (lang)
+    jsOMS.UI.Input.Voice.ReadManager = function (lang = 'en-US')
     {
         this.pitch  = 1;
         this.rate   = 1;
-        this.lang   = typeof lang === 'undefined' ? 'en-US' : lang;
+        this.lang   = lang;
         this.voices = [];
         this.voice  = null;
 

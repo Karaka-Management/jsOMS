@@ -165,14 +165,11 @@
      *
      * @since 1.0.0
      */
-    jsOMS.Event.EventManager.prototype.attach = function (group, callback, remove, reset)
+    jsOMS.Event.EventManager.prototype.attach = function (group, callback, remove = false, reset = false)
     {
         if (this.callbacks.hasOwnProperty(group)) {
             return false;
         }
-
-        remove = typeof remove === 'undefined' ? false : remove;
-        reset  = typeof reset === 'undefined' ? false : reset;
 
         this.callbacks[group] = {remove: remove, reset: reset, func: callback};
 
