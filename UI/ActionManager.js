@@ -91,11 +91,11 @@
             const observeConfig = { childList: false, attributes: true, subtree: false };
 
             if (hasSelector) {
-                this.app.eventManager.attach(e.id + 'childList', function(data) {
+                this.app.eventManager.attach(e.id + '-childList', function(data) {
                     const length = data.addedNodes.length;
 
                     for (let j = 0; j < length; ++j) {
-                        self.bindListener(data.addedNodes[j].id, listeners[i]);
+                        self.bindListener(data.addedNodes[j].id, listeners[i], true);
                     }
                 });
 
@@ -103,7 +103,7 @@
                 observeConfig.subtree   = true;
             }
 
-            this.app.eventManager.attach(e.id + 'attributes', function(data) {});
+            this.app.eventManager.attach(e.id + '-attributes', function(data) {});
             this.app.uiManager.getDOMObserver().observe(e, observeConfig);
         }
     };
@@ -120,7 +120,7 @@
      *
      * @since  1.0.0
      */
-    jsOMS.UI.ActionManager.prototype.bindListener = function(id, listener)
+    jsOMS.UI.ActionManager.prototype.bindListener = function(id, listener, removable = false)
     {
         const self       = this,
             actionLength = listener.action.length;
@@ -133,7 +133,7 @@
             this.app.eventManager.attach(id + '-' + listener.key + '-' + listener.action[j - 1].key, function (data)
             {
                 self.runAction(id, listener, listener.action[j], data);
-            }, false, true);
+            }, removable, true); // todo: make actions removable e.g. in case of child elements getting removed = tag list
         }
         // todo: the true here is a memory leak since it should be removed at some point?!
         // todo: handle onload action right after registering everything. this will be used for onload api calls in order to get content such as lists or models. Maybe in the main application after registering a invoke('onload') should be called if the application wants to execute the onload elements
