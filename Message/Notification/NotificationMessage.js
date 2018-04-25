@@ -12,10 +12,12 @@
     /** @namespace jsOMS.Message.Notification.App */
     jsOMS.Autoloader.defineNamespace('jsOMS.Message.Notification');
 
-    jsOMS.Message.Notification.NotificationMessage = function (status, title, message) 
-    {
-        this.status  = status;
-        this.title   = title;
-        this.message = message;
-    };
+    jsOMS.Message.Notification.NotificationMessage = class {
+        constructor(status, title, message) 
+        {
+            this.status  = status;
+            this.title   = title;
+            this.message = message;
+        };
+    }
 }(window.jsOMS = window.jsOMS || {}));

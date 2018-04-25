@@ -12,30 +12,32 @@
 
     jsOMS.Autoloader.defineNamespace('jsOMS.DataStorage');
 
-    /**
-     * @constructor
-     *
-     * @since 1.0.0
-     */
-    jsOMS.DataStorage.LocalStorage = function ()
-    {
-    };
+    jsOMS.DataStorage.LocalStorage = class {
+        /**
+         * @constructor
+         *
+         * @since 1.0.0
+         */
+        constructor ()
+        {
+        };
 
-    /**
-     * Is local storage available?
-     *
-     * @return {boolean}
-     *
-     * @method
-     *
-     * @since 1.0.0
-     */
-    jsOMS.DataStorage.LocalStorage.prototype.available = function ()
-    {
-        try {
-            return 'localStorage' in window && window.localStorage !== null;
-        } catch (e) {
-            return false;
-        }
-    };
+        /**
+         * Is local storage available?
+         *
+         * @return {boolean}
+         *
+         * @method
+         *
+         * @since 1.0.0
+         */
+        available ()
+        {
+            try {
+                return 'localStorage' in window && window.localStorage !== null;
+            } catch (e) {
+                return false;
+            }
+        };
+    }
 }(window.jsOMS = window.jsOMS || {}));

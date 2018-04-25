@@ -1,38 +1,40 @@
 (function (jsOMS) {
     "use strict";
 
-    jsOMS.TableView = function () {
-        this.table = null;
-    };
+    jsOMS.TableView = class {
+        constructor () {
+            this.table = null;
+        };
 
-    /**
-     * None, Pagination, Infinite
-     */
-    jsOMS.TableView.prototype.setExtensible = function () {
+        /**
+         * None, Pagination, Infinite
+         */
+        setExtensible () {
 
-    };
+        };
 
-    jsOMS.TableView.prototype.add = function (element) {
+        add (element) {
 
-    };
+        };
 
-    jsOMS.TableView.prototype.addCollection = function (collection) {
+        addCollection (collection) {
 
-    };
+        };
 
-    jsOMS.TableView.prototype.remove = function (id) {
+        remove (id) {
 
-    };
+        };
 
-    jsOMS.TableView.prototype.get = function (id) {
+        get (id) {
 
-    };
+        };
 
-    jsOMS.TableView.prototype.filter = function (id) {
+        filter (id) {
 
-    };
+        };
 
-    jsOMS.TableView.prototype.request = function (filter) {
+        request (filter) {
 
-    };
+        };
+    }
 }(window.jsOMS = window.jsOMS || {}));

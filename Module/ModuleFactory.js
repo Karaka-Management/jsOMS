@@ -12,29 +12,31 @@
 
     jsOMS.Autoloader.defineNamespace('jsOMS.Module');
 
-    /**
-     * @constructor
-     *
-     * @since 1.0.0
-     */
-    jsOMS.Module.ModuleFactory = function ()
-    {
-    };
+    jsOMS.Module.ModuleFactory = class {
+        /**
+         * @constructor
+         *
+         * @since 1.0.0
+         */
+        constructor ()
+        {
+        };
 
-    /**
-     * Get module instance.
-     *
-     * @param {string} module Module name
-     * @param {Object} app Application reference
-     *
-     * @return {Object}
-     *
-     * @method
-     *
-     * @since  1.0.0
-     */
-    jsOMS.Module.ModuleFactory.getInstance = function (module, app)
-    {
-        return new jsOMS.Modules[module](app);
-    };
+        /**
+         * Get module instance.
+         *
+         * @param {string} module Module name
+         * @param {Object} app Application reference
+         *
+         * @return {Object}
+         *
+         * @method
+         *
+         * @since  1.0.0
+         */
+        static getInstance (module, app)
+        {
+            return new jsOMS.Modules[module](app);
+        };
+    }
 }(window.jsOMS = window.jsOMS || {}));

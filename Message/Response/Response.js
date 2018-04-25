@@ -15,23 +15,25 @@
     /** @namespace jsOMS.Message.Response */
     jsOMS.Autoloader.defineNamespace('jsOMS.Message.Response');
 
-    jsOMS.Message.Response.Response = function (data)
-    {
-        this.responses = data;
-    };
+    jsOMS.Message.Response.Response = class {
+        constructor (data)
+        {
+            this.responses = data;
+        };
 
-    jsOMS.Message.Response.Response.prototype.get = function (id)
-    {
-        return this.responses[id];
-    };
+        get (id)
+        {
+            return this.responses[id];
+        };
 
-    jsOMS.Message.Response.Response.prototype.getByIndex = function (index)
-    {
-        return this.responses[index];
-    };
+        getByIndex (index)
+        {
+            return this.responses[index];
+        };
 
-    jsOMS.Message.Response.Response.prototype.count = function ()
-    {
-        return this.responses.length;
-    };
+        count ()
+        {
+            return this.responses.length;
+        };
+    }
 }(window.jsOMS = window.jsOMS || {}));

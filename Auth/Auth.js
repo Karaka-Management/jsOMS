@@ -12,88 +12,90 @@
 
     jsOMS.Autoloader.defineNamespace('jsOMS.Auth');
 
-    /**
-     * @constructor
-     *
-     * @since 1.0.0
-     */
-    jsOMS.Auth.Auth = function (uri)
-    {
-        this.account = null;
-        this.uri     = uri;
-    };
-
-    /**
-     * Set account for authentication.
-     *
-     * @param {Object} account Account
-     *
-     * @method
-     *
-     * @since 1.0.0
-     */
-    jsOMS.Auth.Auth.prototype.setAccount = function (account)
-    {
-        this.account = account;
-    };
-
-    /**
-     * Get account.
-     *
-     * @return {Object}
-     *
-     * @method
-     *
-     * @since 1.0.0
-     */
-    jsOMS.Auth.Auth.prototype.getAccount = function ()
-    {
-        return this.account;
-    };
-
-    /**
-     * Login account.
-     *
-     * @method
-     *
-     * @since 1.0.0
-     */
-    jsOMS.Auth.Auth.prototype.login = function ()
-    {
-        const authRequest = new jsOMS.Message.Request.Request();
-        authRequest.setUri(this.uri);
-        authRequest.setMethod(jsOMS.Message.Request.RequestMethod.POST);
-        authRequest.setResponseType(jsOMS.Message.Request.RequestType.JSON);
-        authRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        authRequest.setSuccess(function (xhr)
+    jsOMS.Auth.Auth = class {
+        /**
+         * @constructor
+         *
+         * @since 1.0.0
+         */
+        constructor (uri)
         {
-            this.loginResult(xhr);
-        });
+            this.account = null;
+            this.uri     = uri;
+        };
 
-        authRequest.send();
-    };
+        /**
+         * Set account for authentication.
+         *
+         * @param {Object} account Account
+         *
+         * @method
+         *
+         * @since 1.0.0
+         */
+        setAccount (account)
+        {
+            this.account = account;
+        };
 
-    /**
-     * Logout account.
-     *
-     * @method
-     *
-     * @since 1.0.0
-     */
-    jsOMS.Auth.Auth.prototype.logout = function ()
-    {
-        location.reload();
-    };
+        /**
+         * Get account.
+         *
+         * @return {Object}
+         *
+         * @method
+         *
+         * @since 1.0.0
+         */
+        getAccount ()
+        {
+            return this.account;
+        };
 
-    /**
-     * Handle login result.
-     *
-     * @method
-     *
-     * @since 1.0.0
-     */
-    jsOMS.Auth.Auth.prototype.loginResult = function (xhr)
-    {
-        location.reload();
+        /**
+         * Login account.
+         *
+         * @method
+         *
+         * @since 1.0.0
+         */
+        login ()
+        {
+            const authRequest = new jsOMS.Message.Request.Request();
+            authRequest.setUri(this.uri);
+            authRequest.setMethod(jsOMS.Message.Request.RequestMethod.POST);
+            authRequest.setResponseType(jsOMS.Message.Request.RequestType.JSON);
+            authRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            authRequest.setSuccess(function (xhr)
+            {
+                this.loginResult(xhr);
+            });
+
+            authRequest.send();
+        };
+
+        /**
+         * Logout account.
+         *
+         * @method
+         *
+         * @since 1.0.0
+         */
+        logout ()
+        {
+            location.reload();
+        };
+
+        /**
+         * Handle login result.
+         *
+         * @method
+         *
+         * @since 1.0.0
+         */
+        loginResult (xhr)
+        {
+            location.reload();
+        };
     };
 }(window.jsOMS = window.jsOMS || {}));

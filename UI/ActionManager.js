@@ -96,6 +96,7 @@
 
                     for (let j = 0; j < length; ++j) {
                         self.bindListener(data.addedNodes[j].id, listeners[i], true);
+                        // todo only make removable if action itself is defined as auto removable
                     }
                 });
 
@@ -127,13 +128,14 @@
 
         for (let j = 1; j < actionLength; ++j) {
             if (typeof id === 'undefined' || typeof listener.key === 'undefined') {
-                throw 'Invalid element id/key.'
+                jsOMS.Log.Logger.instance.error('Invalid element id/key: ' + id + '/' + listener.key);
+                return;
             }
 
             this.app.eventManager.attach(id + '-' + listener.key + '-' + listener.action[j - 1].key, function (data)
             {
                 self.runAction(id, listener, listener.action[j], data);
-            }, removable, true); // todo: make actions removable e.g. in case of child elements getting removed = tag list
+            }, removable, true);
         }
         // todo: the true here is a memory leak since it should be removed at some point?!
         // todo: handle onload action right after registering everything. this will be used for onload api calls in order to get content such as lists or models. Maybe in the main application after registering a invoke('onload') should be called if the application wants to execute the onload elements

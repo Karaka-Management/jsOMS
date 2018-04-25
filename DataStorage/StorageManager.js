@@ -3,7 +3,9 @@
 
     jsOMS.Autoloader.defineNamespace('jsOMS.DataStorage');
 
-    jsOMS.DataStorage.StorageManager = function ()
-    {
-    };
+    jsOMS.DataStorage.StorageManager = class {
+        constructor ()
+        {
+        };
+    }
 }(window.jsOMS = window.jsOMS || {}));

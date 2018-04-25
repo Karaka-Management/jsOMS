@@ -13,34 +13,36 @@
     /** @namespace jsOMS.Module */
     jsOMS.Autoloader.defineNamespace('jsOMS.Module');
 
-    /**
-     * @constructor
-     *
-     * @since 1.0.0
-     */
-    jsOMS.Module.ModuleManager = function (app)
-    {
-        this.modules = {};
-        this.app     = app;
-    };
+    jsOMS.Module.ModuleManager = class {
+        /**
+         * @constructor
+         *
+         * @since 1.0.0
+         */
+        constructor(app)
+        {
+            this.modules = {};
+            this.app     = app;
+        };
 
-    /**
-     * Get module.
-     *
-     * @param {string} module Module name
-     *
-     * @return {Object}
-     *
-     * @method
-     *
-     * @since  1.0.0
-     */
-    jsOMS.Module.ModuleManager.prototype.get = function (module)
-    {
-        if (typeof this.modules[module] === 'undefined') {
-            this.modules[module] = jsOMS.Module.ModuleFactory.getInstance(module, this.app);
-        }
+        /**
+         * Get module.
+         *
+         * @param {string} module Module name
+         *
+         * @return {Object}
+         *
+         * @method
+         *
+         * @since  1.0.0
+         */
+        get (module)
+        {
+            if (typeof this.modules[module] === 'undefined') {
+                this.modules[module] = jsOMS.Module.ModuleFactory.getInstance(module, this.app);
+            }
 
-        return this.modules[module];
-    };
+            return this.modules[module];
+        };
+    }
 }(window.jsOMS = window.jsOMS || {}));

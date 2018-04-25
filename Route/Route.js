@@ -3,17 +3,19 @@
 
     jsOMS.Autoloader.defineNamespace('jsOMS.Route');
 
-    // TODO: create comments
-    jsOMS.Route.Route = function ()
-    {
-        this.routes = null;
-    };
+    jsOMS.Route.Route = class {
+        // TODO: create comments
+        constructor ()
+        {
+            this.routes = null;
+        };
 
-    // TODO: create comments
-    jsOMS.Route.prototype.add = function (path, callback, exact)
-    {
-        exact = typeof exact !== 'undefined' ? exact : true;
+        // TODO: create comments
+        add (path, callback, exact)
+        {
+            exact = typeof exact !== 'undefined' ? exact : true;
 
-        // todo: create array key path like i did for php
-    };
+            // todo: create array key path like i did for php
+        };
+    }
 }(window.jsOMS = window.jsOMS || {}));

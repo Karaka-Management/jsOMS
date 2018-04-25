@@ -13,258 +13,258 @@
     /** @namespace jsOMS.UI */
     jsOMS.Autoloader.defineNamespace('jsOMS.UI.Component');
 
-    /**
-     * @constructor
-     *
-     * @since 1.0.0
-     */
-    jsOMS.UI.Component.Form = function (app)
-    {
-        this.app    = app;
-        this.forms  = {};
-        this.ignore = {};
-    };
+    jsOMS.UI.Component.Form = class {
+        /**
+         * @constructor
+         *
+         * @since 1.0.0
+         */
+        constructor (app)
+        {
+            this.app    = app;
+            this.forms  = {};
+            this.ignore = {};
+        };
 
-    /**
-     * Get form
-     *
-     * @param {string} id Form Id
-     *
-     * @since 1.0.0
-     */
-    jsOMS.UI.Component.Form.prototype.get = function (id)
-    {
-        return this.forms[id];
-    };
+        /**
+         * Get form
+         *
+         * @param {string} id Form Id
+         *
+         * @since 1.0.0
+         */
+        get (id)
+        {
+            return this.forms[id];
+        };
 
-    /**
-     * Is form ignored?
-     *
-     * @param {string} id Form Id
-     *
-     * @since 1.0.0
-     */
-    jsOMS.UI.Component.Form.prototype.isIgnored = function (id)
-    {
-        return this.ignore.indexOf(id) !== -1;
-    };
+        /**
+         * Is form ignored?
+         *
+         * @param {string} id Form Id
+         *
+         * @since 1.0.0
+         */
+        isIgnored (id)
+        {
+            return this.ignore.indexOf(id) !== -1;
+        };
 
-    /**
-     * Unbind form
-     *
-     * @param {string} id Form Id
-     *
-     * @since 1.0.0
-     */
-    jsOMS.UI.Component.Form.prototype.unbind = function (id)
-    {
+        /**
+         * Unbind form
+         *
+         * @param {string} id Form Id
+         *
+         * @since 1.0.0
+         */
+        unbind (id)
+        {
 
-    };
+        };
 
-    /**
-     * Bind form
-     *
-     * @param {string} id Form Id (optional)
-     *
-     * @since 1.0.0
-     */
-    jsOMS.UI.Component.Form.prototype.bind = function (id)
-    {
-        if (typeof id !== 'undefined' && typeof this.ignore[id] === 'undefined') {
-            this.bindForm(id);
-        } else {
-            const forms = document.getElementsByTagName('form'),
-                length  = !forms ? 0 : forms.length;
+        /**
+         * Bind form
+         *
+         * @param {string} id Form Id (optional)
+         *
+         * @since 1.0.0
+         */
+        bind (id)
+        {
+            if (typeof id !== 'undefined' && typeof this.ignore[id] === 'undefined') {
+                this.bindForm(id);
+            } else {
+                const forms = document.getElementsByTagName('form'),
+                    length  = !forms ? 0 : forms.length;
+
+                for (let i = 0; i < length; ++i) {
+                    if (typeof forms[i].getAttribute('id') !== 'undefined' && forms[i].getAttribute('id') !== null && typeof this.ignore[forms[i].getAttribute('id')] === 'undefined') {
+                        this.bindForm(forms[i].getAttribute('id'));
+                    }
+                }
+            }
+        };
+
+        /**
+         * Bind form
+         *
+         * @param {string} id Form Id
+         *
+         * @since 1.0.0
+         */
+        bindForm (id)
+        {
+            if (typeof id === 'undefined' || !id) {
+                jsOMS.Log.Logger.instance.info('A form doesn\'t have an ID.');
+                return;
+            }
+
+            const self     = this;
+            this.forms[id] = new jsOMS.Views.FormView(id);
+
+            this.unbind(id);
+
+            const submits = this.forms[id].getSubmit(),
+                length    = submits.length;
 
             for (let i = 0; i < length; ++i) {
-                if (typeof forms[i].getAttribute('id') !== 'undefined' && forms[i].getAttribute('id') !== null && typeof this.ignore[forms[i].getAttribute('id')] === 'undefined') {
-                    this.bindForm(forms[i].getAttribute('id'));
-                }
+                submits[i].addEventListener('click', function (event)
+                {
+                    jsOMS.preventAll(event);
+                    self.submit(self.forms[id]);
+                });
             }
-        }
-    };
+        };
 
-    /**
-     * Bind form
-     *
-     * @param {string} id Form Id
-     *
-     * @since 1.0.0
-     */
-    jsOMS.UI.Component.Form.prototype.bindForm = function (id)
-    {
-        if (typeof id === 'undefined' || !id) {
-            jsOMS.Log.Logger.instance.info('A form doesn\'t have an ID.');
-            return;
-        }
+        /**
+         * Unbind form
+         *
+         * @param {string} id Form Id
+         *
+         * @since 1.0.0
+         */
+        unbindForm (id)
+        {
+            // todo: do i need the findex? can't i just use id?
+            let findex = 0;
 
-        const self     = this;
-        this.forms[id] = new jsOMS.Views.FormView(id);
+            if ((findex = this.forms[id]) !== 'undefined') {
+                this.forms[id].unbind();
+                this.forms.splice(findex, 1);
 
-        this.unbind(id);
+                return true;
+            }
 
-        const submits = this.forms[id].getSubmit(),
-            length    = submits.length;
+            return false;
+        };
 
-        for (let i = 0; i < length; ++i) {
-            submits[i].addEventListener('click', function (event)
+        /**
+         * Submit form
+         *
+         * Calls injections first befor executing the actual form submit
+         *
+         * @param {Object} form Form object
+         *
+         * @since 1.0.0
+         */
+        submit (form)
+        {
+            /* Handle injects */
+            const self  = this,
+                injects = form.getSubmitInjects();
+            let counter = 0;
+
+            // todo: test if attach necessary (maybe already attached in event manager)
+            // Register normal form behavior
+            this.app.eventManager.attach(form.getId(), function ()
             {
-                jsOMS.preventAll(event);
-                self.submit(self.forms[id]);
+                self.submitForm(form);
             });
-        }
-    };
 
-    /**
-     * Unbind form
-     *
-     * @param {string} id Form Id
-     *
-     * @since 1.0.0
-     */
-    jsOMS.UI.Component.Form.prototype.unbindForm = function (id)
-    {
-        // todo: do i need the findex? can't i just use id?
-        let findex = 0;
+            // Run all injects first
+            for (let property in injects) {
+                if (injects.hasOwnProperty(property)) {
+                    counter++;
+                    //this.app.eventManager.addGroup(form.getId(), counter);
+                    const result = injects[property](form, form.getId());
 
-        if ((findex = this.forms[id]) !== 'undefined') {
-            this.forms[id].unbind();
-            this.forms.splice(findex, 1);
-
-            return true;
-        }
-
-        return false;
-    };
-
-    /**
-     * Submit form
-     *
-     * Calls injections first befor executing the actual form submit
-     *
-     * @param {Object} form Form object
-     *
-     * @since 1.0.0
-     */
-    jsOMS.UI.Component.Form.prototype.submit = function (form)
-    {
-        /* Handle injects */
-        const self  = this,
-            injects = form.getSubmitInjects();
-        let counter = 0;
-
-        // todo: test if attach necessary (maybe already attached in event manager)
-        // Register normal form behavior
-        this.app.eventManager.attach(form.getId(), function ()
-        {
-            self.submitForm(form);
-        });
-
-        // Run all injects first
-        for (let property in injects) {
-            if (injects.hasOwnProperty(property)) {
-                counter++;
-                //this.app.eventManager.addGroup(form.getId(), counter);
-                const result = injects[property](form, form.getId());
-
-                if (result === false) {
-                    return;
+                    if (result === false) {
+                        return;
+                    }
+                } else {
+                    jsOMS.Log.Logger.instance.warning('Invalid property.');
                 }
-            } else {
-                jsOMS.Log.Logger.instance.warning('Invalid property.');
             }
-        }
 
-        this.app.eventManager.trigger(form.getId());
-    };
+            this.app.eventManager.trigger(form.getId());
+        };
 
-    /**
-     * Submit form data
-     *
-     * Submits the main form data
-     *
-     * @param {Object} form Form object
-     *
-     * @since 1.0.0
-     */
-    jsOMS.UI.Component.Form.prototype.submitForm = function (form)
-    {
-        if (!form.isValid()) {
-            jsOMS.Log.Logger.instance.debug('Form "' + form.getId() + '" has invalid values.');
-            return;
-        }
-
-        if (form.getMethod() !== jsOMS.Message.Request.RequestMethod.GET
-            && Math.floor(Date.now()) - form.getLastSubmit() < 500
-        ) {
-            return;
-        }
-
-        form.updateLastSubmit();
-
-        /* Handle default submit */
-        const request = new jsOMS.Message.Request.Request(),
-            self      = this;
-
-        request.setData(form.getData());
-        request.setType(jsOMS.Message.Response.ResponseType.JSON);
-        request.setUri(form.getAction());
-        request.setMethod(form.getMethod());
-        request.setRequestHeader('Content-Type', 'application/json');
-        request.setSuccess(function (xhr)
+        /**
+         * Submit form data
+         *
+         * Submits the main form data
+         *
+         * @param {Object} form Form object
+         *
+         * @since 1.0.0
+         */
+        submitForm (form)
         {
-            console.log(xhr.response);
+            if (!form.isValid()) {
+                jsOMS.Log.Logger.instance.debug('Form "' + form.getId() + '" has invalid values.');
+                return;
+            }
 
-            try {
-                const o            = JSON.parse(xhr.response),
-                    response       = new jsOMS.Message.Response.Response(o);
-                let successInject  = null;
+            if (form.getMethod() !== jsOMS.Message.Request.RequestMethod.GET
+                && Math.floor(Date.now()) - form.getLastSubmit() < 500
+            ) {
+                return;
+            }
 
-                if (typeof o.status !== 'undefined') {
-                    self.app.notifyManager.send(
-                        new jsOMS.Message.Notification.NotificationMessage(o.status, o.title, o.message), jsOMS.Message.Notification.NotificationType.APP_NOTIFICATION
+            form.updateLastSubmit();
+
+            /* Handle default submit */
+            const request = new jsOMS.Message.Request.Request(),
+                self      = this;
+
+            request.setData(form.getData());
+            request.setType(jsOMS.Message.Response.ResponseType.JSON);
+            request.setUri(form.getAction());
+            request.setMethod(form.getMethod());
+            request.setRequestHeader('Content-Type', 'application/json');
+            request.setSuccess(function (xhr)
+            {
+                console.log(xhr.response);
+
+                try {
+                    const o            = JSON.parse(xhr.response),
+                        response       = new jsOMS.Message.Response.Response(o);
+                    let successInject  = null;
+
+                    if (typeof o.status !== 'undefined') {
+                        self.app.notifyManager.send(
+                            new jsOMS.Message.Notification.NotificationMessage(o.status, o.title, o.message), jsOMS.Message.Notification.NotificationType.APP_NOTIFICATION
+                        );
+                    }
+
+                    if ((successInject = form.getSuccess()) !== null) {
+                        successInject(response);
+                    }
+                } catch (e) {
+                    console.log(e);
+                    
+                    jsOMS.Log.Logger.instance.error('Invalid form response. \n'
+                        + 'URL: ' + form.getAction() + '\n'
+                        + 'Request: ' + JSON.stringify(form.getData()) + '\n'
+                        + 'Response: ' + xhr.response
                     );
                 }
+            });
 
-                if ((successInject = form.getSuccess()) !== null) {
-                    successInject(response);
-                } else {
-                    self.app.responseManager.run(response.get(0).type, response.get(0), request);
-                }
-            } catch (e) {
-                console.log(e);
-                
-                jsOMS.Log.Logger.instance.error('Invalid form response. \n'
-                    + 'URL: ' + form.getAction() + '\n'
-                    + 'Request: ' + JSON.stringify(form.getData()) + '\n'
-                    + 'Response: ' + xhr.response
+            request.setResultCallback(0, function (xhr) 
+            {
+                self.app.notifyManager.send(
+                    new jsOMS.Message.Notification.NotificationMessage(
+                        jsOMS.Message.Notification.NotificationLevel.ERROR,
+                        'Failure',
+                        'Some failure happend'
+                    ), jsOMS.Message.Notification.NotificationType.APP_NOTIFICATION
                 );
-            }
-        });
+            });
 
-        request.setResultCallback(0, function (xhr) 
+            request.send();
+        };
+
+        /**
+         * Count the bound forms
+         *
+         * @return {number}
+         *
+         * @since 1.0.0
+         */
+        count ()
         {
-            self.app.notifyManager.send(
-                new jsOMS.Message.Notification.NotificationMessage(
-                    jsOMS.Message.Notification.NotificationLevel.ERROR,
-                    'Failure',
-                    'Some failure happend'
-                ), jsOMS.Message.Notification.NotificationType.APP_NOTIFICATION
-            );
-        });
-
-        request.send();
-    };
-
-    /**
-     * Count the bound forms
-     *
-     * @return {number}
-     *
-     * @since 1.0.0
-     */
-    jsOMS.UI.Component.Form.prototype.count = function ()
-    {
-        return this.forms.length;
-    };
+            return this.forms.length;
+        };
+    }
 }(window.jsOMS = window.jsOMS || {}));

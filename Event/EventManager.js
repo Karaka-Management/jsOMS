@@ -14,179 +14,181 @@
 
     jsOMS.Autoloader.defineNamespace('jsOMS.Event');
 
-    /**
-     * @constructor
-     *
-     * @since 1.0.0
-     */
-    jsOMS.Event.EventManager = function ()
-    {
-        this.logger    = jsOMS.Log.Logger.getInstance();
-        this.groups    = {};
-        this.callbacks = {};
-    };
+    jsOMS.Event.EventManager = class {
+        /**
+         * @constructor
+         *
+         * @since 1.0.0
+         */
+        constructor ()
+        {
+            this.logger    = jsOMS.Log.Logger.getInstance();
+            this.groups    = {};
+            this.callbacks = {};
+        };
 
-    /**
-     * Add event group (element)
-     *
-     * Adding the same event overwrites the existing one as "waiting"
-     *
-     * @param {string|int} group Group id
-     * @param {string|int} id Event id
-     *
-     * @method
-     *
-     * @since 1.0.0
-     */
-    jsOMS.Event.EventManager.prototype.addGroup = function (group, id)
-    {
-        if (typeof this.groups[group] === 'undefined') {
-            this.groups[group] = {};
-        }
-
-        this.groups[group][id] = false;
-    };
-
-    /**
-     * Resets the group status
-     *
-     * @param {string|int} group Group id
-     *
-     * @return {void}
-     *
-     * @method
-     *
-     * @since 1.0.0
-     */
-    jsOMS.Event.EventManager.prototype.reset = function (group)
-    {
-        for (let id in this.groups[group]) {
-            if (this.groups[group].hasOwnProperty(id)) {
-                this.groups[group][id] = false;
+        /**
+         * Add event group (element)
+         *
+         * Adding the same event overwrites the existing one as "waiting"
+         *
+         * @param {string|int} group Group id
+         * @param {string|int} id Event id
+         *
+         * @method
+         *
+         * @since 1.0.0
+         */
+        addGroup (group, id)
+        {
+            if (typeof this.groups[group] === 'undefined') {
+                this.groups[group] = {};
             }
-        }
-    };
 
-    /**
-     * Does group have outstanding events
-     *
-     * @param {string|int} group Group id
-     *
-     * @return {boolean}
-     *
-     * @method
-     *
-     * @since 1.0.0
-     */
-    jsOMS.Event.EventManager.prototype.hasOutstanding = function (group)
-    {
-        if (typeof this.groups[group] === 'undefined') {
-            return false;
-        }
+            this.groups[group][id] = false;
+        };
 
-        for (let id  in this.groups[group]) {
-            if (!this.groups[group].hasOwnProperty(id) || !this.groups[group][id]) {
-                return true;
+        /**
+         * Resets the group status
+         *
+         * @param {string|int} group Group id
+         *
+         * @return {void}
+         *
+         * @method
+         *
+         * @since 1.0.0
+         */
+        reset (group)
+        {
+            for (let id in this.groups[group]) {
+                if (this.groups[group].hasOwnProperty(id)) {
+                    this.groups[group][id] = false;
+                }
             }
-        }
+        };
 
-        return false;
-    };
-
-    /**
-     * Trigger event finished
-     *
-     * Executes the callback specified for this group if all events are finished
-     *
-     * @param {string|int} group Group id
-     * @param {string|int} [id] Event id
-     * @param {Object} [data] Data for event
-     *
-     * @return {boolean}
-     *
-     * @method
-     *
-     * @since 1.0.0
-     */
-    jsOMS.Event.EventManager.prototype.trigger = function (group, id, data)
-    {
-        id = typeof id !== 'undefined' ? id : 0;
-
-        if (!this.callbacks.hasOwnProperty(group)) {
-            return false;
-        }
-
-        if (typeof this.groups[group] !== 'undefined') {
-            this.groups[group][id] = true;
-        }
-
-        if (!this.hasOutstanding(group)) {
-            // todo if it is route then call dispatcher?
-            this.callbacks[group].func(data);
-
-            if (this.callbacks[group].remove) {
-                this.detach(group);
-            } else if (this.callbacks[group].reset) {
-                this.reset(group);
+        /**
+         * Does group have outstanding events
+         *
+         * @param {string|int} group Group id
+         *
+         * @return {boolean}
+         *
+         * @method
+         *
+         * @since 1.0.0
+         */
+        hasOutstanding (group)
+        {
+            if (typeof this.groups[group] === 'undefined') {
+                return false;
             }
-        }
 
-        return true;
-    };
+            for (let id  in this.groups[group]) {
+                if (!this.groups[group].hasOwnProperty(id) || !this.groups[group][id]) {
+                    return true;
+                }
+            }
 
-    /**
-     * Detach event
-     *
-     * @param {string|int} group Group id
-     *
-     * @return {void}
-     *
-     * @method
-     *
-     * @since 1.0.0
-     */
-    jsOMS.Event.EventManager.prototype.detach = function (group)
-    {
-        delete this.callbacks[group];
-        delete this.groups[group];
-    };
-
-    /**
-     * Attach callback to event group
-     *
-     * @param {string|int} group Group id
-     * @param {function} callback Callback or route for the event
-     * @param {boolean} [remove] Should be removed after execution
-     * @param {boolean} [reset] Reset after triggering
-     *
-     * @return {boolean}
-     *
-     * @method
-     *
-     * @since 1.0.0
-     */
-    jsOMS.Event.EventManager.prototype.attach = function (group, callback, remove = false, reset = false)
-    {
-        if (this.callbacks.hasOwnProperty(group)) {
             return false;
-        }
+        };
 
-        this.callbacks[group] = {remove: remove, reset: reset, func: callback};
+        /**
+         * Trigger event finished
+         *
+         * Executes the callback specified for this group if all events are finished
+         *
+         * @param {string|int} group Group id
+         * @param {string|int} [id] Event id
+         * @param {Object} [data] Data for event
+         *
+         * @return {boolean}
+         *
+         * @method
+         *
+         * @since 1.0.0
+         */
+        trigger (group, id, data)
+        {
+            id = typeof id !== 'undefined' ? id : 0;
 
-        return true;
-    };
+            if (!this.callbacks.hasOwnProperty(group)) {
+                return false;
+            }
 
-    /**
-     * Count events
-     *
-     * @return {int}
-     *
-     * @method
-     *
-     * @since 1.0.0
-     */
-    jsOMS.Event.EventManager.prototype.count = function ()
-    {
-        return this.callbacks.length;
-    };
+            if (typeof this.groups[group] !== 'undefined') {
+                this.groups[group][id] = true;
+            }
+
+            if (!this.hasOutstanding(group)) {
+                // todo if it is route then call dispatcher?
+                this.callbacks[group].func(data);
+
+                if (this.callbacks[group].remove) {
+                    this.detach(group);
+                } else if (this.callbacks[group].reset) {
+                    this.reset(group);
+                }
+            }
+
+            return true;
+        };
+
+        /**
+         * Detach event
+         *
+         * @param {string|int} group Group id
+         *
+         * @return {void}
+         *
+         * @method
+         *
+         * @since 1.0.0
+         */
+        detach (group)
+        {
+            delete this.callbacks[group];
+            delete this.groups[group];
+        };
+
+        /**
+         * Attach callback to event group
+         *
+         * @param {string|int} group Group id
+         * @param {function} callback Callback or route for the event
+         * @param {boolean} [remove] Should be removed after execution
+         * @param {boolean} [reset] Reset after triggering
+         *
+         * @return {boolean}
+         *
+         * @method
+         *
+         * @since 1.0.0
+         */
+        attach (group, callback, remove = false, reset = false)
+        {
+            if (this.callbacks.hasOwnProperty(group)) {
+                return false;
+            }
+
+            this.callbacks[group] = {remove: remove, reset: reset, func: callback};
+
+            return true;
+        };
+
+        /**
+         * Count events
+         *
+         * @return {int}
+         *
+         * @method
+         *
+         * @since 1.0.0
+         */
+        count ()
+        {
+            return this.callbacks.length;
+        };
+    }
 }(window.jsOMS = window.jsOMS || {}));

@@ -15,342 +15,344 @@
     /** @namespace jsOMS.Uri.UriFactory */
     jsOMS.Autoloader.defineNamespace('jsOMS.Uri.Http');
 
-    /**
-     * @constructor
-     *
-     * @since 1.0.0
-     */
-    jsOMS.Uri.Http = function (uri)
-    {
-        this.uri         = '';
-        this.scheme      = '';
-        this.host        = '';
-        this.port        = '';
-        this.user        = '';
-        this.pass        = '';
-        this.query       = null;
-        this.queryString = '';
-        this.fragment    = '';
-        this.base        = '';
-        this.root        = '/';
+    jsOMS.Uri.Http = class {
+        /**
+         * @constructor
+         *
+         * @since 1.0.0
+         */
+        constructor(uri)
+        {
+            this.uri         = '';
+            this.scheme      = '';
+            this.host        = '';
+            this.port        = '';
+            this.user        = '';
+            this.pass        = '';
+            this.query       = null;
+            this.queryString = '';
+            this.fragment    = '';
+            this.base        = '';
+            this.root        = '/';
 
-        this.set(uri);
-    };
+            this.set(uri);
+        };
 
-    /**
-     * Parse uri
-     *
-     * @param {string} str Url to parse
-     * @param {string} [mode] Parsing mode
-     *
-     * @return {Object}
-     *
-     * @throws {Error}
-     *
-     * @function
-     *
-     * @since 1.0.0
-     */
-    jsOMS.Uri.Http.parseUrl = function (str, mode = 'php')
-    {
-        const key  = ['source', 'scheme', 'authority', 'userInfo', 'user', 'pass', 'host', 'port',
-                'relative', 'path', 'directory', 'file', 'query', 'fragment'
-            ],
-            parser = {
-                php: /^(?:([^:\/?#]+):)?(?:\/\/()(?:(?:()(?:([^:@]*):?([^:@]*))?@)?([^:\/?#]*)(?::(\d*))?))?()(?:(()(?:(?:[^?#\/]*\/)*)()(?:[^?#]*))(?:\?([^#]*))?(?:#(.*))?)/,
-                strict: /^(?:([^:\/?#]+):)?(?:\/\/((?:(([^:@]*):?([^:@]*))?@)?([^:\/?#]*)(?::(\d*))?))?((((?:[^?#\/]*\/)*)([^?#]*))(?:\?([^#]*))?(?:#(.*))?)/,
-                loose: /^(?:(?![^:@]+:[^:@\/]*@)([^:\/?#.]+):)?(?:\/\/\/?)?((?:(([^:@]*):?([^:@]*))?@)?([^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/ // Added one optional slash to post-scheme to catch file:/// (should restrict this)
-            };
+        /**
+         * Parse uri
+         *
+         * @param {string} str Url to parse
+         * @param {string} [mode] Parsing mode
+         *
+         * @return {Object}
+         *
+         * @throws {Error}
+         *
+         * @function
+         *
+         * @since 1.0.0
+         */
+        static parseUrl (str, mode = 'php')
+        {
+            const key  = ['source', 'scheme', 'authority', 'userInfo', 'user', 'pass', 'host', 'port',
+                    'relative', 'path', 'directory', 'file', 'query', 'fragment'
+                ],
+                parser = {
+                    php: /^(?:([^:\/?#]+):)?(?:\/\/()(?:(?:()(?:([^:@]*):?([^:@]*))?@)?([^:\/?#]*)(?::(\d*))?))?()(?:(()(?:(?:[^?#\/]*\/)*)()(?:[^?#]*))(?:\?([^#]*))?(?:#(.*))?)/,
+                    strict: /^(?:([^:\/?#]+):)?(?:\/\/((?:(([^:@]*):?([^:@]*))?@)?([^:\/?#]*)(?::(\d*))?))?((((?:[^?#\/]*\/)*)([^?#]*))(?:\?([^#]*))?(?:#(.*))?)/,
+                    loose: /^(?:(?![^:@]+:[^:@\/]*@)([^:\/?#.]+):)?(?:\/\/\/?)?((?:(([^:@]*):?([^:@]*))?@)?([^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/ // Added one optional slash to post-scheme to catch file:/// (should restrict this)
+                };
 
-        if (!parser.hasOwnProperty(mode)) {
-            throw new Error('Unexpected parsing mode.', 'UriFactory', 52);
-        }
-
-        const m = parser[mode].exec(str),
-            uri = {};
-        let i   = 14;
-
-        while (i--) {
-            if (m[i]) {
-                uri[key[i]] = m[i];
+            if (!parser.hasOwnProperty(mode)) {
+                throw new Error('Unexpected parsing mode.', 'UriFactory', 52);
             }
-        }
 
-        delete uri.source;
+            const m = parser[mode].exec(str),
+                uri = {};
+            let i   = 14;
 
-        return uri;
-    };
-
-    /**
-     * Get Uri query parameters.
-     *
-     * @param {string} query Uri query
-     * @param {string} name Name of the query to return
-     *
-     * @return {null|string}
-     *
-     * @method
-     *
-     * @since  1.0.0
-     */
-    jsOMS.Uri.Http.getUriQueryParameter = function (query, name)
-    {
-        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-
-        const regex = new RegExp("[\\?&]*" + name + "=([^&#]*)"),
-            results = regex.exec(query);
-
-        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-    };
-
-    /**
-     * Get all uri query parameters.
-     *
-     * @param {string} query Uri query
-     *
-     * @return {Object}
-     *
-     * @method
-     *
-     * @since  1.0.0
-     */
-    jsOMS.Uri.Http.getAllUriQueryParameters = function (query)
-    {
-        const params    = {};
-        let keyValPairs = [],
-            pairNum     = null;
-
-        if (query.length) {
-            keyValPairs = query.split('&');
-
-            for (pairNum in keyValPairs) {
-                if (!keyValPairs.hasOwnProperty(pairNum)) {
-                    continue;
+            while (i--) {
+                if (m[i]) {
+                    uri[key[i]] = m[i];
                 }
-
-                const key = keyValPairs[pairNum].split('=')[0];
-
-                if (!key.length) {
-                    continue;
-                }
-
-                if (typeof params[key] === 'undefined') {
-                    params[key] = [];
-                }
-
-                params[key].push(keyValPairs[pairNum].split('=')[1]);
             }
-        }
 
-        return params;
-    };
+            delete uri.source;
 
-    /**
-     * Set uri.
-     *
-     * @param {string} uri Uri string
-     *
-     * @return {void}
-     *
-     * @method
-     *
-     * @since  1.0.0
-     */
-    jsOMS.Uri.Http.prototype.set = function (uri)
-    {
-        this.uri = uri;
+            return uri;
+        };
 
-        const parsed = jsOMS.Uri.Http.parseUrl(this.uri, 'php');
+        /**
+         * Get Uri query parameters.
+         *
+         * @param {string} query Uri query
+         * @param {string} name Name of the query to return
+         *
+         * @return {null|string}
+         *
+         * @method
+         *
+         * @since  1.0.0
+         */
+        static getUriQueryParameter (query, name)
+        {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
 
-        this.scheme = parsed['scheme'];
-        this.host   = parsed['host'];
-        this.port   = parsed['port'];
-        this.user   = parsed['user'];
-        this.pass   = parsed['pass'];
-        this.path   = parsed['path'];
+            const regex = new RegExp("[\\?&]*" + name + "=([^&#]*)"),
+                results = regex.exec(query);
 
-        if (this.path.endsWith('.php')) {
-            this.path = this.path.substr(0, -4);
-        }
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        };
 
-        this.queryString = typeof parsed['query'] !== 'undefined' ? parsed['query'] : [];
+        /**
+         * Get all uri query parameters.
+         *
+         * @param {string} query Uri query
+         *
+         * @return {Object}
+         *
+         * @method
+         *
+         * @since  1.0.0
+         */
+        static getAllUriQueryParameters (query)
+        {
+            const params    = {};
+            let keyValPairs = [],
+                pairNum     = null;
 
-        if (this.queryString !== null) {
-            this.query = jsOMS.Uri.Http.getAllUriQueryParameters(this.queryString);
-        }
+            if (query.length) {
+                keyValPairs = query.split('&');
 
-        this.fragment = typeof parsed['fragment'] !== 'undefined' ? parsed['fragment'] : '';
-        this.base     = this.scheme + '://' + this.host + this.root;
-    };
+                for (pairNum in keyValPairs) {
+                    if (!keyValPairs.hasOwnProperty(pairNum)) {
+                        continue;
+                    }
 
-    /**
-     * Set root path.
-     *
-     * @param {string} rootPath Uri root path
-     *
-     * @return {void}
-     *
-     * @method
-     *
-     * @since  1.0.0
-     */
-    jsOMS.Uri.Http.prototype.setRootPath = function(rootPath)
-    {
-        this.root = rootPath;
-        this.set(this.uri);
-    };
+                    const key = keyValPairs[pairNum].split('=')[0];
 
-    /**
-     * Get Uri base
-     *
-     * @return {string}
-     *
-     * @method
-     *
-     * @since  1.0.0
-     */
-    jsOMS.Uri.Http.prototype.getBase = function()
-    {
-        return this.base;
-    };
+                    if (!key.length) {
+                        continue;
+                    }
 
-    /**
-     * Get Uri scheme
-     *
-     * @return {string}
-     *
-     * @method
-     *
-     * @since  1.0.0
-     */
-    jsOMS.Uri.Http.prototype.getScheme = function()
-    {
-        return this.scheme;
-    };
+                    if (typeof params[key] === 'undefined') {
+                        params[key] = [];
+                    }
 
-    /**
-     * Get Uri host
-     *
-     * @return {string}
-     *
-     * @method
-     *
-     * @since  1.0.0
-     */
-    jsOMS.Uri.Http.prototype.getHost = function()
-    {
-        return this.host;
-    };
+                    params[key].push(keyValPairs[pairNum].split('=')[1]);
+                }
+            }
 
-    /**
-     * Get Uri port
-     *
-     * @return {string}
-     *
-     * @method
-     *
-     * @since  1.0.0
-     */
-    jsOMS.Uri.Http.prototype.getPort = function()
-    {
-        return this.port;
-    };
+            return params;
+        };
 
-    /**
-     * Get Uri user
-     *
-     * @return {string}
-     *
-     * @method
-     *
-     * @since  1.0.0
-     */
-    jsOMS.Uri.Http.prototype.getUser = function()
-    {
-        return this.user;
-    };
+        /**
+         * Set uri.
+         *
+         * @param {string} uri Uri string
+         *
+         * @return {void}
+         *
+         * @method
+         *
+         * @since  1.0.0
+         */
+        set (uri)
+        {
+            this.uri = uri;
 
-    /**
-     * Get Uri pass
-     *
-     * @return {string}
-     *
-     * @method
-     *
-     * @since  1.0.0
-     */
-    jsOMS.Uri.Http.prototype.getPass = function()
-    {
-        return this.pass;
-    };
+            const parsed = jsOMS.Uri.Http.parseUrl(this.uri, 'php');
 
-    /**
-     * Get Uri query
-     *
-     * @return {string}
-     *
-     * @method
-     *
-     * @since  1.0.0
-     */
-    jsOMS.Uri.Http.prototype.getQuery = function()
-    {
-        return this.queryString;
-    };
+            this.scheme = parsed['scheme'];
+            this.host   = parsed['host'];
+            this.port   = parsed['port'];
+            this.user   = parsed['user'];
+            this.pass   = parsed['pass'];
+            this.path   = parsed['path'];
 
-    /**
-     * Get Uri
-     *
-     * @return {string}
-     *
-     * @method
-     *
-     * @since  1.0.0
-     */
-    jsOMS.Uri.Http.prototype.getUri = function()
-    {
-        return this.uri;
-    };
+            if (this.path.endsWith('.php')) {
+                this.path = this.path.substr(0, -4);
+            }
 
-    /**
-     * Get Uri fragment
-     *
-     * @return {string}
-     *
-     * @method
-     *
-     * @since  1.0.0
-     */
-    jsOMS.Uri.Http.prototype.getFragment = function()
-    {
-        return this.fragment;
-    };
+            this.queryString = typeof parsed['query'] !== 'undefined' ? parsed['query'] : [];
 
-    /**
-     * Get Uri path
-     *
-     * @return {string}
-     *
-     * @method
-     *
-     * @since  1.0.0
-     */
-    jsOMS.Uri.Http.prototype.getPath = function()
-    {
-        return this.path;
-    };
+            if (this.queryString !== null) {
+                this.query = jsOMS.Uri.Http.getAllUriQueryParameters(this.queryString);
+            }
 
-    /**
-     * Get Uri path offset
-     *
-     * @return {int}
-     *
-     * @method
-     *
-     * @since  1.0.0
-     */
-    jsOMS.Uri.Http.prototype.getPathOffset = function()
-    {
-        return jsOMS.substr_count(this.root, '/') - 1;
-    };
+            this.fragment = typeof parsed['fragment'] !== 'undefined' ? parsed['fragment'] : '';
+            this.base     = this.scheme + '://' + this.host + this.root;
+        };
+
+        /**
+         * Set root path.
+         *
+         * @param {string} rootPath Uri root path
+         *
+         * @return {void}
+         *
+         * @method
+         *
+         * @since  1.0.0
+         */
+        setRootPath(rootPath)
+        {
+            this.root = rootPath;
+            this.set(this.uri);
+        };
+
+        /**
+         * Get Uri base
+         *
+         * @return {string}
+         *
+         * @method
+         *
+         * @since  1.0.0
+         */
+        getBase()
+        {
+            return this.base;
+        };
+
+        /**
+         * Get Uri scheme
+         *
+         * @return {string}
+         *
+         * @method
+         *
+         * @since  1.0.0
+         */
+        getScheme()
+        {
+            return this.scheme;
+        };
+
+        /**
+         * Get Uri host
+         *
+         * @return {string}
+         *
+         * @method
+         *
+         * @since  1.0.0
+         */
+        getHost()
+        {
+            return this.host;
+        };
+
+        /**
+         * Get Uri port
+         *
+         * @return {string}
+         *
+         * @method
+         *
+         * @since  1.0.0
+         */
+        getPort()
+        {
+            return this.port;
+        };
+
+        /**
+         * Get Uri user
+         *
+         * @return {string}
+         *
+         * @method
+         *
+         * @since  1.0.0
+         */
+        getUser()
+        {
+            return this.user;
+        };
+
+        /**
+         * Get Uri pass
+         *
+         * @return {string}
+         *
+         * @method
+         *
+         * @since  1.0.0
+         */
+        getPass()
+        {
+            return this.pass;
+        };
+
+        /**
+         * Get Uri query
+         *
+         * @return {string}
+         *
+         * @method
+         *
+         * @since  1.0.0
+         */
+        getQuery()
+        {
+            return this.queryString;
+        };
+
+        /**
+         * Get Uri
+         *
+         * @return {string}
+         *
+         * @method
+         *
+         * @since  1.0.0
+         */
+        getUri()
+        {
+            return this.uri;
+        };
+
+        /**
+         * Get Uri fragment
+         *
+         * @return {string}
+         *
+         * @method
+         *
+         * @since  1.0.0
+         */
+        getFragment()
+        {
+            return this.fragment;
+        };
+
+        /**
+         * Get Uri path
+         *
+         * @return {string}
+         *
+         * @method
+         *
+         * @since  1.0.0
+         */
+        getPath()
+        {
+            return this.path;
+        };
+
+        /**
+         * Get Uri path offset
+         *
+         * @return {int}
+         *
+         * @method
+         *
+         * @since  1.0.0
+         */
+        getPathOffset()
+        {
+            return jsOMS.substr_count(this.root, '/') - 1;
+        };
+    }
 }(window.jsOMS = window.jsOMS || {}));

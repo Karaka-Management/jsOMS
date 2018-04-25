@@ -16,79 +16,81 @@
     /** @namespace jsOMS.Config */
     jsOMS.Autoloader.defineNamespace('jsOMS.Config');
 
-    /**
-     * @constructor
-     *
-     * @since 1.0.0
-     */
-    jsOMS.Config.Options = function ()
-    {
-        this.options = {};
-    };
+    jsOMS.Config.Options = class {
+        /**
+         * @constructor
+         *
+         * @since 1.0.0
+         */
+        constructor ()
+        {
+            this.options = {};
+        };
 
-    /**
-     * Set option.
-     *
-     * @param {int|string} key Option key
-     * @param {boolean|int|float|string|Array} value Option value
-     * @param {boolean} [overwrite] Overwrite value
-     *
-     * @return {boolean}
-     *
-     * @method
-     *
-     * @since 1.0.0
-     */
-    jsOMS.Config.Options.prototype.set = function (key, value, overwrite = false)
-    {
-        if (overwrite || typeof this.options[key] === 'undefined') {
-            this.options[key] = value;
+        /**
+         * Set option.
+         *
+         * @param {int|string} key Option key
+         * @param {boolean|int|float|string|Array} value Option value
+         * @param {boolean} [overwrite] Overwrite value
+         *
+         * @return {boolean}
+         *
+         * @method
+         *
+         * @since 1.0.0
+         */
+        set (key, value, overwrite = false)
+        {
+            if (overwrite || typeof this.options[key] === 'undefined') {
+                this.options[key] = value;
 
-            return true;
-        }
+                return true;
+            }
 
-        return false;
-    };
+            return false;
+        };
 
-    /**
-     * Get option.
-     *
-     * @param {int|string} key Option key
-     *
-     * @return {boolean|int|float|string|Array}
-     *
-     * @method
-     *
-     * @since 1.0.0
-     */
-    jsOMS.Config.Options.prototype.get = function (key)
-    {
-        if (typeof this.options[key] !== 'undefined') {
-            return this.options[key];
-        }
+        /**
+         * Get option.
+         *
+         * @param {int|string} key Option key
+         *
+         * @return {boolean|int|float|string|Array}
+         *
+         * @method
+         *
+         * @since 1.0.0
+         */
+        get (key)
+        {
+            if (typeof this.options[key] !== 'undefined') {
+                return this.options[key];
+            }
 
-        return null;
-    };
+            return null;
+        };
 
-    /**
-     * Remove option.
-     *
-     * @param {int|string} key Option key
-     *
-     * @return {boolean}
-     *
-     * @method
-     *
-     * @since 1.0.0
-     */
-    jsOMS.Config.Options.prototype.remove = function (key)
-    {
-        if (typeof this.options[key] !== 'undefined') {
-            delete this.options[key];
+        /**
+         * Remove option.
+         *
+         * @param {int|string} key Option key
+         *
+         * @return {boolean}
+         *
+         * @method
+         *
+         * @since 1.0.0
+         */
+        remove (key)
+        {
+            if (typeof this.options[key] !== 'undefined') {
+                delete this.options[key];
 
-            return true;
-        }
+                return true;
+            }
 
-        return false;
-    };
+            return false;
+        };
+    }
 }(window.jsOMS = window.jsOMS || {}));

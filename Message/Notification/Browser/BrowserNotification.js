@@ -13,35 +13,37 @@
     /** @namespace jsOMS.Message.Notification.Browser */
     jsOMS.Autoloader.defineNamespace('jsOMS.Message.Notification.Browser');
 
-    jsOMS.Message.Notification.Browser.BrowserNotification = function()
-    {
-        this.status = 0;
-    };
+    jsOMS.Message.Notification.Browser.BrowserNotification = class {
+        constructor()
+        {
+            this.status = 0;
+        };
 
-    jsOMS.Message.Notification.Browser.BrowserNotification.prototype.setStatus = function(status)
-    {
-        this.status = status;
-    };
+        setStatus (status)
+        {
+            this.status = status;
+        };
 
-    jsOMS.Message.Notification.Browser.BrowserNotification.prototype.requestPermission = function()
-    {
-        const self = this;
+        requestPermission ()
+        {
+            const self = this;
 
-        /** global: Notification */
-        if(Notification.permission !== 'granted' && Notification.permission !== 'denied') {
-            Notification.requestPermission(function(permission) {
-                if(permission === 'granted') {
-                    let msg = new jsOMS.Message.Notification.NotificationMessage();
+            /** global: Notification */
+            if(Notification.permission !== 'granted' && Notification.permission !== 'denied') {
+                Notification.requestPermission(function(permission) {
+                    if(permission === 'granted') {
+                        let msg = new jsOMS.Message.Notification.NotificationMessage();
 
-                    self.send(msg);
-                }
-            });
-        }
-    };
+                        self.send(msg);
+                    }
+                });
+            }
+        };
 
-    jsOMS.Message.Notification.Browser.BrowserNotification.prototype.send = function(msg)
-    {
-        /** global: Notification */
-        let n = new Notification(/* ... */);
-    };
+        send (msg)
+        {
+            /** global: Notification */
+            let n = new Notification(/* ... */);
+        };
+    }
 }(window.jsOMS = window.jsOMS || {}));
