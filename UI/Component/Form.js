@@ -229,7 +229,9 @@
 
                     if ((successInject = form.getSuccess()) !== null) {
                         successInject(response);
-                    }
+                    } else if (typeof response.get(0).type !== 'undefined') {
+                        self.app.responseManager.run(response.get(0).type, response.get(0), request);
+                    } 
                 } catch (e) {
                     console.log(e);
                     
