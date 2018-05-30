@@ -26,11 +26,6 @@
             return this.responses[id];
         };
 
-        getByIndex (index)
-        {
-            return this.responses[index];
-        };
-
         count ()
         {
             return this.responses.length;
