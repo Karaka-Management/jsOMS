@@ -14,6 +14,8 @@
 
     jsOMS.Message.Notification.NotificationLevel = Object.freeze({
         OK: 'ok',
+        INFO: 'info',
+        WARNING: 'warning',
         ERROR: 'error'
     });
 }(window.jsOMS = window.jsOMS || {}));

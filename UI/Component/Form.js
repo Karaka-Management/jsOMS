@@ -191,6 +191,10 @@
         submitForm (form)
         {
             if (!form.isValid()) {
+                this.app.notifyManager.send(
+                    new jsOMS.Message.Notification.NotificationMessage(jsOMS.Message.Notification.NotificationLevel.INFO, 'Info', 'Invalid form input. Please check the form.'), jsOMS.Message.Notification.NotificationType.APP_NOTIFICATION
+                );
+
                 jsOMS.Log.Logger.instance.debug('Form "' + form.getId() + '" has invalid values.');
                 return;
             }
