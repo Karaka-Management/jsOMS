@@ -41,6 +41,11 @@ describe('UriFactoryTest', function ()
     {
         it('Testing query clearing', function ()
         {
+            jsOMS.Uri.UriFactory.setQuery('Valid', 'query1');
+            jsOMS.Uri.UriFactory.setQuery('Valid', 'query2', true);
+            jsOMS.Uri.UriFactory.setQuery('Valid', 'query3', false);
+            jsOMS.Uri.UriFactory.setQuery('/valid2', 'query4');
+
             expect(jsOMS.Uri.UriFactory.clear('Valid')).toBeTruthy();
             expect(jsOMS.Uri.UriFactory.clear('Valid')).toBeFalsy();
             expect(jsOMS.Uri.UriFactory.getQuery('Valid')).toBe(null);

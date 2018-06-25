@@ -45,7 +45,7 @@
          *
          * @param {string} key
          *
-         * @return {string}
+         * @return {null|string}
          *
          * @method
          *
@@ -53,11 +53,7 @@
          */
         static getQuery (key)
         {
-            if (!jsOMS.Uri.UriFactory.uri.hasOwnProperty(key)) {
-                return '';
-            }
-
-            return jsOMS.Uri.UriFactory.uri[key];
+            return jsOMS.Uri.UriFactory.uri.hasOwnProperty(key) ? jsOMS.Uri.UriFactory.uri[key] : null;
         };
 
         /**
