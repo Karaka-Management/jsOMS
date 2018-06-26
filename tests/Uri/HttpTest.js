@@ -2,15 +2,6 @@ describe('HttpTest', function ()
 {
     "use strict";
 
-    /** global: jsOMS */
-    beforeEach(function ()
-    {
-    });
-
-    afterEach(function ()
-    {
-    });
-
     describe('testParseUrl', function ()
     {
         it('Testing php parsing mode', function ()

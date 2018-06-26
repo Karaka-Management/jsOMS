@@ -11,7 +11,6 @@
     "use strict";
 
     jsOMS.Autoloader.defineNamespace('jsOMS.Account');
-
     
     jsOMS.Account.AccountManager = class {
         /**
@@ -63,7 +62,7 @@
          *
          * @param {int} id Account id
          *
-         * @return {Object}
+         * @return {null|Object}
          *
          * @method
          *
@@ -75,7 +74,7 @@
                 return this.accounts[id];
             }
 
-            return undefined;
+            return null;
         };
     }
 }(window.jsOMS = window.jsOMS || {}));

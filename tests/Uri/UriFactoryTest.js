@@ -2,15 +2,6 @@ describe('UriFactoryTest', function ()
 {
     "use strict";
 
-    /** global: jsOMS */
-    beforeEach(function ()
-    {
-    });
-
-    afterEach(function ()
-    {
-    });
-
     describe('testDefault', function ()
     {
         it('Testing default functionality', function ()

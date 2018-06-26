@@ -2,14 +2,6 @@ describe('AssetManagerTest', function ()
 {
     "use strict";
 
-    beforeEach(function ()
-    {
-    });
-
-    afterEach(function ()
-    {
-    });
-
     describe('testDefault', function ()
     {
         it('Testing default functionality', function ()
@@ -24,10 +16,14 @@ describe('AssetManagerTest', function ()
     {
         it('Testing asset interaction functionality', function ()
         {
-            let asset = new jsOMS.Asset.AssetManager();
-            expect(asset.get('../../../jsOMS/Utils/oLib.js')).not.toBe(null);
-            expect(asset.remove('../../../jsOMS/Utils/oLib.js')).toBeTruthy();
-            expect(asset.load('../../../jsOMS/Utils/oLib.js', 'js')).not.toBeFalsy();
+            let asset = new jsOMS.Asset.AssetManager(),
+                base = window.location.href.substr(0, window.location.href.length - 15);
+
+            asset.registerLoadedAssets();
+
+            expect(asset.get(base + '../Utils/oLib.js')).not.toBe(null);
+            expect(asset.remove(base + '../Utils/oLib.js')).toBeTruthy();
+            expect(asset.load(base + '../Utils/oLib.js', 'js')).not.toBeFalsy();
         });
     });
 });
