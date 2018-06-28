@@ -28,12 +28,14 @@
             }
         }
 
-        return stack.pop();
+        const result = stack.pop();
+
+        return !isNaN(parseFloat(result)) && isFinite(result) ? result : null;
     };
 
     jsOMS.parseValue = function(value)
     {
-        return value.indexOf('.') === -1 ? parseInt(value) : parseFloat(value);
+        return typeof value === 'string' ? (value.indexOf('.') === -1 ? parseInt(value) : parseFloat(value)) : value;
     }
 
     jsOMS.shuntingYard = function(equation)
@@ -41,8 +43,8 @@
         const stack     = [];
         const operators = {
             '^': {precedence: 4, order: 1},
-            '/': {precedence: 3, order: -1},
             '*': {precedence: 3, order: -1},
+            '/': {precedence: 3, order: -1},
             '+': {precedence: 2, order: -1},
             '-': {precedence: 2, order: -1},
         };
@@ -51,9 +53,11 @@
         equation = equation.replace(/\s+/g, '');
         equation = equation.split(/([\+\-\*\/\^\(\)])/).filter(function (n) { return n !== '' });
 
-        let length = equation.length;
+        const length = equation.length;
+        let token;
+
         for (let i = 0; i < length; ++i) {
-            let token = equation[i];
+            token = equation[i];
 
             if (!isNaN(parseFloat(token)) && isFinite(token)) {
                 output.push(token);
