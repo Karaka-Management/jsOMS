@@ -85,7 +85,7 @@
                 return false;
             }
 
-            for (let id  in this.groups[group]) {
+            for (let id in this.groups[group]) {
                 if (!this.groups[group].hasOwnProperty(id) || !this.groups[group][id]) {
                     return true;
                 }
@@ -109,10 +109,8 @@
          *
          * @since 1.0.0
          */
-        trigger (group, id, data)
+        trigger (group, id = '', data = null)
         {
-            id = typeof id !== 'undefined' ? id : 0;
-
             if (!this.callbacks.hasOwnProperty(group)) {
                 return false;
             }
@@ -130,9 +128,11 @@
                 } else if (this.callbacks[group].reset) {
                     this.reset(group);
                 }
+
+                return true;
             }
 
-            return true;
+            return false;
         };
 
         /**
@@ -148,8 +148,51 @@
          */
         detach (group)
         {
-            delete this.callbacks[group];
-            delete this.groups[group];
+            return this.detachCallback(group) | this.detachGroup(group);
+        };
+
+        /**
+         * Detach callback
+         *
+         * @param {string|int} group Group id
+         *
+         * @return {void}
+         *
+         * @method
+         *
+         * @since 1.0.0
+         */
+        detachCallback(group)
+        {
+            if (this.callbacks.hasOwnProperty(group)) {
+                delete this.callbacks[group];
+
+                return true;
+            }
+
+            return false;
+        };
+
+        /**
+         * Detach group
+         *
+         * @param {string|int} group Group id
+         *
+         * @return {void}
+         *
+         * @method
+         *
+         * @since 1.0.0
+         */
+        detachGroup(group)
+        {
+            if (this.groups.hasOwnProperty(group)) {
+                delete this.groups[group];
+
+                return true;
+            }
+
+            return false;
         };
 
         /**
@@ -188,7 +231,7 @@
          */
         count ()
         {
-            return this.callbacks.length;
+            return Object.keys(this.callbacks).length;
         };
     }
 }(window.jsOMS = window.jsOMS || {}));

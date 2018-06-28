@@ -2,11 +2,11 @@ describe('LocalStorageTest', function ()
 {
     "use strict";
 
-    beforeEach(function ()
+    describe('testDefault', function ()
     {
-    });
-
-    afterEach(function ()
-    {
+        it('Testing default functionality', function ()
+        {
+            expect(jsOMS.DataStorage.LocalStorage.available()).toBeTruthy();
+        });
     });
 });

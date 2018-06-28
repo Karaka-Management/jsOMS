@@ -2,14 +2,6 @@ describe('OptionsTest', function ()
 {
     "use strict";
 
-    beforeEach(function ()
-    {
-    });
-
-    afterEach(function ()
-    {
-    });
-
     describe('testDefault', function ()
     {
         it('Testing default functionality', function ()

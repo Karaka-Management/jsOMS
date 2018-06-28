@@ -9,7 +9,7 @@ describe('AccountTypeTest', function ()
             expect(Object.keys(jsOMS.Account.AccountType).length).toBe(2);
         });
 
-        it('Testing amount of enums', function ()
+        it('Testing values of enums', function ()
         {
             expect(jsOMS.Account.AccountType.USER).toBe(0);
             expect(jsOMS.Account.AccountType.GROUP).toBe(1);
