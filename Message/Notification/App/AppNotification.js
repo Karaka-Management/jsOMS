@@ -24,11 +24,6 @@
             this.status = status;
         };
 
-        requestPermission ()
-        {
-            const self = this;
-        };
-
         send (msg)
         {
             const tpl = document.getElementById('app-message');
