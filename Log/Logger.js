@@ -22,11 +22,11 @@
          *
          * @since 1.0.0
          */
-        constructor (verbose, ui, remote)
+        constructor (verbose = true, ui = true, remote = false)
         {
-            this.verbose = typeof verbose !== 'undefined' ? verbose : true;
-            this.ui      = typeof ui !== 'undefined' ? ui : true;
-            this.remote  = typeof remote !== 'undefined' ? remote : false;
+            this.verbose = verbose;
+            this.ui      = ui;
+            this.remote  = remote;
         };
 
         /**
@@ -42,7 +42,7 @@
          *
          * @since  1.0.0
          */
-        static getInstance (verbose, ui, remote)
+        static getInstance (verbose = true, ui = true, remote = false)
         {
             if(!jsOMS.Log.Logger.instance) {
                 jsOMS.Log.Logger.instance = new jsOMS.Log.Logger(verbose, ui, remote);
@@ -66,15 +66,15 @@
          */
         interpolate (message, context, level)
         {
-            let newMessage = jsOMS.Log.Logger.MSG_FULL;
+            message = typeof message === 'undefined' ? jsOMS.Log.Logger.MSG_FULL : message;
 
             for (let replace in context) {
                 if (context.hasOwnProperty(replace)) {
-                    newMessage = newMessage.replace('{' + replace + '}', context[replace]);
+                    message = message.replace('{' + replace + '}', context[replace]);
                 }
             }
 
-            return newMessage;
+            return message;
         };
 
         /**
@@ -121,30 +121,7 @@
             context = this.createContext(message, context, level);
 
             if (this.verbose) {
-                let color = '000';
-
-                switch (level) {
-                    case 'info':
-                    case 'notice':
-                    case 'log':
-                        color = '000';
-                        break;
-                    case 'debug':
-                        color = '289E39';
-                        break;
-                    case 'warning':
-                    case 'alert':
-                        color = 'FFA600';
-                        break;
-                    case 'error':
-                    case 'critical':
-                    case 'emergency':
-                        color = 'CF304A';
-                        break;
-                    default:
-                }
-
-                console.log('%c' + this.interpolate(message, context, level), 'color: #' + color);
+                this.writeVerbose(message, context, level);
             }
 
             if (this.ui) {
@@ -152,17 +129,76 @@
             }
 
             if (this.remote) {
-                let request = new jsOMS.Message.Request.Request();
-                request.setData(context);
-                request.setType(jsOMS.Message.Response.Response.ResponseType.JSON);
-                request.setUri('/{/lang}/api/log');
-                request.setMethod(jsOMS.Message.Request.Request.RequestMethod.POST);
-                request.setRequestHeader('Content-Type', 'application/json');
-                request.setSuccess(function (xhr)
-                {
-                });
-                request.send();
+                this.writeRemote(message, context, level);
             }
+        };
+
+        /**
+         * Create local log message
+         *
+         * @param {string} message Message to display
+         * @param {Object} [context] Context to put into message
+         * @param {string} level Log level
+         *
+         * @return {void}
+         *
+         * @method
+         *
+         * @since  1.0.0
+         */
+        writeVerbose (message, context, level)
+        {
+            let color = '000';
+
+            switch (level) {
+                case 'info':
+                case 'notice':
+                case 'log':
+                    color = '000';
+                    break;
+                case 'debug':
+                    color = '289E39';
+                    break;
+                case 'warning':
+                case 'alert':
+                    color = 'FFA600';
+                    break;
+                case 'error':
+                case 'critical':
+                case 'emergency':
+                    color = 'CF304A';
+                    break;
+                default:
+            }
+
+            console.log('%c' + this.interpolate(message, context, level), 'color: #' + color);
+        };
+
+        /**
+         * Create remote log message
+         *
+         * @param {string} message Message to display
+         * @param {Object} [context] Context to put into message
+         * @param {string} level Log level
+         *
+         * @return {void}
+         *
+         * @method
+         *
+         * @since  1.0.0
+         */
+        writeRemote (message, context, level)
+        {
+            let request = new jsOMS.Message.Request.Request();
+            request.setData(context);
+            request.setType(jsOMS.Message.Response.Response.ResponseType.JSON);
+            request.setUri('/{/lang}/api/log');
+            request.setMethod(jsOMS.Message.Request.Request.RequestMethod.POST);
+            request.setRequestHeader('Content-Type', 'application/json');
+            request.setSuccess(function (xhr)
+            {
+            });
+            request.send();
         };
 
         /**
@@ -322,7 +358,6 @@
         /**
          * Create log message
          *
-         * @param {string} level Log level
          * @param {string} message Message to display
          * @param {Object} [context] Context to put into message
          *
@@ -332,9 +367,9 @@
          *
          * @since  1.0.0
          */
-        console (level, message, context = {})
+        console (message, context = {})
         {
-            this.write(message, context, jsOMS.Log.LogLevel.INFO);
+            this.writeVerbose(message, context, jsOMS.Log.LogLevel.INFO);
         };
     }
 
