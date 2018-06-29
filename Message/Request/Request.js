@@ -19,9 +19,9 @@
          *
          * @since 1.0.0
          */
-        constructor (uri, method, type)
+        constructor (uri = null, method, type)
         {
-            this.uri           = typeof uri !== 'undefined' ? uri : null;
+            this.uri           = uri;
             this.method        = typeof method !== 'undefined' ? method : jsOMS.Message.Request.RequestMethod.GET;
             this.requestHeader = [];
             this.result        = {};
