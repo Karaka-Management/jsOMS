@@ -79,14 +79,15 @@
         str    += '';
         substr += '';
 
-        if (substr.length <= 0) {
+        const step = substr.length;
+
+        if (step <= 0) {
             return (str.length + 1);
         }
 
         let n    = 0,
-            pos  = 0,
-            step = substr.length;
-
+            pos  = 0;
+        
         while (true) {
             pos = str.indexOf(substr, pos);
 
@@ -126,14 +127,17 @@
 
     jsOMS.strpbrk = function (haystack, chars)
     {
-        const length = haystack.length;
+        const length = chars.length;
+        let found    = haystack.length;
+        let min      = haystack.length;
+        
         for (let i = 0; i < length; ++i) {
-            if (chars.indexOf(haystack.charAt(i)) >= 0) {
-                return haystack.slice(i);
+            if ((found = haystack.indexOf(chars.charAt(i))) >= 0 && min > found) {
+                min = found;
             }
         }
 
-        return false;
+        return haystack.slice(min);
     };
 
     jsOMS.htmlspecialchars = function (text, quotes) {

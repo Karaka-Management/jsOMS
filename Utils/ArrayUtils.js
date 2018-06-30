@@ -13,7 +13,7 @@
     "use strict";
 
     /**
-     * Trim char from string
+     * Get value from array/object
      *
      * @param {string} path Array path
      * @param {Object} data Object
@@ -25,10 +25,10 @@
      *
      * @since  1.0.0
      */
-    jsOMS.getArray = function(path, data, delim)
+    jsOMS.getArray = function(path, data, delim = '/')
     {
-        const pathParts = path.split(delim);
-        let current     = data;
+        let pathParts = path.split(delim);
+        let current   = data;
 
         for (let key in pathParts) {
             if (!pathParts.hasOwnProperty(key)) {
@@ -39,7 +39,7 @@
                 return null;
             }
 
-            current = current[key];
+            current = current[pathParts[key]];
         }
 
         return current;

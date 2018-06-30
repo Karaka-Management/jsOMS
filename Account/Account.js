@@ -1,5 +1,5 @@
 /**
- * Account Manager.
+ * Account.
  *
  * @copyright  Dennis Eichhorn
  * @license    OMS License 1.0

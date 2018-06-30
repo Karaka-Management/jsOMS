@@ -1,5 +1,5 @@
 /**
- * Module factory.
+ * Module manager.
  *
  * @copyright  Dennis Eichhorn
  * @license    OMS License 1.0
