@@ -135,28 +135,29 @@
          */
         static unique (url)
         {
-            const parts = url.split('?');
+            const parts = url.replace(/\?/g, '&').split('&'),
+                full = parts[0];
 
-            if (parts.length >= 2) {
-                let full   = parts[1],
-                    pars   = full.split('&'),
-                    comps  = {},
+            if (parts.length > 1) {
+                parts.shift();
+
+                let comps  = {},
                     spl    = null,
-                    length = pars.length;
+                    length = parts.length;
 
                 for (let i = 0; i < length; ++i) {
-                    spl           = pars[i].split('=');
+                    spl           = parts[i].split('=');
                     comps[spl[0]] = spl[1];
                 }
 
-                pars = [];
+                let pars = [];
                 for (let a in comps) {
                     if (comps.hasOwnProperty(a)) {
                         pars.push(a + '=' + comps[a]);
                     }
                 }
 
-                url = parts[0] + '?' + pars.join('&');
+                url = full + '?' + pars.join('&');
             }
 
             return url;
