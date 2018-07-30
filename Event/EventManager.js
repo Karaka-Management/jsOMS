@@ -115,8 +115,6 @@
                 return false;
             }
 
-            console.log(group, id);
-
             if (typeof this.groups[group] !== 'undefined') {
                 this.groups[group][id] = true;
             }
