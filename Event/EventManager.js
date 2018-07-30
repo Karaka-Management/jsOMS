@@ -111,9 +111,11 @@
          */
         trigger (group, id = '', data = null)
         {
-            if (!this.callbacks.hasOwnProperty(group)) {
+            if (!this.callbacks.hasOwnProperty(group) || Math.abs(Date.now() - this.callbacks[group].lastRun) < 500) {
                 return false;
             }
+
+            console.log(group, id);
 
             if (typeof this.groups[group] !== 'undefined') {
                 this.groups[group][id] = true;
@@ -121,6 +123,7 @@
 
             if (!this.hasOutstanding(group)) {
                 // todo if it is route then call dispatcher?
+                this.callbacks[group].lastRun = Date.now();
                 this.callbacks[group].func(data);
 
                 if (this.callbacks[group].remove) {
@@ -215,7 +218,7 @@
                 return false;
             }
 
-            this.callbacks[group] = {remove: remove, reset: reset, func: callback};
+            this.callbacks[group] = {remove: remove, reset: reset, func: callback, lastRun: 0};
 
             return true;
         };

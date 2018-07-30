@@ -200,7 +200,7 @@
             }
 
             if (form.getMethod() !== jsOMS.Message.Request.RequestMethod.GET
-                && Math.floor(Date.now()) - form.getLastSubmit() < 500
+                && Math.abs(Date.now() - form.getLastSubmit()) < 500
             ) {
                 return;
             }
@@ -235,10 +235,10 @@
                         successInject(response);
                     } else if (typeof response.get(0) !== 'undefined' && typeof response.get(0).type !== 'undefined') {
                         self.app.responseManager.run(response.get(0).type, response.get(0), request);
-                    } 
+                    }
                 } catch (e) {
                     console.log(e);
-                    
+
                     jsOMS.Log.Logger.instance.error('Invalid form response. \n'
                         + 'URL: ' + form.getAction() + '\n'
                         + 'Request: ' + JSON.stringify(form.getData()) + '\n'
@@ -247,7 +247,7 @@
                 }
             });
 
-            request.setResultCallback(0, function (xhr) 
+            request.setResultCallback(0, function (xhr)
             {
                 self.app.notifyManager.send(
                     new jsOMS.Message.Notification.NotificationMessage(

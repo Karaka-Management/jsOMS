@@ -78,7 +78,6 @@
             }
 
             let childLength = c.length;
-
             for (let j = 0; j < childLength; ++j) {
                 this.bindListener(c[j].id, listeners[i]);
             }
