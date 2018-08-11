@@ -1,5 +1,6 @@
 language: js
 before_script:
+    - composer install
     - git clone -b develop https://github.com/Orange-Management/Build.git
     - chmod -R 755 Build/Hooks
 script:
