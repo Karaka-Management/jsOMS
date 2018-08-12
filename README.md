@@ -1,4 +1,4 @@
-[![Maintainability](https://api.codeclimate.com/v1/badges/084fdca4353fe35c4b8a/maintainability)](https://codeclimate.com/github/Orange-Management/jsOMS/maintainability)
+[![Build Status](https://travis-ci.org/Orange-Management/jsOMS.svg?branch=develop)](https://travis-ci.org/Orange-Management/jsOMS)
 
 # General
 
