@@ -32,7 +32,7 @@
             this.bind();
 
             this.success    = null;
-            this.lastSubmit = 0; 
+            this.lastSubmit = 0;
         };
 
         /**
@@ -155,7 +155,7 @@
             return this.getUniqueFormElements(
                 Array.prototype.slice.call(inputs).concat(
                     Array.prototype.slice.call(selects),
-                    Array.prototype.slice.call(textareas), 
+                    Array.prototype.slice.call(textareas),
                     Array.prototype.slice.call(external)
                 )
             );
@@ -163,7 +163,7 @@
 
         /**
          * Get unique form elements
-         * 
+         *
          * @param {Array} arr Form element array
          *
          * @return {Array}
@@ -313,8 +313,8 @@
                 return;
             }
 
-            this.method = e.attributes['method'].value;
-            this.action = e.action;
+            this.method = typeof e.attributes['method'] !== 'undefined' ? e.attributes['method'].value : 'EMPTY';
+            this.action = typeof e.action !== 'undefined' ? e.action : 'EMPTY';
 
             const elements = this.getFormElements(),
                 length     = elements.length;
