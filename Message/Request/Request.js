@@ -25,8 +25,10 @@
             this.method        = typeof method !== 'undefined' ? method : jsOMS.Message.Request.RequestMethod.GET;
             this.requestHeader = [];
             this.result        = {};
-            this.type          = typeof type !== 'undefined' ? type : jsOMS.Message.Response.ResponseType.JSON;
+            this.type          = typeof type !== 'undefined' ? type : jsOMS.Message.Request.RequestType.JSON;
             this.data          = {};
+
+            this.requestHeader['Content-Type'] = this.setContentTypeBasedOnType(this.type);
 
             // todo: create log;
             this.result[0] = function()
@@ -36,6 +38,27 @@
 
             /** global: XMLHttpRequest */
             this.xhr = new XMLHttpRequest();
+        };
+
+        /**
+         * Defines the request content type based on the type
+         *
+         * @return {string}
+         *
+         * @method
+         *
+         * @since  1.0.0
+         */
+        setContentTypeBasedOnType(type)
+        {
+            switch(type) {
+                case jsOMS.Message.Request.RequestType.JSON:
+                    return 'application/json';
+                case jsOMS.Message.Request.RequestType.URL_ENCODE:
+                    return 'application/x-www-form-urlencoded';
+                default:
+                    return 'text/plain';
+            }
         };
 
         /**
@@ -370,13 +393,11 @@
             };
 
             if (this.type === jsOMS.Message.Request.RequestType.JSON) {
-                if (typeof this.requestHeader !== 'undefined' && this.requestHeader['Content-Type'] === 'application/json') {
-                    this.xhr.send(JSON.stringify(this.data));
-                } else {
-                    this.xhr.send(this.queryfy(this.data));
-                }
+                this.xhr.send(JSON.stringify(this.data));
             } else if (this.type === jsOMS.Message.Request.RequestType.RAW) {
                 this.xhr.send(this.data);
+            } else if (this.type === jsOMS.Message.Request.RequestType.URL_ENCODE) {
+                this.xhr.send(this.queryfy(this.data));
             }
         };
     }
