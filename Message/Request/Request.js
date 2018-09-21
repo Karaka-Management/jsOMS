@@ -393,6 +393,7 @@
             };
 
             if (this.type === jsOMS.Message.Request.RequestType.JSON) {
+                console.log(JSON.stringify(this.data));
                 this.xhr.send(JSON.stringify(this.data));
             } else if (this.type === jsOMS.Message.Request.RequestType.RAW) {
                 this.xhr.send(this.data);

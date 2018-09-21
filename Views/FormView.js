@@ -146,11 +146,20 @@
                 return [];
             }
 
-            const selects = form.getElementsByTagName('select'),
-                textareas = form.getElementsByTagName('textarea'),
-                inputs    = form.getElementsByTagName('input'),
-                canvas    = form.getElementsByTagName('canvas'),
-                external  = document.querySelectorAll('[form=' + this.id + ']');
+            const selects   = form.getElementsByTagName('select'),
+                textareas   = form.getElementsByTagName('textarea'),
+                inputs      = [].slice.call(form.getElementsByTagName('input')),
+                canvas      = form.getElementsByTagName('canvas'),
+                external    = document.querySelectorAll('[form=' + this.id + ']'),
+                inputLength = inputs.length;
+
+            for (let i = 0; i < inputLength; ++i) {
+                if (inputs[i].type === 'checkbox' && !inputs[i].checked) {
+                    delete inputs[i];
+                }
+
+                // todo: handle radio here as well
+            }
 
             return this.getUniqueFormElements(
                 Array.prototype.slice.call(inputs).concat(

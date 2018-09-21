@@ -69,12 +69,12 @@
             message = typeof message === 'undefined' ? jsOMS.Log.Logger.MSG_FULL : message;
 
             for (let replace in context) {
-                if (context.hasOwnProperty(replace)) {
+                if (context.hasOwnProperty(replace) && typeof message === 'string') {
                     message = message.replace('{' + replace + '}', context[replace]);
                 }
             }
 
-            return message;
+            return (typeof message) !== 'string' ? JSON.stringify(message) : message;
         };
 
         /**
