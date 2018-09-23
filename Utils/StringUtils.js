@@ -87,7 +87,7 @@
 
         let n    = 0,
             pos  = 0;
-        
+
         while (true) {
             pos = str.indexOf(substr, pos);
 
@@ -130,7 +130,7 @@
         const length = chars.length;
         let found    = haystack.length;
         let min      = haystack.length;
-        
+
         for (let i = 0; i < length; ++i) {
             if ((found = haystack.indexOf(chars.charAt(i))) >= 0 && min > found) {
                 min = found;

@@ -136,7 +136,7 @@
         static unique (url)
         {
             const parts = url.replace(/\?/g, '&').split('&'),
-                full = parts[0];
+                full    = parts[0];
 
             if (parts.length > 1) {
                 parts.shift();

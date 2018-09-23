@@ -32,7 +32,7 @@
          *
          * @since 1.0.0
          */
-        getId () 
+        getId ()
         {
             return this.id;
         };

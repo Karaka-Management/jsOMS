@@ -7,7 +7,7 @@ describe('EventManagerTest', function ()
         it('Testing default functionality', function ()
         {
             let manager = new jsOMS.Event.EventManager();
-            
+
             expect(manager.hasOutstanding('invalid')).toBeFalsy(null);
             expect(manager.trigger('invalid')).toBeFalsy(null);
             expect(manager.count()).toBe(0);
@@ -19,7 +19,7 @@ describe('EventManagerTest', function ()
         it('Testing base functionality', function ()
         {
             let manager = new jsOMS.Event.EventManager();
-            
+
             expect(manager.attach('group', function() { return true; }, false, false)).toBeTruthy();
             expect(manager.attach('group', function() { return true; }, false, false)).toBeFalsy();
             expect(manager.count()).toBe(1);
@@ -31,7 +31,7 @@ describe('EventManagerTest', function ()
         it('Testing reset functionality', function ()
         {
             let manager = new jsOMS.Event.EventManager();
-            
+
             expect(manager.attach('group', function() { return true; }, false, true)).toBeTruthy();
             manager.addGroup('group', 'id1');
             manager.addGroup('group', 'id2');
@@ -48,7 +48,7 @@ describe('EventManagerTest', function ()
         it('Testing detach functionality', function ()
         {
             let manager = new jsOMS.Event.EventManager();
-            
+
             expect(manager.attach('group', function() { return true; }, false, true)).toBeTruthy();
             manager.addGroup('group', 'id1');
             manager.addGroup('group', 'id2');
@@ -65,7 +65,7 @@ describe('EventManagerTest', function ()
         it('Testing remove functionality', function ()
         {
             let manager = new jsOMS.Event.EventManager();
-            
+
             expect(manager.attach('group1', function() { return true; }, true, false)).toBeTruthy();
             expect(manager.attach('group2', function() { return true; }, true, false)).toBeTruthy();
             expect(manager.count()).toBe(2);

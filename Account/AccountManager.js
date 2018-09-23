@@ -11,7 +11,7 @@
     "use strict";
 
     jsOMS.Autoloader.defineNamespace('jsOMS.Account');
-    
+
     jsOMS.Account.AccountManager = class {
         /**
          * @constructor

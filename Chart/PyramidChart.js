@@ -80,8 +80,8 @@
 
     jsOMS.Chart.PyramidChart.prototype.draw = function ()
     {
-        let bar, svg, x, xAxis1, xAxis2, y, yAxis1, yAxis2, xGrid, yGrid, zoom, 
-            self = this, 
+        let bar, svg, x, xAxis1, xAxis2, y, yAxis1, yAxis2, xGrid, yGrid, zoom,
+            self = this,
             box  = this.chart.chartSelect.node().getBoundingClientRect();
 
         this.chart.dimension = {

@@ -39,7 +39,7 @@
 
             tpl.parentNode.appendChild(output);
 
-            setTimeout(function () 
+            setTimeout(function ()
             {
                 document.getElementsByClassName('log-msg')[0].remove();
             }, 3000);

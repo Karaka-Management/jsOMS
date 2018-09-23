@@ -72,7 +72,7 @@
             }
 
             this.recognition.onstart  = function() {};
-            this.recognition.onresult = function(event) 
+            this.recognition.onresult = function(event)
             {
                 let result = jsOMS.trim(event.results[event.resultIndex][0].transcript);
 
@@ -81,16 +81,16 @@
                 }
             };
 
-            this.recognition.onspeechend = function() 
+            this.recognition.onspeechend = function()
             {
             };
 
-            this.recognition.onnomatch = function(event) 
+            this.recognition.onnomatch = function(event)
             {
                 jsOMS.Log.Logger.instance.warning('Couldn\'t recognize speech');
             };
 
-            this.recognition.onerror = function(event) 
+            this.recognition.onerror = function(event)
             {
                 jsOMS.Log.Logger.instance.warning('Error during speech recognition: ' + event.error);
             };

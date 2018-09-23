@@ -72,7 +72,7 @@
 
     jsOMS.Chart.CandlestickChart.prototype.draw = function ()
     {
-        let bar, svg, x, xAxis1, xAxis2, y, yAxis1, yAxis2, xGrid, yGrid, zoom, 
+        let bar, svg, x, xAxis1, xAxis2, y, yAxis1, yAxis2, xGrid, yGrid, zoom,
             self = this,
             mm   = 50;
 
