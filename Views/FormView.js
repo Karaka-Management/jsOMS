@@ -92,7 +92,11 @@
          */
         getSubmit ()
         {
-            return document.querySelectorAll('#' + this.id + ' input[type=submit], button[form=' + this.id + '][type=submit], #' + this.id + ' button[type=submit]');
+            return document.querySelectorAll(
+                '#' + this.id + ' input[type=submit],'
+                + ' button[form=' + this.id + '][type=submit],'
+                + ' #' + this.id + ' button[type=submit]'
+            );
         };
 
         /**

@@ -78,8 +78,9 @@
                     length  = !forms ? 0 : forms.length;
 
                 for (let i = 0; i < length; ++i) {
-                    if (typeof forms[i].getAttribute('id') !== 'undefined' && forms[i].getAttribute('id') !== null && typeof this.ignore[forms[i].getAttribute('id')] === 'undefined') {
-                        this.bindForm(forms[i].getAttribute('id'));
+                    let formId = forms[i].getAttribute('id');
+                    if (typeof formId !== 'undefined' && formId !== null && typeof this.ignore[formId] === 'undefined') {
+                        this.bindForm(formId);
                     }
                 }
             }

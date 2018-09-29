@@ -26,7 +26,7 @@
             this.app           = app;
             this.formManager   = new jsOMS.UI.Component.Form(this.app);
             this.tabManager    = new jsOMS.UI.Component.Tab(this.app.responseManager);
-            this.tableManager  = new jsOMS.UI.Component.Table(this.app.responseManager);
+            this.tableManager  = new jsOMS.UI.Component.Table(this.app);
             this.actionManager = new jsOMS.UI.ActionManager(this.app);
             this.dragNDrop     = new jsOMS.UI.DragNDrop(this.app);
             this.generalUI     = new jsOMS.UI.GeneralUI();

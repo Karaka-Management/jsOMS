@@ -1,40 +1,40 @@
 (function (jsOMS) {
     "use strict";
 
-    jsOMS.TableView = class {
-        constructor () {
-            this.table = null;
+    jsOMS.Autoloader.defineNamespace('jsOMS.Views');
+
+    jsOMS.Views.TableView = class {
+        constructor (id) {
+            this.id = id;
+
+            this.bind();
+        };
+
+        bind ()
+        {
+            const e = document.getElementById(this.id);
         };
 
         /**
-         * None, Pagination, Infinite
+         * Get sorting elements
+         *
+         * @return {Object}
+         *
+         * @since 1.0.0
          */
-        setExtensible () {
-
+        getSorting()
+        {
+            return document.querySelectorAll(
+                '#' + this.id + ' thead .sort-asc,'
+                + ' #' + this.id + ' thead .sort-desc'
+            );
         };
 
-        add (element) {
-
-        };
-
-        addCollection (collection) {
-
-        };
-
-        remove (id) {
-
-        };
-
-        get (id) {
-
-        };
-
-        filter (id) {
-
-        };
-
-        request (filter) {
-
+        getFilter()
+        {
+            return document.querySelectorAll(
+                '#' + this.id + ' thead .filter'
+            );
         };
     }
 }(window.jsOMS = window.jsOMS || {}));

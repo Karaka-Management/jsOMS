@@ -28,7 +28,10 @@
      */
     jsOMS.hasClass = function (ele, cls)
     {
-        return typeof ele !== 'undefined' && ele !== null && typeof ele.className !== 'undefined' && ele.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
+        return typeof ele !== 'undefined'
+            && ele !== null
+            && typeof ele.className !== 'undefined'
+            && ele.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)')) !== null;
     };
 
     /**
@@ -106,7 +109,10 @@
     jsOMS.ready = function (func)
     {
         // TODO: IE problems? + Maybe interactive + loaded can cause problems since elements might not be loaded yet?!!?!!?!
-        if (document.readyState === 'complete' || document.readyState === 'loaded' || document.readyState === 'interactive') {
+        if (document.readyState === 'complete'
+            || document.readyState === 'loaded'
+            || document.readyState === 'interactive'
+        ) {
             func();
         } else {
             document.addEventListener("DOMContentLoaded", function (event)
