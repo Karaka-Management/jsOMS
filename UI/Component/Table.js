@@ -98,7 +98,7 @@
                     jsOMS.preventAll(event);
 
                     const table   = document.getElementById(id),
-                        rows      = table.rows,
+                        rows      = table.getElementsByTagName('tbody')[0].rows,
                         rowLength = rows.length,
                         cellId    = this.closest('td').cellIndex;
 
@@ -109,7 +109,7 @@
                     do {
                         order = false;
 
-                        for (j = 1; j < rowLength - 1; ++j) {
+                        for (j = 0; j < rowLength - 1; ++j) {
                             shouldSwitch = false;
                             row1         = rows[j].getElementsByTagName('td')[cellId];
                             row2         = rows[j + 1].getElementsByTagName('td')[cellId];
