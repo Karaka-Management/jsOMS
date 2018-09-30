@@ -107,7 +107,7 @@
             }
 
             const removable = this.tables[id].getRemovable();
-            length         = removable.length;
+            length          = removable.length;
             for (let i = 0; i < length; ++i) {
                 this.bindRemovable(removable[i], id);
             }
