@@ -105,6 +105,22 @@
             for (let i = 0; i < length; ++i) {
                 this.bindFiltering(filters[i], id);
             }
+
+            const removable = this.tables[id].getRemovable();
+            length         = removable.length;
+            for (let i = 0; i < length; ++i) {
+                this.bindRemovable(removable[i], id);
+            }
+        };
+
+        bindRemovable(remove, id)
+        {
+            remove.addEventListener('click', function (event)
+            {
+                jsOMS.preventAll(event);
+
+                document.getElementById(id).deleteRow(this.closest('tr').rowIndex);
+            });
         };
 
         bindReorder(sorting, id)

@@ -38,6 +38,13 @@
             );
         };
 
+        getRemovable()
+        {
+            return document.querySelectorAll(
+                '#' + this.id + ' tbody .remove'
+            );
+        };
+
         getFilter()
         {
             return document.querySelectorAll(
