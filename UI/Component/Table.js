@@ -132,11 +132,12 @@
                 const table   = document.getElementById(id),
                     rows      = table.getElementsByTagName('tbody')[0].rows,
                     rowLength = rows.length,
-                    rowId     = this.closest('tr').rowIndex;
+                    rowId     = this.closest('tr').rowIndex,
+                    orderType = jsOMS.hasClass(this, 'order-up') ? 1 : -1;
 
-                if (jsOMS.hasClass(this, 'order-up') && rowId > 1) {
+                if (orderType === 1 && rowId > 1) {
                     rows[rowId].parentNode.insertBefore(rows[rowId - 2], rows[rowId]);
-                } else if (jsOMS.hasClass(this, 'order-down') && rowId < rowLength) {
+                } else if (orderType === -1 && rowId < rowLength) {
                     rows[rowId - 1].parentNode.insertBefore(rows[rowId], rows[rowId - 1]);
                 }
             });
@@ -151,9 +152,10 @@
                 const table   = document.getElementById(id),
                     rows      = table.getElementsByTagName('tbody')[0].rows,
                     rowLength = rows.length,
-                    cellId    = this.closest('td').cellIndex;
+                    cellId    = this.closest('td').cellIndex,
+                    sortType  = jsOMS.hasClass(this, 'sort-asc') ? 1 : -1;
 
-                let j, row1, row2, content1, content2,
+                let j, i, row1, row2, content1, content2,
                     order        = false,
                     shouldSwitch = false;
 
@@ -163,21 +165,28 @@
                     for (j = 0; j < rowLength - 1; ++j) {
                         shouldSwitch = false;
                         row1         = rows[j].getElementsByTagName('td')[cellId];
-                        row2         = rows[j + 1].getElementsByTagName('td')[cellId];
                         content1     = row1.getAttribute('data-content') !== null ? row1.getAttribute('data-content') : row1.textContent;
-                        content2     = row2.getAttribute('data-content') !== null ? row2.getAttribute('data-content') : row2.textContent;
 
-                        if (jsOMS.hasClass(this, 'sort-asc') && content1 > content2) {
-                            shouldSwitch = true;
-                            break;
-                        } else if (jsOMS.hasClass(this, 'sort-desc') && content1 < content2) {
-                            shouldSwitch = true;
+                        for (i = j + 1; i < rowLength; ++i) {
+                            row2     = rows[i].getElementsByTagName('td')[cellId];
+                            content2 = row2.getAttribute('data-content') !== null ? row2.getAttribute('data-content') : row2.textContent;
+
+                            if (sortType === 1 && content1 > content2) {
+                                shouldSwitch = true;
+                            } else if (sortType === -1 && content1 < content2) {
+                                shouldSwitch = true;
+                            } else {
+                                break;
+                            }
+                        }
+
+                        if (shouldSwitch === true) {
                             break;
                         }
                     }
 
                     if (shouldSwitch) {
-                        rows[j].parentNode.insertBefore(rows[j + 1], rows[j]);
+                        rows[j].parentNode.insertBefore(rows[i - 1], rows[j]);
                         order = true;
                     }
                 } while (order);
