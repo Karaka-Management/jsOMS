@@ -30,6 +30,14 @@
             );
         };
 
+        getSortableRows()
+        {
+            return document.querySelectorAll(
+                '#' + this.id + ' tbody .order-up,'
+                + ' #' + this.id + ' tbody .order-down'
+            );
+        };
+
         getFilter()
         {
             return document.querySelectorAll(

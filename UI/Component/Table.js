@@ -79,7 +79,6 @@
                 return;
             }
 
-            const self     = this;
             this.tables[id] = new jsOMS.Views.TableView(id);
 
             this.unbind(id);
@@ -91,58 +90,91 @@
 
             const sorting = this.tables[id].getSorting();
             let length    = sorting.length;
-
             for (let i = 0; i < length; ++i) {
-                sorting[i].addEventListener('click', function (event)
-                {
-                    jsOMS.preventAll(event);
+                this.bindSorting(sorting[i], id);
+            }
 
-                    const table   = document.getElementById(id),
-                        rows      = table.getElementsByTagName('tbody')[0].rows,
-                        rowLength = rows.length,
-                        cellId    = this.closest('td').cellIndex;
-
-                    let j, row1, row2, content1, content2,
-                        order        = false,
-                        shouldSwitch = false;
-
-                    do {
-                        order = false;
-
-                        for (j = 0; j < rowLength - 1; ++j) {
-                            shouldSwitch = false;
-                            row1         = rows[j].getElementsByTagName('td')[cellId];
-                            row2         = rows[j + 1].getElementsByTagName('td')[cellId];
-                            content1     = row1.getAttribute('data-content') !== null ? row1.getAttribute('data-content') : row1.textContent;
-                            content2     = row2.getAttribute('data-content') !== null ? row2.getAttribute('data-content') : row2.textContent;
-
-                            if (jsOMS.hasClass(this, 'sort-asc') && content1 > content2) {
-                                shouldSwitch = true;
-                                break;
-                            } else if (jsOMS.hasClass(this, 'sort-desc') && content1 < content2) {
-                                shouldSwitch = true;
-                                break;
-                            }
-                        }
-
-                        if (shouldSwitch) {
-                            rows[j].parentNode.insertBefore(rows[j + 1], rows[j]);
-                            order = true;
-                        }
-                    } while (order);
-                });
+            const order = this.tables[id].getSortableRows();
+            length      = order.length;
+            for (let i = 0; i < length; ++i) {
+                this.bindReorder(order[i], id);
             }
 
             const filters = this.tables[id].getFilter();
             length        = filters.length;
-
             for (let i = 0; i < length; ++i) {
-                filters[i].addEventListener('click', function (event)
-                {
-                    jsOMS.preventAll(event);
-                    // filter algorithm here
-                });
+                this.bindFiltering(filters[i], id);
             }
+        };
+
+        bindReorder(sorting, id)
+        {
+            sorting.addEventListener('click', function (event)
+            {
+                jsOMS.preventAll(event);
+
+                const table   = document.getElementById(id),
+                    rows      = table.getElementsByTagName('tbody')[0].rows,
+                    rowLength = rows.length,
+                    rowId     = this.closest('tr').rowIndex;
+
+                if (jsOMS.hasClass(this, 'order-up') && rowId > 1) {
+                    rows[rowId].parentNode.insertBefore(rows[rowId - 2], rows[rowId]);
+                } else if (jsOMS.hasClass(this, 'order-down') && rowId < rowLength) {
+                    rows[rowId - 1].parentNode.insertBefore(rows[rowId], rows[rowId - 1]);
+                }
+            });
+        };
+
+        bindSorting(sorting, id)
+        {
+            sorting.addEventListener('click', function (event)
+            {
+                jsOMS.preventAll(event);
+
+                const table   = document.getElementById(id),
+                    rows      = table.getElementsByTagName('tbody')[0].rows,
+                    rowLength = rows.length,
+                    cellId    = this.closest('td').cellIndex;
+
+                let j, row1, row2, content1, content2,
+                    order        = false,
+                    shouldSwitch = false;
+
+                do {
+                    order = false;
+
+                    for (j = 0; j < rowLength - 1; ++j) {
+                        shouldSwitch = false;
+                        row1         = rows[j].getElementsByTagName('td')[cellId];
+                        row2         = rows[j + 1].getElementsByTagName('td')[cellId];
+                        content1     = row1.getAttribute('data-content') !== null ? row1.getAttribute('data-content') : row1.textContent;
+                        content2     = row2.getAttribute('data-content') !== null ? row2.getAttribute('data-content') : row2.textContent;
+
+                        if (jsOMS.hasClass(this, 'sort-asc') && content1 > content2) {
+                            shouldSwitch = true;
+                            break;
+                        } else if (jsOMS.hasClass(this, 'sort-desc') && content1 < content2) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+
+                    if (shouldSwitch) {
+                        rows[j].parentNode.insertBefore(rows[j + 1], rows[j]);
+                        order = true;
+                    }
+                } while (order);
+            });
+        };
+
+        bindFiltering(filtering, id)
+        {
+            filtering.addEventListener('click', function (event)
+            {
+                jsOMS.preventAll(event);
+                // filter algorithm here
+            });
         };
     }
 }(window.jsOMS = window.jsOMS || {}));
