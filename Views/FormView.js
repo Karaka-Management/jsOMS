@@ -153,6 +153,7 @@
             const selects   = form.getElementsByTagName('select'),
                 textareas   = form.getElementsByTagName('textarea'),
                 inputs      = [].slice.call(form.getElementsByTagName('input')),
+                buttons     = form.getElementsByTagName('button'),
                 canvas      = form.getElementsByTagName('canvas'),
                 external    = document.querySelectorAll('[form=' + this.id + ']'),
                 inputLength = inputs.length;
@@ -169,6 +170,7 @@
                 Array.prototype.slice.call(inputs).concat(
                     Array.prototype.slice.call(selects),
                     Array.prototype.slice.call(textareas),
+                    Array.prototype.slice.call(buttons),
                     Array.prototype.slice.call(external)
                 )
             );
