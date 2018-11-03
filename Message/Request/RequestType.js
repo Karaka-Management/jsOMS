@@ -16,6 +16,7 @@
     jsOMS.Message.Request.RequestType = Object.freeze({
         JSON: 'json',
         RAW: 'raw',
+        FILE: 'file',
         URL_ENCODE: 'url'
     });
 }(window.jsOMS = window.jsOMS || {}));

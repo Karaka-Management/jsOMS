@@ -56,6 +56,8 @@
                     return 'application/json';
                 case jsOMS.Message.Request.RequestType.URL_ENCODE:
                     return 'application/x-www-form-urlencoded';
+                case jsOMS.Message.Request.RequestType.FILE:
+                    return '';
                 default:
                     return 'text/plain';
             }
@@ -308,7 +310,8 @@
          */
         setType(type)
         {
-            this.type = type;
+            this.type                          = type;
+            this.requestHeader['Content-Type'] = this.setContentTypeBasedOnType(this.type);
         };
 
         /**
@@ -365,11 +368,13 @@
                 this.xhr.open(this.method, jsOMS.Uri.UriFactory.build(this.uri));
 
                 for (let p in this.requestHeader) {
-                    if (this.requestHeader.hasOwnProperty(p)) {
+                    if (this.requestHeader.hasOwnProperty(p) && this.requestHeader[p] !== '') {
                         this.xhr.setRequestHeader(p, this.requestHeader[p]);
                     }
                 }
             }
+
+            console.log(this.xhr);
 
             this.xhr.onreadystatechange = function()
             {
@@ -381,12 +386,6 @@
                             self.result[self.xhr.status](self.xhr);
                         }
                         break;
-                    case 2:
-                        // todo: handle server received request
-                        break;
-                    case 3:
-                        // todo: server is handling request
-                        break;
                     default:
                         // todo: create handler for error returns
                 }
@@ -394,7 +393,9 @@
 
             if (this.type === jsOMS.Message.Request.RequestType.JSON) {
                 this.xhr.send(JSON.stringify(this.data));
-            } else if (this.type === jsOMS.Message.Request.RequestType.RAW) {
+            } else if (this.type === jsOMS.Message.Request.RequestType.RAW
+                || this.type === jsOMS.Message.Request.RequestType.FILE
+            ) {
                 this.xhr.send(this.data);
             } else if (this.type === jsOMS.Message.Request.RequestType.URL_ENCODE) {
                 this.xhr.send(this.queryfy(this.data));

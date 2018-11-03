@@ -177,7 +177,9 @@
                 }
             }
 
-            this.app.eventManager.trigger(form.getId());
+            if (counter < 1) {
+                this.app.eventManager.trigger(form.getId());
+            }
         };
 
         /**
