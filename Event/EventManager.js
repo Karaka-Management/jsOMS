@@ -120,7 +120,6 @@
             }
 
             if (!this.hasOutstanding(group)) {
-                // todo if it is route then call dispatcher?
                 this.callbacks[group].lastRun = Date.now();
                 this.callbacks[group].func(data);
 

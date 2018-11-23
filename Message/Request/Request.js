@@ -30,10 +30,9 @@
 
             this.requestHeader['Content-Type'] = this.setContentTypeBasedOnType(this.type);
 
-            // todo: create log;
             this.result[0] = function()
             {
-                //console.log('invalid response');
+                jsOMS.Log.Logger.instance.error('Invalid response code.');
             };
 
             /** global: XMLHttpRequest */
@@ -387,7 +386,7 @@
                         }
                         break;
                     default:
-                        // todo: create handler for error returns
+                        jsOMS.Log.Logger.instance.warning('Unhandled ready state change.');
                 }
             };
 
