@@ -163,7 +163,6 @@
                     this.callbacks[group].callbacks[i](data);
                 }
 
-                // todo: only removes/resets if last func is remove/reset. this is messy, change
                 if (this.callbacks[group].remove) {
                     this.detach(group);
                 } else if (this.callbacks[group].reset) {
