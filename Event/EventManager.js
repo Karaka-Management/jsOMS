@@ -156,9 +156,14 @@
             }
 
             if (!this.hasOutstanding(group)) {
+                const length                  = this.callbacks[group].callbacks.length;
                 this.callbacks[group].lastRun = Date.now();
-                this.callbacks[group].func(data);
 
+                for (let i = 0; i < length; ++i) {
+                    this.callbacks[group].callbacks[i](data);
+                }
+
+                // todo: only removes/resets if last func is remove/reset. this is messy, change
                 if (this.callbacks[group].remove) {
                     this.detach(group);
                 } else if (this.callbacks[group].reset) {
@@ -247,11 +252,11 @@
          */
         attach (group, callback, remove = false, reset = false)
         {
-            if (this.callbacks.hasOwnProperty(group)) {
-                return false;
+            if (!this.callbacks.hasOwnProperty(group)) {
+                this.callbacks[group] = {remove: remove, reset: reset, callbacks: [], lastRun: 0};
             }
 
-            this.callbacks[group] = {remove: remove, reset: reset, func: callback, lastRun: 0};
+            this.callbacks[group].callbacks.push(callback);
 
             return true;
         };
