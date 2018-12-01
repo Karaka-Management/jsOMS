@@ -111,7 +111,43 @@
          */
         trigger (group, id = '', data = null)
         {
-            if (!this.callbacks.hasOwnProperty(group) || Math.abs(Date.now() - this.callbacks[group].lastRun) < 500) {
+            if (this.callbacks.hasOwnProperty(group)) {
+                return this.triggerSingleEvent();
+            }
+
+            const allGroups = Object.keys(this.callbacks),
+                regex = new RegExp($group),
+                length = allGroups.length;
+
+            let result = false;
+
+            for (let i = 0; i < length; ++i) {
+                if (regex.test(allGroups[i])) {
+                    result = result && this.triggerSingleEvent(allGroups[i], id, data);
+                }
+            }
+
+            return result;
+        };
+
+        /**
+         * Trigger event finished
+         *
+         * Executes the callback specified for this group if all events are finished
+         *
+         * @param {string|int} group Group id
+         * @param {string|int} [id] Event id
+         * @param {Object} [data] Data for event
+         *
+         * @return {boolean}
+         *
+         * @method
+         *
+         * @since 1.0.0
+         */
+        triggerSingleEvent (group, id = '', data = null)
+        {
+            if (Math.abs(Date.now() - this.callbacks[group].lastRun) < 500) {
                 return false;
             }
 
