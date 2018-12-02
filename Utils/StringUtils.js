@@ -64,6 +64,25 @@
     };
 
     /**
+     * Validate json string
+     *
+     * @param {string} jsonString String to validate
+     *
+     * @function
+     *
+     * @since  1.0.0
+     */
+    jsOMS.isValidJson = function (jsonString)
+    {
+        try {
+            JSON.parse(jsonString);
+        } catch (e) {
+            return false;
+        }
+        return true;
+    };
+
+    /**
      * Count string in string
      *
      * @param {string} str String to inspect

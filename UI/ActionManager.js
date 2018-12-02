@@ -64,6 +64,13 @@
      */
     jsOMS.UI.ActionManager.prototype.bindElement = function (e)
     {
+        if (!jsOMS.isValidJson(e.getAttribute('data-action'))) {
+            jsOMS.Log.Logger.instance.error('Invalid json string: \'' + e.getAttribute('data-action') + '\'');
+
+            return;
+        }
+
+        // todo: validate json, if invalid log error
         const listeners    = JSON.parse(e.getAttribute('data-action')),
             listenerLength = listeners.length,
             self           = this;
