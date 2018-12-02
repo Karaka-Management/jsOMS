@@ -112,7 +112,7 @@
         trigger (group, id = '', data = null)
         {
             if (this.callbacks.hasOwnProperty(group)) {
-                return this.triggerSingleEvent();
+                return this.triggerSingleEvent(group, id, data);
             }
 
             const allGroups = Object.keys(this.callbacks),
