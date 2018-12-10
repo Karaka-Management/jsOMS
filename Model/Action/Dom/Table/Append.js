@@ -18,14 +18,14 @@ const tableAppend = function (action, callback)
 
     let row, cell, text, rawText;
 
-    for (let i = 0; i < dataLength; i++) {
+    for (let i = 0; i < dataLength; ++i) {
         if (tbody === null) {
             break;
         }
 
         row = tbody.insertRow(tbody.rows.length);
 
-        for (let j = 0; j < headerLength; j++) {
+        for (let j = 0; j < headerLength; ++j) {
             if (row === null) {
                 break;
             }

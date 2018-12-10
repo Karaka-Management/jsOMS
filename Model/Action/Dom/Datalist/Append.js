@@ -15,7 +15,7 @@ const datalistAppend = function (action, callback)
 
     let option;
 
-    for (let i = 0; i < dataLength; i++) {
+    for (let i = 0; i < dataLength; ++i) {
         option       = document.createElement('option');
         option.value = action.data[i][action.text];
         option.setAttribute('data-value', action.data[i][action.value]);
