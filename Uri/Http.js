@@ -71,7 +71,7 @@
                 uri = {};
             let i   = 14;
 
-            while (i--) {
+            while (--i) {
                 if (m[i]) {
                     uri[key[i]] = m[i];
                 }
