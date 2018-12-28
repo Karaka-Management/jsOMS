@@ -27,7 +27,7 @@
      */
     jsOMS.getArray = function(path, data, delim = '/')
     {
-        let pathParts = path.split(delim);
+        let pathParts = jsOMS.ltrim(path, delim).split(delim);
         let current   = data;
 
         for (let key in pathParts) {
