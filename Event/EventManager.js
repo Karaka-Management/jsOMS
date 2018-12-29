@@ -110,7 +110,7 @@
             }
 
             const allGroups = Object.keys(this.callbacks),
-                regex = new RegExp($group),
+                regex = new RegExp(group),
                 length = allGroups.length;
 
             let result = false;

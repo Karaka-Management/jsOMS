@@ -21,7 +21,7 @@ describe('EventManagerTest', function ()
             let manager = new jsOMS.Event.EventManager();
 
             expect(manager.attach('group', function() { return true; }, false, false)).toBeTruthy();
-            expect(manager.attach('group', function() { return true; }, false, false)).toBeFalsy();
+            expect(manager.attach('group', function() { return true; }, false, false)).toBeTruthy();
             expect(manager.count()).toBe(1);
         });
     });
