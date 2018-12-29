@@ -29,8 +29,6 @@
          *
          * @return {void}
          *
-         * @method
-         *
          * @since 1.0.0
          */
         registerLoadedAssets ()
@@ -48,13 +46,11 @@
         /**
          * Load asset.
          *
-         * @param {string} path Asset path
-         * @param {string} filetype Filetype of the asset
+         * @param {string}          path       Asset path
+         * @param {string}          filetype   Filetype of the asset
          * @param {requestCallback} [callback] Callback after load
          *
          * @return {string|boolean}
-         *
-         * @method
          *
          * @since 1.0.0
          */
@@ -126,9 +122,7 @@
          *
          * @param {string} key Key of the asset
          *
-         * @return
-         *
-         * @method
+         * @return {null|string}
          *
          * @since 1.0.0
          */
@@ -149,8 +143,6 @@
          * @param {string} key Key of the asset
          *
          * @return {boolean}
-         *
-         * @method
          *
          * @since 1.0.0
          */

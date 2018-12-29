@@ -29,7 +29,7 @@
          *
          * @param {string} [id] Button id (optional)
          *
-         * @method
+         * @return {void}
          *
          * @since 1.0.0
          */
@@ -49,7 +49,7 @@
          *
          * @param {Object} [e] Element id
          *
-         * @method
+         * @return {void}
          *
          * @since  1.0.0
          */
@@ -71,7 +71,7 @@
          *
          * @param {Object} [e] Element id
          *
-         * @method
+         * @return {void}
          *
          * @since  1.0.0
          */

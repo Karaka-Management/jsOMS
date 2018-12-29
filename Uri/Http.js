@@ -1,7 +1,7 @@
 /**
  * Http Uri.
  *
- * This class is for creating, modifying and analysing http uris.
+ * This class is for creating, modifying and analyzing http uris.
  *
  * @copyright  Dennis Eichhorn
  * @license    OMS License 1.0
@@ -41,14 +41,12 @@
         /**
          * Parse uri
          *
-         * @param {string} str Url to parse
+         * @param {string} str    Url to parse
          * @param {string} [mode] Parsing mode
          *
          * @return {Object}
          *
          * @throws {Error}
-         *
-         * @function
          *
          * @since 1.0.0
          */
@@ -86,11 +84,9 @@
          * Get Uri query parameters.
          *
          * @param {string} query Uri query
-         * @param {string} name Name of the query to return
+         * @param {string} name  Name of the query to return
          *
          * @return {null|string}
-         *
-         * @method
          *
          * @since  1.0.0
          */
@@ -110,8 +106,6 @@
          * @param {string} query Uri query
          *
          * @return {Object}
-         *
-         * @method
          *
          * @since  1.0.0
          */
@@ -153,8 +147,6 @@
          *
          * @return {void}
          *
-         * @method
-         *
          * @since  1.0.0
          */
         set (uri)
@@ -191,8 +183,6 @@
          *
          * @return {void}
          *
-         * @method
-         *
          * @since  1.0.0
          */
         setRootPath(rootPath)
@@ -206,8 +196,6 @@
          *
          * @return {string}
          *
-         * @method
-         *
          * @since  1.0.0
          */
         getBase()
@@ -219,8 +207,6 @@
          * Get Uri scheme
          *
          * @return {string}
-         *
-         * @method
          *
          * @since  1.0.0
          */
@@ -234,8 +220,6 @@
          *
          * @return {string}
          *
-         * @method
-         *
          * @since  1.0.0
          */
         getHost()
@@ -247,8 +231,6 @@
          * Get Uri port
          *
          * @return {string}
-         *
-         * @method
          *
          * @since  1.0.0
          */
@@ -262,8 +244,6 @@
          *
          * @return {string}
          *
-         * @method
-         *
          * @since  1.0.0
          */
         getUser()
@@ -275,8 +255,6 @@
          * Get Uri pass
          *
          * @return {string}
-         *
-         * @method
          *
          * @since  1.0.0
          */
@@ -290,8 +268,6 @@
          *
          * @return {string}
          *
-         * @method
-         *
          * @since  1.0.0
          */
         getQuery()
@@ -303,8 +279,6 @@
          * Get Uri
          *
          * @return {string}
-         *
-         * @method
          *
          * @since  1.0.0
          */
@@ -318,8 +292,6 @@
          *
          * @return {string}
          *
-         * @method
-         *
          * @since  1.0.0
          */
         getFragment()
@@ -332,8 +304,6 @@
          *
          * @return {string}
          *
-         * @method
-         *
          * @since  1.0.0
          */
         getPath()
@@ -345,8 +315,6 @@
          * Get Uri path offset
          *
          * @return {int}
-         *
-         * @method
          *
          * @since  1.0.0
          */

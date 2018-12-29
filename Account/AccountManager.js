@@ -28,7 +28,7 @@
          *
          * @param {Object} account Account
          *
-         * @method
+         * @return {void}
          *
          * @since 1.0.0
          */
@@ -42,7 +42,7 @@
          *
          * @param {int} id Account id
          *
-         * @method
+         * @return {void}
          *
          * @since 1.0.0
          */
@@ -63,8 +63,6 @@
          * @param {int} id Account id
          *
          * @return {null|Object}
-         *
-         * @method
          *
          * @since 1.0.0
          */

@@ -16,6 +16,8 @@
         /**
          * @constructor
          *
+         * @param {string} uri Login uri
+         *
          * @since 1.0.0
          */
         constructor (uri)
@@ -29,8 +31,6 @@
          *
          * @param {Object} account Account
          *
-         * @method
-         *
          * @since 1.0.0
          */
         setAccount (account)
@@ -43,8 +43,6 @@
          *
          * @return {Object}
          *
-         * @method
-         *
          * @since 1.0.0
          */
         getAccount ()
@@ -55,7 +53,7 @@
         /**
          * Login account.
          *
-         * @method
+         * @return {void}
          *
          * @since 1.0.0
          */
@@ -78,7 +76,7 @@
         /**
          * Logout account.
          *
-         * @method
+         * @return {void}
          *
          * @since 1.0.0
          */
@@ -90,7 +88,7 @@
         /**
          * Handle login result.
          *
-         * @method
+         * @return {void}
          *
          * @since 1.0.0
          */

@@ -28,8 +28,6 @@
          *
          * @return {int}
          *
-         * @method
-         *
          * @since 1.0.0
          */
         getId ()

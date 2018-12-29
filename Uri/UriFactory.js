@@ -17,13 +17,11 @@
         /**
          * Set uri query
          *
-         * @param {string} key Query key
-         * @param {string} value Query value
+         * @param {string}  key         Query key
+         * @param {string}  value       Query value
          * @param {boolean} [overwrite] Overwrite if already exists?
          *
          * @return {boolean}
-         *
-         * @function
          *
          * @since 1.0.0
          */
@@ -47,8 +45,6 @@
          *
          * @return {null|string}
          *
-         * @method
-         *
          * @since  1.0.0
          */
         static getQuery (key)
@@ -60,8 +56,6 @@
          * Clear all uri components
          *
          * @return {boolean}
-         *
-         * @method
          *
          * @since  1.0.0
          */
@@ -78,8 +72,6 @@
          * @param {string} key Uri key for component
          *
          * @return {boolean}
-         *
-         * @method
          *
          * @since  1.0.0
          */
@@ -100,8 +92,6 @@
          * @param {string} pattern Uri key pattern to remove
          *
          * @return {boolean}
-         *
-         * @method
          *
          * @since  1.0.0
          */
@@ -128,8 +118,6 @@
          * @param {string} url Url
          *
          * @return {string}
-         *
-         * @function
          *
          * @since 1.0.0
          */
@@ -174,10 +162,10 @@
          * $ = Other data
          * % = Current url
          *
-         * @param {string} uri Raw uri
+         * @param {string} uri       Raw uri
          * @param {Object} [toMatch] Key/value pair to replace in raw
          *
-         * @function
+         * @return {string}
          *
          * @since 1.0.0
          */
@@ -216,17 +204,13 @@
                 parsed = parsed.replace('&', '?');
             }
 
-            parsed = jsOMS.Uri.UriFactory.unique(parsed);
-
-            return parsed;
+            return jsOMS.Uri.UriFactory.unique(parsed);
         };
 
         /**
          * Set uri builder components.
          *
          * @return {void}
-         *
-         * @method
          *
          * @since  1.0.0
          */

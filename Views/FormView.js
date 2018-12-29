@@ -40,6 +40,8 @@
          *
          * Pulled out since this is used in a cleanup process
          *
+         * @return {void}
+         *
          * @since 1.0.0
          */
         initializeMembers ()
@@ -73,11 +75,25 @@
             return this.action;
         };
 
+        /**
+         * Get time of last submit
+         *
+         * @return {int}
+         *
+         * @since 1.0.0
+         */
         getLastSubmit ()
         {
             return this.lastSubmit;
         };
 
+        /**
+         * Update last submit time
+         *
+         * @return {void}
+         *
+         * @since 1.0.0
+         */
         updateLastSubmit ()
         {
             this.lastSubmit = Math.floor(Date.now());
@@ -116,6 +132,8 @@
          *
          * @param {callback} callback Callback
          *
+         * @return {void}
+         *
          * @since 1.0.0
          */
         setSuccess (callback)
@@ -127,6 +145,8 @@
          * Inject submit with post callback
          *
          * @param {callback} callback Callback
+         *
+         * @return {void}
          *
          * @since 1.0.0
          */
@@ -321,6 +341,8 @@
         /**
          * Bind form
          *
+         * @return {void}
+         *
          * @since 1.0.0
          */
         bind ()
@@ -361,6 +383,8 @@
         /**
          * Unbind form
          *
+         * @return {void}
+         *
          * @since 1.0.0
          */
         unbind ()
@@ -389,6 +413,8 @@
 
         /**
          * Clean form
+         *
+         * @return {void}
          *
          * @since 1.0.0
          */

@@ -9,6 +9,15 @@
 (function (jsOMS) {
     "use strict";
 
+    /**
+     * Evaluate math formula
+     *
+     * @param {string} equation Equation
+     *
+     * @return {null|float|int}
+     *
+     * @since 1.0.0
+     */
     jsOMS.mathEvaluate = function(equation)
     {
         const stack = [],
@@ -41,11 +50,29 @@
         return !isNaN(parseFloat(result)) && isFinite(result) ? result : null;
     };
 
+    /**
+     * Parse value
+     *
+     * @param {string} value Value to parse
+     *
+     * @return {float|int}
+     *
+     * @since 1.0.0
+     */
     jsOMS.parseValue = function(value)
     {
         return typeof value === 'string' ? (value.indexOf('.') === -1 ? parseInt(value) : parseFloat(value)) : value;
     }
 
+    /**
+     * Perform shunting yard
+     *
+     * @param {string} value Value to parse
+     *
+     * @return {Array}
+     *
+     * @since 1.0.0
+     */
     jsOMS.shuntingYard = function(equation)
     {
         const stack     = [];

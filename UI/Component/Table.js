@@ -16,6 +16,8 @@
         /**
          * @constructor
          *
+         * @param {Object} app Application
+         *
          * @since 1.0.0
          */
         constructor(app)
@@ -30,7 +32,7 @@
          *
          * @param {string} [id] Element id
          *
-         * @method
+         * @return {void}
          *
          * @since  1.0.0
          */
@@ -56,6 +58,8 @@
          *
          * @param {string} id Table Id
          *
+         * @return {void}
+         *
          * @since 1.0.0
          */
         unbind (id)
@@ -68,7 +72,7 @@
          *
          * @param {Object} [id] Element id
          *
-         * @method
+         * @return {void}
          *
          * @since  1.0.0
          */
@@ -113,6 +117,16 @@
             }
         };
 
+        /**
+         * Removes the closest row on click.
+         *
+         * @param {Element} remove Remove button
+         * @param {Object}  id     Element id
+         *
+         * @return {void}
+         *
+         * @since  1.0.0
+         */
         bindRemovable(remove, id)
         {
             remove.addEventListener('click', function (event)
@@ -123,6 +137,16 @@
             });
         };
 
+        /**
+         * Swaps the row on click.
+         *
+         * @param {Element} sorting Swap button
+         * @param {Object}  id      Element id
+         *
+         * @return {void}
+         *
+         * @since  1.0.0
+         */
         bindReorder(sorting, id)
         {
             sorting.addEventListener('click', function (event)
@@ -143,6 +167,16 @@
             });
         };
 
+        /**
+         * Sorts the table.
+         *
+         * @param {Element} sorting Sort button
+         * @param {Object}  id      Table id
+         *
+         * @return {void}
+         *
+         * @since  1.0.0
+         */
         bindSorting(sorting, id)
         {
             sorting.addEventListener('click', function (event)
@@ -193,6 +227,16 @@
             });
         };
 
+        /**
+         * Filters the table.
+         *
+         * @param {Element} filtering Filter button
+         * @param {Object}  id        Table id
+         *
+         * @return {void}
+         *
+         * @since  1.0.0
+         */
         bindFiltering(filtering, id)
         {
             filtering.addEventListener('click', function (event)

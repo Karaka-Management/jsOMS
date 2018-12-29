@@ -33,9 +33,9 @@
          * Adding the same event overwrites the existing one as "waiting"
          *
          * @param {string|int} group Group id
-         * @param {string|int} id Event id
+         * @param {string|int} id    Event id
          *
-         * @method
+         * @return {void}
          *
          * @since 1.0.0
          */
@@ -55,8 +55,6 @@
          *
          * @return {void}
          *
-         * @method
-         *
          * @since 1.0.0
          */
         reset (group)
@@ -74,8 +72,6 @@
          * @param {string|int} group Group id
          *
          * @return {boolean}
-         *
-         * @method
          *
          * @since 1.0.0
          */
@@ -99,13 +95,11 @@
          *
          * Executes the callback specified for this group if all events are finished
          *
-         * @param {string|int} group Group id
-         * @param {string|int} [id] Event id
-         * @param {Object} [data] Data for event
+         * @param {string|int} group  Group id
+         * @param {string|int} [id]   Event id
+         * @param {Object}     [data] Data for event
          *
          * @return {boolean}
-         *
-         * @method
          *
          * @since 1.0.0
          */
@@ -135,13 +129,11 @@
          *
          * Executes the callback specified for this group if all events are finished
          *
-         * @param {string|int} group Group id
-         * @param {string|int} [id] Event id
-         * @param {Object} [data] Data for event
+         * @param {string|int} group  Group id
+         * @param {string|int} [id]   Event id
+         * @param {Object}     [data] Data for event
          *
          * @return {boolean}
-         *
-         * @method
          *
          * @since 1.0.0
          */
@@ -182,8 +174,6 @@
          *
          * @return {void}
          *
-         * @method
-         *
          * @since 1.0.0
          */
         detach (group)
@@ -197,8 +187,6 @@
          * @param {string|int} group Group id
          *
          * @return {void}
-         *
-         * @method
          *
          * @since 1.0.0
          */
@@ -220,8 +208,6 @@
          *
          * @return {void}
          *
-         * @method
-         *
          * @since 1.0.0
          */
         detachGroup(group)
@@ -238,14 +224,12 @@
         /**
          * Attach callback to event group
          *
-         * @param {string|int} group Group id
-         * @param {function} callback Callback or route for the event
-         * @param {boolean} [remove] Should be removed after execution
-         * @param {boolean} [reset] Reset after triggering
+         * @param {string|int} group    Group id
+         * @param {function}   callback Callback or route for the event
+         * @param {boolean}    [remove] Should be removed after execution
+         * @param {boolean}    [reset]  Reset after triggering
          *
          * @return {boolean}
-         *
-         * @method
          *
          * @since 1.0.0
          */
@@ -264,8 +248,6 @@
          * Count events
          *
          * @return {int}
-         *
-         * @method
          *
          * @since 1.0.0
          */

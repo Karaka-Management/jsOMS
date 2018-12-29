@@ -17,7 +17,7 @@
      *
      * Used to fire event after delay
      *
-     * @function
+     * @return {callback}
      *
      * @since  1.0.0
      */
@@ -37,9 +37,7 @@
      * @param target Target array
      * @param source Source array
      *
-     * @return Array
-     *
-     * @function
+     * @return {Array}
      *
      * @since  1.0.0
      */
@@ -75,6 +73,15 @@
         return obj;
     };
 
+    /**
+     * Check if a value/variable is set
+     *
+     * @param variable Variable to check for existence.
+     *
+     * @return {boolean}
+     *
+     * @since  1.0.0
+     */
     jsOMS.isset = function (variable)
     {
         return typeof variable !== 'undefined' && variable !== null;

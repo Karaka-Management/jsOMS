@@ -25,7 +25,7 @@
         {
             this.app           = app;
             this.formManager   = new jsOMS.UI.Component.Form(this.app);
-            this.tabManager    = new jsOMS.UI.Component.Tab(this.app.responseManager);
+            this.tabManager    = new jsOMS.UI.Component.Tab();
             this.tableManager  = new jsOMS.UI.Component.Table(this.app);
             this.actionManager = new jsOMS.UI.ActionManager(this.app);
             this.dragNDrop     = new jsOMS.UI.DragNDrop(this.app);
@@ -47,7 +47,7 @@
          *
          * @param {string} [id] Element id
          *
-         * @method
+         * @return {void}
          *
          * @since  1.0.0
          */
@@ -86,8 +86,6 @@
          *
          * @return {Object}
          *
-         * @method
-         *
          * @since  1.0.0
          */
         getFormManager()
@@ -99,8 +97,6 @@
          * Get action manager.
          *
          * @return {Object}
-         *
-         * @method
          *
          * @since  1.0.0
          */
@@ -114,8 +110,6 @@
          *
          * @return {Object}
          *
-         * @method
-         *
          * @since  1.0.0
          */
         getDragNDrop()
@@ -127,8 +121,6 @@
          * Get tab manager.
          *
          * @return {Object}
-         *
-         * @method
          *
          * @since  1.0.0
          */
@@ -142,8 +134,6 @@
          *
          * @return {Object}
          *
-         * @method
-         *
          * @since  1.0.0
          */
         getTableManager()
@@ -156,8 +146,6 @@
          *
          * @return {Object}
          *
-         * @method
-         *
          * @since  1.0.0
          */
         getDOMObserver()
@@ -169,8 +157,6 @@
          * Get general UI
          *
          * @return {Object}
-         *
-         * @method
          *
          * @since  1.0.0
          */

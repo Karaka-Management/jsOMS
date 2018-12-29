@@ -19,6 +19,8 @@
          *
          * @param {Object} input Input element
          *
+         * @return {void}
+         *
          * @since 1.0.0
          */
         static unbind = function (input)
@@ -29,9 +31,11 @@
         };
 
         /**
-         * Bind input elment
+         * Bind input element
          *
-         * @param {Object} input Input elment
+         * @param {Object} input Input element
+         *
+         * @return {void}
          *
          * @since 1.0.0
          */
@@ -94,8 +98,10 @@
          *
          * This only applies for datalists that have remote options
          *
-         * @param {Object} input Input elment
-         * @param {Object} datalist Datalist elment
+         * @param {Object} input    Input element
+         * @param {Object} datalist Datalist element
+         *
+         * @return {void}
          *
          * @since 1.0.0
          */
@@ -144,7 +150,9 @@
         /**
          * Remove all datalist options from datalist
          *
-         * @param {Object} datalist Datalist elment
+         * @param {Object} datalist Datalist element
+         *
+         * @return {void}
          *
          * @since 1.0.0
          */

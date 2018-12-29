@@ -18,9 +18,8 @@
          *
          * @since 1.0.0
          */
-        constructor (responseManager)
+        constructor ()
         {
-            this.responseManager = responseManager;
         };
 
         /**
@@ -28,7 +27,7 @@
          *
          * @param {string} [id] Element id
          *
-         * @method
+         * @return {void}
          *
          * @since  1.0.0
          */
@@ -38,7 +37,7 @@
                 const e = document.getElementById(id);
 
                 if (e) {
-                    this.bindElement();
+                    this.bindElement(e);
                 }
             } else {
                 const tabs = document.querySelectorAll('.tabview'),
@@ -53,9 +52,9 @@
         /**
          * Bind & rebind UI element.
          *
-         * @param {Object} [e] Element id
+         * @param {Object} e Element id
          *
-         * @method
+         * @return {void}
          *
          * @since  1.0.0
          */

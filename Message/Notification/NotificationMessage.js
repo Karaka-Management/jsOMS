@@ -13,6 +13,15 @@
     jsOMS.Autoloader.defineNamespace('jsOMS.Message.Notification');
 
     jsOMS.Message.Notification.NotificationMessage = class {
+        /**
+         * @constructor
+         *
+         * @param {string} status  Message status
+         * @param {string} title   Message title
+         * @param {string} message Message content
+         *
+         * @since 1.0.0
+         */
         constructor(status, title, message)
         {
             this.status  = status;

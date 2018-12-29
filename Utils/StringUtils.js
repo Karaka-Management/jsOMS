@@ -15,12 +15,10 @@
     /**
      * Trim char from string
      *
-     * @param {string} str String to trim from
+     * @param {string} str  String to trim from
      * @param {string} char Char to trim
      *
      * @return {string}
-     *
-     * @function
      *
      * @since  1.0.0
      */
@@ -32,12 +30,10 @@
     /**
      * Trim char from right part of string
      *
-     * @param {string} str String to trim from
+     * @param {string} str  String to trim from
      * @param {string} char Char to trim
      *
      * @return {string}
-     *
-     * @function
      *
      * @since  1.0.0
      */
@@ -49,12 +45,10 @@
     /**
      * Trim char from left part of string
      *
-     * @param {string} str String to trim from
+     * @param {string} str  String to trim from
      * @param {string} char Char to trim
      *
      * @return {string}
-     *
-     * @function
      *
      * @since  1.0.0
      */
@@ -68,7 +62,7 @@
      *
      * @param {string} jsonString String to validate
      *
-     * @function
+     * @return {boolean}
      *
      * @since  1.0.0
      */
@@ -85,12 +79,10 @@
     /**
      * Count string in string
      *
-     * @param {string} str String to inspect
+     * @param {string} str    String to inspect
      * @param {string} substr Substring to count
      *
      * @return {int}
-     *
-     * @function
      *
      * @since  1.0.0
      */
@@ -128,8 +120,6 @@
      *
      * @return {int}
      *
-     * @function
-     *
      * @since  1.0.0
      */
     jsOMS.hash = function (str)
@@ -144,6 +134,16 @@
         return res;
     };
 
+    /**
+     * Get the remaining string after finding a certain char
+     *
+     * @param {string} haystack String to to search in
+     * @param {array} chars     Chars to search for
+     *
+     * @return {string}
+     *
+     * @since  1.0.0
+     */
     jsOMS.strpbrk = function (haystack, chars)
     {
         const length = chars.length;
@@ -159,6 +159,16 @@
         return haystack.slice(min);
     };
 
+    /**
+     * Encodes special html characters
+     *
+     * @param {string}  text   String to encode
+     * @param {boolean} quotes Should quotes be allowed
+     *
+     * @return {string}
+     *
+     * @since  1.0.0
+     */
     jsOMS.htmlspecialchars = function (text, quotes) {
         let map = {
             '&': '&amp;',

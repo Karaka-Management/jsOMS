@@ -3,7 +3,7 @@
  *
  * The autoloader is responsible for defining namespaces and dynamically loading javascript
  * files that are not yet included. The intention is to provide a similar functionality as
- * include, import etc. Contrary to it's name the autoloader is not able to truely autoload
+ * include, import etc. Contrary to it's name the autoloader is not able to truly autoload
  * referenced classes.
  *
  * @copyright  Dennis Eichhorn
@@ -24,6 +24,8 @@
      * Define namespace
      *
      * @param {string} namespace Namespace
+     *
+     * @return {void}
      *
      * @since 1.0.0
      */
@@ -51,6 +53,8 @@
     /**
      * Collect all loaded javascript files
      *
+     * @return {void}
+     *
      * @since 1.0.0
      */
     jsOMS.Autoloader.initPreloaded = function ()
@@ -74,6 +78,8 @@
      *
      * @param {string} file Script URI
      *
+     * @return {void}
+     *
      * @since 1.0.0
      */
     jsOMS.Autoloader.addPreloaded = function (file)
@@ -86,8 +92,10 @@
     /**
      * Include script
      *
-     * @param {string} file Script URI
+     * @param {string}   file     Script URI
      * @param {function} callback Callback after script loading
+     *
+     * @return {void}
      *
      * @since 1.0.0
      */

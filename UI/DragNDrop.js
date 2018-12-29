@@ -31,6 +31,8 @@
          *
          * @param {Object} element DOM element
          *
+         * @return {void}
+         *
          * @since 1.0.0
          */
         unbind (element)
@@ -41,6 +43,8 @@
          * Bind element
          *
          * @param {Object} id DOM element
+         *
+         * @return {void}
          *
          * @since 1.0.0
          */
@@ -63,7 +67,9 @@
         /**
          * Bind DOM elment
          *
-         * @param {string} id DOM elment
+         * @param {string} id DOM element
+         *
+         * @return {void}
          *
          * @since 1.0.0
          */

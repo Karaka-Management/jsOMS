@@ -22,8 +22,6 @@
      *
      * @return {boolean}
      *
-     * @function
-     *
      * @since  1.0.0
      */
     jsOMS.hasClass = function (ele, cls)
@@ -42,7 +40,7 @@
      * @param ele DOM Element
      * @param cls Class to add
      *
-     * @function
+     * @return {void}
      *
      * @since  1.0.0
      */
@@ -61,7 +59,7 @@
      * @param ele DOM Element
      * @param cls Class to remove
      *
-     * @function
+     * @return {void}
      *
      * @since  1.0.0
      */
@@ -76,11 +74,11 @@
     /**
      * Action prevent
      *
-     * Preventing event from firering and passing through
+     * Preventing event from firing and passing through
      *
      * @param event Event Event to stop
      *
-     * @function
+     * @return {void}
      *
      * @since  1.0.0
      */
@@ -100,9 +98,9 @@
      *
      * Invoking a function after page load
      *
-     * @param func Callback function
+     * @param {callback} func Callback function
      *
-     * @function
+     * @return {void}
      *
      * @since  1.0.0
      */
@@ -129,7 +127,7 @@
      *
      * @param ele DOM Element
      *
-     * @function
+     * @return {void}
      *
      * @since  1.0.0
      */
@@ -148,8 +146,6 @@
      * @param ele DOM Node
      *
      * @return {boolean}
-     *
-     * @function
      *
      * @since  1.0.0
      */
@@ -170,8 +166,6 @@
      *
      * @return {boolean}
      *
-     * @function
-     *
      * @since  1.0.0
      */
     jsOMS.isElement = function (o)
@@ -190,9 +184,7 @@
      * @param ele DOM Element
      * @param cls Class to find
      *
-     * @return Element
-     *
-     * @function
+     * @return {Element}
      *
      * @since  1.0.0
      */
@@ -212,11 +204,11 @@
     /**
      * Adding event listener to multiple elements
      *
-     * @param e DOM Elements
-     * @param {string} event Event name
+     * @param            e        DOM Elements
+     * @param {string}   event    Event name
      * @param {function} callback Event callback
      *
-     * @function
+     * @return {void}
      *
      * @since  1.0.0
      */

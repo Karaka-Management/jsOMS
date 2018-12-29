@@ -27,8 +27,6 @@
          *
          * @return {boolean}
          *
-         * @method
-         *
          * @since 1.0.0
          */
         static available()

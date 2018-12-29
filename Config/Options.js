@@ -30,13 +30,11 @@
         /**
          * Set option.
          *
-         * @param {int|string} key Option key
-         * @param {boolean|int|float|string|Array} value Option value
-         * @param {boolean} [overwrite] Overwrite value
+         * @param {int|string}                     key         Option key
+         * @param {boolean|int|float|string|Array} value       Option value
+         * @param {boolean}                        [overwrite] Overwrite value
          *
          * @return {boolean}
-         *
-         * @method
          *
          * @since 1.0.0
          */
@@ -58,8 +56,6 @@
          *
          * @return {boolean|int|float|string|Array}
          *
-         * @method
-         *
          * @since 1.0.0
          */
         get (key)
@@ -77,8 +73,6 @@
          * @param {int|string} key Option key
          *
          * @return {boolean}
-         *
-         * @method
          *
          * @since 1.0.0
          */

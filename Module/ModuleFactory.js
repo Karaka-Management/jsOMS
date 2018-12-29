@@ -26,11 +26,9 @@
          * Get module instance.
          *
          * @param {string} module Module name
-         * @param {Object} app Application reference
+         * @param {Object} app    Application reference
          *
          * @return {Object}
-         *
-         * @method
          *
          * @since  1.0.0
          */

@@ -14,16 +14,37 @@
     jsOMS.Autoloader.defineNamespace('jsOMS.Message.Notification.Browser');
 
     jsOMS.Message.Notification.Browser.BrowserNotification = class {
+        /**
+         * @constructor
+         *
+         * @since 1.0.0
+         */
         constructor()
         {
             this.status = 0;
         };
 
+        /**
+         * Set notification status.
+         *
+         * @param {int} status Notification status
+         *
+         * @return {void}
+         *
+         * @since  1.0.0
+         */
         setStatus (status)
         {
             this.status = status;
         };
 
+        /**
+         * Ask for browser permission to create notifications
+         *
+         * @return {void}
+         *
+         * @since  1.0.0
+         */
         requestPermission ()
         {
             const self = this;
@@ -40,8 +61,18 @@
             }
         };
 
+        /**
+         * Create notification
+         *
+         * @param {Object} msg Notification
+         *
+         * @return {void}
+         *
+         * @since  1.0.0
+         */
         send (msg)
         {
+            // todo: implement
             /** global: Notification */
             let n = new Notification(/* ... */);
         };

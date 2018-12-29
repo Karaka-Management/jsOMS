@@ -14,16 +14,39 @@
     jsOMS.Autoloader.defineNamespace('jsOMS.Message.Notification.App');
 
     jsOMS.Message.Notification.App.AppNotification = class {
+        /**
+         * @constructor
+         *
+         * @since 1.0.0
+         */
         constructor ()
         {
             this.status = 0;
         };
 
+        /**
+         * Set notification status.
+         *
+         * @param {int} status Notification status
+         *
+         * @return {void}
+         *
+         * @since  1.0.0
+         */
         setStatus (status)
         {
             this.status = status;
         };
 
+        /**
+         * Create notification
+         *
+         * @param {Object} msg Notification
+         *
+         * @return {void}
+         *
+         * @since  1.0.0
+         */
         send (msg)
         {
             const tpl = document.getElementById('app-message');

@@ -1,5 +1,5 @@
 /**
- * Browser notification.
+ * Notification manager.
  *
  * @copyright  Dennis Eichhorn
  * @license    OMS License 1.0
@@ -14,12 +14,27 @@
     jsOMS.Autoloader.defineNamespace('jsOMS.Message.Notification');
 
     jsOMS.Message.Notification.NotificationManager = class {
+        /**
+         * @constructor
+         *
+         * @since 1.0.0
+         */
         constructor()
         {
             this.appNotifier     = new jsOMS.Message.Notification.App.AppNotification();
             this.browserNotifier = new jsOMS.Message.Notification.Browser.BrowserNotification();
         };
 
+        /**
+         * Create notification.
+         *
+         * @param {Object} message Message object
+         * @param {int}    type    Notification type
+         *
+         * @return {void}
+         *
+         * @since  1.0.0
+         */
         send (message, type)
         {
             if (jsOMS.Message.Notification.NotificationType.APP_NOTIFICATION === type) {
@@ -29,11 +44,25 @@
             }
         };
 
+        /**
+         * Get the app notification manager.
+         *
+         * @return {Object}
+         *
+         * @since  1.0.0
+         */
         getAppNotifier ()
         {
             return this.appNotifier;
         };
 
+        /**
+         * Get the browser notification manager.
+         *
+         * @return {Object}
+         *
+         * @since  1.0.0
+         */
         getBrowserNotifier ()
         {
             return this.browserNotifier;

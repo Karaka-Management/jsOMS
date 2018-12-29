@@ -17,6 +17,8 @@
         /**
          * @constructor
          *
+         * @param {Object} app Application
+         *
          * @since 1.0.0
          */
         constructor(app)
@@ -31,8 +33,6 @@
          * @param {string} module Module name
          *
          * @return {Object}
-         *
-         * @method
          *
          * @since  1.0.0
          */

@@ -32,6 +32,8 @@
          * @param {Array} keys Keyboard keys
          * @param {callback} callback Callback
          *
+         * @return {void}
+         *
          * @since  1.0.0
          */
         add (element, keys, callback)
@@ -49,6 +51,8 @@
          * Bind container for keyboard input.
          *
          * @param {string} element Container id
+         *
+         * @return {void}
          *
          * @since  1.0.0
          */
@@ -76,6 +80,10 @@
          *
          * @param {string} element Container id
          * @param {Object} event Key event
+         *
+         * @return {void}
+         *
+         * @throws {Error}
          *
          * @since  1.0.0
          */

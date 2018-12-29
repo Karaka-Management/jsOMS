@@ -17,6 +17,8 @@
         /**
          * @constructor
          *
+         * @param {Object} app Application
+         *
          * @since 1.0.0
          */
         constructor (app)
@@ -31,6 +33,8 @@
          *
          * @param {string} id Form Id
          *
+         * @return {void}
+         *
          * @since 1.0.0
          */
         get (id)
@@ -42,6 +46,8 @@
          * Is form ignored?
          *
          * @param {string} id Form Id
+         *
+         * @return {boolean}
          *
          * @since 1.0.0
          */
@@ -55,6 +61,8 @@
          *
          * @param {string} id Form Id
          *
+         * @return {void}
+         *
          * @since 1.0.0
          */
         unbind (id)
@@ -66,6 +74,8 @@
          * Bind form
          *
          * @param {string} id Form Id (optional)
+         *
+         * @return {void}
          *
          * @since 1.0.0
          */
@@ -90,6 +100,8 @@
          * Bind form
          *
          * @param {string} id Form Id
+         *
+         * @return {void}
          *
          * @since 1.0.0
          */
@@ -122,6 +134,8 @@
          *
          * @param {string} id Form Id
          *
+         * @return {boolean}
+         *
          * @since 1.0.0
          */
         unbindForm (id)
@@ -145,6 +159,8 @@
          * Calls injections first befor executing the actual form submit
          *
          * @param {Object} form Form object
+         *
+         * @return {void}
          *
          * @since 1.0.0
          */
@@ -188,6 +204,8 @@
          * Submits the main form data
          *
          * @param {Object} form Form object
+         *
+         * @return {void}
          *
          * @since 1.0.0
          */
@@ -267,7 +285,7 @@
         /**
          * Count the bound forms
          *
-         * @return {number}
+         * @return {int}
          *
          * @since 1.0.0
          */

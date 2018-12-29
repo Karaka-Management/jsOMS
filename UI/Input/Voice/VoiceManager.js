@@ -30,6 +30,10 @@
         /**
          * @constructor
          *
+         * @param {Object} app      Application
+         * @param {Object} commands Available commands
+         * @param {string} lang     Localization
+         *
          * @since 1.0.0
          */
         constructor(app, commands = {}, lang = 'en-US')
@@ -49,7 +53,7 @@
         /**
          * Setup or re-initialize voice manager.
          *
-         * @method
+         * @return {void}
          *
          * @since  1.0.0
          */

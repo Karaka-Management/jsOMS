@@ -34,6 +34,8 @@
          * @param {callback} callback Callback
          * @param {bool} exact ??? todo: can't remember why this was important oO!!!
          *
+         * @return {void}
+         *
          * @since  1.0.0
          */
         add (element, type, button, callback, exact)
@@ -51,6 +53,8 @@
          *
          * @param {string} element Element id
          * @param {int} type Action type
+         *
+         * @return {void}
          *
          * @since  1.0.0
          */
@@ -97,6 +101,8 @@
          *
          * @param {string} element Element id
          * @param {Object} event Click event
+         *
+         * @return {void}
          *
          * @since  1.0.0
          */

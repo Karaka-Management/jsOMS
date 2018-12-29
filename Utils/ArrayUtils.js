@@ -19,9 +19,7 @@
      * @param {Object} data Object
      * @param {string} delim Path delimiter
      *
-     * @return
-     *
-     * @function
+     * @return {mixed}
      *
      * @since  1.0.0
      */

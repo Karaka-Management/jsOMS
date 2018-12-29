@@ -33,6 +33,8 @@
          *
          * This is called in between swipes in order to reset previous swipe data.
          *
+         * @return {void}
+         *
          * @since 1.0.0
          */
         resetSwipe ()
@@ -43,7 +45,9 @@
         /**
          * Adding swipe functionality.
          *
-         * Forwarding swipe to arrow keyes.
+         * Forwarding swipe to arrow keys.
+         *
+         * @return {void}
          *
          * @since 1.0.0
          */

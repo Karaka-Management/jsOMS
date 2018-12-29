@@ -35,7 +35,7 @@
          * @param {requestCallback} message Callback for message
          * @param {string} [request] Request id in order to only handle a specific request
          *
-         * @method
+         * @return {void}
          *
          * @since  1.0.0
          */
@@ -58,7 +58,7 @@
          * @param {Array|Object} data Date to use in callback
          * @param {jsOMS.Message.Request.Request} [request] Request id for request specific execution
          *
-         * @method
+         * @return {void}
          *
          * @since  1.0.0
          */

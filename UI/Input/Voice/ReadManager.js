@@ -30,6 +30,8 @@
         /**
          * @constructor
          *
+         * @param {string} lang Localization
+         *
          * @since 1.0.0
          */
         constructor (lang = 'en-US')

@@ -17,6 +17,10 @@
         /**
          * @constructor
          *
+         * @param {string} uri    Request uri
+         * @param {string} method Request method/verb
+         * @param {string} type   Request content type
+         *
          * @since 1.0.0
          */
         constructor (uri = null, method, type)
@@ -44,8 +48,6 @@
          *
          * @return {string}
          *
-         * @method
-         *
          * @since  1.0.0
          */
         setContentTypeBasedOnType(type)
@@ -66,8 +68,6 @@
          * Get browser.
          *
          * @return {string}
-         *
-         * @method
          *
          * @since  1.0.0
          */
@@ -99,8 +99,6 @@
          *
          * @return {string}
          *
-         * @method
-         *
          * @since  1.0.0
          */
         static getOS()
@@ -124,7 +122,7 @@
          *
          * @param {string} method Method type
          *
-         * @method
+         * @return {void}
          *
          * @since  1.0.0
          */
@@ -140,8 +138,6 @@
          *
          * @return {string}
          *
-         * @method
-         *
          * @since  1.0.0
          */
         getMethod()
@@ -156,7 +152,7 @@
          *
          * @param {string} type Method type
          *
-         * @method
+         * @return {void}
          *
          * @since  1.0.0
          */
@@ -172,8 +168,6 @@
          *
          * @return {string}
          *
-         * @method
-         *
          * @since  1.0.0
          */
         getResponseType()
@@ -184,10 +178,10 @@
         /**
          * Set request header.
          *
-         * @param {string} type Request type
+         * @param {string} type   Request type
          * @param {string} header Request header
          *
-         * @method
+         * @return {void}
          *
          * @since  1.0.0
          */
@@ -201,8 +195,6 @@
          *
          * @return {Array}
          *
-         * @method
-         *
          * @since  1.0.0
          */
         getRequestHeader()
@@ -215,7 +207,7 @@
          *
          * @param {string} uri Request uri
          *
-         * @method
+         * @return {void}
          *
          * @since  1.0.0
          */
@@ -229,8 +221,6 @@
          *
          * @return {string}
          *
-         * @method
-         *
          * @since  1.0.0
          */
         getUri()
@@ -241,10 +231,9 @@
         /**
          * Set success callback.
          *
-         * @callback requestCallback
          * @param {requestCallback} callback - Success callback
          *
-         * @method
+         * @return {void}
          *
          * @since  1.0.0
          */
@@ -256,10 +245,10 @@
         /**
          * Set result callback.
          *
-         * @param {int} status Http response status
+         * @param {int}      status   Http response status
          * @param {function} callback Callback
          *
-         * @method
+         * @return {void}
          *
          * @since  1.0.0
          */
@@ -273,7 +262,7 @@
          *
          * @param {Array} data Request data
          *
-         * @method
+         * @return {void}
          *
          * @since  1.0.0
          */
@@ -286,8 +275,6 @@
          * Get request data.
          *
          * @return {Array}
-         *
-         * @method
          *
          * @since  1.0.0
          */
@@ -303,7 +290,7 @@
          *
          * @param {string} type Method type
          *
-         * @method
+         * @return {void}
          *
          * @since  1.0.0
          */
@@ -320,8 +307,6 @@
          *
          * @return {string}
          *
-         * @method
-         *
          * @since  1.0.0
          */
         getType()
@@ -333,8 +318,6 @@
          * Create query from object.
          *
          * @return {string}
-         *
-         * @method
          *
          * @since  1.0.0
          */
@@ -354,8 +337,6 @@
          * Get request data.
          *
          * @return {Array}
-         *
-         * @method
          *
          * @since  1.0.0
          */

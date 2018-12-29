@@ -33,12 +33,10 @@
          * Get logging instance
          *
          * @param {boolean} [verbose] Verbose logging
-         * @param {boolean} [ui] Ui logging
-         * @param {boolean} [remote] Remote logging
+         * @param {boolean} [ui]      Ui logging
+         * @param {boolean} [remote]  Remote logging
          *
          * @return {Object}
-         *
-         * @method
          *
          * @since  1.0.0
          */
@@ -54,13 +52,11 @@
         /**
          * Interpolate message
          *
-         * @param {string} message Message structure
+         * @param {string} message   Message structure
          * @param {Object} [context] Context to put into message
-         * @param {string} [level] Log level
+         * @param {string} [level]   Log level
          *
          * @return {string}
-         *
-         * @method
          *
          * @since  1.0.0
          */
@@ -80,13 +76,11 @@
         /**
          * Create context
          *
-         * @param {string} message Message to display
+         * @param {string} message   Message to display
          * @param {Object} [context] Context to put into message
-         * @param {string} level Log level
+         * @param {string} level     Log level
          *
          * @return {Object}
-         *
-         * @method
          *
          * @since  1.0.0
          */
@@ -106,13 +100,11 @@
         /**
          * Create log message
          *
-         * @param {string} message Message to display
+         * @param {string} message   Message to display
          * @param {Object} [context] Context to put into message
-         * @param {string} level Log level
+         * @param {string} level     Log level
          *
          * @return {void}
-         *
-         * @method
          *
          * @since  1.0.0
          */
@@ -136,13 +128,11 @@
         /**
          * Create local log message
          *
-         * @param {string} message Message to display
+         * @param {string} message   Message to display
          * @param {Object} [context] Context to put into message
-         * @param {string} level Log level
+         * @param {string} level     Log level
          *
          * @return {void}
-         *
-         * @method
          *
          * @since  1.0.0
          */
@@ -177,13 +167,11 @@
         /**
          * Create remote log message
          *
-         * @param {string} message Message to display
+         * @param {string} message   Message to display
          * @param {Object} [context] Context to put into message
-         * @param {string} level Log level
+         * @param {string} level     Log level
          *
          * @return {void}
-         *
-         * @method
          *
          * @since  1.0.0
          */
@@ -204,12 +192,10 @@
         /**
          * Create log message
          *
-         * @param {string} message Message to display
+         * @param {string} message   Message to display
          * @param {Object} [context] Context to put into message
          *
          * @return {void}
-         *
-         * @method
          *
          * @since  1.0.0
          */
@@ -221,12 +207,10 @@
         /**
          * Create log message
          *
-         * @param {string} message Message to display
+         * @param {string} message   Message to display
          * @param {Object} [context] Context to put into message
          *
          * @return {void}
-         *
-         * @method
          *
          * @since  1.0.0
          */
@@ -238,12 +222,10 @@
         /**
          * Create log message
          *
-         * @param {string} message Message to display
+         * @param {string} message   Message to display
          * @param {Object} [context] Context to put into message
          *
          * @return {void}
-         *
-         * @method
          *
          * @since  1.0.0
          */
@@ -255,12 +237,10 @@
         /**
          * Create log message
          *
-         * @param {string} message Message to display
+         * @param {string} message   Message to display
          * @param {Object} [context] Context to put into message
          *
          * @return {void}
-         *
-         * @method
          *
          * @since  1.0.0
          */
@@ -272,12 +252,10 @@
         /**
          * Create log message
          *
-         * @param {string} message Message to display
+         * @param {string} message   Message to display
          * @param {Object} [context] Context to put into message
          *
          * @return {void}
-         *
-         * @method
          *
          * @since  1.0.0
          */
@@ -289,12 +267,10 @@
         /**
          * Create log message
          *
-         * @param {string} message Message to display
+         * @param {string} message   Message to display
          * @param {Object} [context] Context to put into message
          *
          * @return {void}
-         *
-         * @method
          *
          * @since  1.0.0
          */
@@ -306,12 +282,10 @@
         /**
          * Create log message
          *
-         * @param {string} message Message to display
+         * @param {string} message   Message to display
          * @param {Object} [context] Context to put into message
          *
          * @return {void}
-         *
-         * @method
          *
          * @since  1.0.0
          */
@@ -323,12 +297,10 @@
         /**
          * Create log message
          *
-         * @param {string} message Message to display
+         * @param {string} message   Message to display
          * @param {Object} [context] Context to put into message
          *
          * @return {void}
-         *
-         * @method
          *
          * @since  1.0.0
          */
@@ -340,13 +312,11 @@
         /**
          * Create log message
          *
-         * @param {string} level Log level
-         * @param {string} message Message to display
+         * @param {string} level     Log level
+         * @param {string} message   Message to display
          * @param {Object} [context] Context to put into message
          *
          * @return {void}
-         *
-         * @method
          *
          * @since  1.0.0
          */
@@ -358,12 +328,10 @@
         /**
          * Create log message
          *
-         * @param {string} message Message to display
+         * @param {string} message   Message to display
          * @param {Object} [context] Context to put into message
          *
          * @return {void}
-         *
-         * @method
          *
          * @since  1.0.0
          */
