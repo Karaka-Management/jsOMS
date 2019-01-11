@@ -18,8 +18,9 @@
          *
          * @since 1.0.0
          */
-        constructor ()
+        constructor (app)
         {
+            this.app = app;
         };
 
         /**
@@ -41,7 +42,7 @@
                 }
             } else {
                 const tabs = document.querySelectorAll('.tabview'),
-                    length = !tabs ? 0 : tabs.length;
+                length = !tabs ? 0 : tabs.length;
 
                 for (let i = 0; i < length; ++i) {
                     this.bindElement(tabs[i]);
@@ -52,7 +53,7 @@
         /**
          * Bind & rebind UI element.
          *
-         * @param {Object} e Element id
+         * @param {Object} e Element
          *
          * @return {void}
          *
@@ -60,23 +61,55 @@
          */
         bindElement (e)
         {
-            const nodes = e.querySelectorAll('.tab-links a');
+            this.activateTabUri(e);
 
-            nodes.addEventListener('click', function (evt)
-            {
-                /* Change Tab */
-                const attr = this.getAttribute('href').substring(1),
-                    cont   = this.parentNode.parentNode.parentNode.children[1];
+            const nodes = e.querySelectorAll('.tab-links li'),
+                length = nodes.length;
 
-                jsOMS.removeClass(jsOMS.getByClass(this.parentNode.parentNode, 'active'), 'active');
-                jsOMS.addClass(this.parentNode, 'active');
-                jsOMS.removeClass(jsOMS.getByClass(cont, 'active'), 'active');
-                jsOMS.addClass(jsOMS.getByClass(cont, attr), 'active');
+            for (let i = 0; i < length; ++i) {
+                nodes[i].addEventListener('click', function (evt)
+                {
+                    let fragmentString = window.location.href.includes('#') ? jsOMS.Uri.Http.parseUrl(window.location.href).fragment : '';
 
-                /* Modify url */
+                    /* Change Tab */
+                    /* Remove selected tab */
+                    fragmentString = jsOMS.ltrim(fragmentString.replace(this.parentNode.getElementsByClassName('active')[0].getElementsByTagName('label')[0].getAttribute('for'), ''), ',');
+                    jsOMS.removeClass(this.parentNode.getElementsByClassName('active')[0], 'active');
+                    jsOMS.addClass(this, 'active');
 
-                jsOMS.preventAll(evt);
-            });
+                    /* Add selected tab */
+                    window.history.pushState(null,'',
+                        jsOMS.Uri.UriFactory.build(
+                            '{%}#' + (fragmentString === '' ? '' : fragmentString + ',') + this.getElementsByTagName('label')[0].getAttribute('for')
+                        )
+                    );
+                });
+            }
+        };
+
+        /**
+         * Activates the correct tab based on URI fragment.
+         *
+         * This allows to link a specific open tab to a user or make it a bookmark
+         *
+         * @param {Object} e Element
+         *
+         * @return {void}
+         *
+         * @since  1.0.0
+         */
+        activateTabUri(e)
+        {
+            const fragmentString = window.location.href.includes('#') ? jsOMS.Uri.Http.parseUrl(window.location.href).fragment : '';
+            const fragments      = fragmentString.split(','),
+                fragLength = fragments.length;
+
+            for (let i = 0; i < fragLength; ++i) {
+                let label = e.querySelectorAll('label[for="' + fragments[i] + '"]')[0];
+                if (typeof label !== 'undefined') {
+                    label.click();
+                }
+            }
         };
     }
 }(window.jsOMS = window.jsOMS || {}));

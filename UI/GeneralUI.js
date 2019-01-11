@@ -36,12 +36,13 @@
         bind (id)
         {
             let e = null;
-            if (typeof id !== 'undefined') {
+            if (typeof id !== 'undefined' && id !== null) {
                 e = document.getElementById(id);
             }
 
             this.bindHref(e);
             this.bindLazyLoad(e);
+            this.bindInput(e);
         };
 
         /**
@@ -100,6 +101,25 @@
                 } else {
                     this.visObs.observe(e[i]);
                 }
+            }
+        };
+
+        /**
+         * Bind & rebind UI element.
+         *
+         * @param {Object} [e] Element id
+         *
+         * @return {void}
+         *
+         * @since  1.0.0
+         */
+        bindInput (e)
+        {
+            e = e !== null ? [e] : document.getElementsByClassName('advancedInput');
+            const length = e.length;
+
+            for (let i = 0; i < length; ++i) {
+                new jsOMS.UI.Component.AdvancedInput(e[i]);
             }
         };
     }

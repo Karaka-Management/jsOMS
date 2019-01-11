@@ -36,7 +36,7 @@
 
             this.result[0] = function()
             {
-                jsOMS.Log.Logger.instance.error('Invalid response code.');
+                jsOMS.Log.Logger.instance.info('Unhandled response');
             };
 
             /** global: XMLHttpRequest */

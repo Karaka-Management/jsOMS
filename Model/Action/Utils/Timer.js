@@ -7,7 +7,7 @@
  * @since 1.0.0
  */
 const timerActionDelay = {};
-const timerAction      = function (action, callback)
+const timerAction      = function (action, callback, data)
 {
     "use strict";
 
@@ -18,6 +18,6 @@ const timerAction      = function (action, callback)
 
    timerActionDelay[action.id] = setTimeout(function() {
        delete timerActionDelay[action.id];
-       callback();
+       callback(data);
     }, action.delay);
 };

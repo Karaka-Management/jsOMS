@@ -15,6 +15,16 @@
 
     jsOMS.UI.Input = class {
         /**
+         * @constructor
+         *
+         * @since 1.0.0
+         */
+        constructor ()
+        {
+            this.visObs = null;
+        };
+
+        /**
          * Unbind input element
          *
          * @param {Object} input Input element
@@ -49,6 +59,7 @@
 
             input.addEventListener('change', function changeBind(event)
             {
+                console.log('ttttttt');
                 /* Handle remote datalist/autocomplete input element */
                 let listId, list;
                 if (typeof (listId = this.getAttribute('list')) !== 'undefined' && (list = document.getElementById(listId)).getAttribute('data-list-src') !== 'undefined') {

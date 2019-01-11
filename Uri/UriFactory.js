@@ -123,6 +123,7 @@
          */
         static unique (url)
         {
+            // unique queries
             const parts = url.replace(/\?/g, '&').split('&'),
                 full    = parts[0];
 
@@ -146,6 +147,28 @@
                 }
 
                 url = full + '?' + pars.join('&');
+            }
+
+            // unique fragments
+            const fragments = url.match(/\#[a-zA-Z0-9\-,]+/g),
+                fragLength = fragments !== null ? fragments.length : 0;
+
+            for (let i = 0; i < fragLength; ++i) {
+                url = url.replace(fragments[i], '');
+            }
+
+            if (fragLength > 0) {
+                const fragList = fragments[fragLength - 1].split(','),
+                    fragListLength = fragList.length;
+                let fragListNew = [];
+
+                for (let i = 0; i < fragListLength; ++i) {
+                    if (!fragListNew.includes(fragList[i]) && fragList[i] !== '') {
+                        fragListNew.push(fragList[i]);
+                    }
+                }
+
+                url += fragListNew.join(',');
             }
 
             return url;
