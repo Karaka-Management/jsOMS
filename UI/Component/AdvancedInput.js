@@ -49,12 +49,15 @@
                 }
             });
 
+            this.inputField.addEventListener('focusin', function(e) {
+                jsOMS.addClass(this, 'active');
+            });
+
             this.dropdownElement.addEventListener('keydown', function(e) {
                 jsOMS.preventAll(e);
 
                 // todo: consider if it makes sense to have a none element always for phone users only to jump out?
                 // todo: if not remote then the suggestion dropdown should filter itself based on best match
-                // todo: dropdown should show/hide or depending on setting be always visible maybe with :focus+table or similar
 
                 if (e.keyCode === 27 || e.keyCode === 46 || e.keyCode === 8) {
                     // handle esc, del to go back to input field
@@ -80,6 +83,7 @@
 
             this.dropdownElement.addEventListener('focusout', function(e){
                 self.clearDataListSelection(self);
+                jsOMS.removeClass(self.inputField, 'active');
             });
 
             this.dropdownElement.addEventListener('click', function(e) {
@@ -89,6 +93,7 @@
 
                 self.clearDataListSelection(self);
                 self.addToResultList(self);
+                jsOMS.removeClass(self.inputField, 'active');
             });
         };
 
