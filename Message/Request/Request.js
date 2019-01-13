@@ -87,7 +87,10 @@
                 return jsOMS.Message.Request.BrowserType.EDGE;
             } else if (!!window.chrome && !!window.chrome.webstore) {
                 return jsOMS.Message.Request.BrowserType.CHROME;
-            } else if ((isChrome || isOpera) && !!window.CSS) {
+            } else if (((typeof isChrome !== 'undefined' && isChrome)
+                    || (typeof isOpera !== 'undefined' && isOpera))
+                && !!window.CSS
+            ) {
                 return jsOMS.Message.Request.BrowserType.BLINK;
             }
 

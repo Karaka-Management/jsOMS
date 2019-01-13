@@ -153,22 +153,9 @@
             const fragments = url.match(/\#[a-zA-Z0-9\-,]+/g),
                 fragLength = fragments !== null ? fragments.length : 0;
 
-            for (let i = 0; i < fragLength; ++i) {
+            for (let i = 0; i < fragLength - 1; ++i) {
+                // remove all from old url
                 url = url.replace(fragments[i], '');
-            }
-
-            if (fragLength > 0) {
-                const fragList = fragments[fragLength - 1].split(','),
-                    fragListLength = fragList.length;
-                let fragListNew = [];
-
-                for (let i = 0; i < fragListLength; ++i) {
-                    if (!fragListNew.includes(fragList[i]) && fragList[i] !== '') {
-                        fragListNew.push(fragList[i]);
-                    }
-                }
-
-                url += fragListNew.join(',');
             }
 
             return url;

@@ -41,7 +41,7 @@
                     this.bindElement(e);
                 }
             } else {
-                const tabs = document.querySelectorAll('.tabview'),
+                const tabs = document.querySelectorAll('.tab'),
                 length = !tabs ? 0 : tabs.length;
 
                 for (let i = 0; i < length; ++i) {
@@ -61,8 +61,6 @@
          */
         bindElement (e)
         {
-            this.activateTabUri(e);
-
             const nodes = e.querySelectorAll('.tab-links li'),
                 length = nodes.length;
 
@@ -73,18 +71,37 @@
 
                     /* Change Tab */
                     /* Remove selected tab */
-                    fragmentString = jsOMS.ltrim(fragmentString.replace(this.parentNode.getElementsByClassName('active')[0].getElementsByTagName('label')[0].getAttribute('for'), ''), ',');
-                    jsOMS.removeClass(this.parentNode.getElementsByClassName('active')[0], 'active');
+                    const oldActive = this.parentNode.getElementsByClassName('active');
+                    if (oldActive.length > 0) {
+                        // find old active and remove it
+                        fragmentString = jsOMS.trim(
+                            fragmentString.replace(oldActive[0].getElementsByTagName('label')[0].getAttribute('for'), ''),
+                            ','
+                        );
+
+                        jsOMS.removeClass(oldActive[0], 'active');
+                    }
+
+                    // remove new element if new element already inside, alternatively check for existence and don't do a new push state?
+                    // todo: here is a bug or in the uri factory. replace also replaces substrings e.g. #test-c-tab-1 gets partially replaced
+                    // by c-tab-1. either search for #c-tab-1 or ,c-tab-1 to be certain. That's not possible because it doesn't start with `#`
+                    fragmentString = jsOMS.trim(
+                        fragmentString.replace(this.getElementsByTagName('label')[0].getAttribute('for'), ''),
+                        ','
+                    );
+
                     jsOMS.addClass(this, 'active');
 
                     /* Add selected tab */
-                    window.history.pushState(null,'',
+                    window.history.pushState(null, '',
                         jsOMS.Uri.UriFactory.build(
                             '{%}#' + (fragmentString === '' ? '' : fragmentString + ',') + this.getElementsByTagName('label')[0].getAttribute('for')
                         )
                     );
                 });
             }
+
+            this.activateTabUri(e);
         };
 
         /**

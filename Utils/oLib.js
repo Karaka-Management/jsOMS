@@ -171,7 +171,7 @@
     jsOMS.addClass = function (ele, cls)
     {
         if (!jsOMS.hasClass(ele, cls)) {
-            ele.className += " " + cls;
+            ele.className += ele.className !== '' ? " " + cls : cls;
         }
     };
 
