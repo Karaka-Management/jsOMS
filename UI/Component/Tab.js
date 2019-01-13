@@ -41,7 +41,7 @@
                     this.bindElement(e);
                 }
             } else {
-                const tabs = document.querySelectorAll('.tab'),
+                const tabs = document.getElementsByClassName('tabview'),
                 length = !tabs ? 0 : tabs.length;
 
                 for (let i = 0; i < length; ++i) {
@@ -121,11 +121,17 @@
             const fragments      = fragmentString.split(','),
                 fragLength = fragments.length;
 
-            for (let i = 0; i < fragLength; ++i) {
-                let label = e.querySelectorAll('label[for="' + fragments[i] + '"]')[0];
-                if (typeof label !== 'undefined') {
-                    label.click();
+            if (fragLength > 0 && fragmentString !== '') {
+                for (let i = 0; i < fragLength; ++i) {
+                    let label = e.querySelectorAll('label[for="' + fragments[i] + '"]')[0];
+                    if (typeof label !== 'undefined') {
+                        label.click();
+                    }
                 }
+            }
+
+            if (e.getElementsByClassName('active').length < 1) {
+                e.querySelector('label').click();
             }
         };
     }
