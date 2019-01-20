@@ -176,6 +176,7 @@
                 buttons     = form.getElementsByTagName('button'),
                 canvas      = form.getElementsByTagName('canvas'),
                 external    = document.querySelectorAll('[form=' + this.id + ']'),
+                special     = document.querySelectorAll('[data-form=' + this.id + '] [data-name]'),
                 inputLength = inputs.length;
 
             // todo: handle trigger element. check which element triggered the submit and pass it's name+value
@@ -196,7 +197,8 @@
                     Array.prototype.slice.call(selects),
                     Array.prototype.slice.call(textareas),
                     Array.prototype.slice.call(buttons),
-                    Array.prototype.slice.call(external)
+                    Array.prototype.slice.call(external),
+                    Array.prototype.slice.call(special)
                 )
             );
         };
@@ -238,10 +240,24 @@
                 if (elements[i].tagName.toLowerCase() === 'canvas') {
                     value = elements[i].toDataURL('image/png');
                 } else {
-                    value = elements[i].value;
+                    if (typeof elements[i].value !== 'undefined') {
+                        value = elements[i].value;
+                    } else if (typeof elements[i].getAttribute('data-value') !== 'undefined') {
+                        value = elements[i].getAttribute('data-value');
+                    }
                 }
 
-                data[jsOMS.Views.FormView.getElementId(elements[i])] = value;
+                // handle array data (e.g. table rows with same name)
+                const id = jsOMS.Views.FormView.getElementId(elements[i]);
+                if (data.hasOwnProperty(id)) {
+                    if (!data[id].isArray()) {
+                        data[id] = [data[id]];
+                    }
+
+                    data[id].push(value);
+                } else {
+                    data[id] = value;
+                }
             }
 
             return data;
@@ -309,21 +325,15 @@
          */
         static getElementId (e)
         {
-            let id = e.getAttribute('name');
-
-            if (!id) {
-                id = e.getAttribute('id');
-            } else {
-                return id;
+            if (typeof e.getAttribute('name') !== 'undefined') {
+                return e.getAttribute('name');
+            } else if (typeof e.getAttribute('id') !== 'undefined') {
+                return e.getAttribute('id');
+            } else if (typeof e.getAttribute('data-name') !== 'undefined') {
+                return e.getAttribute('data-name');
+            } else if (typeof e.getAttribute('type') !== 'undefined') {
+                return e.getAttribute('type');
             }
-
-            if (!id) {
-                id = e.getAttribute('type');
-            } else {
-                return id;
-            }
-
-            return id;
         };
 
         /**
@@ -344,6 +354,7 @@
          * @return {void}
          *
          * @since 1.0.0
+         * @todo: check bind functionality maybe remove!!!
          */
         bind ()
         {
@@ -386,6 +397,7 @@
          * @return {void}
          *
          * @since 1.0.0
+         * @todo: check unbind functionality maybe remove = everything!!!
          */
         unbind ()
         {
