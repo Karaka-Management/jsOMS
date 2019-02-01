@@ -36,6 +36,16 @@
             this.src             = this.inputField.getAttribute('data-src');
 
             const self = this;
+            this.inputField.addEventListener('focusout', function(e) {
+                if (e.relatedTarget === null ||
+                    e.relatedTarget.parentElement === null ||
+                    e.relatedTarget.parentElement.parentElement === null ||
+                    !jsOMS.hasClass(e.relatedTarget.parentElement.parentElement.parentElement, 'dropdown')
+                ) {
+                    jsOMS.removeClass(self.dropdownElement, 'active');
+                }
+            });
+
             this.inputField.addEventListener('keydown', function(e) {
                 if (e.keyCode === 13 || e.keyCode === 40) {
                     jsOMS.preventAll(e);
@@ -43,6 +53,7 @@
 
                 if (e.keyCode === 40) {
                     self.selectOption(self.dataListBody.firstElementChild);
+                    jsOMS.preventAll(e);
                 } else {
                     // handle change delay
                     self.inputTimeDelay({id: self.id, delay: 300}, self.changeCallback, self, e);
@@ -50,7 +61,7 @@
             });
 
             this.inputField.addEventListener('focusin', function(e) {
-                jsOMS.addClass(this, 'active');
+                jsOMS.addClass(self.dropdownElement, 'active');
             });
 
             this.dropdownElement.addEventListener('keydown', function(e) {
@@ -83,7 +94,7 @@
 
             this.dropdownElement.addEventListener('focusout', function(e){
                 self.clearDataListSelection(self);
-                jsOMS.removeClass(self.inputField, 'active');
+                jsOMS.removeClass(self.dropdownElement, 'active');
             });
 
             this.dropdownElement.addEventListener('click', function(e) {
@@ -93,7 +104,7 @@
 
                 self.clearDataListSelection(self);
                 self.addToResultList(self);
-                jsOMS.removeClass(self.inputField, 'active');
+                jsOMS.removeClass(self.dropdownElement, 'active');
             });
         };
 
@@ -136,11 +147,20 @@
                     }
 
                     self.dataListBody.appendChild(newRow);
+                    self.dataListBody.lastElementChild.addEventListener('focusout', function(e) {
+                        let sibling = e.relatedTarget.parentNode.firstElementChild;
+                        do {
+                            if (sibling === e.relatedTarget) {
+                                jsOMS.preventAll(e);
+                                return;
+                            }
+                        } while ((sibling = sibling.nextElementSibling) !== null);
+                    });
                 }
             }
         };
 
-        changeCallback(self, key)
+        changeCallback(self)
         {
             // if remote data
             if (typeof self.src !== 'undefined' && self.src !== '') {
@@ -152,10 +172,10 @@
 
         selectOption(e)
         {
-                e.focus();
-                // todo: change to set style .active
-                e.setAttribute('style', 'background: #f00');
-                jsOMS.addClass(e, 'active');
+            e.focus();
+            // todo: change to set style .active
+            e.setAttribute('style', 'background: #f00');
+            jsOMS.addClass(e, 'active');
         };
 
         clearDataListSelection(self)
