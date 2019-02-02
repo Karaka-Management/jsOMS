@@ -250,7 +250,7 @@
                 // handle array data (e.g. table rows with same name)
                 const id = jsOMS.Views.FormView.getElementId(elements[i]);
                 if (data.hasOwnProperty(id)) {
-                    if (!data[id].isArray()) {
+                    if (data[id].constructor !== Array) {
                         data[id] = [data[id]];
                     }
 
@@ -325,15 +325,17 @@
          */
         static getElementId (e)
         {
-            if (typeof e.getAttribute('name') !== 'undefined') {
+            if (e.getAttribute('name') !== null) {
                 return e.getAttribute('name');
-            } else if (typeof e.getAttribute('id') !== 'undefined') {
+            } else if (e.getAttribute('id') !== null) {
                 return e.getAttribute('id');
-            } else if (typeof e.getAttribute('data-name') !== 'undefined') {
+            } else if (e.getAttribute('data-name') !== null) {
                 return e.getAttribute('data-name');
-            } else if (typeof e.getAttribute('type') !== 'undefined') {
+            } else if (e.getAttribute('type') !== null) {
                 return e.getAttribute('type');
             }
+
+            throw Error("Invalid id");
         };
 
         /**

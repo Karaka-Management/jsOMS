@@ -176,12 +176,12 @@
             this.app.eventManager.attach(form.getId(), function ()
             {
                 self.submitForm(form);
-            });
+            }, true);
 
             // Run all injects first
             for (let property in injects) {
                 if (injects.hasOwnProperty(property)) {
-                    counter++;
+                    ++counter;
                     //this.app.eventManager.addGroup(form.getId(), counter);
                     const result = injects[property](form, form.getId());
 

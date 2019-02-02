@@ -143,7 +143,7 @@
             document.getElementById(id).addEventListener(listener.listener, function (event)
             {
                 if (listener.preventDefault) {
-                    event.preventDefault();
+                    jsOMS.preventAll(event);
                 }
 
                 self.runAction(this.id, listener, listener.action[0], event);

@@ -20,6 +20,8 @@
         /**
          * @constructor
          *
+         * @param {object} e Element to bind
+         *
          * @since 1.0.0
          */
         constructor (e)
@@ -37,6 +39,10 @@
 
             const self = this;
             this.inputField.addEventListener('focusout', function(e) {
+                // todo: this also means that clicking on any other part of the result list that it disappears befor
+                // the click is registered in the result list since focusout has highest priority (e.g. sort button in table).
+                // so far i don't know a way to check if *any* element in the result div is clicked, if I could check this
+                // first then I could simply say, don't make the result div inactive!
                 if (e.relatedTarget === null ||
                     e.relatedTarget.parentElement === null ||
                     e.relatedTarget.parentElement.parentElement === null ||
@@ -52,6 +58,7 @@
                 }
 
                 if (e.keyCode === 40) {
+                    // down-key
                     self.selectOption(self.dataListBody.firstElementChild);
                     jsOMS.preventAll(e);
                 } else {
@@ -92,7 +99,7 @@
                 }
             });
 
-            this.dropdownElement.addEventListener('focusout', function(e){
+            this.dropdownElement.addEventListener('focusout', function(e) {
                 self.clearDataListSelection(self);
                 jsOMS.removeClass(self.dropdownElement, 'active');
             });
@@ -108,6 +115,16 @@
             });
         };
 
+        /**
+         * Handle remote data response result
+         *
+         * This method adds remote results to the dropdown list for selecting
+         *
+         * @param {object} self This reference
+         * @param {object} data Response data
+         *
+         * @since  1.0.0
+         */
         remoteCallback(self, data)
         {
             data = JSON.parse(data.response);
@@ -148,6 +165,10 @@
 
                     self.dataListBody.appendChild(newRow);
                     self.dataListBody.lastElementChild.addEventListener('focusout', function(e) {
+                        if (e.relatedTarget === null) {
+                            return;
+                        }
+
                         let sibling = e.relatedTarget.parentNode.firstElementChild;
                         do {
                             if (sibling === e.relatedTarget) {
@@ -160,6 +181,13 @@
             }
         };
 
+        /**
+         * Callback for input field content change
+         *
+         * @param {object} self This reference
+         *
+         * @since  1.0.0
+         */
         changeCallback(self)
         {
             // if remote data
@@ -170,6 +198,13 @@
             }
         };
 
+        /**
+         * Select element in dropdown (only mark it as selected)
+         *
+         * @param {object} e Element to select in dropdown
+         *
+         * @since  1.0.0
+         */
         selectOption(e)
         {
             e.focus();
@@ -178,6 +213,13 @@
             jsOMS.addClass(e, 'active');
         };
 
+        /**
+         * Clear all selected/marked options in dropdown
+         *
+         * @param {object} self This reference
+         *
+         * @since  1.0.0
+         */
         clearDataListSelection(self)
         {
             const list = self.dataListBody.getElementsByTagName('tr'),
@@ -190,6 +232,15 @@
             }
         };
 
+        /**
+         * Add selected dropdown elements to some final result list
+         *
+         * This can add the selected dropdown elements to a table, badge list etc. depending on the template structure.
+         *
+         * @param {object} self This reference
+         *
+         * @since  1.0.0
+         */
         addToResultList(self) {
             if (self.inputField.getAttribute('data-autocomplete') === 'true') {
                 self.inputField.value = document.activeElement.querySelectorAll('[data-tpl-value="' + self.inputField.getAttribute('data-value') + '"]')[0].getAttribute('data-value');
@@ -240,8 +291,26 @@
 
                 self.tagElement.appendChild(newTag);
             }
+
+            if (self.inputField.getAttribute('data-emptyAfter') === 'true') {
+                self.inputField.value = '';
+            }
+
+            self.inputField.focus();
         };
 
+        /**
+         * Delay handler (e.g. delay after finishing typing)
+         *
+         * After waiting for a delay a callback can be triggered.
+         *
+         * @param {object}   action   Action type
+         * @param {function} callback Callback to be triggered
+         * @param {object}   self     This reference (passed to callback)
+         * @param {object}   data     Data (passed to callback)
+         *
+         * @since  1.0.0
+         */
         inputTimeDelay(action, callback, self, data)
         {
             if (jsOMS.UI.Component.AdvancedInput.timerDelay[action.id]) {
