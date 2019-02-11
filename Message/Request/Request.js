@@ -370,7 +370,6 @@
                         }
                         break;
                     default:
-                        jsOMS.Log.Logger.instance.warning('Unhandled ready state change.');
                 }
             };
 
