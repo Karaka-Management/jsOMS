@@ -246,16 +246,17 @@
                         response       = new jsOMS.Message.Response.Response(o);
                     let successInject  = null;
 
-                    if (typeof o.status !== 'undefined') {
-                        self.app.notifyManager.send(
-                            new jsOMS.Message.Notification.NotificationMessage(o.status, o.title, o.message), jsOMS.Message.Notification.NotificationType.APP_NOTIFICATION
-                        );
-                    }
-
                     if ((successInject = form.getSuccess()) !== null) {
                         successInject(response);
                     } else if (typeof response.get(0) !== 'undefined' && typeof response.get(0).type !== 'undefined') {
+                        // todo: am i using this now and should all cases be handled with the successInjection?
+                        // maybe there could be global response actions where injecting them to every form would not make any sense
+                        // however not many if any use cases come to mind right now where this would be necessary
                         self.app.responseManager.run(response.get(0).type, response.get(0), request);
+                    } else if (typeof o.status !== 'undefined') {
+                        self.app.notifyManager.send(
+                            new jsOMS.Message.Notification.NotificationMessage(o.status, o.title, o.message), jsOMS.Message.Notification.NotificationType.APP_NOTIFICATION
+                        );
                     }
                 } catch (e) {
                     console.log(e);

@@ -36,6 +36,60 @@
         };
 
         /**
+         * Serialize table data
+         *
+         * @return {object}
+         *
+         * @since 1.0.0
+         */
+        serialize()
+        {
+            const table = document.getElementById(this.id);
+            let data = {
+                caption: null,
+                header: [],
+                rows: []
+            };
+
+            data.caption = table.getElementsByTagName('caption')[0].innerText;
+
+            const header = table.querySelectorAll('thead tr td, thead tr th'),
+                headerLength = header.length;
+
+            for (let i = 0; i < headerLength; ++i) {
+                data.header.push(header[i].innerText);
+            }
+
+            const rows = table.querySelectorAll('tbody tr'),
+                rowsLength = rows.length;
+
+            for (let i = 0; i < rowsLength; ++i) {
+                data.rows[i] = [];
+
+                const columns = rows[i].querySelectorAll('td, th'),
+                    columnLength = columns.length;
+
+                for (let j = 0; j < columnLength; ++j) {
+                    data.rows[i].push(columns[j].innerText);
+                }
+            }
+
+            return data;
+        }
+
+        /**
+         * Get table export button
+         *
+         * @return {HTMLElement}
+         *
+         * @since 1.0.0
+         */
+        getExport()
+        {
+            return document.querySelectorAll('#' + this.id + ' .download')[0];
+        };
+
+        /**
          * Get table header elements which provide sorting
          *
          * @return {array}

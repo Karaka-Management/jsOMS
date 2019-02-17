@@ -87,6 +87,8 @@
 
             this.unbind(id);
 
+            this.bindExport(this.tables[id]);
+
             // todo: sorting: increasing / decreasing only if icons are available
             // todo: filtering: equals (alphanumeric), greater, greater equals, lesser, lesser equals, contains, doesn't contain, excel like selection of elements. Amount of filtering options unlimited.
             // cell value should be data-value="" and cell name should be data-name="" and cell content should be data-content="".
@@ -118,6 +120,26 @@
         };
 
         /**
+         * Export a table
+         *
+         * @param {Element} exports Export button
+         *
+         * @return {void}
+         *
+         * @since  1.0.0
+         */
+        bindExport(exports)
+        {
+            exports.getExport().addEventListener('click', function (event)
+            {
+                console.log(exports.serialize());
+                // todo: either create download in javascript from this data or make roundtrip to server who then sends the data
+                // - think about allowing different export formats (json, csv, excel)
+                // - maybe this should never be done from the ui, maybe a endpoint uri should be specified which then calls the api get function for this data
+            });
+        };
+
+        /**
          * Removes the closest row on click.
          *
          * @param {Element} remove Remove button
@@ -127,7 +149,7 @@
          *
          * @since  1.0.0
          */
-        bindRemovable(remove, id)
+        bindRemovable(table)
         {
             remove.addEventListener('click', function (event)
             {
