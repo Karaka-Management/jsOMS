@@ -130,7 +130,13 @@
          */
         bindExport(exports)
         {
-            exports.getExport().addEventListener('click', function (event)
+            const button = exports.getExport();
+
+            if (typeof button === 'undefined' || button === null) {
+                return;
+            }
+
+            button.addEventListener('click', function (event)
             {
                 console.log(exports.serialize());
                 // todo: either create download in javascript from this data or make roundtrip to server who then sends the data

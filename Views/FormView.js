@@ -176,7 +176,8 @@
                 buttons     = form.getElementsByTagName('button'),
                 canvas      = form.getElementsByTagName('canvas'),
                 external    = document.querySelectorAll('[form=' + this.id + ']'),
-                special     = document.querySelectorAll('[data-form=' + this.id + '] [data-name]'),
+                special     = form.querySelectorAll('[data-name]'),
+                specialExt  = document.querySelectorAll('[data-form=' + this.id + '] [data-name]'),
                 inputLength = inputs.length;
 
             // todo: handle trigger element. check which element triggered the submit and pass it's name+value
@@ -192,15 +193,14 @@
                 // todo: handle radio here as well
             }
 
-            return this.getUniqueFormElements(
-                Array.prototype.slice.call(inputs).concat(
-                    Array.prototype.slice.call(selects),
-                    Array.prototype.slice.call(textareas),
-                    Array.prototype.slice.call(buttons),
-                    Array.prototype.slice.call(external),
-                    Array.prototype.slice.call(special)
-                )
-            );
+            return Array.prototype.slice.call(inputs).concat(
+                Array.prototype.slice.call(selects),
+                Array.prototype.slice.call(textareas),
+                Array.prototype.slice.call(buttons),
+                Array.prototype.slice.call(external),
+                Array.prototype.slice.call(special),
+                Array.prototype.slice.call(specialExt)
+            ).filter(function(val) { return val; });
         };
 
         /**
@@ -247,8 +247,12 @@
                     }
                 }
 
-                // handle array data (e.g. table rows with same name)
                 const id = jsOMS.Views.FormView.getElementId(elements[i]);
+                if (id === null) {
+                    continue;
+                }
+
+                // handle array data (e.g. table rows with same name)
                 if (data.hasOwnProperty(id)) {
                     if (data[id].constructor !== Array) {
                         data[id] = [data[id]];
@@ -335,7 +339,7 @@
                 return e.getAttribute('type');
             }
 
-            throw Error("Invalid id");
+            return null;
         };
 
         /**
