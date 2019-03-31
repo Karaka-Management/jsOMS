@@ -39,6 +39,10 @@
          */
         get (id)
         {
+            if (!this.forms.hasOwnProperty(id)) {
+                this.bind(id);
+            }
+
             return this.forms[id];
         };
 
@@ -281,6 +285,10 @@
             });
 
             request.send();
+
+            if (form.getFinally() !== null) {
+                form.getFinally()();
+            }
         };
 
         /**

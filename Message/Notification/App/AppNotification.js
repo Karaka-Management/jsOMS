@@ -49,7 +49,7 @@
          */
         send (msg)
         {
-            const tpl = document.getElementById('app-message');
+            const tpl = document.getElementById('app-message-tpl');
 
             if (tpl === null) {
                 return;

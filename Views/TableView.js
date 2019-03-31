@@ -146,5 +146,17 @@
                 '#' + this.id + ' tbody .remove'
             );
         };
+
+        getForm()
+        {
+            return document.getElementById(this.id).getAttribute('data-table-form');
+        };
+
+        getUpdatable()
+        {
+            return document.querySelectorAll(
+                '#' + this.id + ' tbody .update'
+            );
+        };
     }
 }(window.jsOMS = window.jsOMS || {}));

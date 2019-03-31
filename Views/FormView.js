@@ -32,6 +32,7 @@
             this.bind();
 
             this.success    = null;
+            this.finally    = null;
             this.lastSubmit = 0;
         };
 
@@ -111,7 +112,8 @@
             return document.querySelectorAll(
                 '#' + this.id + ' input[type=submit], '
                 + 'button[form=' + this.id + '][type=submit], '
-                + '#' + this.id + ' button[type=submit]'
+                + '#' + this.id + ' button[type=submit], '
+                + '#' + this.id + ' .submit'
             );
         };
 
@@ -139,6 +141,30 @@
         setSuccess (callback)
         {
             this.success = callback;
+        };
+
+        /**
+         * Get finally callback
+         *
+         * @return {callback}
+         *
+         * @since 1.0.0
+         */
+        getFinally() {
+            return this.finally;
+        };
+
+        /**
+         * Set finally callback
+         *
+         * @param {callback} callback Callback
+         *
+         * @return {void}
+         *
+         * @since 1.0.0
+         */
+        setFinally(callback) {
+            this.finally = callback;
         };
 
         /**
