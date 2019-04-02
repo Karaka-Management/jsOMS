@@ -1,3 +1,7 @@
+import { AppNotification } from '../../../jsOMS/Message/Notification/App/AppNotification.js';
+import { BrowserNotification } from '../../../jsOMS/Message/Notification/Browser/BrowserNotification.js';
+import { NotificationType } from '../../../jsOMS/Message/Notification/NotificationType.js';
+
 /**
  * Notification manager.
  *
@@ -6,66 +10,58 @@
  * @version    1.0.0
  * @since      1.0.0
  */
-(function (jsOMS)
-{
-    "use strict";
+export class NotificationManager {
+    /**
+     * @constructor
+     *
+     * @since 1.0.0
+     */
+    constructor()
+    {
+        this.appNotifier     = new AppNotification();
+        this.browserNotifier = new BrowserNotification();
+    };
 
-    /** @namespace jsOMS.Message.Notification */
-    jsOMS.Autoloader.defineNamespace('jsOMS.Message.Notification');
+    /**
+     * Create notification.
+     *
+     * @param {Object} message Message object
+     * @param {int}    type    Notification type
+     *
+     * @return {void}
+     *
+     * @since  1.0.0
+     */
+    send (message, type)
+    {
+        if (NotificationType.APP_NOTIFICATION === type) {
+            this.appNotifier.send(message);
+        } else {
+            this.browserNotifier.send(message);
+        }
+    };
 
-    jsOMS.Message.Notification.NotificationManager = class {
-        /**
-         * @constructor
-         *
-         * @since 1.0.0
-         */
-        constructor()
-        {
-            this.appNotifier     = new jsOMS.Message.Notification.App.AppNotification();
-            this.browserNotifier = new jsOMS.Message.Notification.Browser.BrowserNotification();
-        };
+    /**
+     * Get the app notification manager.
+     *
+     * @return {Object}
+     *
+     * @since  1.0.0
+     */
+    getAppNotifier ()
+    {
+        return this.appNotifier;
+    };
 
-        /**
-         * Create notification.
-         *
-         * @param {Object} message Message object
-         * @param {int}    type    Notification type
-         *
-         * @return {void}
-         *
-         * @since  1.0.0
-         */
-        send (message, type)
-        {
-            if (jsOMS.Message.Notification.NotificationType.APP_NOTIFICATION === type) {
-                this.appNotifier.send(message);
-            } else {
-                this.browserNotifier.send(message);
-            }
-        };
-
-        /**
-         * Get the app notification manager.
-         *
-         * @return {Object}
-         *
-         * @since  1.0.0
-         */
-        getAppNotifier ()
-        {
-            return this.appNotifier;
-        };
-
-        /**
-         * Get the browser notification manager.
-         *
-         * @return {Object}
-         *
-         * @since  1.0.0
-         */
-        getBrowserNotifier ()
-        {
-            return this.browserNotifier;
-        };
-    }
-}(window.jsOMS = window.jsOMS || {}));
+    /**
+     * Get the browser notification manager.
+     *
+     * @return {Object}
+     *
+     * @since  1.0.0
+     */
+    getBrowserNotifier ()
+    {
+        return this.browserNotifier;
+    };
+};

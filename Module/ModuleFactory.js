@@ -6,35 +6,28 @@
  * @version    1.0.0
  * @since      1.0.0
  */
-(function (jsOMS)
-{
-    "use strict";
+export class ModuleFactory {
+    /**
+     * @constructor
+     *
+     * @since 1.0.0
+     */
+    constructor ()
+    {
+    };
 
-    jsOMS.Autoloader.defineNamespace('jsOMS.Module');
-
-    jsOMS.Module.ModuleFactory = class {
-        /**
-         * @constructor
-         *
-         * @since 1.0.0
-         */
-        constructor ()
-        {
-        };
-
-        /**
-         * Get module instance.
-         *
-         * @param {string} module Module name
-         * @param {Object} app    Application reference
-         *
-         * @return {Object}
-         *
-         * @since  1.0.0
-         */
-        static getInstance (module, app)
-        {
-            return new jsOMS.Modules[module](app);
-        };
-    }
-}(window.jsOMS = window.jsOMS || {}));
+    /**
+     * Get module instance.
+     *
+     * @param {string} module Module name
+     * @param {Object} app    Application reference
+     *
+     * @return {Object}
+     *
+     * @since  1.0.0
+     */
+    static getInstance (module, app)
+    {
+        return new jsOMS.Modules[module](app);
+    };
+};

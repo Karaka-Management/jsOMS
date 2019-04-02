@@ -6,7 +6,7 @@
  *
  * @since 1.0.0
  */
-const dataCollectionAction = function (action, callback)
+export function dataCollectionAction (action, callback)
 {
     "use strict";
 

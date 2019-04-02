@@ -6,36 +6,29 @@
  * @version    1.0.0
  * @since      1.0.0
  */
-(function (jsOMS)
-{
-    "use strict";
-
-    jsOMS.Autoloader.defineNamespace('jsOMS.DataStorage');
-
-    jsOMS.DataStorage.LocalStorage = class {
-        /**
-         * @constructor
-         *
-         * @since 1.0.0
-         */
-        constructor ()
-        {
-        };
-
-        /**
-         * Is local storage available?
-         *
-         * @return {boolean}
-         *
-         * @since 1.0.0
-         */
-        static available()
-        {
-            try {
-                return 'localStorage' in window && window.localStorage !== null;
-            } catch (e) {
-                return false;
-            }
-        };
+export class LocalStorage {
+    /**
+     * @constructor
+     *
+     * @since 1.0.0
+     */
+    constructor ()
+    {
     };
-}(window.jsOMS = window.jsOMS || {}));
+
+    /**
+     * Is local storage available?
+     *
+     * @return {boolean}
+     *
+     * @since 1.0.0
+     */
+    static available()
+    {
+        try {
+            return 'localStorage' in window && window.localStorage !== null;
+        } catch (e) {
+            return false;
+        }
+    };
+};

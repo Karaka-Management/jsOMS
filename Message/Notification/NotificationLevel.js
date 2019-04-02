@@ -6,16 +6,9 @@
  * @version    1.0.0
  * @since      1.0.0
  */
-(function (jsOMS) {
-    "use strict";
-
-    /** @namespace jsOMS.Message.Notification */
-    jsOMS.Autoloader.defineNamespace('jsOMS.Message.Notification');
-
-    jsOMS.Message.Notification.NotificationLevel = Object.freeze({
-        OK: 'ok',
-        INFO: 'info',
-        WARNING: 'warning',
-        ERROR: 'error'
-    });
-}(window.jsOMS = window.jsOMS || {}));
+export const NotificationLevel = Object.freeze({
+    OK: 'ok',
+    INFO: 'info',
+    WARNING: 'warning',
+    ERROR: 'error'
+});

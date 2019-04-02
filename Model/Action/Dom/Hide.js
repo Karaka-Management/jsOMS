@@ -1,4 +1,4 @@
-const hideAction = function (action, callback)
+export function hideAction (action, callback)
 {
     "use strict";
 

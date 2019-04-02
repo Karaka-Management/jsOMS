@@ -6,7 +6,7 @@
  *
  * @since 1.0.0
  */
-const tableAppend = function (action, callback)
+export function tableAppend (action, callback)
 {
     "use strict";
 

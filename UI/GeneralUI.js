@@ -1,3 +1,7 @@
+
+import { AdvancedInput } from './Component/AdvancedInput.js';
+import { UriFactory } from '../Uri/UriFactory.js';
+
 /**
  * UI manager for handling basic ui elements.
  *
@@ -6,121 +10,113 @@
  * @version    1.0.0
  * @since      1.0.0
  */
-(function (jsOMS)
-{
-    "use strict";
+export class GeneralUI {
+    /**
+     * @constructor
+     *
+     * @since 1.0.0
+     */
+    constructor ()
+    {
+        this.visObs = null;
+    };
 
-    /** @namespace jsOMS.UI */
-    jsOMS.Autoloader.defineNamespace('jsOMS.UI');
+    /**
+     * Bind button.
+     *
+     * @param {string} [id] Button id (optional)
+     *
+     * @return {void}
+     *
+     * @since 1.0.0
+     */
+    bind (id)
+    {
+        let e = null;
+        if (typeof id !== 'undefined' && id !== null) {
+            e = document.getElementById(id);
+        }
 
-    jsOMS.UI.GeneralUI = class {
-        /**
-         * @constructor
-         *
-         * @since 1.0.0
-         */
-        constructor ()
-        {
-            this.visObs = null;
-        };
+        this.bindHref(e);
+        this.bindLazyLoad(e);
+        this.bindInput(e);
+    };
 
-        /**
-         * Bind button.
-         *
-         * @param {string} [id] Button id (optional)
-         *
-         * @return {void}
-         *
-         * @since 1.0.0
-         */
-        bind (id)
-        {
-            let e = null;
-            if (typeof id !== 'undefined' && id !== null) {
-                e = document.getElementById(id);
-            }
+    /**
+     * Bind & rebind UI element.
+     *
+     * @param {Object} [e] Element id
+     *
+     * @return {void}
+     *
+     * @since  1.0.0
+     */
+    bindHref (e)
+    {
+        e            = e !== null ? e.querySelectorAll('[data-href]') : document.querySelectorAll('[data-href]');
+        const length = e.length;
 
-            this.bindHref(e);
-            this.bindLazyLoad(e);
-            this.bindInput(e);
-        };
+        for (let i = 0; i < length; ++i) {
+            e[i].addEventListener('click', function(event) {
+                jsOMS.preventAll(event);
+                window.location = UriFactory.build(this.getAttribute('data-href'));
+            });
+        }
+    };
 
-        /**
-         * Bind & rebind UI element.
-         *
-         * @param {Object} [e] Element id
-         *
-         * @return {void}
-         *
-         * @since  1.0.0
-         */
-        bindHref (e)
-        {
-            e            = e !== null ? e.querySelectorAll('[data-href]') : document.querySelectorAll('[data-href]');
-            const length = e.length;
+    /**
+     * Bind & rebind UI element.
+     *
+     * @param {Object} [e] Element id
+     *
+     * @return {void}
+     *
+     * @since  1.0.0
+     */
+    bindLazyLoad (e)
+    {
+        e            = e !== null ? e.querySelectorAll('[data-lazyload]') : document.querySelectorAll('[data-lazyload]');
+        const length = e.length;
 
-            for (let i = 0; i < length; ++i) {
-                e[i].addEventListener('click', function(event) {
-                    jsOMS.preventAll(event);
-                    window.location = jsOMS.Uri.UriFactory.build(this.getAttribute('data-href'));
+        /** global: IntersectionObserver */
+        if (!this.visObs && window.IntersectionObserver) {
+            this.visObs = new IntersectionObserver(function(eles, obs) {
+                eles.forEach(ele => {
+                    if (ele.intersectionRatio > 0) {
+                        obs.unobserve(ele.target);
+                        ele.target.src = ele.target.dataset.lazyload;
+                        delete ele.target.dataset.lazyload;
+                    }
                 });
+            });
+        }
+
+        for (let i = 0; i < length; ++i) {
+            if (!this.visObs) {
+                e[i].src = e[i].dataset.lazyload;
+                delete e[i].dataset.lazyload;
+            } else {
+                this.visObs.observe(e[i]);
             }
-        };
+        }
+    };
 
-        /**
-         * Bind & rebind UI element.
-         *
-         * @param {Object} [e] Element id
-         *
-         * @return {void}
-         *
-         * @since  1.0.0
-         */
-        bindLazyLoad (e)
-        {
-            e            = e !== null ? e.querySelectorAll('[data-lazyload]') : document.querySelectorAll('[data-lazyload]');
-            const length = e.length;
+    /**
+     * Bind & rebind UI element.
+     *
+     * @param {Object} [e] Element id
+     *
+     * @return {void}
+     *
+     * @since  1.0.0
+     */
+    bindInput (e)
+    {
+        e = e !== null ? [e] : document.getElementsByClassName('advancedInput');
+        const length = e.length;
 
-            /** global: IntersectionObserver */
-            if (!this.visObs && window.IntersectionObserver) {
-                this.visObs = new IntersectionObserver(function(eles, obs) {
-                    eles.forEach(ele => {
-                        if (ele.intersectionRatio > 0) {
-                            obs.unobserve(ele.target);
-                            ele.target.src = ele.target.dataset.lazyload;
-                            delete ele.target.dataset.lazyload;
-                        }
-                    });
-                });
-            }
-
-            for (let i = 0; i < length; ++i) {
-                if (!this.visObs) {
-                    e[i].src = e[i].dataset.lazyload;
-                    delete e[i].dataset.lazyload;
-                } else {
-                    this.visObs.observe(e[i]);
-                }
-            }
-        };
-
-        /**
-         * Bind & rebind UI element.
-         *
-         * @param {Object} [e] Element id
-         *
-         * @return {void}
-         *
-         * @since  1.0.0
-         */
-        bindInput (e)
-        {
-            e = e !== null ? [e] : document.getElementsByClassName('advancedInput');
-            const length = e.length;
-
-            for (let i = 0; i < length; ++i) {
-                new jsOMS.UI.Component.AdvancedInput(e[i]);
-            }
-        };
-    }
-}(window.jsOMS = window.jsOMS || {}));
+        for (let i = 0; i < length; ++i) {
+            new AdvancedInput(e[i]);
+        }
+    };
+};

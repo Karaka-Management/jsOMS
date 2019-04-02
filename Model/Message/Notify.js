@@ -5,7 +5,7 @@
  *
  * @since 1.0.0
  */
-const notifyMessage = function (data)
+export function notifyMessage (data)
 {
     setTimeout(function ()
     {

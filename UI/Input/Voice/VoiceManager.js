@@ -6,172 +6,164 @@
  * @version    1.0.0
  * @since      1.0.0
  */
-(function (jsOMS)
-{
-    "use strict";
+export class VoiceManager {
+    /**
+     * @constructor
+     *
+     * @param {Object} app      Application
+     * @param {Object} commands Available commands
+     * @param {string} lang     Localization
+     *
+     * @since 1.0.0
+     */
+    constructor(app, commands = {}, lang = 'en-US')
+    {
+        this.app                   = app;
+        this.commands              = commands;
+        this.lang                  = lang;
+        this.recognition           = null;
+        this.speechRecognitionList = null;
 
-    /** @namespace jsOMS.UI */
-    jsOMS.Autoloader.defineNamespace('jsOMS.UI.Input.Voice');
+        if (SpeechRecognition !== null) {
+            this.recognition           = new SpeechRecognition();
+            this.speechRecognitionList = new SpeechGrammarList();
+        }
+    };
 
-    // todo: remove once obsolete
-    /** global: webkitSpeechRecognition */
-    /** global: SpeechRecognition */
-    var SpeechRecognition = typeof SpeechRecognition !== 'undefined' ? SpeechRecognition : typeof webkitSpeechRecognition !== 'undefined' ? webkitSpeechRecognition : null;
+    /**
+     * Setup or re-initialize voice manager.
+     *
+     * @return {void}
+     *
+     * @since  1.0.0
+     */
+    setup()
+    {
+        if (SpeechRecognition === null) {
+            return;
+        }
 
-    /** global: webkitSpeechGrammarList */
-    /** global: SpeechGrammarList */
-    var SpeechGrammarList = typeof SpeechGrammarList !== 'undefined' ? SpeechGrammarList : typeof webkitSpeechGrammarList !== 'undefined' ? webkitSpeechGrammarList : null;
+        const self                       = this;
+        this.recognition.lang            = this.lang;
+        this.recognition.interimResults  = false;
+        this.recognition.maxAlternatives = 1;
+        this.recognition.continuous      = true;
+        this.recognition.lang            = this.lang;
 
-    /** global: webkitSpeechRecognitionEvent */
-    /** global: SpeechRecognitionEvent */
-    var SpeechRecognitionEvent = typeof SpeechRecognitionEvent !== 'undefined' ? SpeechRecognitionEvent : typeof webkitSpeechRecognitionEvent !== 'undefined' ? webkitSpeechRecognitionEvent : null;
+        if (typeof this.commands !== 'undefined') {
+            this.speechRecognitionList.addFromString(this.getCommandsString(), 1);
+            this.recognition.grammars = this.speechRecognitionList;
+        }
 
-    jsOMS.UI.Input.Voice.VoiceManager = class {
-        /**
-         * @constructor
-         *
-         * @param {Object} app      Application
-         * @param {Object} commands Available commands
-         * @param {string} lang     Localization
-         *
-         * @since 1.0.0
-         */
-        constructor(app, commands = {}, lang = 'en-US')
+        this.recognition.onstart  = function() {};
+        this.recognition.onresult = function(event)
         {
-            this.app                   = app;
-            this.commands              = commands;
-            this.lang                  = lang;
-            this.recognition           = null;
-            this.speechRecognitionList = null;
+            let result = jsOMS.trim(event.results[event.resultIndex][0].transcript);
 
-            if (SpeechRecognition !== null) {
-                this.recognition           = new SpeechRecognition();
-                this.speechRecognitionList = new SpeechGrammarList();
+            if (self.commands.hasOwnProperty(result)) {
+                self.commands[result]();
             }
         };
 
-        /**
-         * Setup or re-initialize voice manager.
-         *
-         * @return {void}
-         *
-         * @since  1.0.0
-         */
-        setup()
+        this.recognition.onspeechend = function()
         {
-            if (SpeechRecognition === null) {
-                return;
-            }
-
-            const self                       = this;
-            this.recognition.lang            = this.lang;
-            this.recognition.interimResults  = false;
-            this.recognition.maxAlternatives = 1;
-            this.recognition.continuous      = true;
-            this.recognition.lang            = this.lang;
-
-            if (typeof this.commands !== 'undefined') {
-                this.speechRecognitionList.addFromString(this.getCommandsString(), 1);
-                this.recognition.grammars = this.speechRecognitionList;
-            }
-
-            this.recognition.onstart  = function() {};
-            this.recognition.onresult = function(event)
-            {
-                let result = jsOMS.trim(event.results[event.resultIndex][0].transcript);
-
-                if (self.commands.hasOwnProperty(result)) {
-                    self.commands[result]();
-                }
-            };
-
-            this.recognition.onspeechend = function()
-            {
-            };
-
-            this.recognition.onnomatch = function(event)
-            {
-                jsOMS.Log.Logger.instance.warning('Couldn\'t recognize speech');
-            };
-
-            this.recognition.onerror = function(event)
-            {
-                jsOMS.Log.Logger.instance.warning('Error during speech recognition: ' + event.error);
-            };
         };
 
-        /**
-         * Create commands/grammar string from commands
-         *
-         * @return {string}
-         *
-         * @since  1.0.0
-         */
-        getCommandsString()
+        this.recognition.onnomatch = function(event)
         {
-            return '#JSGF V1.0; grammar phrase; public <phrase> = ' + Object.keys(this.commands).join(' | ') + ' ;';
+            jsOMS.Log.Logger.instance.warning('Couldn\'t recognize speech');
         };
 
-        /**
-         * Set language
-         *
-         * @param {string} lang Language code (e.g. en-US)
-         *
-         * @return {void}
-         *
-         * @since  1.0.0
-         */
-        setLanguage(lang)
+        this.recognition.onerror = function(event)
         {
-            // todo: eventually restart
-            this.recognition.lang = lang;
+            jsOMS.Log.Logger.instance.warning('Error during speech recognition: ' + event.error);
         };
+    };
 
-        /**
-         * Add command/grammar and callback.
-         *
-         * @param {string} command Command id
-         * @param {callback} callback Callback for command
-         *
-         * @return {void}
-         *
-         * @since  1.0.0
-         */
-        add(command, callback)
-        {
-            this.commands[command] = callback;
-        };
+    /**
+     * Create commands/grammar string from commands
+     *
+     * @return {string}
+     *
+     * @since  1.0.0
+     */
+    getCommandsString()
+    {
+        return '#JSGF V1.0; grammar phrase; public <phrase> = ' + Object.keys(this.commands).join(' | ') + ' ;';
+    };
 
-        /**
-         * Start voice listener.
-         *
-         * @return {void}
-         *
-         * @since  1.0.0
-         */
-        start()
-        {
-            if (SpeechRecognition === null) {
-                return;
-            }
+    /**
+     * Set language
+     *
+     * @param {string} lang Language code (e.g. en-US)
+     *
+     * @return {void}
+     *
+     * @since  1.0.0
+     */
+    setLanguage(lang)
+    {
+        // todo: eventually restart
+        this.recognition.lang = lang;
+    };
 
-            this.recognition.start();
-        };
+    /**
+     * Add command/grammar and callback.
+     *
+     * @param {string} command Command id
+     * @param {callback} callback Callback for command
+     *
+     * @return {void}
+     *
+     * @since  1.0.0
+     */
+    add(command, callback)
+    {
+        this.commands[command] = callback;
+    };
 
-        /**
-         * Stop voice listener.
-         *
-         * @return {void}
-         *
-         * @since  1.0.0
-         */
-        stop()
-        {
-            if (SpeechRecognition === null) {
-                return;
-            }
+    /**
+     * Start voice listener.
+     *
+     * @return {void}
+     *
+     * @since  1.0.0
+     */
+    start()
+    {
+        if (SpeechRecognition === null) {
+            return;
+        }
 
-            this.recognition.stop();
-        };
-    }
-}(window.jsOMS = window.jsOMS || {}));
+        this.recognition.start();
+    };
+
+    /**
+     * Stop voice listener.
+     *
+     * @return {void}
+     *
+     * @since  1.0.0
+     */
+    stop()
+    {
+        if (SpeechRecognition === null) {
+            return;
+        }
+
+        this.recognition.stop();
+    };
+};
+
+// todo: remove once obsolete
+/** global: webkitSpeechRecognition */
+/** global: SpeechRecognition */
+var SpeechRecognition = typeof SpeechRecognition !== 'undefined' ? SpeechRecognition : typeof webkitSpeechRecognition !== 'undefined' ? webkitSpeechRecognition : null;
+
+/** global: webkitSpeechGrammarList */
+/** global: SpeechGrammarList */
+var SpeechGrammarList = typeof SpeechGrammarList !== 'undefined' ? SpeechGrammarList : typeof webkitSpeechGrammarList !== 'undefined' ? webkitSpeechGrammarList : null;
+
+/** global: webkitSpeechRecognitionEvent */
+/** global: SpeechRecognitionEvent */
+var SpeechRecognitionEvent = typeof SpeechRecognitionEvent !== 'undefined' ? SpeechRecognitionEvent : typeof webkitSpeechRecognitionEvent !== 'undefined' ? webkitSpeechRecognitionEvent : null;

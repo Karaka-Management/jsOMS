@@ -6,7 +6,7 @@
  *
  * @since 1.0.0
  */
-const requestAction = function (action, callback)
+export function requestAction (action, callback)
 {
     "use strict";
 

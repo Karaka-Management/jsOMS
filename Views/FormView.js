@@ -10,462 +10,455 @@
  * @version    1.0.0
  * @since      1.0.0
  */
-(function (jsOMS)
-{
-    "use strict";
-    /** @namespace jsOMS.Views */
-    jsOMS.Autoloader.defineNamespace('jsOMS.Views');
+export class FormView {
+    /**
+     * @constructor
+     *
+     * @param {string} id Form id
+     *
+     * @since 1.0.0
+     */
+    constructor (id)
+    {
+        this.id = id;
 
-    jsOMS.Views.FormView = class {
-        /**
-         * @constructor
-         *
-         * @param {string} id Form id
-         *
-         * @since 1.0.0
-         */
-        constructor (id)
-        {
-            this.id = id;
+        this.initializeMembers();
+        this.bind();
 
-            this.initializeMembers();
-            this.bind();
+        this.success    = null;
+        this.finally    = null;
+        this.lastSubmit = 0;
+    };
 
-            this.success    = null;
-            this.finally    = null;
-            this.lastSubmit = 0;
-        };
+    /**
+     * Initialize members
+     *
+     * Pulled out since this is used in a cleanup process
+     *
+     * @return {void}
+     *
+     * @since 1.0.0
+     */
+    initializeMembers ()
+    {
+        this.submitInjects = [];
+        this.method        = 'POST';
+        this.action        = '';
+    };
 
-        /**
-         * Initialize members
-         *
-         * Pulled out since this is used in a cleanup process
-         *
-         * @return {void}
-         *
-         * @since 1.0.0
-         */
-        initializeMembers ()
-        {
-            this.submitInjects = [];
-            this.method        = 'POST';
-            this.action        = '';
-        };
+    /**
+     * Get method
+     *
+     * @return {string}
+     *
+     * @since 1.0.0
+     */
+    getMethod ()
+    {
+        return this.method;
+    };
 
-        /**
-         * Get method
-         *
-         * @return {string}
-         *
-         * @since 1.0.0
-         */
-        getMethod ()
-        {
-            return this.method;
-        };
+    /**
+     * Get action
+     *
+     * @return {string}
+     *
+     * @since 1.0.0
+     */
+    getAction ()
+    {
+        return this.action;
+    };
 
-        /**
-         * Get action
-         *
-         * @return {string}
-         *
-         * @since 1.0.0
-         */
-        getAction ()
-        {
-            return this.action;
-        };
+    /**
+     * Get time of last submit
+     *
+     * @return {int}
+     *
+     * @since 1.0.0
+     */
+    getLastSubmit ()
+    {
+        return this.lastSubmit;
+    };
 
-        /**
-         * Get time of last submit
-         *
-         * @return {int}
-         *
-         * @since 1.0.0
-         */
-        getLastSubmit ()
-        {
-            return this.lastSubmit;
-        };
+    /**
+     * Update last submit time
+     *
+     * @return {void}
+     *
+     * @since 1.0.0
+     */
+    updateLastSubmit ()
+    {
+        this.lastSubmit = Math.floor(Date.now());
+    };
 
-        /**
-         * Update last submit time
-         *
-         * @return {void}
-         *
-         * @since 1.0.0
-         */
-        updateLastSubmit ()
-        {
-            this.lastSubmit = Math.floor(Date.now());
-        };
+    /**
+     * Get submit elements
+     *
+     * @return {Object}
+     *
+     * @since 1.0.0
+     */
+    getSubmit ()
+    {
+        return document.querySelectorAll(
+            '#' + this.id + ' input[type=submit], '
+            + 'button[form=' + this.id + '][type=submit], '
+            + '#' + this.id + ' button[type=submit], '
+            + '#' + this.id + ' .submit'
+        );
+    };
 
-        /**
-         * Get submit elements
-         *
-         * @return {Object}
-         *
-         * @since 1.0.0
-         */
-        getSubmit ()
-        {
-            return document.querySelectorAll(
-                '#' + this.id + ' input[type=submit], '
-                + 'button[form=' + this.id + '][type=submit], '
-                + '#' + this.id + ' button[type=submit], '
-                + '#' + this.id + ' .submit'
-            );
-        };
+    /**
+     * Get success callback
+     *
+     * @return {callback}
+     *
+     * @since 1.0.0
+     */
+    getSuccess ()
+    {
+        return this.success;
+    };
 
-        /**
-         * Get success callback
-         *
-         * @return {callback}
-         *
-         * @since 1.0.0
-         */
-        getSuccess ()
-        {
-            return this.success;
-        };
+    /**
+     * Set success callback
+     *
+     * @param {callback} callback Callback
+     *
+     * @return {void}
+     *
+     * @since 1.0.0
+     */
+    setSuccess (callback)
+    {
+        this.success = callback;
+    };
 
-        /**
-         * Set success callback
-         *
-         * @param {callback} callback Callback
-         *
-         * @return {void}
-         *
-         * @since 1.0.0
-         */
-        setSuccess (callback)
-        {
-            this.success = callback;
-        };
+    /**
+     * Get finally callback
+     *
+     * @return {callback}
+     *
+     * @since 1.0.0
+     */
+    getFinally() {
+        return this.finally;
+    };
 
-        /**
-         * Get finally callback
-         *
-         * @return {callback}
-         *
-         * @since 1.0.0
-         */
-        getFinally() {
-            return this.finally;
-        };
+    /**
+     * Set finally callback
+     *
+     * @param {callback} callback Callback
+     *
+     * @return {void}
+     *
+     * @since 1.0.0
+     */
+    setFinally(callback) {
+        this.finally = callback;
+    };
 
-        /**
-         * Set finally callback
-         *
-         * @param {callback} callback Callback
-         *
-         * @return {void}
-         *
-         * @since 1.0.0
-         */
-        setFinally(callback) {
-            this.finally = callback;
-        };
+    /**
+     * Inject submit with post callback
+     *
+     * @param {callback} callback Callback
+     *
+     * @return {void}
+     *
+     * @since 1.0.0
+     */
+    injectSubmit (callback)
+    {
+        this.submitInjects.push(callback);
+    };
 
-        /**
-         * Inject submit with post callback
-         *
-         * @param {callback} callback Callback
-         *
-         * @return {void}
-         *
-         * @since 1.0.0
-         */
-        injectSubmit (callback)
-        {
-            this.submitInjects.push(callback);
-        };
+    /**
+     * Get form elements
+     *
+     * @return {Array}
+     *
+     * @since 1.0.0
+     */
+    getFormElements ()
+    {
+        const form = document.getElementById(this.id);
 
-        /**
-         * Get form elements
-         *
-         * @return {Array}
-         *
-         * @since 1.0.0
-         */
-        getFormElements ()
-        {
-            const form = document.getElementById(this.id);
+        if (!form) {
+            return [];
+        }
 
-            if (!form) {
-                return [];
+        const selects   = form.getElementsByTagName('select'),
+            textareas   = form.getElementsByTagName('textarea'),
+            inputs      = [].slice.call(form.getElementsByTagName('input')),
+            buttons     = form.getElementsByTagName('button'),
+            canvas      = form.getElementsByTagName('canvas'),
+            external    = document.querySelectorAll('[form=' + this.id + ']'),
+            special     = form.querySelectorAll('[data-name]'),
+            specialExt  = document.querySelectorAll('[data-form=' + this.id + '] [data-name]'),
+            inputLength = inputs.length;
+
+        // todo: handle trigger element. check which element triggered the submit and pass it's name+value
+        // the reason for this is, there may be multiple buttons in a form which trigger a send
+        // sometimes even a checkbox or drop down could trigger a send
+        // Maybe it makes sense to do this however at a different place e.g. the actual data submit
+
+        for (let i = 0; i < inputLength; ++i) {
+            if (inputs[i].type === 'checkbox' && !inputs[i].checked) {
+                delete inputs[i];
             }
 
-            const selects   = form.getElementsByTagName('select'),
-                textareas   = form.getElementsByTagName('textarea'),
-                inputs      = [].slice.call(form.getElementsByTagName('input')),
-                buttons     = form.getElementsByTagName('button'),
-                canvas      = form.getElementsByTagName('canvas'),
-                external    = document.querySelectorAll('[form=' + this.id + ']'),
-                special     = form.querySelectorAll('[data-name]'),
-                specialExt  = document.querySelectorAll('[data-form=' + this.id + '] [data-name]'),
-                inputLength = inputs.length;
+            // todo: handle radio here as well
+        }
 
-            // todo: handle trigger element. check which element triggered the submit and pass it's name+value
-            // the reason for this is, there may be multiple buttons in a form which trigger a send
-            // sometimes even a checkbox or drop down could trigger a send
-            // Maybe it makes sense to do this however at a different place e.g. the actual data submit
+        return Array.prototype.slice.call(inputs).concat(
+            Array.prototype.slice.call(selects),
+            Array.prototype.slice.call(textareas),
+            Array.prototype.slice.call(buttons),
+            Array.prototype.slice.call(external),
+            Array.prototype.slice.call(special),
+            Array.prototype.slice.call(specialExt)
+        ).filter(function(val) { return val; });
+    };
 
-            for (let i = 0; i < inputLength; ++i) {
-                if (inputs[i].type === 'checkbox' && !inputs[i].checked) {
-                    delete inputs[i];
+    /**
+     * Get unique form elements
+     *
+     * @param {Array} arr Form element array
+     *
+     * @return {Array}
+     *
+     * @since 1.0.0
+     */
+    getUniqueFormElements (arr)
+    {
+        let seen = {};
+
+        return arr.filter(function(item) {
+            return seen.hasOwnProperty(item.name) ? false : (seen[item.name] = true);
+        });
+    };
+
+    /**
+     * Get form data
+     *
+     * @return {Object}
+     *
+     * @since 1.0.0
+     */
+    getData ()
+    {
+        const data   = {},
+            elements = this.getFormElements(),
+            length   = elements.length;
+
+        let value = null;
+
+        for (let i = 0; i < length; ++i) {
+            if (elements[i].tagName.toLowerCase() === 'canvas') {
+                value = elements[i].toDataURL('image/png');
+            } else {
+                if (typeof elements[i].value !== 'undefined') {
+                    value = elements[i].value;
+                } else if (typeof elements[i].getAttribute('data-value') !== 'undefined') {
+                    value = elements[i].getAttribute('data-value');
+                }
+            }
+
+            const id = jsOMS.Views.FormView.getElementId(elements[i]);
+            if (id === null) {
+                continue;
+            }
+
+            // handle array data (e.g. table rows with same name)
+            if (data.hasOwnProperty(id)) {
+                if (data[id].constructor !== Array) {
+                    data[id] = [data[id]];
                 }
 
-                // todo: handle radio here as well
+                data[id].push(value);
+            } else {
+                data[id] = value;
             }
+        }
 
-            return Array.prototype.slice.call(inputs).concat(
-                Array.prototype.slice.call(selects),
-                Array.prototype.slice.call(textareas),
-                Array.prototype.slice.call(buttons),
-                Array.prototype.slice.call(external),
-                Array.prototype.slice.call(special),
-                Array.prototype.slice.call(specialExt)
-            ).filter(function(val) { return val; });
-        };
+        return data;
+    };
 
-        /**
-         * Get unique form elements
-         *
-         * @param {Array} arr Form element array
-         *
-         * @return {Array}
-         *
-         * @since 1.0.0
-         */
-        getUniqueFormElements (arr)
-        {
-            let seen = {};
+    /**
+     * Get form id
+     *
+     * @return {string}
+     *
+     * @since 1.0.0
+     */
+    getId ()
+    {
+        return this.id;
+    };
 
-            return arr.filter(function(item) {
-                return seen.hasOwnProperty(item.name) ? false : (seen[item.name] = true);
-            });
-        };
+    /**
+     * Validate form
+     *
+     * @return {boolean}
+     *
+     * @since 1.0.0
+     */
+    isValid ()
+    {
+        const elements = this.getFormElements(),
+            length     = elements.length;
 
-        /**
-         * Get form data
-         *
-         * @return {Object}
-         *
-         * @since 1.0.0
-         */
-        getData ()
-        {
-            const data   = {},
-                elements = this.getFormElements(),
-                length   = elements.length;
-
-            let value = null;
-
+        try {
             for (let i = 0; i < length; ++i) {
-                if (elements[i].tagName.toLowerCase() === 'canvas') {
-                    value = elements[i].toDataURL('image/png');
-                } else {
-                    if (typeof elements[i].value !== 'undefined') {
-                        value = elements[i].value;
-                    } else if (typeof elements[i].getAttribute('data-value') !== 'undefined') {
-                        value = elements[i].getAttribute('data-value');
-                    }
-                }
-
-                const id = jsOMS.Views.FormView.getElementId(elements[i]);
-                if (id === null) {
-                    continue;
-                }
-
-                // handle array data (e.g. table rows with same name)
-                if (data.hasOwnProperty(id)) {
-                    if (data[id].constructor !== Array) {
-                        data[id] = [data[id]];
-                    }
-
-                    data[id].push(value);
-                } else {
-                    data[id] = value;
+                if ((elements[i].required && elements[i].value === '')
+                    || (typeof elements[i].pattern !== 'undefined'
+                    && elements[i].pattern !== ''
+                    && !(new RegExp(elements[i].pattern)).test(elements[i].value))
+                ) {
+                    return false;
                 }
             }
+        } catch (e) {
+            jsOMS.Log.Logger.instance.error(e);
+        }
 
-            return data;
-        };
+        return true;
+    };
 
-        /**
-         * Get form id
-         *
-         * @return {string}
-         *
-         * @since 1.0.0
-         */
-        getId ()
-        {
-            return this.id;
-        };
+    /**
+     * Get form element
+     *
+     * @return {Object}
+     *
+     * @since 1.0.0
+     */
+    getElement ()
+    {
+        return document.getElementById(this.getId());
+    };
 
-        /**
-         * Validate form
-         *
-         * @return {boolean}
-         *
-         * @since 1.0.0
-         */
-        isValid ()
-        {
-            const elements = this.getFormElements(),
-                length     = elements.length;
+    /**
+     * Get form element id
+     *
+     * @return {string}
+     *
+     * @since 1.0.0
+     */
+    static getElementId (e)
+    {
+        if (e.getAttribute('name') !== null) {
+            return e.getAttribute('name');
+        } else if (e.getAttribute('id') !== null) {
+            return e.getAttribute('id');
+        } else if (e.getAttribute('data-name') !== null) {
+            return e.getAttribute('data-name');
+        } else if (e.getAttribute('type') !== null) {
+            return e.getAttribute('type');
+        }
 
-            try {
-                for (let i = 0; i < length; ++i) {
-                    if ((elements[i].required && elements[i].value === '')
-                        || (typeof elements[i].pattern !== 'undefined'
-                        && elements[i].pattern !== ''
-                        && !(new RegExp(elements[i].pattern)).test(elements[i].value))
-                    ) {
-                        return false;
-                    }
-                }
-            } catch (e) {
-                jsOMS.Log.Logger.instance.error(e);
+        return null;
+    };
+
+    /**
+     * Get submit injects
+     *
+     * @return {Object}
+     *
+     * @since 1.0.0
+     */
+    getSubmitInjects ()
+    {
+        return this.submitInjects;
+    };
+
+    /**
+     * Bind form
+     *
+     * @return {void}
+     *
+     * @since 1.0.0
+     * @todo: check bind functionality maybe remove!!!
+     */
+    bind ()
+    {
+        this.clean();
+
+        const e = document.getElementById(this.id);
+
+        if (!e) {
+            return;
+        }
+
+        this.method = typeof e.attributes['method'] !== 'undefined' ? e.attributes['method'].value : 'EMPTY';
+        this.action = typeof e.action !== 'undefined' ? e.action : 'EMPTY';
+
+        const elements = this.getFormElements(),
+            length     = elements.length;
+
+        for (let i = 0; i < length; ++i) {
+            switch (elements[i].tagName) {
+                case 'input':
+                    jsOMS.UI.Input.bind(elements[i]);
+                    break;
+                case 'select':
+                    this.bindSelect(elements[i]);
+                    break;
+                case 'textarea':
+                    this.bindTextarea(elements[i]);
+                    break;
+                case 'button':
+                    this.bindButton(elements[i]);
+                    break;
+                default:
             }
+        }
+    };
 
-            return true;
-        };
+    /**
+     * Unbind form
+     *
+     * @return {void}
+     *
+     * @since 1.0.0
+     * @todo: check unbind functionality maybe remove = everything!!!
+     */
+    unbind ()
+    {
+        const elements = this.getFormElements(),
+            length     = elements.length;
 
-        /**
-         * Get form element
-         *
-         * @return {Object}
-         *
-         * @since 1.0.0
-         */
-        getElement ()
-        {
-            return document.getElementById(this.getId());
-        };
-
-        /**
-         * Get form element id
-         *
-         * @return {string}
-         *
-         * @since 1.0.0
-         */
-        static getElementId (e)
-        {
-            if (e.getAttribute('name') !== null) {
-                return e.getAttribute('name');
-            } else if (e.getAttribute('id') !== null) {
-                return e.getAttribute('id');
-            } else if (e.getAttribute('data-name') !== null) {
-                return e.getAttribute('data-name');
-            } else if (e.getAttribute('type') !== null) {
-                return e.getAttribute('type');
+        for (let i = 0; i < length; ++i) {
+            switch (elements[i].tagName) {
+                case 'input':
+                    jsOMS.UI.Input.unbind(elements[i]);
+                    break;
+                case 'select':
+                    this.bindSelect(elements[i]);
+                    break;
+                case 'textarea':
+                    this.bindTextarea(elements[i]);
+                    break;
+                case 'button':
+                    this.bindButton(elements[i]);
+                    break;
+                default:
             }
+        }
+    };
 
-            return null;
-        };
-
-        /**
-         * Get submit injects
-         *
-         * @return {Object}
-         *
-         * @since 1.0.0
-         */
-        getSubmitInjects ()
-        {
-            return this.submitInjects;
-        };
-
-        /**
-         * Bind form
-         *
-         * @return {void}
-         *
-         * @since 1.0.0
-         * @todo: check bind functionality maybe remove!!!
-         */
-        bind ()
-        {
-            this.clean();
-
-            const e = document.getElementById(this.id);
-
-            if (!e) {
-                return;
-            }
-
-            this.method = typeof e.attributes['method'] !== 'undefined' ? e.attributes['method'].value : 'EMPTY';
-            this.action = typeof e.action !== 'undefined' ? e.action : 'EMPTY';
-
-            const elements = this.getFormElements(),
-                length     = elements.length;
-
-            for (let i = 0; i < length; ++i) {
-                switch (elements[i].tagName) {
-                    case 'input':
-                        jsOMS.UI.Input.bind(elements[i]);
-                        break;
-                    case 'select':
-                        this.bindSelect(elements[i]);
-                        break;
-                    case 'textarea':
-                        this.bindTextarea(elements[i]);
-                        break;
-                    case 'button':
-                        this.bindButton(elements[i]);
-                        break;
-                    default:
-                }
-            }
-        };
-
-        /**
-         * Unbind form
-         *
-         * @return {void}
-         *
-         * @since 1.0.0
-         * @todo: check unbind functionality maybe remove = everything!!!
-         */
-        unbind ()
-        {
-            const elements = this.getFormElements(),
-                length     = elements.length;
-
-            for (let i = 0; i < length; ++i) {
-                switch (elements[i].tagName) {
-                    case 'input':
-                        jsOMS.UI.Input.unbind(elements[i]);
-                        break;
-                    case 'select':
-                        this.bindSelect(elements[i]);
-                        break;
-                    case 'textarea':
-                        this.bindTextarea(elements[i]);
-                        break;
-                    case 'button':
-                        this.bindButton(elements[i]);
-                        break;
-                    default:
-                }
-            }
-        };
-
-        /**
-         * Clean form
-         *
-         * @return {void}
-         *
-         * @since 1.0.0
-         */
-        clean ()
-        {
-            this.unbind();
-            this.initializeMembers();
-        };
-    }
-}(window.jsOMS = window.jsOMS || {}));
+    /**
+     * Clean form
+     *
+     * @return {void}
+     *
+     * @since 1.0.0
+     */
+    clean ()
+    {
+        this.unbind();
+        this.initializeMembers();
+    };
+};

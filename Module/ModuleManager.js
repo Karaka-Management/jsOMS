@@ -1,3 +1,4 @@
+import { ModuleFactory } from './ModuleFactory.js';
 /**
  * Module manager.
  *
@@ -6,43 +7,35 @@
  * @version    1.0.0
  * @since      1.0.0
  */
-(function (jsOMS)
-{
-    "use strict";
+export class ModuleManager {
+    /**
+     * @constructor
+     *
+     * @param {Object} app Application
+     *
+     * @since 1.0.0
+     */
+    constructor(app)
+    {
+        this.modules = {};
+        this.app     = app;
+    };
 
-    /** @namespace jsOMS.Module */
-    jsOMS.Autoloader.defineNamespace('jsOMS.Module');
+    /**
+     * Get module.
+     *
+     * @param {string} module Module name
+     *
+     * @return {Object}
+     *
+     * @since  1.0.0
+     */
+    get (module)
+    {
+        if (typeof this.modules[module] === 'undefined') {
+            this.modules[module] = ModuleFactory.getInstance(module, this.app);
+        }
 
-    jsOMS.Module.ModuleManager = class {
-        /**
-         * @constructor
-         *
-         * @param {Object} app Application
-         *
-         * @since 1.0.0
-         */
-        constructor(app)
-        {
-            this.modules = {};
-            this.app     = app;
-        };
-
-        /**
-         * Get module.
-         *
-         * @param {string} module Module name
-         *
-         * @return {Object}
-         *
-         * @since  1.0.0
-         */
-        get (module)
-        {
-            if (typeof this.modules[module] === 'undefined') {
-                this.modules[module] = jsOMS.Module.ModuleFactory.getInstance(module, this.app);
-            }
-
-            return this.modules[module];
-        };
-    }
-}(window.jsOMS = window.jsOMS || {}));
+        return this.modules[module];
+    };
+};

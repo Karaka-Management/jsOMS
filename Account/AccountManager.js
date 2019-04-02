@@ -6,73 +6,66 @@
  * @version    1.0.0
  * @since      1.0.0
  */
-(function (jsOMS)
-{
-    "use strict";
+export class AccountManager {
+    /**
+     * @constructor
+     *
+     * @since 1.0.0
+     */
+    constructor ()
+    {
+        this.accounts = [];
+    };
 
-    jsOMS.Autoloader.defineNamespace('jsOMS.Account');
+    /**
+     * Add account.
+     *
+     * @param {Object} account Account
+     *
+     * @return {void}
+     *
+     * @since 1.0.0
+     */
+    add (account)
+    {
+        this.accounts[account.getId()] = account;
+    };
 
-    jsOMS.Account.AccountManager = class {
-        /**
-         * @constructor
-         *
-         * @since 1.0.0
-         */
-        constructor ()
-        {
-            this.accounts = [];
-        };
+    /**
+     * Remove account.
+     *
+     * @param {int} id Account id
+     *
+     * @return {void}
+     *
+     * @since 1.0.0
+     */
+    remove (id)
+    {
+        if (typeof this.accounts[id] !== 'undefined') {
+            delete this.accounts[id];
 
-        /**
-         * Add account.
-         *
-         * @param {Object} account Account
-         *
-         * @return {void}
-         *
-         * @since 1.0.0
-         */
-        add (account)
-        {
-            this.accounts[account.getId()] = account;
-        };
+            return true;
+        }
 
-        /**
-         * Remove account.
-         *
-         * @param {int} id Account id
-         *
-         * @return {void}
-         *
-         * @since 1.0.0
-         */
-        remove (id)
-        {
-            if (typeof this.accounts[id] !== 'undefined') {
-                delete this.accounts[id];
+        return false;
+    };
 
-                return true;
-            }
+    /**
+     * Get account by id.
+     *
+     * @param {int} id Account id
+     *
+     * @return {null|Object}
+     *
+     * @since 1.0.0
+     */
+    get (id)
+    {
+        if (this.accounts[id]) {
+            return this.accounts[id];
+        }
 
-            return false;
-        };
-
-        /**
-         * Get account by id.
-         *
-         * @param {int} id Account id
-         *
-         * @return {null|Object}
-         *
-         * @since 1.0.0
-         */
-        get (id)
-        {
-            if (this.accounts[id]) {
-                return this.accounts[id];
-            }
-
-            return null;
-        };
-    }
-}(window.jsOMS = window.jsOMS || {}));
+        return null;
+    };
+};

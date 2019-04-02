@@ -7,7 +7,7 @@
  * @since 1.0.0
  */
 const timerActionDelay = {};
-const timerAction      = function (action, callback, data)
+export function timerAction (action, callback, data)
 {
     "use strict";
 

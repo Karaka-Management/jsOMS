@@ -6,7 +6,7 @@
  *
  * @since 1.0.0
  */
-const datalistAppend = function (action, callback)
+export function datalistAppend (action, callback)
 {
     "use strict";
 

@@ -5,7 +5,7 @@
  *
  * @since 1.0.0
  */
-const domAction = function (data)
+export function domAction (data)
 {
     /** global: jsOMS */
     setTimeout(function ()

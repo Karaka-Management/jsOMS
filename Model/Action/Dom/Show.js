@@ -1,4 +1,4 @@
-const showAction = function (action, callback)
+export function showAction (action, callback)
 {
     "use strict";
 

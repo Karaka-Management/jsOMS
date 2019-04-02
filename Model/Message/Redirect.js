@@ -1,3 +1,5 @@
+import { UriFactory } from '../../Uri/UriFactory.js';
+
 /**
  * Set message.
  *
@@ -5,11 +7,11 @@
  *
  * @since 1.0.0
  */
-const redirectMessage = function (data)
+export function redirectMessage (data)
 {
     setTimeout(function ()
     {
         /** global: jsOMS */
-        window.location = jsOMS.Uri.UriFactory.build(data.uri);
+        window.location = UriFactory.build(data.uri);
     }, parseInt(data.delay));
 };

@@ -7,7 +7,7 @@
  *
  * @since 1.0.0
  */
-const preventEvent = function (action, callback, id)
+export function preventEvent (action, callback, id)
 {
     "use strict";
 

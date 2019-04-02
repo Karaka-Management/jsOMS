@@ -6,7 +6,7 @@
  *
  * @since 1.0.0
  */
-const validateKeypress = function (action, callback)
+export function validateKeypress (action, callback)
 {
     "use strict";
 

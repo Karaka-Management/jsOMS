@@ -6,126 +6,118 @@
  * @version    1.0.0
  * @since      1.0.0
  */
-(function (jsOMS)
-{
-    "use strict";
+export class TouchManager {
+    /**
+     * @constructor
+     *
+     * @param {Object} app Application
+     *
+     * @since 1.0.0
+     */
+    constructor (app)
+    {
+        this.app         = app;
+        this.activeSwipe = {};
+        this.resetSwipe();
+    };
 
-    /** @namespace jsOMS.UI.Input.Touch */
-    jsOMS.Autoloader.defineNamespace('jsOMS.UI.Input.Touch');
+    /**
+     * Reset swipe data.
+     *
+     * This is called in between swipes in order to reset previous swipe data.
+     *
+     * @return {void}
+     *
+     * @since 1.0.0
+     */
+    resetSwipe ()
+    {
+        this.activeSwipe = {'startX': null, 'startY': null, 'time': null};
+    };
 
-    jsOMS.UI.Input.Touch.TouchManager = class {
-        /**
-         * @constructor
-         *
-         * @param {Object} app Application
-         *
-         * @since 1.0.0
-         */
-        constructor (app)
+    /**
+     * Adding swipe functionality.
+     *
+     * Forwarding swipe to arrow keys.
+     *
+     * @return {void}
+     *
+     * @since 1.0.0
+     */
+    add (surface)
+    {
+        const e  = document.getElementById(surface),
+            self = this;
+
+        if (!e) {
+            return;
+        }
+
+        e.addEventListener('touchstart', function (event)
         {
-            this.app         = app;
-            this.activeSwipe = {};
-            this.resetSwipe();
-        };
+            const touch = this.changedTouches[0];
 
-        /**
-         * Reset swipe data.
-         *
-         * This is called in between swipes in order to reset previous swipe data.
-         *
-         * @return {void}
-         *
-         * @since 1.0.0
-         */
-        resetSwipe ()
+            self.activeSwipe.startX = touch.pageX;
+            self.activeSwipe.startY = touch.pageY;
+            self.activeSwipe.time   = new Date().getTime();
+
+            jsOMS.preventAll(event);
+        });
+
+        e.addEventListener('touchmove', function (event)
         {
-            this.activeSwipe = {'startX': null, 'startY': null, 'time': null};
-        };
+            jsOMS.preventAll(event);
+        });
 
-        /**
-         * Adding swipe functionality.
-         *
-         * Forwarding swipe to arrow keys.
-         *
-         * @return {void}
-         *
-         * @since 1.0.0
-         */
-        add (surface)
+        e.addEventListener('touchend', function (event)
         {
-            const e  = document.getElementById(surface),
-                self = this;
+            const touch     = this.changedTouches[0],
+                distX       = touch.pageX - self.activeSwipe.startX,
+                distY       = touch.pageY - self.activeSwipe.startY,
+                elapsedTime = new Date().getTime() - self.activeSwipe.time;
 
-            if (!e) {
-                return;
-            }
+            self.resetSwipe();
+            // todo: only prevent all if success
+            jsOMS.preventAll(event);
 
-            e.addEventListener('touchstart', function (event)
-            {
-                const touch = this.changedTouches[0];
-
-                self.activeSwipe.startX = touch.pageX;
-                self.activeSwipe.startY = touch.pageY;
-                self.activeSwipe.time   = new Date().getTime();
-
-                jsOMS.preventAll(event);
-            });
-
-            e.addEventListener('touchmove', function (event)
-            {
-                jsOMS.preventAll(event);
-            });
-
-            e.addEventListener('touchend', function (event)
-            {
-                const touch     = this.changedTouches[0],
-                    distX       = touch.pageX - self.activeSwipe.startX,
-                    distY       = touch.pageY - self.activeSwipe.startY,
-                    elapsedTime = new Date().getTime() - self.activeSwipe.time;
-
-                self.resetSwipe();
-                // todo: only prevent all if success
-                jsOMS.preventAll(event);
-
-                if (elapsedTime > 300 && distY < 3 && distX < 3) {
-                    let rightClick = MouseEvent('click',
-                        {
-                            bubbles: true,
-                            cancelable: true,
-                            view: window,
-                            screenX: touch.pageX,
-                            screenY: touch.pageY,
-                            clientX: touch.pageX,
-                            clientY: touch.pageY,
-                            ctrlKey: false,
-                            altKey: false,
-                            shiftKey: false,
-                            metaKey: false,
-                            button: 2,
-                            relatedTarget: null
-                        }
-                    );
-
-                    document.dispatchEvent(rightClick);
-                } else if (elapsedTime < 500) {
-                    /** global: Event */
-                    const e = new Event('keyup');
-
-                    if (distY > 100) {
-                        e.keyCode = 38;
-                        document.dispatchEvent(e);
-                    } else if (distX > 100) {
-                        e.keyCode = 39;
-                        document.dispatchEvent(e);
-                    } else if (distY < -100) {
-                        e.keyCode = 40;
-                        document.dispatchEvent(e);
-                    } else if (distX < -100) {
-                        e.keyCode = 37;
-                        document.dispatchEvent(e);
+            if (elapsedTime > 300 && distY < 3 && distX < 3) {
+                let rightClick = MouseEvent('click',
+                    {
+                        bubbles: true,
+                        cancelable: true,
+                        view: window,
+                        screenX: touch.pageX,
+                        screenY: touch.pageY,
+                        clientX: touch.pageX,
+                        clientY: touch.pageY,
+                        ctrlKey: false,
+                        altKey: false,
+                        shiftKey: false,
+                        metaKey: false,
+                        button: 2,
+                        relatedTarget: null
                     }
+                );
+
+                document.dispatchEvent(rightClick);
+            } else if (elapsedTime < 500) {
+                /** global: Event */
+                const e = new Event('keyup');
+
+                if (distY > 100) {
+                    e.keyCode = 38;
+                    document.dispatchEvent(e);
+                } else if (distX > 100) {
+                    e.keyCode = 39;
+                    document.dispatchEvent(e);
+                } else if (distY < -100) {
+                    e.keyCode = 40;
+                    document.dispatchEvent(e);
+                } else if (distX < -100) {
+                    e.keyCode = 37;
+                    document.dispatchEvent(e);
                 }
-            });
-        };
-    }
-}(window.jsOMS = window.jsOMS || {}));
+            }
+        });
+    };
+};

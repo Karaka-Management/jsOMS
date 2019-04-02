@@ -6,7 +6,7 @@
  *
  * @since 1.0.0
  */
-const tableClear = function (action, callback)
+export function tableClear (action, callback)
 {
     "use strict";
 

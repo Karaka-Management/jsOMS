@@ -5,7 +5,7 @@
  *
  * @since 1.0.0
  */
-const reloadMessage = function (data) {
+export function reloadMessage (data) {
     setTimeout(function () {
         document.location.reload(true);
     }, parseInt(data.delay));

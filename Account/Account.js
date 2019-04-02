@@ -6,33 +6,26 @@
  * @version    1.0.0
  * @since      1.0.0
  */
-(function (jsOMS)
-{
-    "use strict";
-
-    jsOMS.Autoloader.defineNamespace('jsOMS.Account');
-
-    jsOMS.Account.Account = class {
-        /**
-         * @constructor
-         *
-         * @since 1.0.0
-         */
-        constructor ()
-        {
-            this.id = 0;
-        };
-
-        /**
-         * Get id.
-         *
-         * @return {int}
-         *
-         * @since 1.0.0
-         */
-        getId ()
-        {
-            return this.id;
-        };
+export class Account {
+    /**
+     * @constructor
+     *
+     * @since 1.0.0
+     */
+    constructor ()
+    {
+        this.id = 0;
     };
-}(window.jsOMS = window.jsOMS || {}));
+
+    /**
+     * Get id.
+     *
+     * @return {int}
+     *
+     * @since 1.0.0
+     */
+    getId ()
+    {
+        return this.id;
+    };
+};

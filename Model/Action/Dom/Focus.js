@@ -1,4 +1,4 @@
-const focusAction = function (action, callback)
+export function focusAction (action, callback)
 {
     "use strict";
 

@@ -7,7 +7,7 @@
  *
  * @since 1.0.0
  */
-const domRemoveValue = function (action, callback, id)
+export function domRemoveValue (action, callback, id)
 {
     "use strict";
 

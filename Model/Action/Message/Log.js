@@ -6,7 +6,7 @@
  *
  * @since 1.0.0
  */
-const logAction = function (action, callback)
+export function logAction (action, callback)
 {
     "use strict";
 

@@ -7,7 +7,7 @@
  *
  * @since 1.0.0
  */
-const domGetValue = function (action, callback, id)
+export function domGetValue (action, callback, id)
 {
     "use strict";
 

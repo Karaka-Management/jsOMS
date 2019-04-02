@@ -7,7 +7,7 @@
  *
  * @since 1.0.0
  */
-const popupButtonAction = function (action, callback, id)
+export function popupButtonAction (action, callback, id)
 {
     "use strict";
 

@@ -1,14 +1,6 @@
-(function (jsOMS) {
-    "use strict";
+export class CacheManager {
+    constructor ()
+    {
 
-    jsOMS.Autoloader.defineNamespace('jsOMS.DataStorage');
-
-    // TODO: create comments
-
-    jsOMS.DataStorage.CacheManager = class {
-        constructor ()
-        {
-
-        }
-    };
-}(window.jsOMS = window.jsOMS || {}));
+    }
+};

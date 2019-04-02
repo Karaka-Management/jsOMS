@@ -6,75 +6,67 @@
  * @version    1.0.0
  * @since      1.0.0
  */
-(function (jsOMS)
-{
-    "use strict";
+export class BrowserNotification {
+    /**
+     * @constructor
+     *
+     * @since 1.0.0
+     */
+    constructor()
+    {
+        this.status = 0;
+    };
 
-    /** @namespace jsOMS.Message.Notification.Browser */
-    jsOMS.Autoloader.defineNamespace('jsOMS.Message.Notification.Browser');
+    /**
+     * Set notification status.
+     *
+     * @param {int} status Notification status
+     *
+     * @return {void}
+     *
+     * @since  1.0.0
+     */
+    setStatus (status)
+    {
+        this.status = status;
+    };
 
-    jsOMS.Message.Notification.Browser.BrowserNotification = class {
-        /**
-         * @constructor
-         *
-         * @since 1.0.0
-         */
-        constructor()
-        {
-            this.status = 0;
-        };
+    /**
+     * Ask for browser permission to create notifications
+     *
+     * @return {void}
+     *
+     * @since  1.0.0
+     */
+    requestPermission ()
+    {
+        const self = this;
 
-        /**
-         * Set notification status.
-         *
-         * @param {int} status Notification status
-         *
-         * @return {void}
-         *
-         * @since  1.0.0
-         */
-        setStatus (status)
-        {
-            this.status = status;
-        };
+        /** global: Notification */
+        if(Notification.permission !== 'granted' && Notification.permission !== 'denied') {
+            Notification.requestPermission(function(permission) {
+                if(permission === 'granted') {
+                    let msg = new jsOMS.Message.Notification.NotificationMessage();
 
-        /**
-         * Ask for browser permission to create notifications
-         *
-         * @return {void}
-         *
-         * @since  1.0.0
-         */
-        requestPermission ()
-        {
-            const self = this;
+                    self.send(msg);
+                }
+            });
+        }
+    };
 
-            /** global: Notification */
-            if(Notification.permission !== 'granted' && Notification.permission !== 'denied') {
-                Notification.requestPermission(function(permission) {
-                    if(permission === 'granted') {
-                        let msg = new jsOMS.Message.Notification.NotificationMessage();
-
-                        self.send(msg);
-                    }
-                });
-            }
-        };
-
-        /**
-         * Create notification
-         *
-         * @param {Object} msg Notification
-         *
-         * @return {void}
-         *
-         * @since  1.0.0
-         */
-        send (msg)
-        {
-            // todo: implement
-            /** global: Notification */
-            let n = new Notification(/* ... */);
-        };
-    }
-}(window.jsOMS = window.jsOMS || {}));
+    /**
+     * Create notification
+     *
+     * @param {Object} msg Notification
+     *
+     * @return {void}
+     *
+     * @since  1.0.0
+     */
+    send (msg)
+    {
+        // todo: implement
+        /** global: Notification */
+        let n = new Notification(/* ... */);
+    };
+};

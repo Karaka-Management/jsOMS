@@ -6,7 +6,7 @@
  *
  * @since 1.0.0
  */
-const datalistClear = function (action, callback)
+export function datalistClear (action, callback)
 {
     "use strict";
 

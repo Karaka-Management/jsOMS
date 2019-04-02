@@ -7,7 +7,7 @@
  *
  * @since 1.0.0
  */
-const removeButtonAction = function (action, callback, id)
+export function removeButtonAction (action, callback, id)
 {
     "use strict";
 

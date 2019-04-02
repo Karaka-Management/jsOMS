@@ -6,116 +6,108 @@
  * @version    1.0.0
  * @since      1.0.0
  */
-(function (jsOMS)
-{
-    "use strict";
+export class KeyboardManager {
+    /**
+     * @constructor
+     *
+     * @since 1.0.0
+     */
+    constructor ()
+    {
+        this.elements = {};
+        this.down     = [];
+    };
 
-    /** @namespace jsOMS.UI.Input.Keyboard */
-    jsOMS.Autoloader.defineNamespace('jsOMS.UI.Input.Keyboard');
+    /**
+     * Add input listener.
+     *
+     * @param {string} element Container id
+     * @param {Array} keys Keyboard keys
+     * @param {callback} callback Callback
+     *
+     * @return {void}
+     *
+     * @since  1.0.0
+     */
+    add (element, keys, callback)
+    {
+        if (typeof this.elements[element] === 'undefined') {
+            this.elements[element] = [];
 
-    jsOMS.UI.Input.Keyboard.KeyboardManager = class {
-        /**
-         * @constructor
-         *
-         * @since 1.0.0
-         */
-        constructor ()
+            this.bind(element);
+        }
+
+        this.elements[element].push({keys: keys, callback: callback});
+    };
+
+    /**
+     * Bind container for keyboard input.
+     *
+     * @param {string} element Container id
+     *
+     * @return {void}
+     *
+     * @since  1.0.0
+     */
+    bind (element)
+    {
+        const self = this;
+
+        // todo: implement keyboard for selected elements right now only global hotkeys possible
+        document.addEventListener('keydown', function keyBind(event)
         {
-            this.elements = {};
-            this.down     = [];
-        };
+            self.down.push(event.keyCode);
+        });
 
-        /**
-         * Add input listener.
-         *
-         * @param {string} element Container id
-         * @param {Array} keys Keyboard keys
-         * @param {callback} callback Callback
-         *
-         * @return {void}
-         *
-         * @since  1.0.0
-         */
-        add (element, keys, callback)
+        document.addEventListener('keyup', function keyBind(event)
         {
-            if (typeof this.elements[element] === 'undefined') {
-                this.elements[element] = [];
-
-                this.bind(element);
+            if (self.down.length > 0) {
+                self.run(element, event);
+                self.down = [];
             }
+        });
+    };
 
-            this.elements[element].push({keys: keys, callback: callback});
-        };
+    /**
+     * Execute callback based on key presses.
+     *
+     * @param {string} element Container id
+     * @param {Object} event Key event
+     *
+     * @return {void}
+     *
+     * @throws {Error}
+     *
+     * @since  1.0.0
+     */
+    run (element, event)
+    {
+        if (typeof this.elements[element] === 'undefined') {
+            throw 'Unexpected elmenet!';
+        }
 
-        /**
-         * Bind container for keyboard input.
-         *
-         * @param {string} element Container id
-         *
-         * @return {void}
-         *
-         * @since  1.0.0
-         */
-        bind (element)
-        {
-            const self = this;
+        const actions = this.elements[element],
+            length    = actions.length,
+            keyLength = this.down.length;
+        let match     = false;
 
-            // todo: implement keyboard for selected elements right now only global hotkeys possible
-            document.addEventListener('keydown', function keyBind(event)
-            {
-                self.down.push(event.keyCode);
-            });
-
-            document.addEventListener('keyup', function keyBind(event)
-            {
-                if (self.down.length > 0) {
-                    self.run(element, event);
-                    self.down = [];
-                }
-            });
-        };
-
-        /**
-         * Execute callback based on key presses.
-         *
-         * @param {string} element Container id
-         * @param {Object} event Key event
-         *
-         * @return {void}
-         *
-         * @throws {Error}
-         *
-         * @since  1.0.0
-         */
-        run (element, event)
-        {
-            if (typeof this.elements[element] === 'undefined') {
-                throw 'Unexpected elmenet!';
-            }
-
-            const actions = this.elements[element],
-                length    = actions.length,
-                keyLength = this.down.length;
-            let match     = false;
-
-            for (let i = 0; i < length; ++i) {
-                for (let j = 0; j < keyLength; ++j) {
-                    if (actions[i].keys.indexOf(this.down[j]) === -1) {
-                        match = false;
-
-                        break;
-                    }
-
-                    match = true;
-                }
-
-                if (match) {
-                    jsOMS.preventAll(event);
-                    actions[i].callback();
+        for (let i = 0; i < length; ++i) {
+            for (let j = 0; j < keyLength; ++j) {
+                if (actions[i].keys.indexOf(this.down[j]) === -1) {
+                    match = false;
 
                     break;
                 }
+
+                match = true;
             }
-        };
-    }
-}(window.jsOMS = window.jsOMS || {}));
+
+            if (match) {
+                jsOMS.preventAll(event);
+                actions[i].callback();
+
+                break;
+            }
+        }
+    };
+};

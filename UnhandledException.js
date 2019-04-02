@@ -14,7 +14,7 @@
     window.addEventListener('error', function (e)
     {
         /** global: jsOMS */
-        jsOMS.Log.Logger.instance.error(e.error);
+        //jsOMS.Log.Logger.instance.error(e.error);
 
         return false;
     });

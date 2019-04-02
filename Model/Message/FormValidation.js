@@ -5,7 +5,7 @@
  *
  * @since 1.0.0
  */
-const formValidationMessage = function (data) {
+export function formValidationMessage (data) {
     const form = document.getElementById(data.form);
 
     if(!form) {
