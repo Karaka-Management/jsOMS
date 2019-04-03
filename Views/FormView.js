@@ -1,3 +1,5 @@
+import { Input } from '../UI/Component/Input.js';
+
 /**
  * Form view.
  *
@@ -267,7 +269,7 @@ export class FormView {
                 }
             }
 
-            const id = jsOMS.Views.FormView.getElementId(elements[i]);
+            const id = FormView.getElementId(elements[i]);
             if (id === null) {
                 continue;
             }
@@ -401,7 +403,7 @@ export class FormView {
         for (let i = 0; i < length; ++i) {
             switch (elements[i].tagName) {
                 case 'input':
-                    jsOMS.UI.Input.bind(elements[i]);
+                    Input.bind(elements[i]);
                     break;
                 case 'select':
                     this.bindSelect(elements[i]);
@@ -433,7 +435,7 @@ export class FormView {
         for (let i = 0; i < length; ++i) {
             switch (elements[i].tagName) {
                 case 'input':
-                    jsOMS.UI.Input.unbind(elements[i]);
+                    Input.unbind(elements[i]);
                     break;
                 case 'select':
                     this.bindSelect(elements[i]);

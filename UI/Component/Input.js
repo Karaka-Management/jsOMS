@@ -1,3 +1,5 @@
+import { Request } from '../../Message/Request/Request.js';
+
 /**
  * Form manager class.
  *
@@ -26,7 +28,7 @@ export class Input {
      *
      * @since 1.0.0
      */
-    static unbind = function (input)
+    static unbind(input)
     {
         this.app.inputManager.getKeyboardManager().unbind(input);
         /** global: changeBind */
@@ -42,7 +44,7 @@ export class Input {
      *
      * @since 1.0.0
      */
-    static bindElement = function (input)
+    static bindElement(input)
     {
         if (typeof input === 'undefined') {
             throw 'Input element required'
@@ -109,7 +111,7 @@ export class Input {
      *
      * @since 1.0.0
      */
-    static addRemoteDatalistOptions = function (input, datalist)
+    static addRemoteDatalistOptions(input, datalist)
     {
         this.clearDatalistOptions(datalist);
 
@@ -160,7 +162,7 @@ export class Input {
      *
      * @since 1.0.0
      */
-    static clearDatalistOptions = function (datalist)
+    static clearDatalistOptions(datalist)
     {
         const length = datalist.options.length;
 
