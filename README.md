@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/Orange-Management/jsOMS.svg?branch=develop)](https://travis-ci.org/Orange-Management/jsOMS)
-
 # General
 
 The **jsOMS** framework provides many features to manage and interact with the UI and connect the frontend to the backend for data exchange. Additionally to the framework features it also includes a library that provides additional functionality.
