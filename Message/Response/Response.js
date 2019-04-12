@@ -32,7 +32,7 @@ export class Response {
      */
     get (id)
     {
-        return this.responses[id];
+        return typeof id === 'undefined' ? this.responses : this.responses[id];
     };
 
     /**

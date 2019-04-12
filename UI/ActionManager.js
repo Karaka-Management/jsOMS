@@ -63,7 +63,7 @@ export class ActionManager {
             listenerLength = listeners.length,
             self           = this;
 
-        // For everey action an event is registered
+        // For every action an event is registered
         for (let i = 0; i < listenerLength; ++i) {
             let c = [e], hasSelector = false;
 

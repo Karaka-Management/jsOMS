@@ -121,7 +121,7 @@ export class AdvancedInput {
      */
     remoteCallback(self, data)
     {
-        data = JSON.parse(data.response);
+        data = JSON.parse(data.response)[0];
         const dataLength = data.length;
 
         console.table(data);
@@ -251,6 +251,7 @@ export class AdvancedInput {
             let value       = '';
 
             for (let j = 0; j < fieldLength; ++j) {
+                // todo: this is always the same value (the data-tpl-value of the parent container, change for the future to do only once or create uuid from multiple values?)
                 value = document.activeElement.querySelectorAll('[data-tpl-value="' + newTag.firstElementChild.getAttribute('data-tpl-value') + '"]')[0].getAttribute('data-value');
                 fields[j].setAttribute('data-value', value);
 
@@ -258,6 +259,7 @@ export class AdvancedInput {
             }
 
             // don't allow duplicate
+            // todo: create a data-duplicat=true attribute to allow duplication and then have a count as part of the uuid (maybe row id)
             if (self.tagElement.querySelectorAll('[data-tpl-uuid="' + uuid + '"').length !== 0) {
                 return;
             }

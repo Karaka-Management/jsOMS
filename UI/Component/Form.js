@@ -4,6 +4,9 @@ import { Request } from '../../Message/Request/Request.js';
 import { RequestMethod } from '../../Message/Request/RequestMethod.js';
 import { Response } from '../../Message/Response/Response.js';
 import { ResponseType } from '../../Message/Response/ResponseType.js';
+import { NotificationMessage } from '../../Message/Notification/NotificationMessage.js';
+import { NotificationLevel } from '../../Message/Notification/NotificationLevel.js';
+import { NotificationType } from '../../Message/Notification/NotificationType.js';
 
 /**
  * Form manager class.
@@ -246,17 +249,17 @@ export class Form {
             console.log(xhr.response);
 
             try {
-                const o            = JSON.parse(xhr.response),
+                const o            = JSON.parse(xhr.response)[0],
                     response       = new Response(o);
                 let successInject  = null;
 
                 if ((successInject = form.getSuccess()) !== null) {
                     successInject(response);
-                } else if (typeof response.get(0) !== 'undefined' && typeof response.get(0).type !== 'undefined') {
+                } else if (typeof response.get('type') !== 'undefined') {
                     // todo: am i using this now and should all cases be handled with the successInjection?
                     // maybe there could be global response actions where injecting them to every form would not make any sense
                     // however not many if any use cases come to mind right now where this would be necessary
-                    self.app.responseManager.run(response.get(0).type, response.get(0), request);
+                    self.app.responseManager.run(response.get('type'), response.get(), request);
                 } else if (typeof o.status !== 'undefined') {
                     self.app.notifyManager.send(
                         new NotificationMessage(o.status, o.title, o.message), NotificationType.APP_NOTIFICATION
