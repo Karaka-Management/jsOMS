@@ -197,9 +197,9 @@ export class FormView {
             inputs      = [].slice.call(form.getElementsByTagName('input')),
             buttons     = form.getElementsByTagName('button'),
             canvas      = form.getElementsByTagName('canvas'),
-            external    = document.querySelectorAll('[form=' + this.id + ']'),
+            external    = document.querySelectorAll('form:not(#' + this.id + ') [form=' + this.id + ']'),
             special     = form.querySelectorAll('[data-name]'),
-            specialExt  = document.querySelectorAll('[data-form=' + this.id + '] [data-name]'),
+            specialExt  = document.querySelectorAll('form:not(#' + this.id + ') [data-form=' + this.id + '] [data-name]'),
             inputLength = inputs.length;
 
         // todo: handle trigger element. check which element triggered the submit and pass it's name+value
