@@ -59,6 +59,7 @@ export class GeneralUI {
         for (let i = 0; i < length; ++i) {
             e[i].addEventListener('click', function(event) {
                 jsOMS.preventAll(event);
+                history.pushState(null, null, window.location);
                 window.location = UriFactory.build(this.getAttribute('data-href'));
             });
         }
