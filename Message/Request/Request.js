@@ -345,6 +345,10 @@ export class Request {
      */
     send()
     {
+        if (this.uri === '') {
+            return;
+        }
+
         const self = this;
 
         if (this.xhr.readyState !== 1) {

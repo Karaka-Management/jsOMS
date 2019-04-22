@@ -286,6 +286,17 @@ export class FormView {
             }
         }
 
+        // Create FormData
+        /* todo: implement once we know how to handle this in the backend/php
+        const formData = new FormData(),
+            dataLength = data.length;
+
+        for (let key in data) {
+            if (data.hasOwnProperty(key)) {
+                formData.append(key, data[key].constructor === Array ? JSON.stringify(data[key]) : data[key]);
+            }
+        } */
+
         return data;
     };
 
@@ -395,7 +406,7 @@ export class FormView {
         }
 
         this.method = typeof e.attributes['method'] !== 'undefined' ? e.attributes['method'].value : 'EMPTY';
-        this.action = typeof e.action !== 'undefined' ? e.action : 'EMPTY';
+        this.action = typeof e.getAttribute('action') !== 'undefined' ? e.getAttribute('action') : 'EMPTY';
 
         const elements = this.getFormElements(),
             length     = elements.length;
