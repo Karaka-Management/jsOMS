@@ -127,30 +127,4 @@ export class TableView {
             + ' #' + this.id + ' tbody .order-down'
         );
     };
-
-    /**
-     * Get row elements which allow to remove a row element
-     *
-     * @return {array}
-     *
-     * @since 1.0.0
-     */
-    getRemovable()
-    {
-        return document.querySelectorAll(
-            '#' + this.id + ' tbody .remove'
-        );
-    };
-
-    getForm()
-    {
-        return document.getElementById(this.id).getAttribute('data-table-form');
-    };
-
-    getUpdatable()
-    {
-        return document.querySelectorAll(
-            '#' + this.id + ' tbody .update'
-        );
-    };
 };

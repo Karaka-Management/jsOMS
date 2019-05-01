@@ -11,6 +11,10 @@ import { Input } from '../UI/Component/Input.js';
  * @license    OMS License 1.0
  * @version    1.0.0
  * @since      1.0.0
+ *
+ * @todo expand this so any element can become a "form" e.g. table, div etc.
+ *       Simply add data-method, data-action
+ *       Expand the getData() and some other function to consider this
  */
 export class FormView {
     /**
@@ -105,11 +109,59 @@ export class FormView {
      */
     getSubmit ()
     {
+        // todo: question, exclude save/remove button? maybe not because they also submit data right?
         return document.querySelectorAll(
             '#' + this.id + ' input[type=submit], '
             + 'button[form=' + this.id + '][type=submit], '
             + '#' + this.id + ' button[type=submit], '
+            + '.submit[data-form=' + this.id + '], '
             + '#' + this.id + ' .submit'
+        );
+    };
+
+    /**
+     * Get edit elements
+     *
+     * @return {Object}
+     *
+     * @since 1.0.0
+     */
+    getUpdate() {
+        return document.querySelectorAll(
+            'button[form=' + this.id + '].update, '
+            + '.update[data-form=' + this.id + '], '
+            + '#' + this.id + ' .update'
+        );
+    };
+
+    /**
+     * Get remove buttons
+     *
+     * @return {NodeListOf<any>}
+     *
+     * @since 1.0.0
+     */
+    getRemove() {
+        return document.querySelectorAll(
+            'button[form=' + this.id + '].remove, '
+            + '.remove[data-form=' + this.id + '], '
+            + '#' + this.id + ' .remove'
+        );
+    };
+
+    /**
+     * Get remove buttons
+     *
+     * @return {NodeListOf<any>}
+     *
+     * @since 1.0.0
+     * @todo isn't this the same as submit in some cases? form below table?
+     */
+    getAdd() {
+        return document.querySelectorAll(
+            'button[form=' + this.id + '].add, '
+            + '.add[data-form=' + this.id + '], '
+            + '#' + this.id + ' .add'
         );
     };
 

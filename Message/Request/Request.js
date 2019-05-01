@@ -34,9 +34,9 @@ export class Request {
 
         this.requestHeader['Content-Type'] = this.setContentTypeBasedOnType(this.type);
 
-        this.result[0] = function()
+        this.result[0] = function(xhr)
         {
-            Logger.instance.info('Unhandled response');
+            Logger.getInstance().info('Unhandled response from "' + xhr.responseURL + '" with response data "' + xhr.response + '"');
         };
 
         /** global: XMLHttpRequest */

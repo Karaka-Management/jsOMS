@@ -20,6 +20,8 @@ export class Table {
     constructor(app)
     {
         this.app    = app;
+
+        /** @var {Object <string, TableView>} */
         this.tables = {};
         this.ignore = {};
     };
@@ -108,27 +110,6 @@ export class Table {
         for (let i = 0; i < length; ++i) {
             this.bindFiltering(filters[i], id);
         }
-
-        const removable = this.tables[id].getRemovable();
-        length          = removable.length;
-        for (let i = 0; i < length; ++i) {
-            this.bindRemovable(removable[i], id);
-        }
-
-        const createForm   = this.tables[id].getForm();
-        const createButton = document.getElementById(id).getAttribute('data-table-add');
-
-        if (createButton !== null) {
-            this.bindCreateInline(createButton, id);
-        } else if (createForm !== null) {
-            this.bindCreateForm(createForm, id);
-        }
-
-        const update = this.tables[id].getUpdatable();
-        length       = update.length;
-        for (let i = 0; i < length; ++i) {
-            this.bindUpdatable(update[i], id);
-        }
     };
 
     /**
@@ -151,33 +132,10 @@ export class Table {
         button.addEventListener('click', function (event)
         {
             console.log(exports.serialize());
-            // todo: either create download in javascript from this data or make roundtrip to server who then sends the data
+            // todo: either create download in javascript from this data or make round trip to server who then sends the data
             // - think about allowing different export formats (json, csv, excel)
             // - maybe this should never be done from the ui, maybe a endpoint uri should be specified which then calls the api get function for this data
         });
-    };
-
-    /**
-     * Removes the closest row on click.
-     *
-     * @param {Element} remove Remove button
-     * @param {Object}  id     Element id
-     *
-     * @return {void}
-     *
-     * @since  1.0.0
-     */
-    bindRemovable(remove, id)
-    {
-        if (remove.closest('form').getAttribute('method') !== 'NONE') {
-            this.app.uiManager.getFormManager().get(remove.closest('form').id).setSuccess(function () {
-                document.getElementById(id).deleteRow(remove.closest('tr').rowIndex);
-            });
-        } else {
-            this.app.uiManager.getFormManager().get(remove.closest('form').id).setFinally(function () {
-                document.getElementById(id).deleteRow(remove.closest('tr').rowIndex);
-            });
-        }
     };
 
     /**
@@ -309,8 +267,8 @@ export class Table {
 
             const output = document.importNode(tpl.content, true);
             output.firstElementChild.setAttribute('style', 'position: absolute; top: ' + posY + 'px; left: ' + posX + 'px;')
-            output.firstElementChild.setAttribute('data-table', this.closest('table').id);
-            output.firstElementChild.setAttribute('data-table-column', this.closest('td').cellIndex);
+            output.firstElementChild.setAttribute('data-ui', this.closest('table').id);
+            output.firstElementChild.setAttribute('data-ui-column', this.closest('td').cellIndex);
 
             // todo: set existing filtering option in ui here
 
@@ -327,10 +285,10 @@ export class Table {
                     filter.push(input[i].value);
                 }
 
-                const table = document.getElementById(document.getElementById('table-filter').getAttribute('data-table'));
+                const table = document.getElementById(document.getElementById('table-filter').getAttribute('data-ui'));
 
                 table.querySelectorAll('thead td')[
-                    document.getElementById('table-filter').getAttribute('data-table-column')
+                    document.getElementById('table-filter').getAttribute('data-ui-column')
                 ].setAttribute('data-filter', JSON.stringify(filter));
 
                 // todo: if not empty highlight filter button for user indication that filter is active
@@ -354,120 +312,6 @@ export class Table {
         });
     };
 
-    /**
-     * Create the table row
-     *
-     * @param {string} createForm Create form
-     * @param {Object} id         Table id
-     *
-     * @return {void}
-     *
-     * @since  1.0.0
-     */
-    bindCreateForm(createForm, id)
-    {
-        this.app.uiManager.getFormManager().get(createForm).injectSubmit(function () {
-            const table  = document.getElementById(id).getElementsByTagName('tbody')[0];
-            const newRow = table.getElementsByTagName('template')[0].content.cloneNode(true);
-
-            // set internal value
-            let fields      = newRow.querySelectorAll('[data-tpl-value]');
-            let fieldLength = fields.length;
-            let uuid        = '';
-            let value       = '';
-
-            for (let j = 0; j < fieldLength; ++j) {
-                value = document.querySelectorAll(
-                    '#' + createForm + ' [data-tpl-value="' + fields[j].getAttribute('data-tpl-value') + '"], [data-form="' + createForm + '"][data-tpl-value="' + fields[j].getAttribute('data-tpl-value') + '"]')[0]
-                    .getAttribute('data-value');
-
-                // todo: we need to check what kind of tag the selector above returns in order to get the correct value. currently this only makes sense for input elements but for selection, checkboxes etc. this doesn't make sense there we need .innerHtml or [data-text=]
-
-                fields[j].setAttribute('data-value', value);
-
-                uuid += value;
-            }
-
-            // don't allow duplicate
-            if (table.querySelectorAll('[data-tpl-uuid="' + uuid + '"').length !== 0) {
-                return;
-            }
-
-            newRow.firstElementChild.setAttribute('data-tpl-uuid', uuid);
-
-            // set readable text
-            fields      = newRow.querySelectorAll('[data-tpl-text]');
-            fieldLength = fields.length;
-
-            for (let j = 0; j < fieldLength; ++j) {
-                fields[j].appendChild(
-                    document.createTextNode(
-                        document.querySelectorAll('#' + createForm + ' [data-tpl-text="' + fields[j].getAttribute('data-tpl-text') + '"], [data-form="' + createForm + '"][data-tpl-text="' + fields[j].getAttribute('data-tpl-text') + '"]')[0].value
-                    )
-                );
-
-                // todo: we need to check what kind of tag the selector above returns in order to get the correct value. currently this only makes sense for input elements but for selection, checkboxes etc. this doesn't make sense there we need .innerHtml or [data-text=]
-            }
-
-            table.appendChild(newRow);
-            // todo: consider to do ui action as success inject to the backend request... maybe optional because sometimes there will be no backend call?
-            // todo: if a column has a form in the template the id of the form needs to be set unique somehow (e.g. remove button in form)
-
-            // todo: bind removable
-            // todo: bind edit
-
-            return true;
-        });
-    };
-
-    /**
-     * Create the table row
-     *
-     * @param {string} createForm Create form
-     * @param {Object} id         Table id
-     *
-     * @return {void}
-     *
-     * @since  1.0.0
-     */
-    bindCreateInline(createForm, id)
-    {
-        const self = this;
-
-        document.getElementById(createForm).addEventListener('click', function() {
-            const table  = document.getElementById(id).getElementsByTagName('tbody')[0];
-            const newRow = table.getElementsByTagName('template')[1].content.cloneNode(true);
-            const rowId  = 'f' + Math.random().toString(36).substring(7);
-            // todo: check if random id doesn't already exist
-
-            newRow.firstElementChild.id                                 = rowId;
-            newRow.firstElementChild.getElementsByTagName('form')[0].id = rowId + '-form';
-
-            const fields = newRow.firstElementChild.querySelectorAll('[data-form="' + self.tables[id].getForm() + '"]');
-            const length = fields.length;
-
-            for (let i = 0; i < length; ++i) {
-                fields[i].setAttribute('data-form', rowId + '-form');
-            }
-
-            table.appendChild(newRow.firstElementChild);
-
-            self.bindCreateForm(rowId + '-form', id);
-            self.app.uiManager.getFormManager().get(rowId + '-form').injectSubmit(function () {
-                document.getElementById(id).getElementsByTagName('tbody')[0].removeChild(
-                    document.getElementById(rowId)
-                );
-            });
-
-            // todo: bind removable
-            // todo: bind edit
-        });
-
-        // todo: this is polluting the form manager because it should be emptied afterwards (form is deleted but not from form manager)
-        // todo: consider to do ui action as success inject to the backend request... maybe optional because sometimes there will be no backend call?
-        // todo: if a column has a form in the template the id of the form needs to be set unique somehow (e.g. remove button in form)
-    };
-
     static getRemoteData (table)
     {
         const data = {
@@ -485,7 +329,7 @@ export class Table {
         request.setRequestHeader('Content-Type', 'application/json');
         request.setSuccess(function (xhr) {
             Table.emptyTable(table.getElementsByTagName('tbody')[0]);
-            Table.addToTable(table.getElementsByTagName('tbody')[0], JSON.parse(xhr.response));
+            Table.addToTable(table.getElementsByTagName('tbody')[0], JSON.parse(xhr.response)[0]);
         });
 
         request.send();
@@ -536,90 +380,5 @@ export class Table {
 
             // todo: bind buttons if required (e.g. remove, edit button)
         }
-    };
-
-    bindUpdatable (update, id)
-    {
-        const self = this;
-
-        update.addEventListener('click', function() {
-            // handle external form
-            // handle internal form
-            const formId = document.getElementById(id).getAttribute('data-table-form');
-            const values = this.closest('tr').querySelectorAll('[data-tpl-value]');
-            const text   = this.closest('tr').querySelectorAll('[data-tpl-text]');
-            const table  = document.getElementById(id).getElementsByTagName('tbody')[0];
-
-            if (document.getElementById(formId) === null) {
-                this.closest('tr').style = "display: none"; // todo: replace with class instead of inline style
-
-                const newRow = table.getElementsByTagName('template')[1].content.cloneNode(true);
-                const rowId  = 'f' + Math.random().toString(36).substring(7);
-                // todo: don't use random ide use actual row id for data which needs to be updated
-
-                newRow.firstElementChild.id                                 = rowId;
-                newRow.firstElementChild.getElementsByTagName('form')[0].id = rowId + '-form';
-
-                const fields = newRow.firstElementChild.querySelectorAll('[data-form="' + self.tables[id].getForm() + '"]');
-                let length   = fields.length;
-
-                for (let i = 0; i < length; ++i) {
-                    fields[i].setAttribute('data-form', rowId + '-form');
-                }
-
-                // insert row values data into form
-                length = values.length;
-                for (let i = 0; i < length; ++i) {
-                    newRow.firstElementChild.querySelectorAll('[data-tpl-value="' + values[i].getAttribute('data-tpl-value') + '"')[0].value = values[i].value;
-                    // todo: handle different input types
-                }
-
-                // insert row text data into form
-                length = text.length;
-                for (let i = 0; i < length; ++i) {
-                    newRow.firstElementChild.querySelectorAll('[data-tpl-text="' + text[i].getAttribute('data-tpl-text') + '"')[0].value = text[i].innerText;
-                    console.log(text[i].innerText);
-                    // todo: handle different input types
-                }
-
-                table.insertBefore(newRow.firstElementChild, this.closest('tr'));
-
-                self.bindCreateForm(rowId + '-form', id);
-                self.app.uiManager.getFormManager().get(rowId + '-form').injectSubmit(function () {
-                    document.getElementById(id).getElementsByTagName('tbody')[0].removeChild(
-                        document.getElementById(rowId)
-                    );
-                });
-
-                // todo: replace add button with save button and add cancel button
-                // todo: on save button click insert data into hidden row and show hidden row again, delete form row
-            } else {
-                const fields = document.getElementById(formId).querySelectorAll('[data-form="' + self.tables[id].getForm() + '"]');
-                let length   = fields.length;
-
-                for (let i = 0; i < length; ++i) {
-                    fields[i].setAttribute('data-form', rowId + '-form');
-                }
-
-                // insert row values data into form
-                length = values.length;
-                for (let i = 0; i < length; ++i) {
-                    document.getElementById(formId).querySelectorAll('[data-tpl-value="' + values[i].getAttribute('data-tpl-value') + '"')[0].value = values[i].value;
-                    // todo: handle different input types
-                }
-
-                // insert row text data into form
-                length = text.length;
-                for (let i = 0; i < length; ++i) {
-                    document.getElementById(formId).querySelectorAll('[data-tpl-text="' + text[i].getAttribute('data-tpl-text') + '"')[0].value = text[i].innerText;
-                    console.log(text[i].innerText);
-                    // todo: handle different input types
-                }
-
-                // todo: replace add button with save button and add cancel button
-                // todo: on save button click insert data into hidden row and show hidden row again, delete form row
-                // todo: consider to highlight column during edit
-            }
-        });
     };
 };

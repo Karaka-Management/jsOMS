@@ -1,3 +1,5 @@
+import { Logger } from '../../../Log/Logger.js';
+
 /**
  * Form manager class.
  *
@@ -71,12 +73,12 @@ export class VoiceManager {
 
         this.recognition.onnomatch = function(event)
         {
-            jsOMS.Log.Logger.instance.warning('Couldn\'t recognize speech');
+            Logger.instance.warning('Couldn\'t recognize speech');
         };
 
         this.recognition.onerror = function(event)
         {
-            jsOMS.Log.Logger.instance.warning('Error during speech recognition: ' + event.error);
+            Logger.instance.warning('Error during speech recognition: ' + event.error);
         };
     };
 
