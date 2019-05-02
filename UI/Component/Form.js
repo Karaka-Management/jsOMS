@@ -313,7 +313,7 @@ export class Form {
                 new NotificationMessage(
                     NotificationLevel.ERROR,
                     'Failure',
-                    'Some failure happend'
+                    'Some failure happened'
                 ), NotificationType.APP_NOTIFICATION
             );
         });
@@ -353,7 +353,8 @@ export class Form {
         // todo: maybe allow multiple add buttons!!!! In order to do that  do createForm.getAttribute('data-ui-form') and add this attribute to the add button instead of the pseudo form
 
         this.app.uiManager.getFormManager().get(createForm).injectSubmit(function () {
-            const subMain = document.getElementById(id).querySelector(document.getElementById(id).getAttribute('data-ui-content'));
+            const formElement = document.getElementById(id);
+            const subMain = formElement.querySelector(formElement.getAttribute('data-ui-content'));
             const newEle  = subMain.getElementsByTagName('template')[0].content.cloneNode(true);
 
             // set internal value
@@ -421,7 +422,8 @@ export class Form {
         const self = this;
 
         createForm.addEventListener('click', function () {
-            const subMain = document.getElementById(id).querySelector(document.getElementById(id).getAttribute('data-ui-content'));
+            const formElement = document.getElementById(id);
+            const subMain = formElement.querySelector(formElement.getAttribute('data-ui-content'));
             const newEle  = subMain.getElementsByTagName('template')[1].content.cloneNode(true);
             const eleId = 'f' + Math.random().toString(36).substring(7);
             // todo: check if random id doesn't already exist
@@ -466,21 +468,41 @@ export class Form {
         const self = this;
 
         update.addEventListener('click', function () {
-            const parent = this.closest(document.getElementById(id).getAttribute('data-ui-element'));
-            const values = parent.querySelectorAll('[data-tpl-value]');
-            const text = parent.querySelectorAll('[data-tpl-text]');
-            const subMain = parent.parentNode;
+            const formElement  = document.getElementById(id);
+            const parents      = [];
+            const selectors    = formElement.getAttribute('data-ui-element').split(','),
+                selectorLength = selectors.length;
 
-            parent.style = "display: none"; // todo: replace with class instead of inline style
+            const subMain = formElement.querySelector(
+                formElement.getAttribute('data-ui-content')
+            );
 
-            const newEle = subMain.getElementsByTagName('template')[1].content.cloneNode(true);
-            const eleId = 'f' + Math.random().toString(36).substring(7);
-            // todo: don't use random id use actual row id for data which needs to be updated
+            let values   = [];
+            let text     = [];
+            const newEle = [];
 
-            // root element is form even if it has a different tag than <form> also <tr> can be a form!
-            newEle.firstElementChild.id = eleId;
+            for (let i = 0; i < selectorLength; ++i) {
+                parents.push(this.closest(selectors[i].trim(' ')));
+                values = values.concat(Array.prototype.slice.call(parents[i].querySelectorAll('[data-tpl-value]')));
+                text = text.concat(Array.prototype.slice.call(parents[i].querySelectorAll('[data-tpl-text]')));
 
-            const fields = newEle.firstElementChild.querySelectorAll('[data-form="' + id + '"]');
+                parents[i].style = 'display: none'; // todo: replace with class instead of inline style
+
+                newEle.push(subMain.getElementsByTagName('template')[i + 1].content.cloneNode(true));
+
+                // todo: don't use random id use actual row id for data which needs to be updated
+                const eleId = 'f' + Math.random().toString(36).substring(7);
+
+                // root element is form even if it has a different tag than <form> also <tr> can be a form!
+                newEle[i].firstElementChild.id = eleId;
+            }
+
+            const fields = [];
+
+            for (let i = 0; i < selectorLength; ++i) {
+                fields.concat(newEle[i].firstElementChild.querySelectorAll('[data-form="' + id + '"]'));
+            }
+
             let length = fields.length;
 
             for (let i = 0; i < length; ++i) {
@@ -490,28 +512,42 @@ export class Form {
             // insert row values data into form
             length = values.length;
             for (let i = 0; i < length; ++i) {
-                // todo: handle multiple matches
-                newEle.firstElementChild.querySelectorAll('[data-tpl-value="' + values[i].getAttribute('data-tpl-value') + '"')[0].value = values[i].value;
-                // todo: handle different input types
+                for (let j = 0; j < selectorLength; ++j) {
+                    const matches = newEle[j].firstElementChild.querySelectorAll('[data-tpl-value="' + values[i].getAttribute('data-tpl-value') + '"');
+                    if (matches.length > 0) {
+                        // todo: handle multiple matches
+                        matches[0].value = values[i].value;
+                    }
+                    // todo: handle different input types
+                }
             }
 
             // insert row text data into form
             length = text.length;
             for (let i = 0; i < length; ++i) {
-                // todo: handle multiple matches
-                newEle.firstElementChild.querySelectorAll('[data-tpl-text="' + text[i].getAttribute('data-tpl-text') + '"')[0].value = text[i].innerText;
-                // todo: handle different input types
+                for (let j = 0; j < selectorLength; ++j) {
+                    const matches = newEle[j].firstElementChild.querySelectorAll('[data-tpl-text="' + text[i].getAttribute('data-tpl-text') + '"');
+                    if (matches.length > 0) {
+                        // todo: handle multiple matches
+                        matches[0].value = text[i].innerText;
+                        // todo: handle different input types
+                    }
+                }
             }
 
-            subMain.insertBefore(newEle.firstElementChild, parent);
+            for (let i = 0; i < selectorLength; ++i) {
+                parents[i].parentNode.insertBefore(newEle[i].firstElementChild, parents[i]);
+            }
 
             //self.bindCreateForm(eleId, id); // todo: why this bind???
+            // todo: this is not working!!!!!!!!!!
+            /*
             self.app.uiManager.getFormManager().get(eleId).injectSubmit(function () {
                 // todo: simplify this?
                 self.closest(self.getAttribute('data-ui-element')).parentNode.removeChild(
                     document.getElementById(eleId)
                 );
-            });
+            });*/
 
             // todo: replace add button with save button and add cancel button
             // todo: on save button click insert data into hidden row and show hidden row again, delete form row
@@ -521,8 +557,9 @@ export class Form {
     bindUpdatableExternal(update, id)
     {
         update.addEventListener('click', function () {
-            const parent = this.closest(document.getElementById(id).getAttribute('data-ui-element'));
-            const formId = document.getElementById(id).getAttribute('data-ui-form');
+            const formElement = document.getElementById(id);
+            const parent = this.closest(formElement.getAttribute('data-ui-element'));
+            const formId = formElement.getAttribute('data-ui-form');
             const values = parent.querySelectorAll('[data-tpl-value]');
             const text = parent.querySelectorAll('[data-tpl-text]');
 
