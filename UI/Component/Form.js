@@ -355,6 +355,8 @@ export class Form {
         this.app.uiManager.getFormManager().get(createForm).injectSubmit(function () {
             const formElement = document.getElementById(id);
             const subMain = formElement.querySelector(formElement.getAttribute('data-ui-content'));
+
+            // todo: [0/1] is no longer working because of arbitrary templates for inline editing
             const newEle  = subMain.getElementsByTagName('template')[0].content.cloneNode(true);
 
             // set internal value
@@ -424,6 +426,8 @@ export class Form {
         createForm.addEventListener('click', function () {
             const formElement = document.getElementById(id);
             const subMain = formElement.querySelector(formElement.getAttribute('data-ui-content'));
+
+            // todo: [0/1] is no longer working because of arbitrary templates for inline editing
             const newEle  = subMain.getElementsByTagName('template')[1].content.cloneNode(true);
             const eleId = 'f' + Math.random().toString(36).substring(7);
             // todo: check if random id doesn't already exist
@@ -440,6 +444,7 @@ export class Form {
 
             subMain.appendChild(newEle.firstElementChild);
 
+            // todo: this is no longer working... it's not tbody!!!
             self.app.uiManager.getFormManager().get(eleId + '-form').injectSubmit(function () {
                 document.getElementById(id).getElementsByTagName('tbody')[0].removeChild(
                     document.getElementById(eleId)
@@ -482,13 +487,27 @@ export class Form {
             const newEle = [];
 
             for (let i = 0; i < selectorLength; ++i) {
-                parents.push(this.closest(selectors[i].trim(' ')));
+                // this handles selectors such as 'ancestor > child/or/sibling' and many more
+                // todo: maybe move this to the library as an advanced ancestor function?
+                const selector = selectors[i].trim(' ').split(' ');
+                const closest  = selector[0].trim();
+
+                let subSelector = '';
+                if (selector.length !== 0) {
+                    selector.shift();
+                    subSelector = selector.join(' ').trim();
+                }
+
+                parents.push(
+                    selector.length === 0 ? this.closest(closest) : this.closest(closest).querySelector(subSelector)
+                );
+
                 values = values.concat(Array.prototype.slice.call(parents[i].querySelectorAll('[data-tpl-value]')));
                 text = text.concat(Array.prototype.slice.call(parents[i].querySelectorAll('[data-tpl-text]')));
 
                 parents[i].style = 'display: none'; // todo: replace with class instead of inline style
 
-                newEle.push(subMain.getElementsByTagName('template')[i + 1].content.cloneNode(true));
+                newEle.push(subMain.getElementsByTagName('template')[selectorLength + i].content.cloneNode(true));
 
                 // todo: don't use random id use actual row id for data which needs to be updated
                 const eleId = 'f' + Math.random().toString(36).substring(7);
