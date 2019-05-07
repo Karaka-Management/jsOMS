@@ -135,6 +135,36 @@ export class FormView {
     };
 
     /**
+    * Get save elements
+    *
+    * @return {Object}
+    *
+    * @since 1.0.0
+    */
+    getSave() {
+        return document.querySelectorAll(
+            'button[form=' + this.id + '].save, '
+            + '.save[data-form=' + this.id + '], '
+            + '#' + this.id + ' .save'
+        );
+    };
+
+    /**
+    * Get save elements
+    *
+    * @return {Object}
+    *
+    * @since 1.0.0
+    */
+    getCancel() {
+        return document.querySelectorAll(
+            'button[form=' + this.id + '].cancel, '
+            + '.cancel[data-form=' + this.id + '], '
+            + '#' + this.id + ' .cancel'
+        );
+    };
+
+    /**
      * Get remove buttons
      *
      * @return {NodeListOf<any>}
@@ -463,10 +493,10 @@ export class FormView {
         const elements = this.getFormElements(),
             length     = elements.length;
 
-        for (let i = 0; i < length; ++i) {
-            switch (elements[i].tagName) {
+            for (let i = 0; i < length; ++i) {
+            switch (elements[i].tagName.toLowerCase()) {
                 case 'input':
-                    Input.bind(elements[i]);
+                    Input.bindElement(elements[i]);
                     break;
                 case 'select':
                     this.bindSelect(elements[i]);
