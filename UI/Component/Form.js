@@ -1,12 +1,12 @@
 import { Logger } from '../../Log/Logger.js';
-import { FormView } from '../../Views/FormView.js';
+import { NotificationLevel } from '../../Message/Notification/NotificationLevel.js';
+import { NotificationMessage } from '../../Message/Notification/NotificationMessage.js';
+import { NotificationType } from '../../Message/Notification/NotificationType.js';
 import { Request } from '../../Message/Request/Request.js';
 import { RequestMethod } from '../../Message/Request/RequestMethod.js';
 import { Response } from '../../Message/Response/Response.js';
 import { ResponseType } from '../../Message/Response/ResponseType.js';
-import { NotificationMessage } from '../../Message/Notification/NotificationMessage.js';
-import { NotificationLevel } from '../../Message/Notification/NotificationLevel.js';
-import { NotificationType } from '../../Message/Notification/NotificationType.js';
+import { FormView } from '../../Views/FormView.js';
 
 /**
  * Form manager class.
@@ -152,8 +152,20 @@ export class Form {
             this.bindAddInline(addable[i], id);
         }
 
+        const save = this.forms[id].getSave();
+        length = save === null ? 0 : save.length;
+        for (let i = 0; i < length; ++i) {
+            this.bindSaveInline(save[i], id);
+        }
+
         if (document.getElementById(id).getAttribute('data-ui-form') !== null) {
             this.bindAddExternal(id);
+        }
+
+        const cancel = this.forms[id].getCancel();
+        length = cancel === null ? 0 : cancel.length;
+        for (let i = 0; i < length; ++i) {
+            this.bindCancelInline(cancel[i], id);
         }
 
         const update = this.forms[id].getUpdate();
@@ -505,25 +517,25 @@ export class Form {
                 values = values.concat(Array.prototype.slice.call(parents[i].querySelectorAll('[data-tpl-value]')));
                 text = text.concat(Array.prototype.slice.call(parents[i].querySelectorAll('[data-tpl-text]')));
 
-                parents[i].style = 'display: none'; // todo: replace with class instead of inline style
+                jsOMS.addClass(parents[i], 'hidden');
 
                 newEle.push(subMain.getElementsByTagName('template')[selectorLength + i].content.cloneNode(true));
 
-                // todo: don't use random id use actual row id for data which needs to be updated
-                const eleId = 'f' + Math.random().toString(36).substring(7);
+                if (newEle[i].firstElementChild.id === null) {
+                    // todo: don't use random id use actual row id for data which needs to be updated
+                    const eleId = 'f' + Math.random().toString(36).substring(7);
 
-                // root element is form even if it has a different tag than <form> also <tr> can be a form!
-                newEle[i].firstElementChild.id = eleId;
+                    // root element is form even if it has a different tag than <form> also <tr> can be a form!
+                    newEle[i].firstElementChild.id = eleId;
+                }
             }
 
             const fields = [];
-
             for (let i = 0; i < selectorLength; ++i) {
                 fields.concat(newEle[i].firstElementChild.querySelectorAll('[data-form="' + id + '"]'));
             }
 
             let length = fields.length;
-
             for (let i = 0; i < length; ++i) {
                 fields[i].setAttribute('data-form', eleId);
             }
@@ -555,6 +567,7 @@ export class Form {
             }
 
             for (let i = 0; i < selectorLength; ++i) {
+                newEle[i].firstElementChild.setAttribute('data-marker', 'tpl');
                 parents[i].parentNode.insertBefore(newEle[i].firstElementChild, parents[i]);
             }
 
@@ -569,8 +582,163 @@ export class Form {
             });*/
 
             // todo: replace add button with save button and add cancel button
+            jsOMS.addClass(this, 'hidden');
+
+            const saveButtons = self.forms[id].getSave();
+            length = saveButtons.length;
+            for (let i = 0; i < length; ++i) {
+                jsOMS.removeClass(saveButtons[i], 'hidden');
+            }
+
+            const cancelButtons = self.forms[id].getCancel();
+            length = cancelButtons.length;
+            for (let i = 0; i < length; ++i) {
+                jsOMS.removeClass(cancelButtons[i], 'hidden');
+            }
+
             // todo: on save button click insert data into hidden row and show hidden row again, delete form row
         });
+    };
+
+    bindCancelInline(cancel, id)
+    {
+        const self = this;
+
+        cancel.addEventListener('click', function () {
+            self.removeEditTemplate(this, id);
+        });
+    };
+
+    bindSaveInline(save, id)
+    {
+        const self = this;
+
+        save.addEventListener('click', function () {
+            const formElement = document.getElementById(id);
+            const parentsTpl = [];
+            const parentsContent = [];
+            const selectors = formElement.getAttribute('data-ui-element').split(','),
+                selectorLength = selectors.length;
+
+            let values = [];
+            let text = [];
+
+            for (let i = 0; i < selectorLength; ++i) {
+                // todo: similar logic is in updatable Inline and probably in External... pull out?
+                // this handles selectors such as 'ancestor > child/or/sibling' and many more
+                // todo: maybe move this to the library as an advanced ancestor function?
+                let selector = selectors[i].trim(' ').split(' ');
+                let closest = selector[0].trim();
+
+                // template elements
+                let subSelector = '';
+                if (selector.length !== 0) {
+                    selector.shift();
+                    subSelector = selector.join(' ').trim() + '[data-marker=tpl]';
+                } else {
+                    closest += '[data-marker=tpl]';
+                }
+
+                parentsTpl.push(
+                    selector.length === 0 ? this.closest(closest) : this.closest(closest).querySelector(subSelector)
+                );
+
+                // content elements
+                selector = selectors[i].trim(' ').split(' ');
+                closest = selector[0].trim();
+                subSelector = '';
+                if (selector.length !== 0) {
+                    selector.shift();
+                    subSelector = selector.join(' ').trim() + ':not([data-marker=tpl])';
+                } else {
+                    closest += ':not([data-marker=tpl])';
+                }
+
+                parentsContent.push(
+                    selector.length === 0 ? this.closest(closest) : this.closest(closest).querySelector(subSelector)
+                );
+
+                values = values.concat(Array.prototype.slice.call(parentsTpl[i].querySelectorAll('[data-tpl-value]')));
+                text = text.concat(Array.prototype.slice.call(parentsTpl[i].querySelectorAll('[data-tpl-text]')));
+            }
+
+            // overwrite old values data in ui
+            length = values.length;
+            for (let i = 0; i < length; ++i) {
+                for (let j = 0; j < selectorLength; ++j) {
+                    const matches = parentsContent[j].querySelectorAll('[data-tpl-value="' + values[i].getAttribute('data-tpl-value') + '"');
+                    if (matches.length > 0) {
+                        // todo: handle multiple matches
+                        matches[0].value = values[i].value;
+                    }
+                    // todo: handle different input types
+                }
+            }
+
+            // overwrite old text data in ui
+            length = text.length;
+            for (let i = 0; i < length; ++i) {
+                for (let j = 0; j < selectorLength; ++j) {
+                    const matches = parentsContent[j].querySelectorAll('[data-tpl-text="' + text[i].getAttribute('data-tpl-text') + '"');
+                    if (matches.length > 0) {
+                        // todo: handle multiple matches
+                        matches[0].innerText = text[i].value;
+                        // todo: handle different input types
+                    }
+                }
+            }
+
+            // todo: submit changes to backend/api
+
+            self.removeEditTemplate(this, id);
+        });
+    }
+
+    removeEditTemplate(ele, id)
+    {
+        const formElement = document.getElementById(id);
+        const selectors = formElement.getAttribute('data-ui-element').split(','),
+            selectorLength = selectors.length;
+
+        for (let i = 0; i < selectorLength; ++i) {
+            let selector = selectors[i].trim(' ').split(' ');
+            let closest = selector[0].trim();
+
+            let subSelector = '';
+            if (selector.length !== 0) {
+                selector.shift();
+                subSelector = selector.join(' ').trim();
+            }
+
+            let content = selector.length === 0 ? ele.closest(closest) : ele.closest(closest).querySelector(subSelector);
+            const tpls = content.parentNode.querySelectorAll('[data-marker=tpl]'),
+                tplsLength = tpls.length;
+
+            for (let j = 0; j < tplsLength; ++j) {
+                tpls[j].parentNode.removeChild(tpls[j]);
+            }
+
+            content = selector.length === 0 ? ele.closest(closest) : ele.closest(closest).querySelector(subSelector);
+            jsOMS.removeClass(content, 'hidden');
+        }
+
+        const saveButtons = this.forms[id].getSave();
+        let length = saveButtons.length;
+        for (let i = 0; i < length; ++i) {
+            jsOMS.addClass(saveButtons[i], 'hidden');
+        }
+
+        const cancelButtons = this.forms[id].getCancel();
+        length = cancelButtons.length;
+        for (let i = 0; i < length; ++i) {
+            jsOMS.addClass(cancelButtons[i], 'hidden');
+        }
+
+        const update = this.forms[id].getUpdate();
+        length = update === null ? 0 : update.length;
+        for (let i = 0; i < length; ++i) {
+            jsOMS.removeClass(update[i], 'hidden');
+        }
     };
 
     bindUpdatableExternal(update, id)
