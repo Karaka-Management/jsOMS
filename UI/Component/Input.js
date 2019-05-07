@@ -47,54 +47,17 @@ export class Input {
     static bindElement(input)
     {
         if (typeof input === 'undefined') {
-            throw 'Input element required'
+            throw 'Input element required';
         }
 
-        const self = this;
+        const type = input.type;
 
-        input.addEventListener('change', function changeBind(event)
-        {
-            console.log('ttttttt');
-            /* Handle remote datalist/autocomplete input element */
-            let listId, list;
-            if (typeof (listId = this.getAttribute('list')) !== 'undefined' && (list = document.getElementById(listId)).getAttribute('data-list-src') !== 'undefined') {
-                self.addRemoteDatalistOptions(this, list);
-            }
-
-            /* Handle html defined functions */
-            let change;
-            if (typeof (change = this.getAttribute('data-change-func')) !== 'undefined') {
-                change(this);
-            }
-
-            /* Handle pre-defined dynamic change events */
-            let ref;
-            if (typeof (ref = this.getAttribute('data-ref')) !== 'undefined') {
-                let e = document.getElementById(ref);
-
-                if (!e) {
-                    return;
-                }
-
-                switch (e.tagName) {
-                    case 'ul':
-                        break;
-                    case 'table':
-                        break;
-                    default:
-                }
-            }
-        });
-
-        let dataButton;
-        if (typeof (dataButton = input.getAttribute('data-button')) !== 'undefined') {
-            this.app.inputManager.getKeyboardManager().bind(input, 13, function ()
-            {
-                const db = document.getElementById(dataButton);
-
-                if (db) {
-                    db.click();
-                }
+        const removeContentButton = input.parentNode.querySelector('.fa-times');
+        if (removeContentButton !== null
+            && type !== 'submit' && type !== 'button') {
+            removeContentButton.addEventListener('click', function() {
+                input.value = '';
+                input.focus();
             });
         }
     };

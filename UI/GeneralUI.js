@@ -1,6 +1,6 @@
 
-import { AdvancedInput } from './Component/AdvancedInput.js';
 import { UriFactory } from '../Uri/UriFactory.js';
+import { AdvancedInput } from './Component/AdvancedInput.js';
 
 /**
  * UI manager for handling basic ui elements.
