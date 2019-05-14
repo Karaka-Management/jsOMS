@@ -499,13 +499,13 @@ export class FormView {
                     Input.bindElement(elements[i]);
                     break;
                 case 'select':
-                    this.bindSelect(elements[i]);
+                    //this.bindSelect(elements[i]);
                     break;
                 case 'textarea':
-                    this.bindTextarea(elements[i]);
+                    //this.bindTextarea(elements[i]);
                     break;
                 case 'button':
-                    this.bindButton(elements[i]);
+                    //this.bindButton(elements[i]);
                     break;
                 default:
             }
