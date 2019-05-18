@@ -487,8 +487,21 @@ export class FormView {
             return;
         }
 
-        this.method = typeof e.attributes['method'] !== 'undefined' ? e.attributes['method'].value : 'EMPTY';
-        this.action = typeof e.getAttribute('action') !== 'undefined' ? e.getAttribute('action') : 'EMPTY';
+        if (typeof e.attributes['method'] !== 'undefined') {
+            this.method = e.attributes['method'].value;
+        } else if (typeof e.attributes['data-method'] !== 'undefined') {
+            this.method = e.attributes['data-method'].value;
+        } else {
+            this.method = 'EMPTY';
+        }
+
+        if (typeof e.attributes['action'] !== 'undefined') {
+            this.action = e.attributes['action'].value;
+        } else if (typeof e.attributes['data-action'] !== 'undefined') {
+            this.action = e.attributes['data-action'].value;
+        } else {
+            this.action = 'EMPTY';
+        }
 
         const elements = this.getFormElements(),
             length     = elements.length;
