@@ -490,9 +490,9 @@ export class Form {
             const selectors    = formElement.getAttribute('data-ui-element').split(','),
                 selectorLength = selectors.length;
 
-            const subMain = formElement.querySelector(
-                formElement.getAttribute('data-ui-content')
-            );
+            const subMain = formElement.getAttribute('data-ui-content').charAt(0) === '#'
+                ? document.querySelector(formElement.getAttribute('data-ui-content'))
+                : formElement.querySelector(formElement.getAttribute('data-ui-content'));
 
             let values   = [];
             let text     = [];
