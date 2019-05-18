@@ -220,4 +220,9 @@
             e[i].addEventListener(event, callback);
         }
     };
+
+    jsOMS.nearest = function (e, selector)
+    {
+
+    };
 }(window.jsOMS = window.jsOMS || {}));

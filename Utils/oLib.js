@@ -489,4 +489,10 @@
 
         return text.replace(/[&<>"']/g, function(m) { return map[m]; });
     };
+
+    jsOMS.nearest = function (e, selector) {
+        // same level first
+        // parent level second
+        // child level third
+    };
 }(window.jsOMS = window.jsOMS || {}));
