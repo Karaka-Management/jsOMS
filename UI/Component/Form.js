@@ -202,7 +202,7 @@ export class Form {
     /**
      * Submit form
      *
-     * Calls injections first befor executing the actual form submit
+     * Calls injections first before executing the actual form submit
      *
      * @param {Object} form Form object
      *
@@ -481,7 +481,8 @@ export class Form {
         }
     };
 
-    bindUpdatableInline(update, id) {
+    bindUpdatableInline(update, id)
+    {
         const self = this;
 
         update.addEventListener('click', function () {
@@ -688,8 +689,7 @@ export class Form {
                 }
             }
 
-            // todo: submit changes to backend/api
-
+            self.submit(self.forms[id]);
             self.removeEditTemplate(this, id);
         });
     }

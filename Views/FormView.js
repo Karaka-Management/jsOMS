@@ -126,7 +126,8 @@ export class FormView {
      *
      * @since 1.0.0
      */
-    getUpdate() {
+    getUpdate ()
+    {
         return document.querySelectorAll(
             'button[form=' + this.id + '].update, '
             + '.update[data-form=' + this.id + '], '
@@ -141,7 +142,8 @@ export class FormView {
     *
     * @since 1.0.0
     */
-    getSave() {
+    getSave ()
+    {
         return document.querySelectorAll(
             'button[form=' + this.id + '].save, '
             + '.save[data-form=' + this.id + '], '
@@ -156,7 +158,8 @@ export class FormView {
     *
     * @since 1.0.0
     */
-    getCancel() {
+    getCancel ()
+    {
         return document.querySelectorAll(
             'button[form=' + this.id + '].cancel, '
             + '.cancel[data-form=' + this.id + '], '
@@ -171,7 +174,8 @@ export class FormView {
      *
      * @since 1.0.0
      */
-    getRemove() {
+    getRemove ()
+    {
         return document.querySelectorAll(
             'button[form=' + this.id + '].remove, '
             + '.remove[data-form=' + this.id + '], '
@@ -187,7 +191,8 @@ export class FormView {
      * @since 1.0.0
      * @todo isn't this the same as submit in some cases? form below table?
      */
-    getAdd() {
+    getAdd ()
+    {
         return document.querySelectorAll(
             'button[form=' + this.id + '].add, '
             + '.add[data-form=' + this.id + '], '
@@ -228,7 +233,8 @@ export class FormView {
      *
      * @since 1.0.0
      */
-    getFinally() {
+    getFinally ()
+    {
         return this.finally;
     };
 
@@ -497,8 +503,8 @@ export class FormView {
 
         if (typeof e.attributes['action'] !== 'undefined') {
             this.action = e.attributes['action'].value;
-        } else if (typeof e.attributes['data-action'] !== 'undefined') {
-            this.action = e.attributes['data-action'].value;
+        } else if (typeof e.attributes['data-uri'] !== 'undefined') {
+            this.action = e.attributes['data-uri'].value;
         } else {
             this.action = 'EMPTY';
         }
