@@ -303,7 +303,7 @@ export class Form {
                     // maybe there could be global response actions where injecting them to every form would not make any sense
                     // however not many if any use cases come to mind right now where this would be necessary
                     self.app.responseManager.run(response.get('type'), response.get(), request);
-                } else if (typeof o.status !== 'undefined') {
+                } else if (typeof o.status !== 'undefined' && o.status !== NotificationLevel.HIDDEN) {
                     self.app.notifyManager.send(
                         new NotificationMessage(o.status, o.title, o.message), NotificationType.APP_NOTIFICATION
                     );

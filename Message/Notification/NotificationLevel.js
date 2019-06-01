@@ -10,5 +10,6 @@ export const NotificationLevel = Object.freeze({
     OK: 'ok',
     INFO: 'info',
     WARNING: 'warning',
-    ERROR: 'error'
+    ERROR: 'error',
+    HIDDEN: 'hidden'
 });

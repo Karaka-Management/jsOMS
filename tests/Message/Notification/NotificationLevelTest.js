@@ -15,6 +15,7 @@ describe('NotificationLevelTest', function ()
             expect(jsOMS.Message.Notification.NotificationLevel.INFO).toBe('info');
             expect(jsOMS.Message.Notification.NotificationLevel.WARNING).toBe('warning');
             expect(jsOMS.Message.Notification.NotificationLevel.ERROR).toBe('error');
+            expect(jsOMS.Message.Notification.NotificationLevel.HIDDEN).toBe('hidden');
         });
     });
 });

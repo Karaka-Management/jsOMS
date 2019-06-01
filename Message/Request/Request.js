@@ -1,9 +1,9 @@
-import { RequestMethod } from './RequestMethod.js'
-import { RequestType } from './RequestType.js'
-import { BrowserType } from './BrowserType.js'
-import { OSType } from './OSType.js'
-import { UriFactory } from '../../Uri/UriFactory.js'
-import { Logger } from '../../Log/Logger.js'
+import { Logger } from '../../Log/Logger.js';
+import { UriFactory } from '../../Uri/UriFactory.js';
+import { BrowserType } from './BrowserType.js';
+import { OSType } from './OSType.js';
+import { RequestMethod } from './RequestMethod.js';
+import { RequestType } from './RequestType.js';
 
 /**
  * Request class.
