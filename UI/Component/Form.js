@@ -422,10 +422,10 @@ export class Form {
     };
 
     /**
-     * Create the table row
+     * Create the new input
      *
      * @param {string} createForm Create form
-     * @param {Object} id         Table id
+     * @param {Object} id         Id
      *
      * @return {void}
      *
@@ -472,6 +472,16 @@ export class Form {
         // todo: if a column has a form in the template the id of the form needs to be set unique somehow (e.g. remove button in form)
     };
 
+    /**
+     * Bind edit button
+     *
+     * @param {string} update Update button
+     * @param {Object} id     Id
+     *
+     * @return {void}
+     *
+     * @since  1.0.0
+     */
     bindUpdatable(update, id)
     {
         if (document.getElementById(id).getAttribute('data-ui-form') === null) {
@@ -481,6 +491,16 @@ export class Form {
         }
     };
 
+    /**
+     * Bind inline edit button
+     *
+     * @param {string} update Update button
+     * @param {Object} id     Id
+     *
+     * @return {void}
+     *
+     * @since  1.0.0
+     */
     bindUpdatableInline(update, id)
     {
         const self = this;
@@ -601,6 +621,16 @@ export class Form {
         });
     };
 
+    /**
+     * Bind inline cancel button
+     *
+     * @param {string} cancel Cancel button
+     * @param {Object} id     Id
+     *
+     * @return {void}
+     *
+     * @since  1.0.0
+     */
     bindCancelInline(cancel, id)
     {
         const self = this;
@@ -610,6 +640,16 @@ export class Form {
         });
     };
 
+    /**
+     * Bind inline save button
+     *
+     * @param {string} save Save button
+     * @param {Object} id   Id
+     *
+     * @return {void}
+     *
+     * @since  1.0.0
+     */
     bindSaveInline(save, id)
     {
         const self = this;
@@ -694,6 +734,16 @@ export class Form {
         });
     }
 
+    /**
+     * Remove inline edit template
+     *
+     * @param {string} ele Inline edit element
+     * @param {Object} id  Id
+     *
+     * @return {void}
+     *
+     * @since  1.0.0
+     */
     removeEditTemplate(ele, id)
     {
         const formElement = document.getElementById(id);
@@ -741,6 +791,16 @@ export class Form {
         }
     };
 
+    /**
+     * Bind edit button where data is edited externally
+     *
+     * @param {string} update Update button
+     * @param {Object} id     Id
+     *
+     * @return {void}
+     *
+     * @since  1.0.0
+     */
     bindUpdatableExternal(update, id)
     {
         update.addEventListener('click', function () {

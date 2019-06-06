@@ -221,6 +221,9 @@
         }
     };
 
+    /**
+     * @todo: implement
+     */
     jsOMS.nearest = function (e, selector)
     {
 
