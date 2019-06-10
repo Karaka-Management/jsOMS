@@ -1,3 +1,5 @@
+import { LocalStorage } from '../DataStorage/LocalStorage.js';
+
 describe('LocalStorageTest', function ()
 {
     "use strict";
@@ -6,7 +8,7 @@ describe('LocalStorageTest', function ()
     {
         it('Testing default functionality', function ()
         {
-            expect(jsOMS.DataStorage.LocalStorage.available()).toBeTruthy();
+            expect(LocalStorage.available()).toBeTruthy();
         });
     });
 });

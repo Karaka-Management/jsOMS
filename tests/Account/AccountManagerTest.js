@@ -1,4 +1,6 @@
-describe('AccounManagertTest', function ()
+import { AccountManager } from '../Account/AccountManager.js';
+
+describe('AccountManagerTest', function ()
 {
     "use strict";
 
@@ -6,7 +8,7 @@ describe('AccounManagertTest', function ()
     {
         it('Testing default functionality', function ()
         {
-            let obj = new jsOMS.Account.AccountManager();
+            let obj = new AccountManager();
 
             expect(obj.get(2)).toBe(null);
         });
@@ -16,8 +18,8 @@ describe('AccounManagertTest', function ()
     {
         it('Testing default functionality', function ()
         {
-            let obj = new jsOMS.Account.AccountManager();
-            let acc = new jsOMS.Account.Account();
+            let obj = new AccountManager();
+            let acc = new Account();
 
             obj.add(acc);
             expect(obj.get(0)).toBe(acc);

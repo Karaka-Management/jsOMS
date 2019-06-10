@@ -1,3 +1,5 @@
+import { AccountType } from '../Account/AccountType.js';
+
 describe('AccountTypeTest', function ()
 {
     "use strict";
@@ -6,13 +8,13 @@ describe('AccountTypeTest', function ()
     {
         it('Testing amount of enums', function ()
         {
-            expect(Object.keys(jsOMS.Account.AccountType).length).toBe(2);
+            expect(Object.keys(AccountType).length).toBe(2);
         });
 
         it('Testing values of enums', function ()
         {
-            expect(jsOMS.Account.AccountType.USER).toBe(0);
-            expect(jsOMS.Account.AccountType.GROUP).toBe(1);
+            expect(AccountType.USER).toBe(0);
+            expect(AccountType.GROUP).toBe(1);
         });
     });
 });

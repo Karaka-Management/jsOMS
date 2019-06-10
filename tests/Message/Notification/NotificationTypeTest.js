@@ -1,3 +1,5 @@
+import { NotificationType } from '../Message/Notification/NotificationType.js';
+
 describe('NotificationTypeTest', function ()
 {
     "use strict";
@@ -6,13 +8,13 @@ describe('NotificationTypeTest', function ()
     {
         it('Testing amount of enums', function ()
         {
-            expect(Object.keys(jsOMS.Message.Notification.NotificationType).length).toBe(2);
+            expect(Object.keys(NotificationType).length).toBe(2);
         });
 
         it('Testing values of enums', function ()
         {
-            expect(jsOMS.Message.Notification.NotificationType.APP_NOTIFICATION).toBe(1);
-            expect(jsOMS.Message.Notification.NotificationType.BROWSER_NOTIFICATION).toBe(2);
+            expect(NotificationType.APP_NOTIFICATION).toBe(1);
+            expect(NotificationType.BROWSER_NOTIFICATION).toBe(2);
         });
     });
 });

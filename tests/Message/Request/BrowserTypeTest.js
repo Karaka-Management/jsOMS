@@ -1,3 +1,5 @@
+import { BrowserType } from '../Message/Request/BrowserType.js';
+
 describe('BrowserTypeTest', function ()
 {
     "use strict";
@@ -6,19 +8,19 @@ describe('BrowserTypeTest', function ()
     {
         it('Testing amount of enums', function ()
         {
-            expect(Object.keys(jsOMS.Message.Request.BrowserType).length).toBe(8);
+            expect(Object.keys(BrowserType).length).toBe(8);
         });
 
         it('Testing values of enums', function ()
         {
-            expect(jsOMS.Message.Request.BrowserType.OPERA).toBe('opera');
-            expect(jsOMS.Message.Request.BrowserType.FIREFOX).toBe('firefox');
-            expect(jsOMS.Message.Request.BrowserType.SAFARI).toBe('safari');
-            expect(jsOMS.Message.Request.BrowserType.IE).toBe('msie');
-            expect(jsOMS.Message.Request.BrowserType.EDGE).toBe('edge');
-            expect(jsOMS.Message.Request.BrowserType.CHROME).toBe('chrome');
-            expect(jsOMS.Message.Request.BrowserType.BLINK).toBe('blink');
-            expect(jsOMS.Message.Request.BrowserType.UNKNOWN).toBe('unknown');
+            expect(BrowserType.OPERA).toBe('opera');
+            expect(BrowserType.FIREFOX).toBe('firefox');
+            expect(BrowserType.SAFARI).toBe('safari');
+            expect(BrowserType.IE).toBe('msie');
+            expect(BrowserType.EDGE).toBe('edge');
+            expect(BrowserType.CHROME).toBe('chrome');
+            expect(BrowserType.BLINK).toBe('blink');
+            expect(BrowserType.UNKNOWN).toBe('unknown');
         });
     });
 });

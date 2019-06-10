@@ -1,3 +1,5 @@
+import { Account } from '../Account/Account.js';
+
 describe('AccountTest', function ()
 {
     "use strict";
@@ -6,7 +8,7 @@ describe('AccountTest', function ()
     {
         it('Testing default functionality', function ()
         {
-            let obj = new jsOMS.Account.Account();
+            let obj = new Account();
 
             expect(obj.getId()).toBe(0);
         });

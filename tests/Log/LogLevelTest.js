@@ -1,3 +1,5 @@
+import { LogLevel } from '../../Log/LogLevel.js';
+
 describe('LogLevelTest', function ()
 {
     "use strict";
@@ -6,19 +8,19 @@ describe('LogLevelTest', function ()
     {
         it('Testing amount of enums', function ()
         {
-            expect(Object.keys(jsOMS.Log.LogLevel).length).toBe(8);
+            expect(Object.keys(LogLevel).length).toBe(8);
         });
 
         it('Testing values of enums', function ()
         {
-            expect(jsOMS.Log.LogLevel.EMERGENCY).toBe('emergency');
-            expect(jsOMS.Log.LogLevel.ALERT).toBe('alert');
-            expect(jsOMS.Log.LogLevel.CRITICAL).toBe('critical');
-            expect(jsOMS.Log.LogLevel.ERROR).toBe('error');
-            expect(jsOMS.Log.LogLevel.WARNING).toBe('warning');
-            expect(jsOMS.Log.LogLevel.NOTICE).toBe('notice');
-            expect(jsOMS.Log.LogLevel.INFO).toBe('info');
-            expect(jsOMS.Log.LogLevel.DEBUG).toBe('debug');
+            expect(LogLevel.EMERGENCY).toBe('emergency');
+            expect(LogLevel.ALERT).toBe('alert');
+            expect(LogLevel.CRITICAL).toBe('critical');
+            expect(LogLevel.ERROR).toBe('error');
+            expect(LogLevel.WARNING).toBe('warning');
+            expect(LogLevel.NOTICE).toBe('notice');
+            expect(LogLevel.INFO).toBe('info');
+            expect(LogLevel.DEBUG).toBe('debug');
         });
     });
 });

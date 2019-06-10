@@ -1,3 +1,5 @@
+import { Options } from '../Config/Options.js';
+
 describe('OptionsTest', function ()
 {
     "use strict";
@@ -6,7 +8,7 @@ describe('OptionsTest', function ()
     {
         it('Testing default functionality', function ()
         {
-            let option = new jsOMS.Config.Options();
+            let option = new Options();
             expect(option.get('invalid')).toBe(null);
             expect(option.remove('invalid')).toBeFalsy();
         });
@@ -16,7 +18,7 @@ describe('OptionsTest', function ()
     {
         it('Testing set/get functionality', function ()
         {
-            let option = new jsOMS.Config.Options();
+            let option = new Options();
 
             expect(option.set('a', 2)).toBeTruthy();
             expect(option.get('a')).toBe(2);

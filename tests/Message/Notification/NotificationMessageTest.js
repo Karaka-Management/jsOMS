@@ -1,3 +1,5 @@
+import { NotificationMessage } from '../Message/Notification/NotificationMessage.js';
+
 describe('NotificationMessageTest', function ()
 {
     "use strict";
@@ -6,7 +8,7 @@ describe('NotificationMessageTest', function ()
     {
         it('Testing default functionality', function ()
         {
-            let msg = new jsOMS.Message.Notification.NotificationMessage('ok', 'abc', 'def');
+            let msg = new NotificationMessage('ok', 'abc', 'def');
 
             expect(msg.status).toBe('ok');
             expect(msg.title).toBe('abc');

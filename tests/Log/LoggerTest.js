@@ -1,3 +1,5 @@
+import { Logger } from '../../Log/Logger.js';
+
 describe('LoggerTest', function ()
 {
     "use strict";
@@ -8,7 +10,7 @@ describe('LoggerTest', function ()
         {
             spyOn(console, 'log');
 
-            let log = new jsOMS.Log.Logger(true, false, false);
+            let log = new Logger(true, false, false);
 
             log.emergency();
             expect(console.log).toHaveBeenCalled();
@@ -18,7 +20,7 @@ describe('LoggerTest', function ()
         {
             spyOn(console, 'log');
 
-            let log = new jsOMS.Log.Logger(true, false, false);
+            let log = new Logger(true, false, false);
 
             log.alert();
             expect(console.log).toHaveBeenCalled();
@@ -28,7 +30,7 @@ describe('LoggerTest', function ()
         {
             spyOn(console, 'log');
 
-            let log = new jsOMS.Log.Logger(true, false, false);
+            let log = new Logger(true, false, false);
 
             log.critical();
             expect(console.log).toHaveBeenCalled();
@@ -38,7 +40,7 @@ describe('LoggerTest', function ()
         {
             spyOn(console, 'log');
 
-            let log = new jsOMS.Log.Logger(true, false, false);
+            let log = new Logger(true, false, false);
 
             log.error();
             expect(console.log).toHaveBeenCalled();
@@ -48,7 +50,7 @@ describe('LoggerTest', function ()
         {
             spyOn(console, 'log');
 
-            let log = new jsOMS.Log.Logger(true, false, false);
+            let log = new Logger(true, false, false);
 
             log.warning();
             expect(console.log).toHaveBeenCalled();
@@ -58,7 +60,7 @@ describe('LoggerTest', function ()
         {
             spyOn(console, 'log');
 
-            let log = new jsOMS.Log.Logger(true, false, false);
+            let log = new Logger(true, false, false);
 
             log.notice();
             expect(console.log).toHaveBeenCalled();
@@ -68,7 +70,7 @@ describe('LoggerTest', function ()
         {
             spyOn(console, 'log');
 
-            let log = new jsOMS.Log.Logger(true, false, false);
+            let log = new Logger(true, false, false);
 
             log.info();
             expect(console.log).toHaveBeenCalled();
@@ -78,7 +80,7 @@ describe('LoggerTest', function ()
         {
             spyOn(console, 'log');
 
-            let log = new jsOMS.Log.Logger(true, false, false);
+            let log = new Logger(true, false, false);
 
             log.debug();
             expect(console.log).toHaveBeenCalled();
@@ -88,7 +90,7 @@ describe('LoggerTest', function ()
         {
             spyOn(console, 'log');
 
-            let log = new jsOMS.Log.Logger(true, false, false);
+            let log = new Logger(true, false, false);
 
             log.log();
             expect(console.log).toHaveBeenCalled();
@@ -98,7 +100,7 @@ describe('LoggerTest', function ()
         {
             spyOn(console, 'log');
 
-            let log = new jsOMS.Log.Logger(true, false, false);
+            let log = new Logger(true, false, false);
 
             log.log();
             expect(console.log).toHaveBeenCalled();
@@ -108,7 +110,7 @@ describe('LoggerTest', function ()
         {
             spyOn(console, 'log');
 
-            let log = new jsOMS.Log.Logger(true, false, false);
+            let log = new Logger(true, false, false);
 
             log.console();
             expect(console.log).toHaveBeenCalled();
@@ -121,7 +123,7 @@ describe('LoggerTest', function ()
         {
             spyOn(console, 'log');
 
-            let log = new jsOMS.Log.Logger(false, false, false);
+            let log = new Logger(false, false, false);
 
             log.emergency();
             expect(console.log).not.toHaveBeenCalled();
@@ -131,7 +133,7 @@ describe('LoggerTest', function ()
         {
             spyOn(console, 'log');
 
-            let log = new jsOMS.Log.Logger(false, false, false);
+            let log = new Logger(false, false, false);
 
             log.alert();
             expect(console.log).not.toHaveBeenCalled();
@@ -141,7 +143,7 @@ describe('LoggerTest', function ()
         {
             spyOn(console, 'log');
 
-            let log = new jsOMS.Log.Logger(false, false, false);
+            let log = new Logger(false, false, false);
 
             log.critical();
             expect(console.log).not.toHaveBeenCalled();
@@ -151,7 +153,7 @@ describe('LoggerTest', function ()
         {
             spyOn(console, 'log');
 
-            let log = new jsOMS.Log.Logger(false, false, false);
+            let log = new Logger(false, false, false);
 
             log.error();
             expect(console.log).not.toHaveBeenCalled();
@@ -161,7 +163,7 @@ describe('LoggerTest', function ()
         {
             spyOn(console, 'log');
 
-            let log = new jsOMS.Log.Logger(false, false, false);
+            let log = new Logger(false, false, false);
 
             log.warning();
             expect(console.log).not.toHaveBeenCalled();
@@ -171,7 +173,7 @@ describe('LoggerTest', function ()
         {
             spyOn(console, 'log');
 
-            let log = new jsOMS.Log.Logger(false, false, false);
+            let log = new Logger(false, false, false);
 
             log.notice();
             expect(console.log).not.toHaveBeenCalled();
@@ -181,7 +183,7 @@ describe('LoggerTest', function ()
         {
             spyOn(console, 'log');
 
-            let log = new jsOMS.Log.Logger(false, false, false);
+            let log = new Logger(false, false, false);
 
             log.info();
             expect(console.log).not.toHaveBeenCalled();
@@ -191,7 +193,7 @@ describe('LoggerTest', function ()
         {
             spyOn(console, 'log');
 
-            let log = new jsOMS.Log.Logger(false, false, false);
+            let log = new Logger(false, false, false);
 
             log.debug();
             expect(console.log).not.toHaveBeenCalled();
@@ -201,7 +203,7 @@ describe('LoggerTest', function ()
         {
             spyOn(console, 'log');
 
-            let log = new jsOMS.Log.Logger(false, false, false);
+            let log = new Logger(false, false, false);
 
             log.log();
             expect(console.log).not.toHaveBeenCalled();
@@ -211,7 +213,7 @@ describe('LoggerTest', function ()
         {
             spyOn(console, 'log');
 
-            let log = new jsOMS.Log.Logger(false, false, false);
+            let log = new Logger(false, false, false);
 
             log.log();
             expect(console.log).not.toHaveBeenCalled();
@@ -221,7 +223,7 @@ describe('LoggerTest', function ()
         {
             spyOn(console, 'log');
 
-            let log = new jsOMS.Log.Logger(false, false, false);
+            let log = new Logger(false, false, false);
 
             log.console();
             expect(console.log).toHaveBeenCalled();
