@@ -382,7 +382,7 @@ export class Form {
                     '#' + createForm + ' [data-tpl-value="' + fields[j].getAttribute('data-tpl-value') + '"], [data-form="' + createForm + '"][data-tpl-value="' + fields[j].getAttribute('data-tpl-value') + '"]')[0]
                     .getAttribute('data-value');
 
-                // todo: we need to check what kind of tag the selector above returns in order to get the correct value. currently this only makes sense for input elements but for selection, checkboxes etc. this doesn't make sense there we need .innerHtml or [data-text=]
+                // todo: we need to check what kind of tag the selector above returns in order to get the correct value. currently this only makes sense for input elements but for selection, checkboxes etc. this doesn't make sense there we need .innerHTML or [data-text=]
 
                 fields[j].setAttribute('data-value', value);
 
@@ -407,7 +407,7 @@ export class Form {
                     )
                 );
 
-                // todo: we need to check what kind of tag the selector above returns in order to get the correct value. currently this only makes sense for input elements but for selection, checkboxes etc. this doesn't make sense there we need .innerHtml or [data-text=]
+                // todo: we need to check what kind of tag the selector above returns in order to get the correct value. currently this only makes sense for input elements but for selection, checkboxes etc. this doesn't make sense there we need .innerHTML or [data-text=]
             }
 
             subMain.appendChild(newEle);
@@ -566,9 +566,27 @@ export class Form {
             for (let i = 0; i < length; ++i) {
                 for (let j = 0; j < selectorLength; ++j) {
                     const matches = newEle[j].firstElementChild.querySelectorAll('[data-tpl-value="' + values[i].getAttribute('data-tpl-value') + '"');
-                    if (matches.length > 0) {
+
+                    const matchLength = matches.length;
+                    for (let c = 0; c < matchLength; ++c) {
                         // todo: handle multiple matches
-                        matches[0].value = values[i].value;
+                        // todo: urls remote src shouldn't start with http (it can but also the base path should be allowed or the current uri as basis... maybe define a data-tpl-value-srctype??? however this sounds stupid and might be too verbose or use http as identifier and use the fact that the request object uses internally the uri factory!!! sounds much smarter :))
+                        // todo: implement this for other cases as well or potentially pull it out because it is very similar!!!
+                        if (values[i].getAttribute('data-tpl-value').startsWith('http')
+                            || values[i].getAttribute('data-tpl-value').startsWith('{')
+                        ) {
+                            const request = new Request(values[i].getAttribute('data-tpl-value'));
+                            request.setResultCallback(200, function(xhr) {
+                                matches[c].value = xhr.response;
+                                // todo: the problem with this is that the response must only return the markdown or whatever is requested. It would be much nicer if it would also possible to define a path for the response in case a json object is returned which is very likely
+                            });
+
+                            request.send();
+                        } else {
+                            matches[c].value = self.getValueFromDataSource(values[i]);
+                            matches[c].innerHTML = values[i].innerText;
+                        }
+                        // todo handle remote data (e.g. value ist coming from backend. do special check for http)
                     }
                     // todo: handle different input types
                 }
@@ -579,10 +597,14 @@ export class Form {
             for (let i = 0; i < length; ++i) {
                 for (let j = 0; j < selectorLength; ++j) {
                     const matches = newEle[j].firstElementChild.querySelectorAll('[data-tpl-text="' + text[i].getAttribute('data-tpl-text') + '"');
-                    if (matches.length > 0) {
+
+                    const matchLength = matches.length;
+                    for (let c = 0; c < matchLength; ++c) {
                         // todo: handle multiple matches
-                        matches[0].value = text[i].innerText;
-                        // todo: handle different input types
+                        matches[c].value = self.getTextFromDataSource(text[i]);
+                        matches[c].innerHTML = text[i].innerHTML; // example for article instead of input field without value
+                        // todo: handle different input types e.g. Article requires innerHTML instead of value
+                        // todo handle remote data (e.g. value ist coming from backend. do special check for http)
                     }
                 }
             }
@@ -708,9 +730,13 @@ export class Form {
             for (let i = 0; i < length; ++i) {
                 for (let j = 0; j < selectorLength; ++j) {
                     const matches = parentsContent[j].querySelectorAll('[data-tpl-value="' + values[i].getAttribute('data-tpl-value') + '"');
-                    if (matches.length > 0) {
+
+
+                    const matchLength = matches.length;
+                    for (let c = 0; c < matchLength; ++c) {
                         // todo: handle multiple matches
-                        matches[0].value = values[i].value;
+                        matches[c].value = self.getValueFromDataSource(values[i]);
+                        // todo handle remote data (e.g. value ist coming from backend. do special check for http)
                     }
                     // todo: handle different input types
                 }
@@ -721,10 +747,13 @@ export class Form {
             for (let i = 0; i < length; ++i) {
                 for (let j = 0; j < selectorLength; ++j) {
                     const matches = parentsContent[j].querySelectorAll('[data-tpl-text="' + text[i].getAttribute('data-tpl-text') + '"');
-                    if (matches.length > 0) {
+
+                    const matchLength = matches.length;
+                    for (let c = 0; c < matchLength; ++c) {
                         // todo: handle multiple matches
-                        matches[0].innerText = text[i].value;
+                        matches[c].innerText = self.getTextFromDataSource(text[i]);
                         // todo: handle different input types
+                        // todo handle remote data (e.g. value ist coming from backend. do special check for http)
                     }
                 }
             }
@@ -803,6 +832,8 @@ export class Form {
      */
     bindUpdatableExternal(update, id)
     {
+        const self = this;
+
         update.addEventListener('click', function () {
             const formElement = document.getElementById(id);
             const parent = this.closest(formElement.getAttribute('data-ui-element'));
@@ -821,16 +852,29 @@ export class Form {
             length = values.length;
             for (let i = 0; i < length; ++i) {
                 // todo: handle multiple matches
-                document.getElementById(formId).querySelectorAll('[data-tpl-value="' + values[i].getAttribute('data-tpl-value') + '"')[0].value = values[i].value;
+                const matches = document.getElementById(formId).querySelectorAll('[data-tpl-value="' + values[i].getAttribute('data-tpl-value') + '"');
+
+                const matchLength = matches.length;
+                for (let c = 0; c < matchLength; ++c) {
+                    matches[c].value = self.getValueFromDataSource(values[i]);
+                }
                 // todo: handle different input types
+                // todo handle remote data (e.g. value ist coming from backend. do special check for http)
             }
 
             // insert row text data into form
             length = text.length;
             for (let i = 0; i < length; ++i) {
                 // todo: handle multiple matches
-                document.getElementById(formId).querySelectorAll('[data-tpl-text="' + text[i].getAttribute('data-tpl-text') + '"')[0].value = text[i].innerText;
+                const matches = document.getElementById(formId).querySelectorAll('[data-tpl-text="' + text[i].getAttribute('data-tpl-text') + '"');
+
+                // consider pulling this out because it exists like 3x2 = 6 times in a similar way or at least 3 times very similarly
+                const matchLength = matches.length;
+                for (let c = 0; c < matchLength; ++c) {
+                    matches[c].value = self.getTextFromDataSource(text[i]);
+                }
                 // todo: handle different input types
+                // todo handle remote data (e.g. value ist coming from backend. do special check for http)
             }
 
             // todo: replace add button with save button and add cancel button
@@ -874,5 +918,25 @@ export class Form {
                 callback();
             }
         });
+    };
+
+    setValueOfElement(src, dest)
+    {
+
+    };
+
+    setTextOfElement(src, dest)
+    {
+
+    };
+
+    getValueFromDataSource(src)
+    {
+        return src.value;
+    };
+
+    getTextFromDataSource(src)
+    {
+        return src.value;
     };
 };
