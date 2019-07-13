@@ -366,7 +366,9 @@ export class Form {
 
         this.app.uiManager.getFormManager().get(createForm).injectSubmit(function () {
             const formElement = document.getElementById(id);
-            const subMain = formElement.querySelector(formElement.getAttribute('data-ui-content'));
+            const subMain = formElement.getAttribute('data-ui-content').charAt(0) === '#'
+                ? document.querySelector(formElement.getAttribute('data-ui-content'))
+                : formElement.querySelector(formElement.getAttribute('data-ui-content'));
 
             // todo: [0/1] is no longer working because of arbitrary templates for inline editing
             const newEle  = subMain.getElementsByTagName('template')[0].content.cloneNode(true);
@@ -379,8 +381,8 @@ export class Form {
 
             for (let j = 0; j < fieldLength; ++j) {
                 value = document.querySelectorAll(
-                    '#' + createForm + ' [data-tpl-value="' + fields[j].getAttribute('data-tpl-value') + '"], [data-form="' + createForm + '"][data-tpl-value="' + fields[j].getAttribute('data-tpl-value') + '"]')[0]
-                    .getAttribute('data-value');
+                        '#' + createForm + ' [data-tpl-value="' + fields[j].getAttribute('data-tpl-value') + '"], [data-form="' + createForm + '"][data-tpl-value="' + fields[j].getAttribute('data-tpl-value') + '"]'
+                    )[0].getAttribute('data-value');
 
                 // todo: we need to check what kind of tag the selector above returns in order to get the correct value. currently this only makes sense for input elements but for selection, checkboxes etc. this doesn't make sense there we need .innerHTML or [data-text=]
 
@@ -403,7 +405,9 @@ export class Form {
             for (let j = 0; j < fieldLength; ++j) {
                 fields[j].appendChild(
                     document.createTextNode(
-                        document.querySelectorAll('#' + createForm + ' [data-tpl-text="' + fields[j].getAttribute('data-tpl-text') + '"], [data-form="' + createForm + '"][data-tpl-text="' + fields[j].getAttribute('data-tpl-text') + '"]')[0].value
+                        document.querySelectorAll(
+                            '#' + createForm + ' [data-tpl-text="' + fields[j].getAttribute('data-tpl-text') + '"], [data-form="' + createForm + '"][data-tpl-text="' + fields[j].getAttribute('data-tpl-text') + '"]'
+                        )[0].value
                     )
                 );
 
@@ -412,6 +416,7 @@ export class Form {
 
             subMain.appendChild(newEle);
             // todo: consider to do ui action as success inject to the backend request... maybe optional because sometimes there will be no backend call?
+            // todo: sometimes the response data needs to be put into the frontend (e.g. image uploade, only after upload the backend endpoint will be known and not in advance)
             // todo: if a column has a form in the template the id of the form needs to be set unique somehow (e.g. remove button in form)
 
             // todo: bind removable
@@ -437,7 +442,9 @@ export class Form {
 
         createForm.addEventListener('click', function () {
             const formElement = document.getElementById(id);
-            const subMain = formElement.querySelector(formElement.getAttribute('data-ui-content'));
+            const subMain = formElement.getAttribute('data-ui-content').charAt(0) === '#'
+                ? document.querySelector(formElement.getAttribute('data-ui-content'))
+                : formElement.querySelector(formElement.getAttribute('data-ui-content'));
 
             // todo: [0/1] is no longer working because of arbitrary templates for inline editing
             const newEle  = subMain.getElementsByTagName('template')[1].content.cloneNode(true);
