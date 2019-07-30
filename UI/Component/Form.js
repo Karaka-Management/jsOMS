@@ -542,8 +542,12 @@ export class Form {
                     selector.length === 0 ? this.closest(closest) : this.closest(closest).querySelector(subSelector)
                 );
 
-                values = values.concat(Array.prototype.slice.call(parents[i].querySelectorAll('[data-tpl-value]')));
-                text = text.concat(Array.prototype.slice.call(parents[i].querySelectorAll('[data-tpl-text]')));
+                values = values.concat(
+                        parents[i].hasAttribute('data-tpl-value') ? parents[i] : Array.prototype.slice.call(parents[i].querySelectorAll('[data-tpl-value]'))
+                    );
+                text = text.concat(
+                        parents[i].hasAttribute('data-tpl-text') ? parents[i] : Array.prototype.slice.call(parents[i].querySelectorAll('[data-tpl-text]'))
+                    );
 
                 jsOMS.addClass(parents[i], 'hidden');
 
@@ -560,7 +564,9 @@ export class Form {
 
             const fields = [];
             for (let i = 0; i < selectorLength; ++i) {
-                fields.concat(newEle[i].firstElementChild.querySelectorAll('[data-form="' + id + '"]'));
+                fields.concat(
+                        newEle[i].firstElementChild.hasAttribute('data-form') ? newEle[i].firstElementChild : newEle[i].firstElementChild.querySelectorAll('[data-form="' + id + '"]')
+                    );
             }
 
             let length = fields.length;
@@ -572,7 +578,7 @@ export class Form {
             length = values.length;
             for (let i = 0; i < length; ++i) {
                 for (let j = 0; j < selectorLength; ++j) {
-                    const matches = newEle[j].firstElementChild.querySelectorAll('[data-tpl-value="' + values[i].getAttribute('data-tpl-value') + '"');
+                    const matches = newEle[j].firstElementChild.hasAttribute('data-tpl-value') ? [newEle[j].firstElementChild] : newEle[j].firstElementChild.querySelectorAll('[data-tpl-value="' + values[i].getAttribute('data-tpl-value') + '"');
 
                     const matchLength = matches.length;
                     for (let c = 0; c < matchLength; ++c) {
@@ -590,8 +596,7 @@ export class Form {
 
                             request.send();
                         } else {
-                            matches[c].value = self.getValueFromDataSource(values[i]);
-                            matches[c].innerHTML = values[i].innerText;
+                            self.setValueOfElement(matches[c], self.getValueFromDataSource(values[i]));
                         }
                         // todo handle remote data (e.g. value ist coming from backend. do special check for http)
                     }
@@ -603,14 +608,12 @@ export class Form {
             length = text.length;
             for (let i = 0; i < length; ++i) {
                 for (let j = 0; j < selectorLength; ++j) {
-                    const matches = newEle[j].firstElementChild.querySelectorAll('[data-tpl-text="' + text[i].getAttribute('data-tpl-text') + '"');
+                    const matches = newEle[j].firstElementChild.hasAttribute('data-tpl-text') ? [newEle[j].firstElementChild] : newEle[j].firstElementChild.querySelectorAll('[data-tpl-text="' + text[i].getAttribute('data-tpl-text') + '"');
 
                     const matchLength = matches.length;
                     for (let c = 0; c < matchLength; ++c) {
                         // todo: handle multiple matches
-                        matches[c].value = self.getTextFromDataSource(text[i]);
-                        matches[c].innerHTML = text[i].innerHTML; // example for article instead of input field without value
-                        // todo: handle different input types e.g. Article requires innerHTML instead of value
+                        self.setTextOfElement(matches[c], self.getTextFromDataSource(text[i]));
                         // todo handle remote data (e.g. value ist coming from backend. do special check for http)
                     }
                 }
@@ -728,8 +731,12 @@ export class Form {
                     selector.length === 0 ? this.closest(closest) : this.closest(closest).querySelector(subSelector)
                 );
 
-                values = values.concat(Array.prototype.slice.call(parentsTpl[i].querySelectorAll('[data-tpl-value]')));
-                text = text.concat(Array.prototype.slice.call(parentsTpl[i].querySelectorAll('[data-tpl-text]')));
+                values = values.concat(
+                    parentsTpl[i].hasAttribute('data-tpl-value') ? parentsTpl[i] : Array.prototype.slice.call(parentsTpl[i].querySelectorAll('[data-tpl-value]'))
+                );
+                text = text.concat(
+                    parentsTpl[i].hasAttribute('data-tpl-text') ? parentsTpl[i] : Array.prototype.slice.call(parentsTpl[i].querySelectorAll('[data-tpl-text]'))
+                );
             }
 
             // overwrite old values data in ui
@@ -758,8 +765,7 @@ export class Form {
                     const matchLength = matches.length;
                     for (let c = 0; c < matchLength; ++c) {
                         // todo: handle multiple matches
-                        matches[c].innerText = self.getTextFromDataSource(text[i]);
-                        // todo: handle different input types
+                        self.setTextOfElement(matches[c], self.getTextFromDataSource(text[i]));
                         // todo handle remote data (e.g. value ist coming from backend. do special check for http)
                     }
                 }
@@ -863,9 +869,8 @@ export class Form {
 
                 const matchLength = matches.length;
                 for (let c = 0; c < matchLength; ++c) {
-                    matches[c].value = self.getValueFromDataSource(values[i]);
+                    self.setValueOfElement(matches[c], self.getValueFromDataSource(values[i]));
                 }
-                // todo: handle different input types
                 // todo handle remote data (e.g. value ist coming from backend. do special check for http)
             }
 
@@ -878,9 +883,8 @@ export class Form {
                 // consider pulling this out because it exists like 3x2 = 6 times in a similar way or at least 3 times very similarly
                 const matchLength = matches.length;
                 for (let c = 0; c < matchLength; ++c) {
-                    matches[c].value = self.getTextFromDataSource(text[i]);
+                    self.setTextOfElement(matches[c], self.getTextFromDataSource(text[i]));
                 }
-                // todo: handle different input types
                 // todo handle remote data (e.g. value ist coming from backend. do special check for http)
             }
 
@@ -927,23 +931,57 @@ export class Form {
         });
     };
 
-    setValueOfElement(src, dest)
+    setValueOfElement(src, value)
     {
-
+        switch (src.tagName.toLowerCase) {
+            case 'div':
+            case 'pre':
+            case 'article':
+            case 'section':
+                src.innerHTML = value;
+                break;
+            default:
+                src.value = value;
+        }
     };
 
-    setTextOfElement(src, dest)
+    setTextOfElement(src, value)
     {
-
+        switch (src.tagName.toLowerCase) {
+            case 'div':
+            case 'pre':
+            case 'article':
+            case 'section':
+                src.innerHTML = value;
+                break;
+            default:
+                src.value = value;
+        }
     };
 
     getValueFromDataSource(src)
     {
-        return src.value;
+        switch (src.tagName.toLowerCase()) {
+            case 'div':
+            case 'pre':
+            case 'article':
+            case 'section':
+                return src.innerHTML;
+            default:
+                return src.value;
+        }
     };
 
     getTextFromDataSource(src)
     {
-        return src.value;
+        switch (src.tagName.toLowerCase()) {
+            case 'div':
+            case 'pre':
+            case 'article':
+            case 'section':
+                return src.innerHTML;
+            default:
+                return src.value;
+        }
     };
 };
