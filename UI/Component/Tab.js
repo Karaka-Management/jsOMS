@@ -1,5 +1,5 @@
-import { UriFactory } from '../../Uri/UriFactory.js';
 import { Http } from '../../Uri/Http.js';
+import { UriFactory } from '../../Uri/UriFactory.js';
 
 /**
  * Tab manager class.
@@ -90,7 +90,7 @@ export class Tab {
                 jsOMS.addClass(this, 'active');
 
                 /* Add selected tab */
-                window.history.pushState(null, '',
+                window.history.replaceState(null, '',
                     UriFactory.build(
                         '{%}#' + (fragmentString === '' ? '' : fragmentString + ',') + this.getElementsByTagName('label')[0].getAttribute('for')
                     )
