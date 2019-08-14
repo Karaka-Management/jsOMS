@@ -13,6 +13,33 @@
     "use strict";
 
     /**
+     * Trigger an event
+     *
+     * @param {element} element Element where the event is assigned
+     * @param {string}  eventName Name of the event
+     *
+     * @return void
+     *
+     * @function
+     *
+     * @since  1.0.0
+     */
+    jsOMS.triggerEvent = function(element, eventName)
+    {
+        if (document.createEvent) {
+            event = document.createEvent('HTMLEvents');
+            event.initEvent(eventName, true, true);
+            event.eventName = eventName;
+            element.dispatchEvent(event);
+        } else {
+            event = document.createEventObject();
+            event.eventName = eventName;
+            event.eventType = eventName;
+            element.fireEvent(event.eventType, event);
+        }
+    };
+
+    /**
      * Trim char from string
      *
      * @param {string} path Array path
