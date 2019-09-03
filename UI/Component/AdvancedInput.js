@@ -28,7 +28,7 @@ export class AdvancedInput {
         this.dataList        = this.dropdownElement.getElementsByTagName('table')[0];
         this.dataListBody    = this.dataList.getElementsByTagName('tbody')[0];
         this.dataTpl         = document.getElementById(this.id + '-rowElement');
-        this.tagTpl          = this.tagElement.getElementsByTagName('template')[0];
+        this.tagTpl          = this.tagElement !== null ? this.tagElement.getElementsByTagName('template')[0] : null;
         this.src             = this.inputField.getAttribute('data-src');
 
         const self = this;
@@ -241,7 +241,7 @@ export class AdvancedInput {
             self.inputField.value = document.activeElement.querySelectorAll('[data-tpl-value="' + self.inputField.getAttribute('data-value') + '"]')[0].getAttribute('data-value');
         }
 
-        if (self.tagElement.getAttribute('data-active') === 'true') {
+        if (self.tagElement !== null && self.tagElement.getAttribute('data-active') === 'true') {
             // todo: make badges removable
             const newTag = self.tagTpl.content.cloneNode(true);
 
