@@ -120,6 +120,20 @@ export class FormView {
     };
 
     /**
+     * Get submit elements
+     *
+     * @return {Object}
+     *
+     * @since 1.0.0
+     */
+    getImagePreviews() {
+        // todo: question, exclude save/remove button? maybe not because they also submit data right?
+        return document.querySelectorAll(
+            '#' + this.id + ' input[type=file].preview'
+        );
+    };
+
+    /**
      * Get edit elements
      *
      * @return {Object}

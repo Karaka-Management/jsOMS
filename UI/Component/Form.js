@@ -173,7 +173,37 @@ export class Form {
         for (let i = 0; i < length; ++i) {
             this.bindUpdatable(update[i], id);
         }
+
+        const imgPreviews = this.forms[id].getImagePreviews();
+        length = imgPreviews === null ? 0 : imgPreviews.length;
+        for (let i = 0; i < length; ++i) {
+            this.bindImagePreview(imgPreviews[i], id);
+        }
     };
+
+    /**
+    * Create the new input
+    *
+    * @param {string} imageUpload Create form
+    * @param {Object} id         Id
+    *
+    * @return {void}
+    *
+    * @since  1.0.0
+    */
+    bindImagePreview(imageUpload, id) {
+        const self = this;
+
+        imageUpload.addEventListener('change', function () {
+            const formElement = document.getElementById(id);
+            const preview = formElement.querySelector('img#preview-' + imageUpload.getAttribute('name'));
+
+            preview.src = window.URL.createObjectURL(imageUpload.files[0]);
+            preview.onload = function () {
+                window.URL.revokeObjectURL(this.src);
+            }
+        });
+    }
 
     /**
      * Unbind form
@@ -416,7 +446,7 @@ export class Form {
 
             subMain.appendChild(newEle);
             // todo: consider to do ui action as success inject to the backend request... maybe optional because sometimes there will be no backend call?
-            // todo: sometimes the response data needs to be put into the frontend (e.g. image uploade, only after upload the backend endpoint will be known and not in advance)
+            // todo: sometimes the response data needs to be put into the frontend (e.g. image upload, only after upload the backend endpoint will be known and not in advance)
             // todo: if a column has a form in the template the id of the form needs to be set unique somehow (e.g. remove button in form)
 
             // todo: bind removable
@@ -590,7 +620,7 @@ export class Form {
                         ) {
                             const request = new Request(values[i].getAttribute('data-tpl-value'));
                             request.setResultCallback(200, function(xhr) {
-                                matches[c].value = xhr.response;
+                                self.setValueOfElement(matches[c], xhr.response);
                                 // todo: the problem with this is that the response must only return the markdown or whatever is requested. It would be much nicer if it would also possible to define a path for the response in case a json object is returned which is very likely
                             });
 
@@ -933,7 +963,7 @@ export class Form {
 
     setValueOfElement(src, value)
     {
-        switch (src.tagName.toLowerCase) {
+        switch (src.tagName.toLowerCase()) {
             case 'div':
             case 'pre':
             case 'article':
@@ -947,12 +977,16 @@ export class Form {
 
     setTextOfElement(src, value)
     {
-        switch (src.tagName.toLowerCase) {
+        switch (src.tagName.toLowerCase()) {
             case 'div':
             case 'pre':
             case 'article':
             case 'section':
                 src.innerHTML = value;
+                break;
+            case 'textarea':
+                // textarea only has value data in it's content and nothing else!
+                // @todo: check other html tags as well or maybe just don't use the -text attribute and be fine?
                 break;
             default:
                 src.value = value;
