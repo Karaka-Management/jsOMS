@@ -1,3 +1,5 @@
+import { Logger } from '../Log/Logger.js';
+
 /**
  * Action manager class.
  *
