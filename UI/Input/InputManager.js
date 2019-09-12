@@ -28,7 +28,7 @@ export class InputManager {
      *
      * @return {Object}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     getKeyboardManager ()
     {
@@ -40,7 +40,7 @@ export class InputManager {
      *
      * @return {Object}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     getMouseManager ()
     {
@@ -52,7 +52,7 @@ export class InputManager {
      *
      * @return {Object}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     getVoiceManager ()
     {

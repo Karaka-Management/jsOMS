@@ -124,7 +124,7 @@ export class AdvancedSelect {
      * @param {object} self This reference
      * @param {object} data Response data
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     remoteCallback(self, data) {
         console.log(data);
@@ -187,7 +187,7 @@ export class AdvancedSelect {
      *
      * @param {object} self This reference
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     changeCallback(self) {
         // if remote data
@@ -203,7 +203,7 @@ export class AdvancedSelect {
      *
      * @param {object} e Element to select in dropdown
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     selectOption(e) {
         e.focus();
@@ -217,7 +217,7 @@ export class AdvancedSelect {
      *
      * @param {object} self This reference
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     clearDataListSelection(self) {
         const list = self.dataListBody.getElementsByTagName('tr'),
@@ -237,7 +237,7 @@ export class AdvancedSelect {
      *
      * @param {object} self This reference
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     addToResultList(self) {
         if (self.inputField.getAttribute('data-autocomplete') === 'true') {
@@ -308,7 +308,7 @@ export class AdvancedSelect {
      * @param {object}   self     This reference (passed to callback)
      * @param {object}   data     Data (passed to callback)
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     inputTimeDelay(action, callback, self, data) {
         if (AdvancedSelect.timerDelay[action.id]) {

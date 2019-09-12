@@ -30,7 +30,7 @@ export class ResponseManager {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     add(key, message, request)
     {
@@ -53,7 +53,7 @@ export class ResponseManager {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     run(key, data, request)
     {

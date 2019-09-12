@@ -24,7 +24,7 @@ export class BrowserNotification {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     setStatus (status)
     {
@@ -36,7 +36,7 @@ export class BrowserNotification {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     requestPermission ()
     {
@@ -61,7 +61,7 @@ export class BrowserNotification {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     send (msg)
     {

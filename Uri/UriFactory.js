@@ -40,7 +40,7 @@ export class UriFactory {
      *
      * @return {null|string}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     static getQuery (key)
     {
@@ -52,7 +52,7 @@ export class UriFactory {
      *
      * @return {boolean}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     static clearAll ()
     {
@@ -68,7 +68,7 @@ export class UriFactory {
      *
      * @return {boolean}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     static clear (key)
     {
@@ -88,7 +88,7 @@ export class UriFactory {
      *
      * @return {boolean}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     static clearLike (pattern)
     {
@@ -217,7 +217,7 @@ export class UriFactory {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     static setupUriBuilder (uri)
     {

@@ -22,7 +22,7 @@
      *
      * @function
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.triggerEvent = function(element, eventName)
     {
@@ -50,7 +50,7 @@
      *
      * @function
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.getArray = function(path, data, delim = '/')
     {
@@ -82,7 +82,7 @@
      *
      * @function
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.trim = function(str, char = ' ')
     {
@@ -99,7 +99,7 @@
      *
      * @function
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.rtrim = function(str, char = ' ')
     {
@@ -116,7 +116,7 @@
      *
      * @function
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.ltrim = function(str, char = ' ')
     {
@@ -133,7 +133,7 @@
      *
      * @function
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.substr_count = function(str, substr) {
         str    += '';
@@ -173,7 +173,7 @@
      *
      * @function
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.hasClass = function (ele, cls)
     {
@@ -193,7 +193,7 @@
      *
      * @function
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.addClass = function (ele, cls)
     {
@@ -212,7 +212,7 @@
      *
      * @function
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.removeClass = function (ele, cls)
     {
@@ -229,7 +229,7 @@
      *
      * @function
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.watcher = function ()
     {
@@ -250,7 +250,7 @@
      *
      * @function
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.preventAll = function (event)
     {
@@ -272,7 +272,7 @@
      *
      * @function
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.ready = function (func)
     {
@@ -296,7 +296,7 @@
      *
      * @function
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.empty = function (ele)
     {
@@ -314,7 +314,7 @@
      *
      * @function
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.hash = function (str)
     {
@@ -339,7 +339,7 @@
      *
      * @function
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.isNode = function (ele)
     {
@@ -360,7 +360,7 @@
      *
      * @function
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.isElement = function (o)
     {
@@ -382,7 +382,7 @@
      *
      * @function
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.getByClass = function (ele, cls)
     {
@@ -406,7 +406,7 @@
      *
      * @function
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.addEventListenerToAll = function (e, event, callback)
     {
@@ -424,7 +424,7 @@
      *
      * @function
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.isValidJson = function (jsonString)
     {
@@ -446,7 +446,7 @@
      *
      * @function
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.merge = function (target, source)
     {

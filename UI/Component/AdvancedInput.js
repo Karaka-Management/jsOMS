@@ -117,7 +117,7 @@ export class AdvancedInput {
      * @param {object} self This reference
      * @param {object} data Response data
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     remoteCallback(self, data)
     {
@@ -181,7 +181,7 @@ export class AdvancedInput {
      *
      * @param {object} self This reference
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     changeCallback(self)
     {
@@ -198,7 +198,7 @@ export class AdvancedInput {
      *
      * @param {object} e Element to select in dropdown
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     selectOption(e)
     {
@@ -213,7 +213,7 @@ export class AdvancedInput {
      *
      * @param {object} self This reference
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     clearDataListSelection(self)
     {
@@ -234,7 +234,7 @@ export class AdvancedInput {
      *
      * @param {object} self This reference
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     addToResultList(self) {
         if (self.inputField.getAttribute('data-autocomplete') === 'true') {
@@ -305,7 +305,7 @@ export class AdvancedInput {
      * @param {object}   self     This reference (passed to callback)
      * @param {object}   data     Data (passed to callback)
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     inputTimeDelay(action, callback, self, data)
     {

@@ -27,7 +27,7 @@ export class Tab {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     bind (id)
     {
@@ -54,7 +54,7 @@ export class Tab {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     bindElement (e)
     {
@@ -110,7 +110,7 @@ export class Tab {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     activateTabUri(e)
     {

@@ -20,7 +20,7 @@
      *
      * @return {string}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.trim = function(str, char = ' ')
     {
@@ -35,7 +35,7 @@
      *
      * @return {string}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.rtrim = function(str, char = ' ')
     {
@@ -50,7 +50,7 @@
      *
      * @return {string}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.ltrim = function(str, char = ' ')
     {
@@ -64,7 +64,7 @@
      *
      * @return {boolean}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.isValidJson = function (jsonString)
     {
@@ -84,7 +84,7 @@
      *
      * @return {int}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.substr_count = function(str, substr) {
         str    += '';
@@ -120,7 +120,7 @@
      *
      * @return {int}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.hash = function (str)
     {
@@ -142,7 +142,7 @@
      *
      * @return {string}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.strpbrk = function (haystack, chars)
     {
@@ -167,7 +167,7 @@
      *
      * @return {string}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.htmlspecialchars = function (text, quotes) {
         let map = {

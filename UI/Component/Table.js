@@ -33,7 +33,7 @@ export class Table {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     bind (id)
     {
@@ -73,7 +73,7 @@ export class Table {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     bindTable (id)
     {
@@ -119,7 +119,7 @@ export class Table {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     bindExport(exports)
     {
@@ -146,7 +146,7 @@ export class Table {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     bindReorder(sorting, id)
     {
@@ -179,7 +179,7 @@ export class Table {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     bindSorting(sorting, id)
     {
@@ -248,7 +248,7 @@ export class Table {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     bindFiltering(filtering, id)
     {

@@ -35,7 +35,7 @@ export class ReadManager {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     read (text)
     {
@@ -56,7 +56,7 @@ export class ReadManager {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     setLanguage (lang)
     {
@@ -70,7 +70,7 @@ export class ReadManager {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     setPitch (pitch)
     {
@@ -84,7 +84,7 @@ export class ReadManager {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     setRate (rate)
     {
@@ -96,7 +96,7 @@ export class ReadManager {
      *
      * @return {Array}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     getVoices ()
     {

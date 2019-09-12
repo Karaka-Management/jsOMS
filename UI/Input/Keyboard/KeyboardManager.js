@@ -27,7 +27,7 @@ export class KeyboardManager {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     add (element, keys, callback)
     {
@@ -47,7 +47,7 @@ export class KeyboardManager {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     bind (element)
     {
@@ -78,7 +78,7 @@ export class KeyboardManager {
      *
      * @throws {Error}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     run (element, event)
     {

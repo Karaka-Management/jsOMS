@@ -35,7 +35,7 @@ export class Logger {
      *
      * @return {Object}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     static getInstance (verbose = true, ui = true, remote = false)
     {
@@ -55,7 +55,7 @@ export class Logger {
      *
      * @return {string}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     interpolate (message, context, level)
     {
@@ -79,7 +79,7 @@ export class Logger {
      *
      * @return {Object}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     createContext (message, context, level)
     {
@@ -103,7 +103,7 @@ export class Logger {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     write (message, context, level)
     {
@@ -131,7 +131,7 @@ export class Logger {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     writeVerbose (message, context, level)
     {
@@ -170,7 +170,7 @@ export class Logger {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     writeRemote (message, context, level)
     {
@@ -194,7 +194,7 @@ export class Logger {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     emergency (message, context = {})
     {
@@ -209,7 +209,7 @@ export class Logger {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     alert (message, context = {})
     {
@@ -224,7 +224,7 @@ export class Logger {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     critical (message, context = {})
     {
@@ -239,7 +239,7 @@ export class Logger {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     error (message, context = {})
     {
@@ -254,7 +254,7 @@ export class Logger {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     warning (message, context = {})
     {
@@ -269,7 +269,7 @@ export class Logger {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     notice (message, context = {})
     {
@@ -284,7 +284,7 @@ export class Logger {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     info (message, context = {})
     {
@@ -299,7 +299,7 @@ export class Logger {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     debug (message, context = {})
     {
@@ -315,7 +315,7 @@ export class Logger {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     log (level, message, context = {})
     {
@@ -330,7 +330,7 @@ export class Logger {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     console (message, context = {})
     {

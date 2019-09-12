@@ -21,7 +21,7 @@
      *
      * @return {mixed}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.getArray = function(path, data, delim = '/')
     {

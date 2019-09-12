@@ -37,7 +37,7 @@ export class VoiceManager {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     setup()
     {
@@ -87,7 +87,7 @@ export class VoiceManager {
      *
      * @return {string}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     getCommandsString()
     {
@@ -101,7 +101,7 @@ export class VoiceManager {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     setLanguage(lang)
     {
@@ -117,7 +117,7 @@ export class VoiceManager {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     add(command, callback)
     {
@@ -129,7 +129,7 @@ export class VoiceManager {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     start()
     {
@@ -145,7 +145,7 @@ export class VoiceManager {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     stop()
     {

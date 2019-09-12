@@ -387,7 +387,7 @@ export class Form {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     bindAddExternal(id)
     {
@@ -464,7 +464,7 @@ export class Form {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     bindAddInline(createForm, id)
     {
@@ -517,7 +517,7 @@ export class Form {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     bindUpdatable(update, id)
     {
@@ -536,7 +536,7 @@ export class Form {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     bindUpdatableInline(update, id)
     {
@@ -691,7 +691,7 @@ export class Form {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     bindCancelInline(cancel, id)
     {
@@ -710,7 +710,7 @@ export class Form {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     bindSaveInline(save, id)
     {
@@ -814,7 +814,7 @@ export class Form {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     removeEditTemplate(ele, id)
     {
@@ -871,7 +871,7 @@ export class Form {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     bindUpdatableExternal(update, id)
     {
@@ -932,7 +932,7 @@ export class Form {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     bindRemovable(remove, id)
     {

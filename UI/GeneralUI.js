@@ -49,7 +49,7 @@ export class GeneralUI {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     bindHref (e)
     {
@@ -72,7 +72,7 @@ export class GeneralUI {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     bindLazyLoad (e)
     {
@@ -109,7 +109,7 @@ export class GeneralUI {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     bindInput (e)
     {

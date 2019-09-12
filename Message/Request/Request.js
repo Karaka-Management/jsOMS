@@ -48,7 +48,7 @@ export class Request {
      *
      * @return {string}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     setContentTypeBasedOnType(type)
     {
@@ -69,7 +69,7 @@ export class Request {
      *
      * @return {string}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     static getBrowser()
     {
@@ -102,7 +102,7 @@ export class Request {
      *
      * @return {string}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     static getOS()
     {
@@ -127,7 +127,7 @@ export class Request {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     setMethod(method)
     {
@@ -141,7 +141,7 @@ export class Request {
      *
      * @return {string}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     getMethod()
     {
@@ -157,7 +157,7 @@ export class Request {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     setResponseType(type)
     {
@@ -171,7 +171,7 @@ export class Request {
      *
      * @return {string}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     getResponseType()
     {
@@ -186,7 +186,7 @@ export class Request {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     setRequestHeader(type, header)
     {
@@ -198,7 +198,7 @@ export class Request {
      *
      * @return {Array}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     getRequestHeader()
     {
@@ -212,7 +212,7 @@ export class Request {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     setUri(uri)
     {
@@ -224,7 +224,7 @@ export class Request {
      *
      * @return {string}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     getUri()
     {
@@ -238,7 +238,7 @@ export class Request {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     setSuccess(callback)
     {
@@ -253,7 +253,7 @@ export class Request {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     setResultCallback(status, callback)
     {
@@ -267,7 +267,7 @@ export class Request {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     setData(data)
     {
@@ -279,7 +279,7 @@ export class Request {
      *
      * @return {Array}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     getData()
     {
@@ -295,7 +295,7 @@ export class Request {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     setType(type)
     {
@@ -310,7 +310,7 @@ export class Request {
      *
      * @return {string}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     getType()
     {
@@ -322,7 +322,7 @@ export class Request {
      *
      * @return {string}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     queryfy(obj)
     {
@@ -341,7 +341,7 @@ export class Request {
      *
      * @return {Array}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     send()
     {

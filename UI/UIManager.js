@@ -49,7 +49,7 @@ export class UIManager {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     bind(id)
     {
@@ -86,7 +86,7 @@ export class UIManager {
      *
      * @return {Object}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     getFormManager()
     {
@@ -98,7 +98,7 @@ export class UIManager {
      *
      * @return {Object}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     getActionManager()
     {
@@ -110,7 +110,7 @@ export class UIManager {
      *
      * @return {Object}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     getDragNDrop()
     {
@@ -122,7 +122,7 @@ export class UIManager {
      *
      * @return {Object}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     getTabManager()
     {
@@ -134,7 +134,7 @@ export class UIManager {
      *
      * @return {Object}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     getTableManager()
     {
@@ -146,7 +146,7 @@ export class UIManager {
      *
      * @return {Object}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     getDOMObserver()
     {
@@ -158,7 +158,7 @@ export class UIManager {
      *
      * @return {Object}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     getGeneralUI()
     {

@@ -30,7 +30,7 @@ export class NotificationManager {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     send (message, type)
     {
@@ -46,7 +46,7 @@ export class NotificationManager {
      *
      * @return {Object}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     getAppNotifier ()
     {
@@ -58,7 +58,7 @@ export class NotificationManager {
      *
      * @return {Object}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     getBrowserNotifier ()
     {

@@ -24,7 +24,7 @@ export class ModuleFactory {
      *
      * @return {Object}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     static getInstance (module, app)
     {

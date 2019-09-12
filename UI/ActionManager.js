@@ -113,7 +113,7 @@ export class ActionManager {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     bindListener (id, listener, removable = false)
     {

@@ -31,7 +31,7 @@ export class MouseManager {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     add (element, type, button, callback, exact)
     {
@@ -51,7 +51,7 @@ export class MouseManager {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     bind (element, type)
     {
@@ -99,7 +99,7 @@ export class MouseManager {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     run (element, event)
     {

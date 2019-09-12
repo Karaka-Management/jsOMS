@@ -22,7 +22,7 @@
      *
      * @return {boolean}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.hasClass = function (ele, cls)
     {
@@ -42,7 +42,7 @@
      *
      * @function
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.triggerEvent = function (element, eventName)
     {
@@ -69,7 +69,7 @@
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.addClass = function (ele, cls)
     {
@@ -88,7 +88,7 @@
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.removeClass = function (ele, cls)
     {
@@ -107,7 +107,7 @@
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.preventAll = function (event)
     {
@@ -129,7 +129,7 @@
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.ready = function (func)
     {
@@ -156,7 +156,7 @@
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.empty = function (ele)
     {
@@ -174,7 +174,7 @@
      *
      * @return {boolean}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.isNode = function (ele)
     {
@@ -193,7 +193,7 @@
      *
      * @return {boolean}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.isElement = function (o)
     {
@@ -213,7 +213,7 @@
      *
      * @return {Element}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.getByClass = function (ele, cls)
     {
@@ -237,7 +237,7 @@
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.addEventListenerToAll = function (e, event, callback)
     {

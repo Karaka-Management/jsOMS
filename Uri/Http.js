@@ -81,7 +81,7 @@ export class Http {
      *
      * @return {null|string}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     static getUriQueryParameter (query, name)
     {
@@ -100,7 +100,7 @@ export class Http {
      *
      * @return {Object}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     static getAllUriQueryParameters (query)
     {
@@ -140,7 +140,7 @@ export class Http {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     set (uri)
     {
@@ -176,7 +176,7 @@ export class Http {
      *
      * @return {void}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     setRootPath(rootPath)
     {
@@ -189,7 +189,7 @@ export class Http {
      *
      * @return {string}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     getBase()
     {
@@ -201,7 +201,7 @@ export class Http {
      *
      * @return {string}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     getScheme()
     {
@@ -213,7 +213,7 @@ export class Http {
      *
      * @return {string}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     getHost()
     {
@@ -225,7 +225,7 @@ export class Http {
      *
      * @return {string}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     getPort()
     {
@@ -237,7 +237,7 @@ export class Http {
      *
      * @return {string}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     getUser()
     {
@@ -249,7 +249,7 @@ export class Http {
      *
      * @return {string}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     getPass()
     {
@@ -261,7 +261,7 @@ export class Http {
      *
      * @return {string}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     getQuery()
     {
@@ -273,7 +273,7 @@ export class Http {
      *
      * @return {string}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     getUri()
     {
@@ -285,7 +285,7 @@ export class Http {
      *
      * @return {string}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     getFragment()
     {
@@ -297,7 +297,7 @@ export class Http {
      *
      * @return {string}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     getPath()
     {
@@ -309,7 +309,7 @@ export class Http {
      *
      * @return {int}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     getPathOffset()
     {

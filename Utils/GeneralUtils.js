@@ -19,7 +19,7 @@
      *
      * @return {callback}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.watcher = function ()
     {
@@ -39,7 +39,7 @@
      *
      * @return {Array}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.merge = function (target, source)
     {
@@ -80,7 +80,7 @@
      *
      * @return {boolean}
      *
-     * @since  1.0.0
+     * @since 1.0.0
      */
     jsOMS.isset = function (variable)
     {
