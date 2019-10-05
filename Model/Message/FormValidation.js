@@ -8,7 +8,7 @@
 export function formValidationMessage (data) {
     const form = document.getElementById(data.form);
 
-    if(!form) {
+    if (!form) {
         return;
     }
 

@@ -20,7 +20,7 @@ export function dataCollectionAction (action, callback)
         elements = document.querySelectorAll(action.collect[selector]);
 
         for (let e in elements) {
-            if(!elements.hasOwnProperty(e)) {
+            if (!elements.hasOwnProperty(e)) {
                 continue;
             }
 

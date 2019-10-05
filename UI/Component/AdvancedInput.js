@@ -133,7 +133,7 @@ export class AdvancedInput {
                 self.dataListBody.removeChild(self.dataListBody.firstChild);
             }
 
-            for(let i = 0; i < dataLength; ++i) {
+            for (let i = 0; i < dataLength; ++i) {
                 // set readable value
                 const newRow    = self.dataTpl.content.cloneNode(true);
                 let fields      = newRow.querySelectorAll('[data-tpl-text]');

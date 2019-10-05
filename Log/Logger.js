@@ -39,7 +39,7 @@ export class Logger {
      */
     static getInstance (verbose = true, ui = true, remote = false)
     {
-        if(!Logger.instance) {
+        if (!Logger.instance) {
             Logger.instance = new Logger(verbose, ui, remote);
         }
 

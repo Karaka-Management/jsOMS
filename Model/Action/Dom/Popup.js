@@ -13,21 +13,21 @@ export function popupButtonAction (action, callback, id)
 
     const popup = action.base === 'self' ? (action.selector === '' ? [document.getElementById(id)] : document.getElementById(id).querySelectorAll(action.selector)) : document.querySelectorAll(action.selector);
 
-    for(let i in popup) {
+    for (let i in popup) {
         /** global: HTMLElement */
-        if(!popup.hasOwnProperty(i) || !popup[i] || !(popup[i] instanceof HTMLElement)) {
+        if (!popup.hasOwnProperty(i) || !popup[i] || !(popup[i] instanceof HTMLElement)) {
             continue;
         }
 
         const clone = document.importNode(popup[i].content, true);
         const dim   = document.getElementById('dim');
 
-        if(dim) {
+        if (dim) {
             document.getElementById('dim').classList.remove('vh');
         }
 
-        for(let j in clone) {
-            if(!clone.hasOwnProperty(j) || !(clone[j] instanceof HTMLElement)) {
+        for (let j in clone) {
+            if (!clone.hasOwnProperty(j) || !(clone[j] instanceof HTMLElement)) {
                 continue;
             }
 
@@ -38,7 +38,7 @@ export function popupButtonAction (action, callback, id)
 
         let e = document.getElementById(popup[i].id.substr(0, popup[i].id.length - 4));
 
-        if(!e) {
+        if (!e) {
             continue;
         }
 

@@ -1,7 +1,7 @@
 import { Logger } from '../../../Log/Logger.js';
 
 /**
- * Form manager class.
+ * Voice manager class.
  *
  * @copyright  Dennis Eichhorn
  * @license    OMS License 1.0

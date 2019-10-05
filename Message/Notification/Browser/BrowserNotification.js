@@ -43,9 +43,9 @@ export class BrowserNotification {
         const self = this;
 
         /** global: Notification */
-        if(Notification.permission !== 'granted' && Notification.permission !== 'denied') {
+        if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
             Notification.requestPermission(function(permission) {
-                if(permission === 'granted') {
+                if (permission === 'granted') {
                     let msg = new jsOMS.Message.Notification.NotificationMessage();
 
                     self.send(msg);

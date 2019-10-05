@@ -314,11 +314,11 @@
     {
         let state = this.createParserState();
 
-        if(text.indexOf('\r\n') !== -1) {
+        if (text.indexOf('\r\n') !== -1) {
             text = text.replace(/\r\n/g, '/n');
         }
 
-        if(text.indexOf('\\\n') !== -1) {
+        if (text.indexOf('\\\n') !== -1) {
             text = text.replace(/\\\n/g, '');
         }
 
@@ -330,7 +330,7 @@
             result = [],
             trimLeft = (typeof ''.trimLeft === 'function');
 
-        for(let i = 0, l = lines.length; i < l; i++) {
+        for (let i = 0, l = lines.length; i < l; i++) {
             line = lines[i];
 			line = trimLeft ? line.trimLeft() : line.trim();
 			lineLength = line.length;

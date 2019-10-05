@@ -36,7 +36,7 @@ export class UIManager {
         this.domObserver = new MutationObserver(function(mutations) {
             const length = mutations.length;
 
-            for(let i = 0; i < length; ++i) {
+            for (let i = 0; i < length; ++i) {
                 self.app.eventManager.trigger(mutations[i].target.id + '-' + mutations[i].type, 0, mutations[i]);
             }
         });
@@ -64,7 +64,7 @@ export class UIManager {
             const tag = document.getElementById(id);
             this.generalUI.bind(tag);
 
-            if(!tag) {
+            if (!tag) {
                 return;
             }
 
