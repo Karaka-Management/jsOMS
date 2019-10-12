@@ -70,22 +70,28 @@ export class Tab {
                 /* Remove selected tab */
                 const oldActive = this.parentNode.getElementsByClassName('active');
                 if (oldActive.length > 0) {
+                    let fragments = fragmentString.split(',');
+                    const index   = fragments.indexOf(oldActive[0].getElementsByTagName('label')[0].getAttribute('for'));
+
+                    if (index > -1) {
+                        fragments.splice(index, 1);
+                    }
+
                     // find old active and remove it
-                    fragmentString = jsOMS.trim(
-                        fragmentString.replace(oldActive[0].getElementsByTagName('label')[0].getAttribute('for'), ''),
-                        ','
-                    );
+                    fragmentString = fragments.join(',');
 
                     jsOMS.removeClass(oldActive[0], 'active');
                 }
 
-                // remove new element if new element already inside, alternatively check for existence and don't do a new push state?
-                // todo: here is a bug or in the uri factory. replace also replaces substrings e.g. #test-c-tab-1 gets partially replaced
-                // by c-tab-1. either search for #c-tab-1 or ,c-tab-1 to be certain. That's not possible because it doesn't start with `#`
-                fragmentString = jsOMS.trim(
-                    fragmentString.replace(this.getElementsByTagName('label')[0].getAttribute('for'), ''),
-                    ','
-                );
+                let fragments = fragmentString.split(',');
+                const index   = fragments.indexOf(this.getElementsByTagName('label')[0].getAttribute('for'));
+
+                if (index > -1) {
+                    fragments.splice(index, 1);
+                }
+
+                // find old active and remove it
+                fragmentString = fragments.join(',');
 
                 jsOMS.addClass(this, 'active');
 
