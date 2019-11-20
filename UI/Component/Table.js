@@ -19,7 +19,7 @@ export class Table {
      */
     constructor(app)
     {
-        this.app    = app;
+        this.app = app;
 
         /** @var {Object <string, TableView>} */
         this.tables = {};

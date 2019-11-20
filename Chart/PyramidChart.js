@@ -53,6 +53,7 @@
                 visible: true
             }
         };
+
         this.chart.subtype = 'waterfall';
     };
 
@@ -136,7 +137,7 @@
             .tickFormat("");
 
         x.domain(this.chart.dataset[0].points.map(function(d) { return d.name; }));
-        y.domain([0, d3.max(this.chart.dataset[0].points, function(d) { return d.y*1.05; })]);
+        y.domain([0, d3.max(this.chart.dataset[0].points, function(d) { return d.y * 1.05; })]);
 
         svg = this.chart.chartSelect.append("svg")
             .attr("width", this.chart.dimension.width)

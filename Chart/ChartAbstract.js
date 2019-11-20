@@ -413,9 +413,9 @@
 
             if (!this.defined.text.footer) {
                 this.position.footer.top = temp.node().getBoundingClientRect().height;
-                this.margin.bottom += temp.node().getBoundingClientRect().height + 10;
+                this.margin.bottom      += temp.node().getBoundingClientRect().height + 10;
                 this.defined.text.footer = true;
-                this.shouldRedraw = true;
+                this.shouldRedraw        = true;
             }
         }
     };

@@ -2,12 +2,13 @@
     "use strict";
 
     jsOMS.Client = function (ip, port, protocol) {
-        this.port = port;
-        this.ip = ip;
-        this.protocol = protocol;
+        this.port       = port;
+        this.ip         = ip;
+        this.protocol   = protocol;
         this.connection = null;
-        this.messages = [];
+        this.messages   = [];
     };
+
     jsOMS.Client.prototype.setMessage = function(id, callback) {
         this.messages[id] = callback;
     };
@@ -25,7 +26,7 @@
     };
 
     jsOMS.Client.prototype.connect = function() {
-        var self = this;
+        var self        = this;
         this.connection = new WebSocket(this.ip, this.protocol);
 
         this.connection.onmessage = function(event) {

@@ -75,7 +75,7 @@
             - Math.max(this.chart.margin.right + this.chart.margin.left,
                 this.chart.margin.top + this.chart.margin.bottom)
             ),
-            innerRadius = radius - radius*self.chart.dataSettings.style.strokewidth,
+            innerRadius = radius - radius * self.chart.dataSettings.style.strokewidth,
             arc         = d3.svg.arc()
                 .outerRadius(function() { return radius; })
                 .innerRadius(function() { return innerRadius; });

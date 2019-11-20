@@ -32,7 +32,7 @@
             event.eventName = eventName;
             element.dispatchEvent(event);
         } else {
-            event = document.createEventObject();
+            event           = document.createEventObject();
             event.eventName = eventName;
             event.eventType = eventName;
             element.fireEvent(event.eventType, event);

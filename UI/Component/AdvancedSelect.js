@@ -27,16 +27,16 @@ export class AdvancedSelect {
      * @since 1.0.0
      */
     constructor(e) {
-        this.id = e.id;
+        this.id              = e.id;
         this.selectComponent = e;
-        this.selectField = this.selectComponent.getElementsByClassName('input')[0];
+        this.selectField     = this.selectComponent.getElementsByClassName('input')[0];
         this.dropdownElement = document.getElementById(this.id + '-dropdown');
-        this.tagElement = document.getElementById(this.id + '-tags');
-        this.dataList = this.dropdownElement.getElementsByTagName('table')[0];
-        this.dataListBody = this.dataList.getElementsByTagName('tbody')[0];
-        this.dataTpl = document.getElementById(this.id + '-rowElement');
-        this.tagTpl = this.tagElement.getElementsByTagName('template')[0];
-        this.src = this.selectField.getAttribute('data-src');
+        this.tagElement      = document.getElementById(this.id + '-tags');
+        this.dataList        = this.dropdownElement.getElementsByTagName('table')[0];
+        this.dataListBody    = this.dataList.getElementsByTagName('tbody')[0];
+        this.dataTpl         = document.getElementById(this.id + '-rowElement');
+        this.tagTpl          = this.tagElement.getElementsByTagName('template')[0];
+        this.src             = this.selectField.getAttribute('data-src');
 
         const self = this;
         this.selectField.addEventListener('focusout', function (e) {
@@ -128,7 +128,7 @@ export class AdvancedSelect {
      */
     remoteCallback(self, data) {
         console.log(data);
-        data = JSON.parse(data.response)[0];
+        data             = JSON.parse(data.response)[0];
         const dataLength = data.length;
 
         console.table(data);
@@ -141,8 +141,8 @@ export class AdvancedSelect {
 
             for (let i = 0; i < dataLength; ++i) {
                 // set readable value
-                const newRow = self.dataTpl.content.cloneNode(true);
-                let fields = newRow.querySelectorAll('[data-tpl-text]');
+                const newRow    = self.dataTpl.content.cloneNode(true);
+                let fields      = newRow.querySelectorAll('[data-tpl-text]');
                 let fieldLength = fields.length;
 
                 for (let j = 0; j < fieldLength; ++j) {
@@ -154,7 +154,7 @@ export class AdvancedSelect {
                 }
 
                 // set internal value
-                fields = newRow.querySelectorAll('[data-tpl-value]');
+                fields      = newRow.querySelectorAll('[data-tpl-value]');
                 fieldLength = fields.length;
 
                 for (let j = 0; j < fieldLength; ++j) {
@@ -249,10 +249,10 @@ export class AdvancedSelect {
             const newTag = self.tagTpl.content.cloneNode(true);
 
             // set internal value
-            let fields = newTag.querySelectorAll('[data-tpl-value]');
+            let fields      = newTag.querySelectorAll('[data-tpl-value]');
             let fieldLength = fields.length;
-            let uuid = '';
-            let value = '';
+            let uuid        = '';
+            let value       = '';
 
             for (let j = 0; j < fieldLength; ++j) {
                 value = document.activeElement.querySelectorAll('[data-tpl-value="' + fields[j].getAttribute('data-tpl-value') + '"]')[0].getAttribute('data-value');
@@ -270,7 +270,7 @@ export class AdvancedSelect {
             newTag.firstElementChild.setAttribute('data-tpl-uuid', uuid);
 
             // set readable text
-            fields = newTag.querySelectorAll('[data-tpl-text]');
+            fields      = newTag.querySelectorAll('[data-tpl-text]');
             fieldLength = fields.length;
 
             for (let j = 0; j < fieldLength; ++j) {

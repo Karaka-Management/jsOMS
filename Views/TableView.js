@@ -40,7 +40,7 @@ export class TableView {
     serialize()
     {
         const table = document.getElementById(this.id);
-        let data = {
+        let data    = {
             caption: null,
             header: [],
             rows: []
@@ -48,20 +48,20 @@ export class TableView {
 
         data.caption = table.getElementsByTagName('caption')[0].innerText;
 
-        const header = table.querySelectorAll('thead tr td, thead tr th'),
+        const header     = table.querySelectorAll('thead tr td, thead tr th'),
             headerLength = header.length;
 
         for (let i = 0; i < headerLength; ++i) {
             data.header.push(header[i].innerText);
         }
 
-        const rows = table.querySelectorAll('tbody tr'),
+        const rows     = table.querySelectorAll('tbody tr'),
             rowsLength = rows.length;
 
         for (let i = 0; i < rowsLength; ++i) {
             data.rows[i] = [];
 
-            const columns = rows[i].querySelectorAll('td, th'),
+            const columns    = rows[i].querySelectorAll('td, th'),
                 columnLength = columns.length;
 
             for (let j = 0; j < columnLength; ++j) {

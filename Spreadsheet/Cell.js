@@ -14,8 +14,8 @@
 
     jsOMS.Spreadsheet.Cell = function(id, raw)
     {
-        this.id = id;
-        this.raw = raw;
+        this.id         = id;
+        this.raw        = raw;
         this.formatting = raw.formatting;
     };
 }(window.jsOMS = window.jsOMS || {}));

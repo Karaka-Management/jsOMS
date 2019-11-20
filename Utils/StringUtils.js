@@ -96,8 +96,8 @@
             return (str.length + 1);
         }
 
-        let n    = 0,
-            pos  = 0;
+        let n   = 0,
+            pos = 0;
 
         while (true) {
             pos = str.indexOf(substr, pos);

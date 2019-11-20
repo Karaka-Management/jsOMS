@@ -49,7 +49,7 @@
             }
         };
 
-        this.chart.grid    = {
+        this.chart.grid = {
             x: {
                 visible: true
             },
@@ -57,6 +57,7 @@
                 visible: true
             }
         };
+
         this.chart.subtype = 'candlestick';
     };
 
@@ -105,7 +106,7 @@
             .attr("y", function(d) { return y(Math.max(d.open, d.close)); })
             .attr("height", function(d) { return Math.max(1, y(Math.min(d.open, d.close)) - y(Math.max(d.open, d.close)));})
             .attr("width", function(d) { return 0.5 * mm; })
-            .attr("fill",function(d) { return d.open > d.close ? "red" : "green" ;});
+            .attr("fill",function(d) { return d.open > d.close ? "red" : "green"; });
         } else {
             let datapoint = svg.selectAll("rect")
             .data(this.chart.dataset[0].points)
@@ -116,14 +117,14 @@
             .attr("y", function(d) {return y(d.open);})
             .attr("height", function(d) { return 1;})
             .attr("width", function(d) { return 0.25 * mm / 2; })
-            .attr("fill",function(d) { return d.open > d.close ? "red" : "green" ;});
+            .attr("fill",function(d) { return d.open > d.close ? "red" : "green"; });
 
             datapoint.append("svg:rect")
             .attr("x", function(d) { return x(d.x); })
             .attr("y", function(d) {return y(d.close);})
             .attr("height", function(d) { return 1;})
             .attr("width", function(d) { return 0.25 * mm / 2; })
-            .attr("fill",function(d) { return d.open > d.close ? "red" : "green" ;});
+            .attr("fill",function(d) { return d.open > d.close ? "red" : "green"; });
         }
 
         svg.selectAll("line.stem")

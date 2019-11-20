@@ -113,7 +113,7 @@ export class GeneralUI {
      */
     bindInput (e)
     {
-        e = e !== null ? [e] : document.getElementsByClassName('advancedInput');
+        e            = e !== null ? [e] : document.getElementsByClassName('advancedInput');
         const length = e.length;
 
         for (let i = 0; i < length; ++i) {

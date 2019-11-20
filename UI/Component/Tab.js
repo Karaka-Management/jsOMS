@@ -38,8 +38,8 @@ export class Tab {
                 this.bindElement(e);
             }
         } else {
-            const tabs = document.getElementsByClassName('tabview'),
-            length = !tabs ? 0 : tabs.length;
+            const tabs   = document.getElementsByClassName('tabview');
+            const length = !tabs ? 0 : tabs.length;
 
             for (let i = 0; i < length; ++i) {
                 this.bindElement(tabs[i]);
@@ -59,7 +59,7 @@ export class Tab {
     bindElement (e)
     {
         const nodes = e.querySelectorAll('.tab-links li'),
-            length = nodes.length;
+            length  = nodes.length;
 
         for (let i = 0; i < length; ++i) {
             nodes[i].addEventListener('click', function (evt)
@@ -122,7 +122,7 @@ export class Tab {
     {
         const fragmentString = window.location.href.includes('#') ? Http.parseUrl(window.location.href).fragment : '';
         const fragments      = fragmentString.split(','),
-            fragLength = fragments.length;
+            fragLength       = fragments.length;
 
         if (fragLength > 0 && fragmentString !== '') {
             for (let i = 0; i < fragLength; ++i) {

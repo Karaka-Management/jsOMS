@@ -146,7 +146,7 @@ export class UriFactory {
 
         // unique fragments
         const fragments = url.match(/\#[a-zA-Z0-9\-,]+/g),
-            fragLength = fragments !== null ? fragments.length : 0;
+            fragLength  = fragments !== null ? fragments.length : 0;
 
         for (let i = 0; i < fragLength - 1; ++i) {
             // remove all from old url

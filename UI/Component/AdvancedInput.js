@@ -122,7 +122,7 @@ export class AdvancedInput {
     remoteCallback(self, data)
     {
         console.log(data);
-        data = JSON.parse(data.response)[0];
+        data             = JSON.parse(data.response)[0];
         const dataLength = data.length;
 
         console.table(data);

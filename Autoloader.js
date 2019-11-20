@@ -15,8 +15,8 @@ import { AssetManager } from './Asset/AssetManager.js';
  */
     export const Autoloader = {};
 
-Autoloader.loaded = [];
-Autoloader.namespaced = [];
+Autoloader.loaded      = [];
+Autoloader.namespaced  = [];
 Autoloader.assetLoader = new AssetManager();
 
 /**

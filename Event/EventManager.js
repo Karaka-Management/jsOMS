@@ -103,11 +103,11 @@ export class EventManager {
     {
         if (this.callbacks.hasOwnProperty(group)) {
             return this.triggerSingleEvent(group, id, data);
-        }
+        }p
 
         const allGroups = Object.keys(this.callbacks),
-            regex = new RegExp(group),
-            length = allGroups.length;
+            regex       = new RegExp(group),
+            length      = allGroups.length;
 
         let result = false;
 

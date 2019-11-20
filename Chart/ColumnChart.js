@@ -189,7 +189,7 @@
                 {
                     return x(d.x) + x.rangeBand() / self.chart.dataset.length * j;
                 })
-                .attr("width", x.rangeBand() /self.chart.dataset.length)
+                .attr("width", x.rangeBand() / self.chart.dataset.length)
                 .transition()
                 .attr("y", function (d)
                 {

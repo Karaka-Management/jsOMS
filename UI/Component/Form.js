@@ -141,19 +141,19 @@ export class Form {
         }
 
         const removable = this.forms[id].getRemove();
-        length = removable === null ? 0 : removable.length;
+        length          = removable === null ? 0 : removable.length;
         for (let i = 0; i < length; ++i) {
             this.bindRemovable(removable[i], id);
         }
 
         const addable = this.forms[id].getAdd();
-        length = addable === null ? 0 : addable.length;
+        length        = addable === null ? 0 : addable.length;
         for (let i = 0; i < length; ++i) {
             this.bindAddInline(addable[i], id);
         }
 
         const save = this.forms[id].getSave();
-        length = save === null ? 0 : save.length;
+        length     = save === null ? 0 : save.length;
         for (let i = 0; i < length; ++i) {
             this.bindSaveInline(save[i], id);
         }
@@ -163,19 +163,19 @@ export class Form {
         }
 
         const cancel = this.forms[id].getCancel();
-        length = cancel === null ? 0 : cancel.length;
+        length       = cancel === null ? 0 : cancel.length;
         for (let i = 0; i < length; ++i) {
             this.bindCancelInline(cancel[i], id);
         }
 
         const update = this.forms[id].getUpdate();
-        length = update === null ? 0 : update.length;
+        length       = update === null ? 0 : update.length;
         for (let i = 0; i < length; ++i) {
             this.bindUpdatable(update[i], id);
         }
 
         const imgPreviews = this.forms[id].getImagePreviews();
-        length = imgPreviews === null ? 0 : imgPreviews.length;
+        length            = imgPreviews === null ? 0 : imgPreviews.length;
         for (let i = 0; i < length; ++i) {
             this.bindImagePreview(imgPreviews[i], id);
         }
@@ -196,9 +196,9 @@ export class Form {
 
         imageUpload.addEventListener('change', function () {
             const formElement = document.getElementById(id);
-            const preview = formElement.querySelector('img#preview-' + imageUpload.getAttribute('name'));
+            const preview     = formElement.querySelector('img#preview-' + imageUpload.getAttribute('name'));
 
-            preview.src = window.URL.createObjectURL(imageUpload.files[0]);
+            preview.src    = window.URL.createObjectURL(imageUpload.files[0]);
             preview.onload = function () {
                 window.URL.revokeObjectURL(this.src);
             }
@@ -322,9 +322,9 @@ export class Form {
             console.log(xhr.response);
 
             try {
-                const o            = JSON.parse(xhr.response)[0],
-                    response       = new Response(o);
-                let successInject  = null;
+                const o           = JSON.parse(xhr.response)[0],
+                    response      = new Response(o);
+                let successInject = null;
 
                 if ((successInject = form.getSuccess()) !== null) {
                     successInject(response);
@@ -396,18 +396,18 @@ export class Form {
 
         this.app.uiManager.getFormManager().get(createForm).injectSubmit(function () {
             const formElement = document.getElementById(id);
-            const subMain = formElement.getAttribute('data-ui-content').charAt(0) === '#'
+            const subMain     = formElement.getAttribute('data-ui-content').charAt(0) === '#'
                 ? document.querySelector(formElement.getAttribute('data-ui-content'))
                 : formElement.querySelector(formElement.getAttribute('data-ui-content'));
 
             // todo: [0/1] is no longer working because of arbitrary templates for inline editing
-            const newEle  = subMain.getElementsByTagName('template')[0].content.cloneNode(true);
+            const newEle = subMain.getElementsByTagName('template')[0].content.cloneNode(true);
 
             // set internal value
-            let fields = newEle.querySelectorAll('[data-tpl-value]');
+            let fields      = newEle.querySelectorAll('[data-tpl-value]');
             let fieldLength = fields.length;
-            let uuid = '';
-            let value = '';
+            let uuid        = '';
+            let value       = '';
 
             for (let j = 0; j < fieldLength; ++j) {
                 value = document.querySelectorAll(
@@ -429,7 +429,7 @@ export class Form {
             newEle.firstElementChild.setAttribute('data-tpl-uuid', uuid);
 
             // set readable text
-            fields = newEle.querySelectorAll('[data-tpl-text]');
+            fields      = newEle.querySelectorAll('[data-tpl-text]');
             fieldLength = fields.length;
 
             for (let j = 0; j < fieldLength; ++j) {
@@ -472,16 +472,16 @@ export class Form {
 
         createForm.addEventListener('click', function () {
             const formElement = document.getElementById(id);
-            const subMain = formElement.getAttribute('data-ui-content').charAt(0) === '#'
+            const subMain     = formElement.getAttribute('data-ui-content').charAt(0) === '#'
                 ? document.querySelector(formElement.getAttribute('data-ui-content'))
                 : formElement.querySelector(formElement.getAttribute('data-ui-content'));
 
             // todo: [0/1] is no longer working because of arbitrary templates for inline editing
-            const newEle  = subMain.getElementsByTagName('template')[1].content.cloneNode(true);
-            const eleId = 'f' + Math.random().toString(36).substring(7);
+            const newEle = subMain.getElementsByTagName('template')[1].content.cloneNode(true);
+            const eleId  = 'f' + Math.random().toString(36).substring(7);
             // todo: check if random id doesn't already exist
 
-            newEle.firstElementChild.id = eleId;
+            newEle.firstElementChild.id                                 = eleId;
             newEle.firstElementChild.getElementsByTagName('form')[0].id = eleId + '-form';
 
             const fields = newEle.firstElementChild.querySelectorAll('[data-form="' + id + '"]');
@@ -575,7 +575,7 @@ export class Form {
                 values = values.concat(
                         parents[i].hasAttribute('data-tpl-value') ? parents[i] : Array.prototype.slice.call(parents[i].querySelectorAll('[data-tpl-value]'))
                     );
-                text = text.concat(
+                text   = text.concat(
                         parents[i].hasAttribute('data-tpl-text') ? parents[i] : Array.prototype.slice.call(parents[i].querySelectorAll('[data-tpl-text]'))
                     );
 
@@ -668,13 +668,13 @@ export class Form {
             jsOMS.addClass(this, 'hidden');
 
             const saveButtons = self.forms[id].getSave();
-            length = saveButtons.length;
+            length            = saveButtons.length;
             for (let i = 0; i < length; ++i) {
                 jsOMS.removeClass(saveButtons[i], 'hidden');
             }
 
             const cancelButtons = self.forms[id].getCancel();
-            length = cancelButtons.length;
+            length              = cancelButtons.length;
             for (let i = 0; i < length; ++i) {
                 jsOMS.removeClass(cancelButtons[i], 'hidden');
             }
@@ -717,21 +717,21 @@ export class Form {
         const self = this;
 
         save.addEventListener('click', function () {
-            const formElement = document.getElementById(id);
-            const parentsTpl = [];
+            const formElement    = document.getElementById(id);
+            const parentsTpl     = [];
             const parentsContent = [];
-            const selectors = formElement.getAttribute('data-ui-element').split(','),
-                selectorLength = selectors.length;
+            const selectors      = formElement.getAttribute('data-ui-element').split(','),
+                selectorLength   = selectors.length;
 
             let values = [];
-            let text = [];
+            let text   = [];
 
             for (let i = 0; i < selectorLength; ++i) {
                 // todo: similar logic is in updatable Inline and probably in External... pull out?
                 // this handles selectors such as 'ancestor > child/or/sibling' and many more
                 // todo: maybe move this to the library as an advanced ancestor function?
                 let selector = selectors[i].trim(' ').split(' ');
-                let closest = selector[0].trim();
+                let closest  = selector[0].trim();
 
                 // template elements
                 let subSelector = '';
@@ -747,8 +747,8 @@ export class Form {
                 );
 
                 // content elements
-                selector = selectors[i].trim(' ').split(' ');
-                closest = selector[0].trim();
+                selector    = selectors[i].trim(' ').split(' ');
+                closest     = selector[0].trim();
                 subSelector = '';
                 if (selector.length !== 0) {
                     selector.shift();
@@ -764,7 +764,7 @@ export class Form {
                 values = values.concat(
                     parentsTpl[i].hasAttribute('data-tpl-value') ? parentsTpl[i] : Array.prototype.slice.call(parentsTpl[i].querySelectorAll('[data-tpl-value]'))
                 );
-                text = text.concat(
+                text   = text.concat(
                     parentsTpl[i].hasAttribute('data-tpl-text') ? parentsTpl[i] : Array.prototype.slice.call(parentsTpl[i].querySelectorAll('[data-tpl-text]'))
                 );
             }
@@ -818,13 +818,13 @@ export class Form {
      */
     removeEditTemplate(ele, id)
     {
-        const formElement = document.getElementById(id);
-        const selectors = formElement.getAttribute('data-ui-element').split(','),
+        const formElement  = document.getElementById(id);
+        const selectors    = formElement.getAttribute('data-ui-element').split(','),
             selectorLength = selectors.length;
 
         for (let i = 0; i < selectorLength; ++i) {
             let selector = selectors[i].trim(' ').split(' ');
-            let closest = selector[0].trim();
+            let closest  = selector[0].trim();
 
             let subSelector = '';
             if (selector.length !== 0) {
@@ -832,8 +832,8 @@ export class Form {
                 subSelector = selector.join(' ').trim();
             }
 
-            let content = selector.length === 0 ? ele.closest(closest) : ele.closest(closest).querySelector(subSelector);
-            const tpls = content.parentNode.querySelectorAll('[data-marker=tpl]'),
+            let content    = selector.length === 0 ? ele.closest(closest) : ele.closest(closest).querySelector(subSelector);
+            const tpls     = content.parentNode.querySelectorAll('[data-marker=tpl]'),
                 tplsLength = tpls.length;
 
             for (let j = 0; j < tplsLength; ++j) {
@@ -845,19 +845,19 @@ export class Form {
         }
 
         const saveButtons = this.forms[id].getSave();
-        let length = saveButtons.length;
+        let length        = saveButtons.length;
         for (let i = 0; i < length; ++i) {
             jsOMS.addClass(saveButtons[i], 'hidden');
         }
 
         const cancelButtons = this.forms[id].getCancel();
-        length = cancelButtons.length;
+        length              = cancelButtons.length;
         for (let i = 0; i < length; ++i) {
             jsOMS.addClass(cancelButtons[i], 'hidden');
         }
 
         const update = this.forms[id].getUpdate();
-        length = update === null ? 0 : update.length;
+        length       = update === null ? 0 : update.length;
         for (let i = 0; i < length; ++i) {
             jsOMS.removeClass(update[i], 'hidden');
         }
@@ -879,13 +879,13 @@ export class Form {
 
         update.addEventListener('click', function () {
             const formElement = document.getElementById(id);
-            const parent = this.closest(formElement.getAttribute('data-ui-element'));
-            const formId = formElement.getAttribute('data-ui-form');
-            const values = parent.querySelectorAll('[data-tpl-value]');
-            const text = parent.querySelectorAll('[data-tpl-text]');
+            const parent      = this.closest(formElement.getAttribute('data-ui-element'));
+            const formId      = formElement.getAttribute('data-ui-form');
+            const values      = parent.querySelectorAll('[data-tpl-value]');
+            const text        = parent.querySelectorAll('[data-tpl-text]');
 
             const fields = document.getElementById(formId).querySelectorAll('[data-form="' + id + '"]');
-            let length = fields.length;
+            let length   = fields.length;
 
             for (let i = 0; i < length; ++i) {
                 fields[i].setAttribute('data-form', eleId);

@@ -54,6 +54,7 @@
                 visible: true
             }
         };
+
         this.chart.subtype = 'scatterplot';
     };
 
