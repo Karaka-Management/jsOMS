@@ -126,19 +126,12 @@ export class Form {
 
         const self     = this;
         this.forms[id] = new FormView(id);
+        let length     = 0;
+
+        const submits      = this.forms[id].getSubmit()
+        const submitLength =submits.length;
 
         this.unbind(id);
-
-        const submits = this.forms[id].getSubmit()
-        let length    = submits.length;
-
-        for (let i = 0; i < length; ++i) {
-            submits[i].addEventListener('click', function (event)
-            {
-                jsOMS.preventAll(event);
-                self.submit(self.forms[id]);
-            });
-        }
 
         const removable = this.forms[id].getRemove();
         length          = removable === null ? 0 : removable.length;
@@ -178,6 +171,14 @@ export class Form {
         length            = imgPreviews === null ? 0 : imgPreviews.length;
         for (let i = 0; i < length; ++i) {
             this.bindImagePreview(imgPreviews[i], id);
+        }
+
+        for (let i = 0; i < submitLength; ++i) {
+            submits[i].addEventListener('click', function (event)
+            {
+                jsOMS.preventAll(event);
+                self.submit(self.forms[id]);
+            });
         }
     };
 
@@ -681,6 +682,8 @@ export class Form {
 
             // todo: on save button click insert data into hidden row and show hidden row again, delete form row
         });
+
+        // todo: bind bad form response (e.g. api responds with anything but 201)
     };
 
     /**
