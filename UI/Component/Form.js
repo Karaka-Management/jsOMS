@@ -129,7 +129,7 @@ export class Form {
         let length     = 0;
 
         const submits      = this.forms[id].getSubmit()
-        const submitLength =submits.length;
+        const submitLength = submits.length;
 
         this.unbind(id);
 
