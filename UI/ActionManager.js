@@ -18,6 +18,7 @@ export class ActionManager {
      */
     constructor(app)
     {
+        this.logger  = Logger.getInstance();
         this.app     = app;
         this.actions = {};
     };
@@ -55,7 +56,7 @@ export class ActionManager {
     bindElement (e)
     {
         if (!jsOMS.isValidJson(e.getAttribute('data-action'))) {
-            jsOMS.Log.Logger.instance.error('Invalid json string: \'' + e.getAttribute('data-action') + '\'');
+            this.logger.error('Invalid json string: \'' + e.getAttribute('data-action') + '\'');
 
             return;
         }
@@ -122,7 +123,7 @@ export class ActionManager {
 
         for (let j = 1; j < actionLength; ++j) {
             if (typeof id === 'undefined' || typeof listener.key === 'undefined') {
-                jsOMS.Log.Logger.instance.error('Invalid element id/key: ' + id + '/' + listener.key);
+                this.logger.error('Invalid element id/key: ' + id + '/' + listener.key);
                 return;
             }
 
@@ -162,7 +163,7 @@ export class ActionManager {
         const self = this;
 
         if (!this.actions.hasOwnProperty(action.type)) {
-            jsOMS.Log.Logger.instance.warning('Undefined action ' + action.type);
+            this.logger.warning('Undefined action ' + action.type);
             return;
         }
 

@@ -1,3 +1,6 @@
+import { Request } from '../../../Message/Request/Request.js';
+
+
 /**
  * Set message.
  *
@@ -11,7 +14,7 @@ export function requestAction (action, callback)
     "use strict";
 
     /** global: jsOMS */
-    const request = new jsOMS.Message.Request.Request(action.uri, action.method, action.request_type);
+    const request = new Request(action.uri, action.method, action.request_type);
 
     request.setSuccess(function(xhr) {
         console.log(xhr.responseText);
