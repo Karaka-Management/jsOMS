@@ -14,6 +14,8 @@ export class InputManager {
     /**
      * @constructor
      *
+     * @param {Object} app Application
+     *
      * @since 1.0.0
      */
     constructor(app)

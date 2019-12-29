@@ -22,7 +22,7 @@ export class AdvancedSelect {
     /**
      * @constructor
      *
-     * @param {object} e Element to bind
+     * @param {Object} e Element to bind
      *
      * @since 1.0.0
      */
@@ -121,8 +121,10 @@ export class AdvancedSelect {
      *
      * This method adds remote results to the dropdown list for selecting
      *
-     * @param {object} self This reference
-     * @param {object} data Response data
+     * @param {Object} self This reference
+     * @param {Object} data Response data
+     *
+     * @return {void}
      *
      * @since 1.0.0
      */
@@ -185,7 +187,9 @@ export class AdvancedSelect {
     /**
      * Callback for input field content change
      *
-     * @param {object} self This reference
+     * @param {Object} self This reference
+     *
+     * @return {void}
      *
      * @since 1.0.0
      */
@@ -201,7 +205,9 @@ export class AdvancedSelect {
     /**
      * Select element in dropdown (only mark it as selected)
      *
-     * @param {object} e Element to select in dropdown
+     * @param {Object} e Element to select in dropdown
+     *
+     * @return {void}
      *
      * @since 1.0.0
      */
@@ -215,7 +221,9 @@ export class AdvancedSelect {
     /**
      * Clear all selected/marked options in dropdown
      *
-     * @param {object} self This reference
+     * @param {Object} self This reference
+     *
+     * @return {void}
      *
      * @since 1.0.0
      */
@@ -235,7 +243,9 @@ export class AdvancedSelect {
      *
      * This can add the selected dropdown elements to a table, badge list etc. depending on the template structure.
      *
-     * @param {object} self This reference
+     * @param {Object} self This reference
+     *
+     * @return {void}
      *
      * @since 1.0.0
      */
@@ -303,10 +313,12 @@ export class AdvancedSelect {
      *
      * After waiting for a delay a callback can be triggered.
      *
-     * @param {object}   action   Action type
+     * @param {Object}   action   Action type
      * @param {function} callback Callback to be triggered
-     * @param {object}   self     This reference (passed to callback)
-     * @param {object}   data     Data (passed to callback)
+     * @param {Object}   self     This reference (passed to callback)
+     * @param {Object}   data     Data (passed to callback)
+     *
+     * @return {void}
      *
      * @since 1.0.0
      */

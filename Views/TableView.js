@@ -10,6 +10,8 @@ export class TableView {
     /**
      * @constructor
      *
+     * @param {string} id Table id
+     *
      * @since 1.0.0
      */
     constructor (id) {
@@ -33,7 +35,7 @@ export class TableView {
     /**
      * Serialize table data
      *
-     * @return {object}
+     * @return {Object}
      *
      * @since 1.0.0
      */

@@ -1,3 +1,7 @@
+import { Request } from '../../Message/Request/Request.js';
+import { RequestMethod } from '../../Message/Request/RequestMethod.js';
+import { RequestType } from '../../Message/Request/RequestType.js';
+
 /**
  * Auth class.
  *
@@ -53,11 +57,11 @@ export class Auth {
      */
     login ()
     {
-        const authRequest = new jsOMS.Message.Request.Request();
+        const authRequest = new Request();
 
         authRequest.setUri(this.uri);
-        authRequest.setMethod(jsOMS.Message.Request.RequestMethod.POST);
-        authRequest.setResponseType(jsOMS.Message.Request.RequestType.JSON);
+        authRequest.setMethod(RequestMethod.POST);
+        authRequest.setResponseType(RequestType.JSON);
         authRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         authRequest.setSuccess(function (xhr)
         {

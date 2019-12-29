@@ -12,6 +12,8 @@ export class Http {
     /**
      * @constructor
      *
+     * @param {string} uri Http uri
+     *
      * @since 1.0.0
      */
     constructor(uri)

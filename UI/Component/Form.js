@@ -236,13 +236,13 @@ export class Form {
      * Calls injections first before executing the actual form submit
      *
      * @param {Object} form   Form object
-     * @param {string} action Action different from the form action (e.g. formaction=*)
+     * @param {string} [action] Action different from the form action (e.g. formaction=*)
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    submit (form, action)
+    submit (form, action = null)
     {
         action = typeof action !== 'undefined' ? action : null;
 
@@ -284,12 +284,13 @@ export class Form {
      * Submits the main form data
      *
      * @param {Object} form   Form object
-     * @param {string} action Action different from the form action (e.g. formaction=*)
+     * @param {string} [action] Action different from the form action (e.g. formaction=*)
+     *
      * @return {void}
      *
      * @since 1.0.0
      */
-    submitForm (form, action)
+    submitForm (form, action = null)
     {
         action = typeof action !== 'undefined' ? action : null;
 
