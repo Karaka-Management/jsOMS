@@ -1,10 +1,10 @@
 /**
  * Request data enum.
  *
- * @copyright  Dennis Eichhorn
- * @license    OMS License 1.0
- * @version    1.0.0
- * @since      1.0.0
+ * @copyright Dennis Eichhorn
+ * @license   OMS License 1.0
+ * @version   1.0.0
+ * @since     1.0.0
  */
 export const OSType = Object.freeze({
     WINDOWS_10: 'windows nt 10.0', /* Windows 10 */

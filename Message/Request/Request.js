@@ -8,10 +8,10 @@ import { RequestType } from './RequestType.js';
 /**
  * Request class.
  *
- * @copyright  Dennis Eichhorn
- * @license    OMS License 1.0
- * @version    1.0.0
- * @since      1.0.0
+ * @copyright Dennis Eichhorn
+ * @license   OMS License 1.0
+ * @version   1.0.0
+ * @since     1.0.0
  */
 export class Request {
     /**

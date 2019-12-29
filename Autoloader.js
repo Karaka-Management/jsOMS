@@ -8,12 +8,12 @@ import { AssetManager } from './Asset/AssetManager.js';
  * include, import etc. Contrary to it's name the autoloader is not able to truly autoload
  * referenced classes.
  *
- * @copyright  Dennis Eichhorn
- * @license    OMS License 1.0
- * @version    1.0.0
- * @since      1.0.0
+ * @copyright Dennis Eichhorn
+ * @license   OMS License 1.0
+ * @version   1.0.0
+ * @since     1.0.0
  */
-    export const Autoloader = {};
+export const Autoloader = {};
 
 Autoloader.loaded      = [];
 Autoloader.namespaced  = [];
