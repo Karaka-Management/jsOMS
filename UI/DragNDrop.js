@@ -10,6 +10,8 @@ export class DragNDrop {
     /**
      * @constructor
      *
+     * @param {Object} app Application
+     *
      * @since 1.0.0
      */
     constructor (app)
@@ -35,7 +37,7 @@ export class DragNDrop {
     /**
      * Bind element
      *
-     * @param {Object} id DOM element
+     * @param {Object} [id] DOM element
      *
      * @return {void}
      *
