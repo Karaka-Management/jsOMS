@@ -177,7 +177,7 @@ export class Form {
             submits[i].addEventListener('click', function (event)
             {
                 jsOMS.preventAll(event);
-                self.submit(self.forms[id]);
+                self.submit(self.forms[id], submits[i].getAttribute('formaction'));
             });
         }
     };
@@ -235,14 +235,17 @@ export class Form {
      *
      * Calls injections first before executing the actual form submit
      *
-     * @param {Object} form Form object
+     * @param {Object} form   Form object
+     * @param {string} action Action different from the form action (e.g. formaction=*)
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    submit (form)
+    submit (form, action)
     {
+        action = typeof action !== 'undefined' ? action : null;
+
         /* Handle injects */
         const self  = this,
             injects = form.getSubmitInjects();
@@ -252,7 +255,7 @@ export class Form {
         // Register normal form behavior
         this.app.eventManager.attach(form.getId(), function ()
         {
-            self.submitForm(form);
+            self.submitForm(form, action);
         }, true);
 
         // Run all injects first
@@ -280,14 +283,16 @@ export class Form {
      *
      * Submits the main form data
      *
-     * @param {Object} form Form object
-     *
+     * @param {Object} form   Form object
+     * @param {string} action Action different from the form action (e.g. formaction=*)
      * @return {void}
      *
      * @since 1.0.0
      */
-    submitForm (form)
+    submitForm (form, action)
     {
+        action = typeof action !== 'undefined' ? action : null;
+
         if (!form.isValid()) {
             this.app.notifyManager.send(
                 new NotificationMessage(
@@ -315,7 +320,7 @@ export class Form {
 
         request.setData(form.getData());
         request.setType(ResponseType.JSON);
-        request.setUri(form.getAction());
+        request.setUri(action ? action : form.getAction());
         request.setMethod(form.getMethod());
         request.setRequestHeader('Content-Type', 'application/json');
         request.setSuccess(function (xhr)
