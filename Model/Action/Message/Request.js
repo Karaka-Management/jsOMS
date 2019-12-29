@@ -1,6 +1,5 @@
 import { Request } from '../../../Message/Request/Request.js';
 
-
 /**
  * Set message.
  *

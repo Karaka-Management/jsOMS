@@ -1,8 +1,8 @@
 /**
- * Set message.
+ * Clear datalist.
  *
- * @param {{id:string}} action Message data
- * @param {function} callback Callback
+ * @param {{id:string}} action   Message data
+ * @param {function}    callback Callback
  *
  * @since 1.0.0
  */

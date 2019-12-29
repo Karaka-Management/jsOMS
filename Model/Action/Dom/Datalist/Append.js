@@ -1,8 +1,8 @@
 /**
- * Set message.
+ * Append datalist element.
  *
- * @param {{id:string},{data:object},{text:string},{value:string}} action Message data
- * @param {function} callback Callback
+ * @param {{id:string},{data:object},{text:string},{value:string}} action   Message data
+ * @param {function}                                               callback Callback
  *
  * @since 1.0.0
  */

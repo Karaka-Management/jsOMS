@@ -1,5 +1,5 @@
 /**
- * Set message.
+ * Notification message.
  *
  * @param {{title:string},{content:string},{level:int},{delay:int},{stay:int}} data Message data
  *

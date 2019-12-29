@@ -1,5 +1,5 @@
 /**
- * Set message.
+ * Reload page.
  *
  * @param {{delay:int}} data Message data
  *

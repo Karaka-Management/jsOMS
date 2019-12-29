@@ -1,5 +1,5 @@
 /**
- * Set message.
+ * Form validation.
  *
  * @param {{delay:int},{errors:string},{form:string}} data Message data
  *

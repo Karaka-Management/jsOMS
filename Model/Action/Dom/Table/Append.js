@@ -1,7 +1,7 @@
 /**
- * Set message.
+ * Apped element to a table.
  *
- * @param {Object} action Action data
+ * @param {Object}   action   Action data
  * @param {function} callback Callback
  *
  * @since 1.0.0

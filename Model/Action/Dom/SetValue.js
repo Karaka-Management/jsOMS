@@ -1,9 +1,9 @@
 /**
- * Set message.
+ * Set value of input.
  *
- * @param {Object} action Action data
+ * @param {Object}   action   Action data
  * @param {function} callback Callback
- * @param {id} element Action element
+ * @param {string}   id       Action element
  *
  * @since 1.0.0
  */

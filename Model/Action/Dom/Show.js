@@ -1,4 +1,13 @@
-export function showAction (action, callback)
+/**
+ * Show dom element.
+ *
+ * @param {Object}   action   Action data
+ * @param {function} callback Callback
+ * @param {string}   id       Action element
+ *
+ * @since 1.0.0
+ */
+export function showAction (action, callback, id)
 {
     "use strict";
 
