@@ -7,14 +7,10 @@ import { Input } from '../UI/Component/Input.js';
  * the browser but through this view. The view also provides additional functionality for non-default
  * form elements such as canvas etc.
  *
- * @copyright  Dennis Eichhorn
- * @license    OMS License 1.0
- * @version    1.0.0
- * @since      1.0.0
- *
- * @todo expand this so any element can become a "form" e.g. table, div etc.
- *       Simply add data-method, data-action
- *       Expand the getData() and some other function to consider this
+ * @copyright Dennis Eichhorn
+ * @license   OMS License 1.0
+ * @version   1.0.0
+ * @since     1.0.0
  */
 export class FormView {
     /**
