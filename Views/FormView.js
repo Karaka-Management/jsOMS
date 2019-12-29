@@ -328,7 +328,8 @@ export class FormView {
             Array.prototype.slice.call(buttons),
             Array.prototype.slice.call(external),
             Array.prototype.slice.call(special),
-            Array.prototype.slice.call(specialExt)
+            Array.prototype.slice.call(specialExt),
+            Array.prototype.slice.call(canvas)
         ).filter(function(val) { return val; });
     };
 
