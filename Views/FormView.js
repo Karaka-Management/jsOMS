@@ -305,11 +305,6 @@ export class FormView {
             inputLength    = inputs.length,
             externalLength = external.length;
 
-        // todo: handle trigger element. check which element triggered the submit and pass it's name+value
-        // the reason for this is, there may be multiple buttons in a form which trigger a send
-        // sometimes even a checkbox or drop down could trigger a send
-        // Maybe it makes sense to do this however at a different place e.g. the actual data submit
-
         for (let i = 0; i < inputLength; ++i) {
             if ((inputs[i].type === 'checkbox' || inputs[i].type === 'radio') && !inputs[i].checked) {
                 delete inputs[i];
