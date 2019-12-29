@@ -110,7 +110,7 @@ export class ActionManager {
      * Bind listener for object
      *
      * @param {string} id Element to bind
-     * @param {object} listener Listener object
+     * @param {Object} listener Listener object
      *
      * @return {void}
      *

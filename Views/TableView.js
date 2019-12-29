@@ -89,7 +89,7 @@ export class TableView {
     /**
      * Get table header elements which provide sorting
      *
-     * @return {array}
+     * @return {Array}
      *
      * @since 1.0.0
      */
@@ -104,7 +104,7 @@ export class TableView {
     /**
      * Get table header elements which provide filter functionality
      *
-     * @return {array}
+     * @return {Array}
      *
      * @since 1.0.0
      */
@@ -118,7 +118,7 @@ export class TableView {
     /**
      * Get row elements which allow to swap the current row with another row
      *
-     * @return {array}
+     * @return {Array}
      *
      * @since 1.0.0
      */

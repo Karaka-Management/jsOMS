@@ -112,7 +112,7 @@
         /**
          * Draw particle to canvas
          *
-         * @param {object} ctx Canvas
+         * @param {Object} ctx Canvas
          *
          * @return {void}
          *

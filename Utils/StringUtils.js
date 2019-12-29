@@ -138,7 +138,7 @@
      * Get the remaining string after finding a certain char
      *
      * @param {string} haystack String to to search in
-     * @param {array} chars     Chars to search for
+     * @param {Array} chars     Chars to search for
      *
      * @return {string}
      *

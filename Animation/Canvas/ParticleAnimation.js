@@ -16,7 +16,7 @@
     jsOMS.Animation.Canvas.ParticleAnimation = class {
         /**
          *
-         * @param {object} canvas Canvas
+         * @param {Object} canvas Canvas
          *
          * @constructor
          *
@@ -52,7 +52,7 @@
         /**
          * Draw everything
          *
-         * @param {object} self Object reference for self invoke
+         * @param {Object} self Object reference for self invoke
          *
          * @return {void}
          *

@@ -451,7 +451,7 @@
 
     /**
      * Validate extension
-     * @param {array} extension
+     * @param {Array} extension
      * @param {string} name
      * @returns {{valid: boolean, error: string}}
      */
@@ -559,7 +559,7 @@
 
     /**
      * Validate extension
-     * @param {object} ext
+     * @param {Object} ext
      * @returns {boolean}
      */
     showdown.validateExtension = function (ext) {
@@ -2184,7 +2184,7 @@
     /**
      * Showdown Converter class
      * @class
-     * @param {object} [converterOptions]
+     * @param {Object} [converterOptions]
      * @returns {Converter}
      */
     showdown.Converter = function (converterOptions) {
