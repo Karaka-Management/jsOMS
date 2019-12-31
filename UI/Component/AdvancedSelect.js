@@ -14,9 +14,6 @@ import { Request } from '../../Message/Request/Request.js';
  * @license    OMS License 1.0
  * @version    1.0.0
  * @since      1.0.0
- *
- * @todo: this class is probably the most stupid thing I've done in a long time. Seriously fix this!
- * @todo: Passing self to every MEMBER function is just dumb.
  */
 export class AdvancedSelect
 {

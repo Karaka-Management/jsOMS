@@ -1,6 +1,7 @@
 import { TableView } from '../../Views/TableView.js';
 import { Request } from '../../Message/Request/Request.js';
 import { ResponseType } from '../../Message/Response/ResponseType.js';
+
 /**
  * Table manager class.
  *
@@ -8,6 +9,24 @@ import { ResponseType } from '../../Message/Response/ResponseType.js';
  * @license   OMS License 1.0
  * @version   1.0.0
  * @since     1.0.0
+ *
+ * @todo Orange-Management/jsOMS#50
+ *  Add basic table handling (no db and pagination)
+ *
+ * @todo Orange-Management/jsOMS#55
+ *  Implement filtering and sorting based on backend
+ *
+ * @todo Orange-Management/jsOMS#57
+ *  Advanced filtering
+ *  The current filtering implementation is only column by column connected with &&.
+ *  Consider to implement a much more advanced filtering where different combinations are possible such as || &&, different ordering with parenthesis etc.
+ *  This can be extremely powerful but will be complex for standard users.
+ *  This advanced filtering should probably be a little bit hidden?
+ *
+ * @todo Orange-Management/jsOMS#59
+ *  Data download
+ *  There is a small icon in the top right corner of tables which allows (not yet to be honest) to download the data in the table.
+ *  Whether the backend should be queried for this or only the frontend data should be collected (current situation) should depend on if the table has an api endpoint defined.
  */
 export class Table
 {

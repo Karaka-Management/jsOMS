@@ -11,6 +11,15 @@ import { Input } from '../UI/Component/Input.js';
  * @license   OMS License 1.0
  * @version   1.0.0
  * @since     1.0.0
+ *
+ * @tood Orange-Management/jsOMS#60
+ *  On change listener
+ *  Allow to add a on change listener in a form. This should result in automatic submits after changing a form.
+ *  Consider the following cases to submit the form:
+ *      * on Enter (all except textarea)
+ *      * on Change (by using a timer)
+ *      * on Leave (all elements)
+ *  The listener should be defined in the form definition once and in js be applied to all form elements.
  */
 export class FormView
 {
@@ -100,7 +109,7 @@ export class FormView
     /**
      * Get submit elements
      *
-     * @return {Object}
+     * @return {NodeListOf<any>}
      *
      * @since 1.0.0
      */
@@ -119,7 +128,7 @@ export class FormView
     /**
      * Get submit elements
      *
-     * @return {Object}
+     * @return {NodeListOf<any>}
      *
      * @since 1.0.0
      */
@@ -133,7 +142,7 @@ export class FormView
     /**
      * Get edit elements
      *
-     * @return {Object}
+     * @return {NodeListOf<any>}
      *
      * @since 1.0.0
      */
@@ -149,7 +158,7 @@ export class FormView
     /**
     * Get save elements
     *
-    * @return {Object}
+    * @return {NodeListOf<any>}
     *
     * @since 1.0.0
     */
@@ -165,7 +174,7 @@ export class FormView
     /**
     * Get save elements
     *
-    * @return {Object}
+    * @return {NodeListOf<any>}
     *
     * @since 1.0.0
     */
@@ -195,12 +204,13 @@ export class FormView
     };
 
     /**
-     * Get remove buttons
+     * Get add buttons
+     *
+     * The add button is different from the submit button since sometimes you want to show data to the user before you submit it.
      *
      * @return {NodeListOf<any>}
      *
      * @since 1.0.0
-     * @todo isn't this the same as submit in some cases? form below table?
      */
     getAdd ()
     {
@@ -493,7 +503,6 @@ export class FormView
      * @return {void}
      *
      * @since 1.0.0
-     * @todo: check bind functionality maybe remove!!!
      */
     bind ()
     {
@@ -549,7 +558,6 @@ export class FormView
      * @return {void}
      *
      * @since 1.0.0
-     * @todo: check unbind functionality maybe remove = everything!!!
      */
     unbind ()
     {

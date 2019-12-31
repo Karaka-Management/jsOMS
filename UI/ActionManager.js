@@ -7,6 +7,23 @@ import { Logger } from '../Log/Logger.js';
  * @license   OMS License 1.0
  * @version   1.0.0
  * @since     1.0.0
+ *
+ * @todo Orange-Management/jsOMS#26
+ *  Sync/Async events
+ *  Events so fare can be created sync and async depending on the implementation.
+ *  It would be better to make it sync/async depending on a option flag.
+ *
+ * @todo Orange-Management/jsOMS#35
+ *  Template actions cannot be overwritten
+ *  Templates by nature get added and removed from a page (often in order to reuse existing html to minimize the html load).
+ *  The problem with templates is that they need to register in the ActionManager.js.
+ *  A listener currently is only registered once per id.
+ *  Since templates often keep the same id for some elements this results in a problem because the new template will not register a new listener.
+ *  Possible solutions:
+ *      1. Force unique ids for templates during setup (pro: fast and easy initial solution, con: action event pollution not solved)
+ *      2. Whenever a dom element with action elements is removed, also unregister the listeners (pro: clean solution, con: difficult to implement)
+ *  Solution 2 will be implemented.
+ *  Maybe this can be performed in the dom removing action events or a dom listener would be required to listen for these dom elements.
  */
 export class ActionManager
 {

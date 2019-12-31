@@ -249,7 +249,9 @@
     };
 
     /**
-     * @todo: implement
+     * @todo Orange-Management/jsOMS#64
+     *  Implement a function which returns the nearest dom element based on a selector.
+     *  Nearest is defined as vertical and horizontal distance.
      */
     jsOMS.nearest = function (e, selector)
     {

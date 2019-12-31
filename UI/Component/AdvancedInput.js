@@ -7,9 +7,6 @@ import { Request } from '../../Message/Request/Request.js';
  * @license    OMS License 1.0
  * @version    1.0.0
  * @since      1.0.0
- *
- * @todo: this class is probably the most stupid thing I've done in a long time. Seriously fix this!
- * @todo: Passing self to every MEMBER function is just dumb.
  */
 export class AdvancedInput
 {
@@ -35,10 +32,12 @@ export class AdvancedInput
 
         const self = this;
         this.inputField.addEventListener('focusout', function(e) {
-            // todo: this also means that clicking on any other part of the result list that it disappears befor
-            // the click is registered in the result list since focusout has highest priority (e.g. sort button in table).
-            // so far i don't know a way to check if *any* element in the result div is clicked, if I could check this
-            // first then I could simply say, don't make the result div inactive!
+            /**
+             * @todo Orange-Management/Modules#63
+             *  If you click anything outside of the input element the dropdown list closes.
+             *  This is also true if you click something inside of the dropdown list e.g. sort/filter etc.
+             *  This might be fixable by changing the focus from the input element to the dropdown element and keep the dropdown element visible if it has focus.
+             */
             if (e.relatedTarget === null ||
                 e.relatedTarget.parentElement === null ||
                 e.relatedTarget.parentElement.parentElement === null ||
@@ -70,9 +69,14 @@ export class AdvancedInput
         this.dropdownElement.addEventListener('keydown', function(e) {
             jsOMS.preventAll(e);
 
-            // todo: consider if it makes sense to have a none element always for phone users only to jump out?
-            // todo: if not remote then the suggestion dropdown should filter itself based on best match
-
+            /**
+             * @todo Orange-Management/jsOMS#61
+             *  Jumping out of the dropdown list is a little bit annoying for handheld users.
+             *  A solution could be to add a exit/none element which closes the dropdown when clicked.
+             *
+             * @todo Orange-Management/jsOMS#62
+             *  If the data for the input element is only locally defined the filter or sort should be done by the best match.
+             */
             if (e.keyCode === 27 || e.keyCode === 46 || e.keyCode === 8) {
                 // handle esc, del to go back to input field
                 self.inputField.focus();

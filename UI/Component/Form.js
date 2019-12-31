@@ -15,6 +15,20 @@ import { FormView } from '../../Views/FormView.js';
  * @license   OMS License 1.0
  * @version   1.0.0
  * @since     1.0.0
+ *
+ * @tood Orange-Management/jsOMS#60
+ *  On change listener
+ *  Allow to add a on change listener in a form. This should result in automatic submits after changing a form.
+ *  Consider the following cases to submit the form:
+ *      * on Enter (all except textarea)
+ *      * on Change (by using a timer)
+ *      * on Leave (all elements)
+ *  The listener should be defined in the form definition once and in js be applied to all form elements.
+ *
+ * @todo Orange-Management/Modules#177
+ *  Hotkey for saving forms for creation/edit
+ *  Instead of using the mouse to click save the user should be able to use a hotkey to save/create/update the current form.
+ *  The hotkey on PC should be alt+enter or alt+shift+enter or alt+s
  */
 export class Form
 {
@@ -996,7 +1010,6 @@ export class Form
                 break;
             case 'textarea':
                 // textarea only has value data in it's content and nothing else!
-                // @todo: check other html tags as well or maybe just don't use the -text attribute and be fine?
                 break;
             default:
                 src.value = value;
