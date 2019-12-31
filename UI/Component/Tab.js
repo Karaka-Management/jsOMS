@@ -9,7 +9,8 @@ import { UriFactory } from '../../Uri/UriFactory.js';
  * @version   1.0.0
  * @since     1.0.0
  */
-export class Tab {
+export class Tab
+{
     /**
      * @constructor
      *

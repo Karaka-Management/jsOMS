@@ -6,7 +6,8 @@
  * @version   1.0.0
  * @since     1.0.0
  */
-export class NotificationMessage {
+export class NotificationMessage
+{
     /**
      * @constructor
      *

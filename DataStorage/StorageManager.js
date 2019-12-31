@@ -1,4 +1,5 @@
-export class StorageManager {
+export class StorageManager
+{
     constructor ()
     {
     };

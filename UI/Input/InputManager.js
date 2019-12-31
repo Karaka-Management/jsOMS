@@ -10,7 +10,8 @@ import { VoiceManager } from '../../../jsOMS/UI/Input/Voice/VoiceManager.js';
  * @version   1.0.0
  * @since     1.0.0
  */
-export class InputManager {
+export class InputManager
+{
     /**
      * @constructor
      *

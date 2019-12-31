@@ -10,7 +10,8 @@ import { AdvancedInput } from './Component/AdvancedInput.js';
  * @version   1.0.0
  * @since     1.0.0
  */
-export class GeneralUI {
+export class GeneralUI
+{
     /**
      * @constructor
      *

@@ -8,7 +8,8 @@ import { EventType } from '../../../../jsOMS/UI/Input/Mouse/EventType.js';
  * @version   1.0.0
  * @since     1.0.0
  */
-export class MouseManager {
+export class MouseManager
+{
     /**
      * @constructor
      *

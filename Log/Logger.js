@@ -9,7 +9,8 @@ import { Request } from '../Message/Request/Request.js';
  * @version   1.0.0
  * @since     1.0.0
  */
-export class Logger {
+export class Logger
+{
     /**
      * @constructor
      *

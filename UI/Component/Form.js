@@ -16,7 +16,8 @@ import { FormView } from '../../Views/FormView.js';
  * @version   1.0.0
  * @since     1.0.0
  */
-export class Form {
+export class Form
+{
     /**
      * @constructor
      *

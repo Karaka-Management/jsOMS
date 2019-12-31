@@ -10,7 +10,8 @@ import { NotificationType } from '../../../jsOMS/Message/Notification/Notificati
  * @version   1.0.0
  * @since     1.0.0
  */
-export class NotificationManager {
+export class NotificationManager
+{
     /**
      * @constructor
      *

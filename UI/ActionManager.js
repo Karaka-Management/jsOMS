@@ -8,7 +8,8 @@ import { Logger } from '../Log/Logger.js';
  * @version   1.0.0
  * @since     1.0.0
  */
-export class ActionManager {
+export class ActionManager
+{
     /**
      * @constructor
      *

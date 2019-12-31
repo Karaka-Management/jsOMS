@@ -1,4 +1,5 @@
-export class Dispatcher {
+export class Dispatcher
+{
     constructor ()
     {
     };

@@ -12,7 +12,8 @@ import { Input } from '../UI/Component/Input.js';
  * @version   1.0.0
  * @since     1.0.0
  */
-export class FormView {
+export class FormView
+{
     /**
      * @constructor
      *

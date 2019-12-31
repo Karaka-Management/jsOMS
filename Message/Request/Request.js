@@ -13,7 +13,8 @@ import { RequestType } from './RequestType.js';
  * @version   1.0.0
  * @since     1.0.0
  */
-export class Request {
+export class Request
+{
     /**
      * @constructor
      *

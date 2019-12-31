@@ -10,7 +10,8 @@ import { RequestType } from '../../Message/Request/RequestType.js';
  * @version   1.0.0
  * @since     1.0.0
  */
-export class Auth {
+export class Auth
+{
     /**
      * @constructor
      *
