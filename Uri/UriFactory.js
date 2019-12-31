@@ -197,7 +197,6 @@ export class UriFactory
                 } else if (match.indexOf('?') === 0) {
                     return Http.getUriQueryParameter(current.query, match.substr(1));
                 } else if (match.indexOf('/') === 0) {
-                    // todo: second match should return second path
                     return 'ERROR PATH';
                 } else if (match === '%') {
                     return window.location.href;

@@ -64,13 +64,17 @@
     };
 
     /**
-     * todo: implement deep clone/copy
-     * @param obj
-     * @returns {*}
+     * Shallow clones an object.
+     *
+     * @param {Object} obj Object to clone
+     *
+     * @returns {Object}
+     *
+     * @since 1.0.0
      */
     jsOMS.clone = function (obj)
     {
-        return obj;
+        return { ...obj };
     };
 
     /**

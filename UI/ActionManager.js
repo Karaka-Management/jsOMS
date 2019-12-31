@@ -79,7 +79,6 @@ export class ActionManager
             return;
         }
 
-        // todo: validate json, if invalid log error
         const listeners    = JSON.parse(e.getAttribute('data-action')),
             listenerLength = listeners.length,
             self           = this;
