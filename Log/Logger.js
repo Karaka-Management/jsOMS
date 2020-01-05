@@ -115,7 +115,11 @@ export class Logger
         }
 
         if (this.ui) {
-            // todo: fill log box, set class and initiate animation
+            /**
+             * @todo Orange-Management/jsOMS#67
+             *  Implement UI logging
+             *  Create a dom element with inline css for UI logging.
+             */
         }
 
         if (this.remote) {

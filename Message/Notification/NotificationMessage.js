@@ -11,16 +11,18 @@ export class NotificationMessage
     /**
      * @constructor
      *
-     * @param {string} status  Message status
-     * @param {string} title   Message title
-     * @param {string} message Message content
+     * @param {string} status    Message status
+     * @param {string} title     Message title
+     * @param {string} message   Message content
+     * @param {bool}   [vibrate] Vibrate
      *
      * @since 1.0.0
      */
-    constructor(status, title, message)
+    constructor(status, title, message, vibrate = false)
     {
         this.status  = status;
         this.title   = title;
         this.message = message;
+        this.vibrate = vibrate
     };
 };

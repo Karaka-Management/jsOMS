@@ -89,10 +89,6 @@ export class AssetManager
                 /** global: Image */
                 this.assets[hash]     = new Image();
                 this.assets[hash].src = path;
-            } else if (filetype === 'audio') {
-                // TODO: implement audio asset
-            } else if (filetype === 'video') {
-                // TODO: implement video asset
             }
 
             if (callback) {

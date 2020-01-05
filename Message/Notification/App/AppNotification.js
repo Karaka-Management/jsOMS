@@ -55,6 +55,7 @@ export class AppNotification
         output.querySelector('.log-msg-content').innerHTML = msg.message;
 
         tpl.parentNode.appendChild(output);
+        window.navigator.vibrate(meg.vibrate ? 200 : 0);
 
         setTimeout(function ()
         {

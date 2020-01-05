@@ -242,6 +242,20 @@ export class EventManager
     };
 
     /**
+     * Is a certain group allready attached
+     *
+     * @param {string|int} group    Group id
+     *
+     * @return {boolean}
+     *
+     * @since 1.0.0
+     */
+    isAttached (group)
+    {
+        return this.callbacks.hasOwnProperty(group);
+    };
+
+    /**
      * Count events
      *
      * @return {int}

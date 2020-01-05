@@ -41,17 +41,9 @@ export class BrowserNotification
      */
     requestPermission ()
     {
-        const self = this;
-
         /** global: Notification */
         if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
-            Notification.requestPermission(function(permission) {
-                if (permission === 'granted') {
-                    let msg = new jsOMS.Message.Notification.NotificationMessage();
-
-                    self.send(msg);
-                }
-            });
+            Notification.requestPermission().then(function(permission) { });
         }
     };
 
@@ -66,8 +58,11 @@ export class BrowserNotification
      */
     send (msg)
     {
-        // todo: implement
         /** global: Notification */
-        let n = new Notification(/* ... */);
+        if (Notification.permission === "granted") {
+            let notification = new Notification(msg.title, { body: msg.message, vibrate: [msg.vibrate ? 200 : 0] });
+
+            setTimeout(notification.close.bind(notification), 4000);
+        }
     };
 };

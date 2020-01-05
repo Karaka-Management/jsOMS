@@ -324,7 +324,6 @@
             let div = this.chartSelect.append("div").attr("class", "charttooltip").style("opacity", 0);
             div.html(self.axis.x.label.text + ': ' + 100 + "<br/>" + self.axis.y.label.text + ': ' + 100);
 
-            /* todo: allow also hover on charts without marker... not possible since hover only on marker and not on point? */
             temp.on("mouseover", function (d)
                 {
                     let dim = div.node().getBoundingClientRect();
@@ -396,7 +395,6 @@
 
             // if no x axis available an element less will be drawn and the footer
             // will be out of bounds.
-            // todo: fix this hacky solution!!!
             if (typeof this.axis.x === 'undefined') {
                 spacer = -this.margin.top;
             }

@@ -40,7 +40,6 @@
         dataPointEnter     = temp[0];
         dataPoint          = temp[1];
 
-        // todo: create own legend drawing
         this.chart.drawLegend(svg, dataPointEnter, dataPoint);
         this.chart.drawText(svg);
 

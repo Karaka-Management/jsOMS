@@ -208,7 +208,6 @@
     {
         y.domain([yMin, yMax]);
 
-        // todo: n is undefined !!!!
         rect.transition()
             .duration(500)
             .delay(function (d, i)

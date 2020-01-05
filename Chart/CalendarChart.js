@@ -81,7 +81,6 @@
                     + "H" + (w0 + 1) * self.chart.cellSize + "Z";
             });
 
-        // todo: fix the following data filter etc. this is way to much work and slow
         rect.filter(function(d) {
             let year   = d.split('-')[0],
                 length = self.chart.dataset.length;

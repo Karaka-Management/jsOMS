@@ -232,12 +232,9 @@ export class Form
      */
     unbindForm (id)
     {
-        // todo: do i need the findex? can't i just use id?
-        let findex = 0;
-
         if ((findex = this.forms[id]) !== 'undefined') {
             this.forms[id].unbind();
-            this.forms.splice(findex, 1);
+            this.forms.splice(id, 1);
 
             return true;
         }
@@ -266,12 +263,13 @@ export class Form
             injects = form.getSubmitInjects();
         let counter = 0;
 
-        // todo: test if attach necessary (maybe already attached in event manager)
         // Register normal form behavior
-        this.app.eventManager.attach(form.getId(), function ()
-        {
-            self.submitForm(form, action);
-        }, true);
+        if (!this.app.eventManager.isAttached(form.getId())) {
+            this.app.eventManager.attach(form.getId(), function ()
+            {
+                self.submitForm(form, action);
+            }, true);
+        }
 
         // Run all injects first
         for (let property in injects) {

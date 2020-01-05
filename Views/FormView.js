@@ -115,7 +115,6 @@ export class FormView
      */
     getSubmit ()
     {
-        // todo: question, exclude save/remove button? maybe not because they also submit data right?
         return document.querySelectorAll(
             '#' + this.id + ' input[type=submit], '
             + 'button[form=' + this.id + '][type=submit], '
@@ -133,7 +132,6 @@ export class FormView
      * @since 1.0.0
      */
     getImagePreviews() {
-        // todo: question, exclude save/remove button? maybe not because they also submit data right?
         return document.querySelectorAll(
             '#' + this.id + ' input[type=file].preview'
         );
@@ -397,7 +395,15 @@ export class FormView
         }
 
         // Create FormData
-        /* todo: implement once we know how to handle this in the backend/php
+        /**
+         * @todo Orange-Management/Modules#202
+         *  Consider to use FormData
+         *  Form data is currently submitted in two steps if it contains media files.
+         *      1. Upload media data
+         *      2. Submit form data
+         *  Consider to use `FormData` in order to submit media files and form data at the same time.
+         */
+        /*
         const formData = new FormData(),
             dataLength = data.length;
 
