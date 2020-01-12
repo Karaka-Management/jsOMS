@@ -25,7 +25,6 @@ export function domGetValue (action, callback, id)
         if (e[i].tagName === 'INPUT' || e[i].tagName === 'SELECTS' || e[i].tagName === 'BUTTON') {
             value[eId] = e[i].getAttribute('value');
         } else if (e[i].tagName === 'FORM') {
-            // todo: this is messy. if form should be handled somewhere else not in loop since it overwrites all other values... will there very be other values in case of a form selector? if yes than this will cause a bug!
             value = window.omsApp.uiManager.getFormManager().get(eId).getData();
             break;
         } else {

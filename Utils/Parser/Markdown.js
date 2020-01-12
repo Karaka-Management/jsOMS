@@ -2558,7 +2558,6 @@
             clean(doc);
 
             // some stuff, like accidental reference links must now be escaped
-            // todo
             // doc.innerHTML = doc.innerHTML.replace(/\[[\S\t ]]/);
 
             var nodes = doc.childNodes,

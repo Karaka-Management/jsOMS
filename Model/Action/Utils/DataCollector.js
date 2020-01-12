@@ -24,8 +24,7 @@ export function dataCollectionAction (action, callback)
                 continue;
             }
 
-            // todo: different types of elements have differnt forms of storing values (input, textarea etc.)
-            data[selector].push(e.value);
+            data[selector].push(jsOMS.getValue(e));
         }
     }
 

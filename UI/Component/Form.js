@@ -349,9 +349,6 @@ export class Form
                 if ((successInject = form.getSuccess()) !== null) {
                     successInject(response);
                 } else if (typeof response.get('type') !== 'undefined') {
-                    // todo: am i using this now and should all cases be handled with the successInjection?
-                    // maybe there could be global response actions where injecting them to every form would not make any sense
-                    // however not many if any use cases come to mind right now where this would be necessary
                     self.app.responseManager.run(response.get('type'), response.get(), request);
                 } else if (typeof o.status !== 'undefined' && o.status !== NotificationLevel.HIDDEN) {
                     self.app.notifyManager.send(
@@ -412,15 +409,25 @@ export class Form
     bindAddExternal(id)
     {
         const createForm = document.getElementById(id).getAttribute('data-ui-form');
-        // todo: maybe allow multiple add buttons!!!! In order to do that  do createForm.getAttribute('data-ui-form') and add this attribute to the add button instead of the pseudo form
 
+        /**
+         * @todo Orange-Management/jsOMS#75
+         *  Currently only one add button is allowed per form. Allow multiple/different add buttons in a form.
+         */
         this.app.uiManager.getFormManager().get(createForm).injectSubmit(function () {
             const formElement = document.getElementById(id);
             const subMain     = formElement.getAttribute('data-ui-content').charAt(0) === '#'
                 ? document.querySelector(formElement.getAttribute('data-ui-content'))
                 : formElement.querySelector(formElement.getAttribute('data-ui-content'));
 
-            // todo: [0/1] is no longer working because of arbitrary templates for inline editing
+            /**
+             * @todo Orange-Management/jsOMS#76
+             *  In the beginning there was a fixed amount of templates required (even if some were not used) for adding new dom elements to a lest, table etc.
+             *  This no longer works especially for inline editing
+             *  ```js
+             *  const newEle = subMain.getElementsByTagName('template')[0].content.cloneNode(true);
+             *  ```
+             */
             const newEle = subMain.getElementsByTagName('template')[0].content.cloneNode(true);
 
             // set internal value
@@ -430,11 +437,15 @@ export class Form
             let value       = '';
 
             for (let j = 0; j < fieldLength; ++j) {
+                /**
+                 * @todo Orange-Management/jsOMS#77
+                 *  We need to check what kind of tag the selector above returns in order to get the correct value.
+                 *  Currently this only makes sense for input elements but for selection, checkboxes etc.
+                 *  This doesn't make sense there we need .innerHTML or [data-text=]
+                 */
                 value = document.querySelectorAll(
                         '#' + createForm + ' [data-tpl-value="' + fields[j].getAttribute('data-tpl-value') + '"], [data-form="' + createForm + '"][data-tpl-value="' + fields[j].getAttribute('data-tpl-value') + '"]'
                     )[0].getAttribute('data-value');
-
-                // todo: we need to check what kind of tag the selector above returns in order to get the correct value. currently this only makes sense for input elements but for selection, checkboxes etc. this doesn't make sense there we need .innerHTML or [data-text=]
 
                 fields[j].setAttribute('data-value', value);
 
@@ -453,6 +464,12 @@ export class Form
             fieldLength = fields.length;
 
             for (let j = 0; j < fieldLength; ++j) {
+                /**
+                 * @todo Orange-Management/jsOMS#77
+                 *  We need to check what kind of tag the selector above returns in order to get the correct value.
+                 *  Currently this only makes sense for input elements but for selection, checkboxes etc.
+                 *  This doesn't make sense there we need .innerHTML or [data-text=]
+                 */
                 fields[j].appendChild(
                     document.createTextNode(
                         document.querySelectorAll(
@@ -460,17 +477,28 @@ export class Form
                         )[0].value
                     )
                 );
-
-                // todo: we need to check what kind of tag the selector above returns in order to get the correct value. currently this only makes sense for input elements but for selection, checkboxes etc. this doesn't make sense there we need .innerHTML or [data-text=]
             }
 
             subMain.appendChild(newEle);
-            // todo: consider to do ui action as success inject to the backend request... maybe optional because sometimes there will be no backend call?
-            // todo: sometimes the response data needs to be put into the frontend (e.g. image upload, only after upload the backend endpoint will be known and not in advance)
-            // todo: if a column has a form in the template the id of the form needs to be set unique somehow (e.g. remove button in form)
 
-            // todo: bind removable
-            // todo: bind edit
+            /**
+             * @todo Orange-Management/jsOMS#80
+             *  Consider to do UI action as success inject after a backend response.
+             *  This will prevent bugs where the backand couldn't complete a action but the user sees it in the frontend.
+             *  This should be probably optional optional because sometimes there will be no calls to the backend.
+             *
+             * @todo Orange-Management/jsOMS#78
+             *  After adding a new element some require a binding for removal
+             *
+             * @todo Orange-Management/jsOMS#79
+             *  After adding a new element some require a binding for editing
+             *
+             * @todo Orange-Management/jsOMS#81
+             *  A template can contain elements which must/should have an id (e.g. a form).
+             *  If this element gets added to the DOM the id should be changed to a unique id because it could be added multiple times to the DOM.
+             *  In order to bind these elements (e.g. forms) they must have a unique id.
+             *  Maybe check all elements for ids and add a random part e.g. `-random_string`
+             */
 
             return true;
         });
@@ -496,10 +524,20 @@ export class Form
                 ? document.querySelector(formElement.getAttribute('data-ui-content'))
                 : formElement.querySelector(formElement.getAttribute('data-ui-content'));
 
-            // todo: [0/1] is no longer working because of arbitrary templates for inline editing
+            /**
+             * @todo Orange-Management/jsOMS#76
+             *  In the beginning there was a fixed amount of templates required (even if some were not used) for adding new dom elements to a lest, table etc.
+             *  This no longer works especially for inline editing
+             *  ```js
+             *  const newEle = subMain.getElementsByTagName('template')[0].content.cloneNode(true);
+             *  ```
+             */
             const newEle = subMain.getElementsByTagName('template')[1].content.cloneNode(true);
-            const eleId  = 'f' + Math.random().toString(36).substring(7);
-            // todo: check if random id doesn't already exist
+            let eleId    = '';
+
+            do {
+                eleId = 'f' + Math.random().toString(36).substring(7);
+            } while (document.getElementById(eleId) !== null);
 
             newEle.firstElementChild.id                                 = eleId;
             newEle.firstElementChild.getElementsByTagName('form')[0].id = eleId + '-form';
@@ -513,20 +551,40 @@ export class Form
 
             subMain.appendChild(newEle.firstElementChild);
 
-            // todo: this is no longer working... it's not tbody!!!
+            /**
+             * @todo Orange-Management/jsOMS#82
+             *  The container element for inline adding isn't always tbody
+             *
+             * @todo Orange-Management/jsOMS#83
+             *  Removing a dynamically added form from the dom should also be removed and unbound from the FormManager
+             */
             self.app.uiManager.getFormManager().get(eleId + '-form').injectSubmit(function () {
                 document.getElementById(id).getElementsByTagName('tbody')[0].removeChild(
                     document.getElementById(eleId)
                 );
             });
 
-            // todo: bind removable
-            // todo: bind edit
+            /**
+             * @todo Orange-Management/jsOMS#78
+             *  After adding a new element some require a binding for removal
+             *
+             * @todo Orange-Management/jsOMS#79
+             *  After adding a new element some require a binding for editing
+             */
         });
 
-        // todo: this is polluting the form manager because it should be emptied afterwards (form is deleted but not from form manager)
-        // todo: consider to do ui action as success inject to the backend request... maybe optional because sometimes there will be no backend call?
-        // todo: if a column has a form in the template the id of the form needs to be set unique somehow (e.g. remove button in form)
+        /**
+         * @todo Orange-Management/jsOMS#80
+         *  Consider to do UI action as success inject after a backend response.
+         *  This will prevent bugs where the backand couldn't complete a action but the user sees it in the frontend.
+         *  This should be probably optional optional because sometimes there will be no calls to the backend.
+         *
+         * @todo Orange-Management/jsOMS#81
+         *  A template can contain elements which must/should have an id (e.g. a form).
+         *  If this element gets added to the DOM the id should be changed to a unique id because it could be added multiple times to the DOM.
+         *  In order to bind these elements (e.g. forms) they must have a unique id.
+         *  Maybe check all elements for ids and add a random part e.g. `-random_string`
+         */
     };
 
     /**
@@ -578,7 +636,6 @@ export class Form
 
             for (let i = 0; i < selectorLength; ++i) {
                 // this handles selectors such as 'ancestor > child/or/sibling' and many more
-                // todo: maybe move this to the library as an advanced ancestor function?
                 const selector = selectors[i].trim(' ').split(' ');
                 const closest  = selector[0].trim();
 
@@ -604,8 +661,11 @@ export class Form
                 newEle.push(subMain.getElementsByTagName('template')[selectorLength + i].content.cloneNode(true));
 
                 if (newEle[i].firstElementChild.id === null) {
-                    // todo: don't use random id use actual row id for data which needs to be updated
-                    const eleId = 'f' + Math.random().toString(36).substring(7);
+                    let eleId = '';
+
+                    do {
+                        eleId = 'f' + Math.random().toString(36).substring(7);
+                    } while (document.getElementById(eleId) !== null);
 
                     // root element is form even if it has a different tag than <form> also <tr> can be a form!
                     newEle[i].firstElementChild.id = eleId;
@@ -632,25 +692,25 @@ export class Form
 
                     const matchLength = matches.length;
                     for (let c = 0; c < matchLength; ++c) {
-                        // todo: handle multiple matches
-                        // todo: urls remote src shouldn't start with http (it can but also the base path should be allowed or the current uri as basis... maybe define a data-tpl-value-srctype??? however this sounds stupid and might be too verbose or use http as identifier and use the fact that the request object uses internally the uri factory!!! sounds much smarter :))
-                        // todo: implement this for other cases as well or potentially pull it out because it is very similar!!!
                         if (values[i].getAttribute('data-tpl-value').startsWith('http')
                             || values[i].getAttribute('data-tpl-value').startsWith('{')
                         ) {
                             const request = new Request(values[i].getAttribute('data-tpl-value'));
                             request.setResultCallback(200, function(xhr) {
+                                /**
+                                 * @todo Orange-Management/jsOMS#84
+                                 *  Remote data responses need to be parsed
+                                 *  The data coming from the backend/api usually is not directly usable in the frontend.
+                                 *  For that purpose some kind of value path should be defined to handle json responses in order to get only the data that is needed.
+                                 */
                                 self.setValueOfElement(matches[c], xhr.response);
-                                // todo: the problem with this is that the response must only return the markdown or whatever is requested. It would be much nicer if it would also possible to define a path for the response in case a json object is returned which is very likely
                             });
 
                             request.send();
                         } else {
                             self.setValueOfElement(matches[c], self.getValueFromDataSource(values[i]));
                         }
-                        // todo handle remote data (e.g. value ist coming from backend. do special check for http)
                     }
-                    // todo: handle different input types
                 }
             }
 
@@ -662,9 +722,24 @@ export class Form
 
                     const matchLength = matches.length;
                     for (let c = 0; c < matchLength; ++c) {
-                        // todo: handle multiple matches
-                        self.setTextOfElement(matches[c], self.getTextFromDataSource(text[i]));
-                        // todo handle remote data (e.g. value ist coming from backend. do special check for http)
+                        if (text[i].getAttribute('data-tpl-text').startsWith('http')
+                            || text[i].getAttribute('data-tpl-text').startsWith('{')
+                        ) {
+                            const request = new Request(text[i].getAttribute('data-tpl-text'));
+                            request.setResultCallback(200, function(xhr) {
+                                /**
+                                 * @todo Orange-Management/jsOMS#84
+                                 *  Remote data responses need to be parsed
+                                 *  The data coming from the backend/api usually is not directly usable in the frontend.
+                                 *  For that purpose some kind of value path should be defined to handle json responses in order to get only the data that is needed.
+                                 */
+                                self.setTextOfElement(matches[c], xhr.response);
+                            });
+
+                            request.send();
+                        } else {
+                            self.setTextOfElement(matches[c], self.getTextFromDataSource(text[i]));
+                        }
                     }
                 }
             }
@@ -684,7 +759,10 @@ export class Form
                 );
             });*/
 
-            // todo: replace add button with save button and add cancel button
+            /**
+             * @todo Orange-Management/jsOMS#86
+             *  On edit replace add button with save and cancel
+             */
             jsOMS.addClass(this, 'hidden');
 
             const saveButtons = self.forms[id].getSave();
@@ -702,7 +780,10 @@ export class Form
             // todo: on save button click insert data into hidden row and show hidden row again, delete form row
         });
 
-        // todo: bind bad form response (e.g. api responds with anything but 201)
+        /**
+         * @todo Orange-Management/jsOMS#85
+         *  Invalid backend/api responses (!201) should undo/stop UI changes
+         */
     };
 
     /**
@@ -751,7 +832,6 @@ export class Form
             for (let i = 0; i < selectorLength; ++i) {
                 // todo: similar logic is in updatable Inline and probably in External... pull out?
                 // this handles selectors such as 'ancestor > child/or/sibling' and many more
-                // todo: maybe move this to the library as an advanced ancestor function?
                 let selector = selectors[i].trim(' ').split(' ');
                 let closest  = selector[0].trim();
 
@@ -797,14 +877,27 @@ export class Form
                 for (let j = 0; j < selectorLength; ++j) {
                     const matches = parentsContent[j].querySelectorAll('[data-tpl-value="' + values[i].getAttribute('data-tpl-value') + '"');
 
-
                     const matchLength = matches.length;
                     for (let c = 0; c < matchLength; ++c) {
-                        // todo: handle multiple matches
-                        matches[c].value = self.getValueFromDataSource(values[i]);
-                        // todo handle remote data (e.g. value ist coming from backend. do special check for http)
+                        if (values[i].getAttribute('data-tpl-value').startsWith('http')
+                            || values[i].getAttribute('data-tpl-value').startsWith('{')
+                        ) {
+                            const request = new Request(values[i].getAttribute('data-tpl-value'));
+                            request.setResultCallback(200, function(xhr) {
+                                /**
+                                 * @todo Orange-Management/jsOMS#84
+                                 *  Remote data responses need to be parsed
+                                 *  The data coming from the backend/api usually is not directly usable in the frontend.
+                                 *  For that purpose some kind of value path should be defined to handle json responses in order to get only the data that is needed.
+                                 */
+                                self.setValueOfElement(matches[c], xhr.response);
+                            });
+
+                            request.send();
+                        } else {
+                            self.setValueOfElement(matches[c], self.getValueFromDataSource(values[i]));
+                        }
                     }
-                    // todo: handle different input types
                 }
             }
 
@@ -816,9 +909,24 @@ export class Form
 
                     const matchLength = matches.length;
                     for (let c = 0; c < matchLength; ++c) {
-                        // todo: handle multiple matches
-                        self.setTextOfElement(matches[c], self.getTextFromDataSource(text[i]));
-                        // todo handle remote data (e.g. value ist coming from backend. do special check for http)
+                        if (text[i].getAttribute('data-tpl-text').startsWith('http')
+                            || text[i].getAttribute('data-tpl-text').startsWith('{')
+                        ) {
+                            const request = new Request(text[i].getAttribute('data-tpl-text'));
+                            request.setResultCallback(200, function(xhr) {
+                                /**
+                                 * @todo Orange-Management/jsOMS#84
+                                 *  Remote data responses need to be parsed
+                                 *  The data coming from the backend/api usually is not directly usable in the frontend.
+                                 *  For that purpose some kind of value path should be defined to handle json responses in order to get only the data that is needed.
+                                 */
+                                self.setTextOfElement(matches[c], xhr.response);
+                            });
+
+                            request.send();
+                        } else {
+                            self.setTextOfElement(matches[c], self.getTextFromDataSource(text[i]));
+                        }
                     }
                 }
             }
@@ -916,31 +1024,68 @@ export class Form
             // insert row values data into form
             length = values.length;
             for (let i = 0; i < length; ++i) {
-                // todo: handle multiple matches
                 const matches = document.getElementById(formId).querySelectorAll('[data-tpl-value="' + values[i].getAttribute('data-tpl-value') + '"');
 
                 const matchLength = matches.length;
                 for (let c = 0; c < matchLength; ++c) {
-                    self.setValueOfElement(matches[c], self.getValueFromDataSource(values[i]));
+                    if (values[i].getAttribute('data-tpl-value').startsWith('http')
+                            || values[i].getAttribute('data-tpl-value').startsWith('{')
+                        ) {
+                            const request = new Request(values[i].getAttribute('data-tpl-value'));
+                            request.setResultCallback(200, function(xhr) {
+                                /**
+                                 * @todo Orange-Management/jsOMS#84
+                                 *  Remote data responses need to be parsed
+                                 *  The data coming from the backend/api usually is not directly usable in the frontend.
+                                 *  For that purpose some kind of value path should be defined to handle json responses in order to get only the data that is needed.
+                                 */
+                                self.setValueOfElement(matches[c], xhr.response);
+                            });
+
+                            request.send();
+                        } else {
+                            self.setValueOfElement(matches[c], self.getValueFromDataSource(values[i]));
+                        }
                 }
-                // todo handle remote data (e.g. value ist coming from backend. do special check for http)
             }
 
             // insert row text data into form
             length = text.length;
             for (let i = 0; i < length; ++i) {
-                // todo: handle multiple matches
                 const matches = document.getElementById(formId).querySelectorAll('[data-tpl-text="' + text[i].getAttribute('data-tpl-text') + '"');
 
-                // consider pulling this out because it exists like 3x2 = 6 times in a similar way or at least 3 times very similarly
+                // todo: consider pulling this out because it exists like 3x2 = 6 times in a similar way or at least 3 times very similarly
                 const matchLength = matches.length;
                 for (let c = 0; c < matchLength; ++c) {
-                    self.setTextOfElement(matches[c], self.getTextFromDataSource(text[i]));
+                    if (text[i].getAttribute('data-tpl-text').startsWith('http')
+                        || text[i].getAttribute('data-tpl-text').startsWith('{')
+                    ) {
+                        const request = new Request(text[i].getAttribute('data-tpl-text'));
+                        request.setResultCallback(200, function(xhr) {
+                            /**
+                             * @todo Orange-Management/jsOMS#84
+                             *  Remote data responses need to be parsed
+                             *  The data coming from the backend/api usually is not directly usable in the frontend.
+                             *  For that purpose some kind of value path should be defined to handle json responses in order to get only the data that is needed.
+                             */
+                            self.setTextOfElement(matches[c], xhr.response);
+                        });
+
+                        request.send();
+                    } else {
+                        self.setTextOfElement(matches[c], self.getTextFromDataSource(text[i]));
+                    }
                 }
-                // todo handle remote data (e.g. value ist coming from backend. do special check for http)
             }
 
-            // todo: replace add button with save button and add cancel button
+            /**
+             * @todo Orange-Management/jsOMS#86
+             *  On edit replace add button with save and cancel
+             *
+             * @todo Orange-Management/jsOMS#85
+             *  Invalid backend/api responses (!201) should undo/stop UI changes
+             */
+
             // todo: on save button click insert data into hidden row and show hidden row again, delete form row
             // todo: consider to highlight column during edit
         });

@@ -99,6 +99,28 @@
     };
 
     /**
+     * Get element value
+     *
+     * @param ele DOM Element
+     *
+     * @return {string}
+     *
+     * @since 1.0.0
+     */
+    jsOMS.getValue = function (ele)
+    {
+        switch (ele.tagName.toLowerCase()) {
+            case 'div':
+            case 'pre':
+            case 'article':
+            case 'section':
+                return ele.innerHTML;
+            default:
+                return ele.value;
+        }
+    };
+
+    /**
      * Action prevent
      *
      * Preventing event from firing and passing through

@@ -106,7 +106,6 @@ export class VoiceManager
      */
     setLanguage(lang)
     {
-        // todo: eventually restart
         this.recognition.lang = lang;
     };
 

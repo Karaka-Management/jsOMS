@@ -52,21 +52,25 @@ export class KeyboardManager
      */
     bind (element)
     {
-        const self = this;
+        const elements = document.querySelectorAll(element);
+        const self     = this,
+            length     = elements.length;
 
-        // todo: implement keyboard for selected elements right now only global hotkeys possible
-        document.addEventListener('keydown', function keyBind(event)
-        {
-            self.down.push(event.keyCode);
-        });
 
-        document.addEventListener('keyup', function keyBind(event)
-        {
-            if (self.down.length > 0) {
-                self.run(element, event);
-                self.down = [];
-            }
-        });
+        for (let i = 0; i < length; ++i) {
+            elements[i].addEventListener('keydown', function keyBind(event)
+            {
+                self.down.push(event.keyCode);
+            });
+
+            elements[i].addEventListener('keyup', function keyBind(event)
+            {
+                if (self.down.length > 0) {
+                    self.run(element, event);
+                    self.down = [];
+                }
+            });
+        }
     };
 
     /**

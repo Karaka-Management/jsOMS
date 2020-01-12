@@ -215,7 +215,11 @@ export class AdvancedInput
     selectOption(e)
     {
         e.focus();
-        // todo: change to set style .active
+
+        /**
+         * @todo Orange-Management/jsOMS#70
+         *  Implement external styles for selections instead of inline css
+         */
         e.setAttribute('style', 'background: #f00');
         jsOMS.addClass(e, 'active');
     };
@@ -235,7 +239,11 @@ export class AdvancedInput
             length = list.length;
 
         for (let i = 0; i < length; ++i) {
-            // todo: remove the active class
+
+            /**
+             * @todo Orange-Management/jsOMS#70
+             *  Implement external styles for selections instead of inline css
+             */
             list[i].setAttribute('style', '');
             jsOMS.removeClass(list[i], 'active');
         }
@@ -258,7 +266,11 @@ export class AdvancedInput
         }
 
         if (self.tagElement !== null && self.tagElement.getAttribute('data-active') === 'true') {
-            // todo: make badges removable
+
+            /**
+             * @todo Orange-Management/jsOMS#71
+             *  Make badges removable
+             */
             const newTag = self.tagTpl.content.cloneNode(true);
 
             // set internal value
@@ -274,8 +286,11 @@ export class AdvancedInput
                 uuid += value;
             }
 
-            // don't allow duplicate
-            // todo: create a data-duplicat=true attribute to allow duplication and then have a count as part of the uuid (maybe row id)
+            /**
+             * @todo Orange-Management/jsOMS#72
+             *  Allow duplication
+             *  Create a `data-duplicat=true` attribute to allow duplication and then have a count as part of the uuid (maybe row id).
+             */
             if (self.tagElement.querySelectorAll('[data-tpl-uuid="' + uuid + '"').length !== 0) {
                 return;
             }

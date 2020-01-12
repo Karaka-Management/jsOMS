@@ -38,10 +38,12 @@ export class AdvancedSelect
 
         const self = this;
         this.selectField.addEventListener('focusout', function (e) {
-            // todo: this also means that clicking on any other part of the result list that it disappears befor
-            // the click is registered in the result list since focusout has highest priority (e.g. sort button in table).
-            // so far i don't know a way to check if *any* element in the result div is clicked, if I could check this
-            // first then I could simply say, don't make the result div inactive!
+            /**
+             * @todo Orange-Management/Modules#63
+             *  If you click anything outside of the input element the dropdown list closes.
+             *  This is also true if you click something inside of the dropdown list e.g. sort/filter etc.
+             *  This might be fixable by changing the focus from the input element to the dropdown element and keep the dropdown element visible if it has focus.
+             */
             if (e.relatedTarget === null ||
                 e.relatedTarget.parentElement === null ||
                 e.relatedTarget.parentElement.parentElement === null ||
@@ -73,9 +75,13 @@ export class AdvancedSelect
         this.dropdownElement.addEventListener('keydown', function (e) {
             jsOMS.preventAll(e);
 
-            // todo: consider if it makes sense to have a none element always for phone users only to jump out?
-            // todo: if not remote then the suggestion dropdown should filter itself based on best match
-
+            /**
+             * @todo Orange-Management/jsOMS#73
+             *  Consider to add a none element which allows phone users to undo a selection (if this is allowed).
+             *
+             * @todo Orange-Management/jsOMS#74
+             *  Implement auto filtering on client side (for remote data and client side data).
+             */
             if (e.keyCode === 27 || e.keyCode === 46 || e.keyCode === 8) {
                 // handle esc, del to go back to input field
                 self.inputField.focus();
@@ -211,7 +217,10 @@ export class AdvancedSelect
      */
     selectOption(e) {
         e.focus();
-        // todo: change to set style .active
+        /**
+             * @todo Orange-Management/jsOMS#70
+             *  Implement external styles for selections instead of inline css
+             */
         e.setAttribute('style', 'background: #f00');
         jsOMS.addClass(e, 'active');
     };
@@ -230,7 +239,10 @@ export class AdvancedSelect
             length = list.length;
 
         for (let i = 0; i < length; ++i) {
-            // todo: remove the active class
+            /**
+             * @todo Orange-Management/jsOMS#70
+             *  Implement external styles for selections instead of inline css
+             */
             list[i].setAttribute('style', '');
             jsOMS.removeClass(list[i], 'active');
         }
@@ -253,7 +265,10 @@ export class AdvancedSelect
         }
 
         if (self.tagElement.getAttribute('data-active') === 'true') {
-            // todo: make badges removable
+            /**
+             * @todo Orange-Management/jsOMS#71
+             *  Make badges removable
+             */
             const newTag = self.tagTpl.content.cloneNode(true);
 
             // set internal value
@@ -269,8 +284,11 @@ export class AdvancedSelect
                 uuid += value;
             }
 
-            // don't allow duplicate
-            // todo: create a data-duplicat=true attribute to allow duplication and then have a count as part of the uuid (maybe row id)
+            /**
+             * @todo Orange-Management/jsOMS#72
+             *  Allow duplication
+             *  Create a `data-duplicat=true` attribute to allow duplication and then have a count as part of the uuid (maybe row id).
+             */
             if (self.tagElement.querySelectorAll('[data-tpl-uuid="' + uuid + '"').length !== 0) {
                 return;
             }

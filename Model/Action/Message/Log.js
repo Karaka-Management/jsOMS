@@ -1,3 +1,6 @@
+import { NotificationMessage } from '../../../Message/Notification/NotificationMessage.js';
+import { NotificationType } from '../../../Message/Notification/NotificationType.js';
+
 /**
  * Log.
  *
@@ -12,11 +15,11 @@ export function logAction (action, callback, id)
     "use strict";
 
     window.omsApp.notifyManager.send(
-        new jsOMS.Message.Notification.NotificationMessage(
+        new NotificationMessage(
             action.data.status,
             action.data.title,
             action.data.message
-        ), jsOMS.Message.Notification.NotificationType.APP_NOTIFICATION
+        ), NotificationType.APP_NOTIFICATION
     );
 
     callback();

@@ -276,7 +276,6 @@
      */
     jsOMS.ready = function (func)
     {
-        // todo: IE problems? + Maybe interactive + loaded can cause problems since elements might not be loaded yet?!!?!!?!
         if (document.readyState === 'complete' || document.readyState === 'loaded' || document.readyState === 'interactive') {
             func();
         } else {
@@ -284,6 +283,28 @@
             {
                 func();
             });
+        }
+    };
+
+    /**
+     * Get element value
+     *
+     * @param ele DOM Element
+     *
+     * @return {string}
+     *
+     * @since 1.0.0
+     */
+    jsOMS.getValue = function (ele)
+    {
+        switch (ele.tagName.toLowerCase()) {
+            case 'div':
+            case 'pre':
+            case 'article':
+            case 'section':
+                return ele.innerHTML;
+            default:
+                return ele.value;
         }
     };
 

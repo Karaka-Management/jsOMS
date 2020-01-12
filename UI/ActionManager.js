@@ -87,6 +87,7 @@ export class ActionManager
         for (let i = 0; i < listenerLength; ++i) {
             let c = [e], hasSelector = false;
 
+            // the selector must be a child of e!!!
             if (listeners[i].hasOwnProperty('selector')) {
                 c           = document.querySelectorAll(listeners[i].selector);
                 hasSelector = true;
@@ -97,11 +98,13 @@ export class ActionManager
                 this.bindListener(c[j].id, listeners[i]);
             }
 
-            // if it has selector then a listener for child events must be implemented since these can potentially changed without any knowledge
-            // todo: what if the selector parent is different from "e"? then this doesn't make sense! Maybe this isn't allowed to happen!
-            // todo: careful this could cause bugs if there is another component relying on a listener for this dom element. Maybe create actionManager domlistener?
-            //       Maybe just use this listener for ALL action listeners and check if delete, then remove otherwise do current stuff.
-            //       Problem is, the listener doesn't work for the node itself only for children and listening to ALL document nodes might be a bad idea?!?!?!
+            /**
+             * @todo Orange-Management/jsOMS#69
+             *  If a element has a selector defined this means the action is defined for all child elements of this selector.
+             *  This usually is done in order to avoid defining the same behavior multiple times for similar elements (e.g. elements in a list).
+             *  However, in this case it's not unusual that the child elements get changed dynamically (added, changed, removed).
+             *  In this case the child element listeners need to be updated on change/addition/removal.
+             */
             const observeConfig = { childList: false, attributes: true, subtree: false };
 
             if (hasSelector) {
@@ -109,8 +112,11 @@ export class ActionManager
                     const length = data.addedNodes.length;
 
                     for (let j = 0; j < length; ++j) {
-                        self.bindListener(data.addedNodes[j].id, listeners[i], true);
-                        // todo only make removable if action itself is defined as auto removable
+                        self.bindListener(
+                            data.addedNodes[j].id,
+                            listeners[i],
+                            typeof listeners[i].autoremove !== 'undefined' ? listeners[i].autoremove : false
+                        );
                     }
                 });
 
@@ -144,13 +150,15 @@ export class ActionManager
                 return;
             }
 
+            if (this.app.eventManager.isAttached(id + '-' + listener.key + '-' + listener.action[j - 1].key)) {
+                return;
+            }
+
             this.app.eventManager.attach(id + '-' + listener.key + '-' + listener.action[j - 1].key, function (data)
             {
                 self.runAction(id, listener, listener.action[j], data);
             }, removable, true);
         }
-        // todo: the true here is a memory leak since it should be removed at some point?!
-        // todo: handle onload action right after registering everything. this will be used for onload api calls in order to get content such as lists or models. Maybe in the main application after registering a invoke('onload') should be called if the application wants to execute the onload elements
 
         // Register event for first action
         document.getElementById(id).addEventListener(listener.listener, function (event)

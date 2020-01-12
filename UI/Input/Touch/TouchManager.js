@@ -78,10 +78,10 @@ export class TouchManager
                 elapsedTime = new Date().getTime() - self.activeSwipe.time;
 
             self.resetSwipe();
-            // todo: only prevent all if success
-            jsOMS.preventAll(event);
 
             if (elapsedTime > 300 && distY < 3 && distX < 3) {
+                jsOMS.preventAll(event);
+
                 let rightClick = MouseEvent('click',
                     {
                         bubbles: true,
@@ -102,6 +102,8 @@ export class TouchManager
 
                 document.dispatchEvent(rightClick);
             } else if (elapsedTime < 500) {
+                jsOMS.preventAll(event);
+
                 /** global: Event */
                 const e = new Event('keyup');
 

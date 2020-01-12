@@ -24,7 +24,11 @@ export function removeButtonAction (action, callback, id)
             e[i].classList.add(action.aniOut);
         }
 
-        // todo: here is a problem with removing elements. after removing the first element in a list the second one cannot be deleted. maybe this is because the action event gets removed for sister elements after one is deleted?
+        /**
+         * @todo Orange-Management/jsOMS#68
+         *  Adding a remove action to a list of elements will stop working after removing the first element.
+         *  This could be because after removing the first sibling the action or the listener is removed for the siblings?
+         */
         setTimeout(function ()
         {
             if (e[i].parentElement === null) {
