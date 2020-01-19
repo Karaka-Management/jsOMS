@@ -105,13 +105,28 @@ export class Table
         this.tables[id] = new TableView(id);
 
         this.unbind(id);
-
         this.bindExport(this.tables[id]);
 
-        // todo: sorting: increasing / decreasing only if icons are available
-        // todo: filtering: equals (alphanumeric), greater, greater equals, lesser, lesser equals, contains, doesn't contain, excel like selection of elements. Amount of filtering options unlimited.
-        // cell value should be data-value="" and cell name should be data-name="" and cell content should be data-content="".
-        // if no value is defined than data-value = cell content. if no name is defined then data-name = cell content. if no content is defined then data-content = cell content.
+        /**
+         * @todo Orange-Management/jsOMS#89
+         *  Implement local and remote filtering
+         *  Options:
+         *      * alphanumeric
+         *      * greater
+         *      * greater equals
+         *      * lesser
+         *      * lesser equals
+         *      * contains
+         *      * doesnt contain
+         *      * in between
+         *      * regex
+         *      * pre-defined values
+         * The cell values should be defined in data-value and the name should be data-name and the content should be data-content.
+         * Note content and value can be different.
+         *      * If no value is defined then the cell content is the value.
+         *      * If no name is defined the cell content is the name.
+         *      * If no content is defined the cell content is the name.
+         */
 
         const sorting = this.tables[id].getSorting();
         let length    = sorting.length;
@@ -152,9 +167,13 @@ export class Table
         button.addEventListener('click', function (event)
         {
             console.log(exports.serialize());
-            // todo: either create download in javascript from this data or make round trip to server who then sends the data
-            // - think about allowing different export formats (json, csv, excel)
-            // - maybe this should never be done from the ui, maybe a endpoint uri should be specified which then calls the api get function for this data
+            /**
+             * @todo Orange-Management/jsOMS#90
+             *  mplement export
+             *  Either create download in javascript from this data or make round trip to server who then sends the data.
+             *  The export should be possible (if available) in json, csv, excel, word, pdf, ...
+             *  If no endpoint is specified or reachable the client side should create a json or csv export.
+             */
         });
     };
 
@@ -187,7 +206,7 @@ export class Table
                 rows[rowId - 1].parentNode.insertBefore(rows[rowId], rows[rowId - 1]);
             }
 
-            // todo: submit new order to remote
+            // continue implementation
         });
     };
 
@@ -292,7 +311,6 @@ export class Table
 
             // todo: set existing filtering option in ui here
 
-            // todo: do this as injection into a form instead? -this would require cleanup for the events every time
             output.firstElementChild.querySelectorAll('button[type="submit"], input[type="submit"]')[0].addEventListener('click', function (event) {
                 jsOMS.preventAll(event);
 
@@ -311,8 +329,13 @@ export class Table
                     document.getElementById('table-filter').getAttribute('data-ui-column')
                 ].setAttribute('data-filter', JSON.stringify(filter));
 
-                // todo: if not empty highlight filter button for user indication that filter is active
-                // todo: filter locally and if src is available to remote filter maybe just create an apply function which calls the different functions?
+                /**
+                 * @todo Orange-Management/jsOMS#88
+                 *  If a filter is active it should be highlighted/marked in the table
+                 *
+                 * @todo Orange-Management/jsOMS#89
+                 *  Filter locally and if a data-src is defined a remote filtering endpoint should be used.
+                 */
 
                 document.getElementById('table-filter').parentNode.removeChild(document.getElementById('table-filter'));
 
@@ -320,8 +343,6 @@ export class Table
                     Table.getRemoteData(table);
                     return;
                 }
-
-                // todo: implement local filtering if no data-src available
             });
 
             output.firstElementChild.querySelectorAll('button[type="reset"], input[type="reset"]')[0].addEventListener('click', function (event) {

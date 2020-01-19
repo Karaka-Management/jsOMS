@@ -155,7 +155,6 @@
      */
     jsOMS.ready = function (func)
     {
-        // todo: IE problems? + Maybe interactive + loaded can cause problems since elements might not be loaded yet?!!?!!?!
         if (document.readyState === 'complete'
             || document.readyState === 'loaded'
             || document.readyState === 'interactive'

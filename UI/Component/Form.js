@@ -1084,10 +1084,10 @@ export class Form
              *
              * @todo Orange-Management/jsOMS#85
              *  Invalid backend/api responses (!201) should undo/stop UI changes
+             *
+             * @todo Orange-Management/jsOMS#87
+             *  On edit highlight the data which is changed
              */
-
-            // todo: on save button click insert data into hidden row and show hidden row again, delete form row
-            // todo: consider to highlight column during edit
         });
     };
 
