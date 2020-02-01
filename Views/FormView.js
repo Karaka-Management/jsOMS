@@ -317,6 +317,11 @@ export class FormView
         }
 
         for (let i = 0; i < externalLength; ++i) {
+            if (form.contains(external[i])) {
+                delete external[i];
+                continue;
+            }
+
             if ((external[i].type === 'checkbox' || external[i].type === 'radio') && !external[i].checked) {
                 delete external[i];
             }

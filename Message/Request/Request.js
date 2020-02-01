@@ -60,6 +60,8 @@ export class Request
                 return 'application/x-www-form-urlencoded';
             case RequestType.FILE:
                 return '';
+            case RequestType.FORM_DATA:
+                return 'multipart/form-data';
             default:
                 return 'text/plain';
         }
@@ -386,6 +388,8 @@ export class Request
             this.xhr.send(this.data);
         } else if (this.type === RequestType.URL_ENCODE) {
             this.xhr.send(this.queryfy(this.data));
+        } else if (this.type === RequestType.FORM_DATA) {
+            this.xhr.send(this.data);
         }
     };
 };

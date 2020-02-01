@@ -10,5 +10,6 @@ export const RequestType = Object.freeze({
     JSON: 'json',
     RAW: 'raw',
     FILE: 'file',
-    URL_ENCODE: 'url'
+    URL_ENCODE: 'url',
+    FORM_DATA: 'formdata'
 });
