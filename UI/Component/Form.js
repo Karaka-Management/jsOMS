@@ -16,6 +16,9 @@ import { FormView } from '../../Views/FormView.js';
  * @version   1.0.0
  * @since     1.0.0
  *
+ * data-ui-content = what is the main parent
+ * data-ui-element = what are the elements to replace
+ *
  * @tood Orange-Management/jsOMS#60
  *  On change listener
  *  Allow to add a on change listener in a form. This should result in automatic submits after changing a form.
@@ -758,10 +761,6 @@ export class Form
                 );
             });*/
 
-            /**
-             * @todo Orange-Management/jsOMS#86
-             *  On edit replace add button with save and cancel
-             */
             jsOMS.addClass(this, 'hidden');
 
             const saveButtons = self.forms[id].getSave();
@@ -859,7 +858,8 @@ export class Form
                 }
 
                 parentsContent.push(
-                    selector.length === 0 ? this.closest(closest) : this.closest(closest).querySelector(subSelector)
+                    selector.length === 0 ? this.closest(closest) : this.closest(closest).querySelector(subSelector).parentNode
+                    /* parentNode because of media edit. maybe I need a data-ui-parent element? */
                 );
 
                 values = values.concat(
@@ -930,6 +930,7 @@ export class Form
                 }
             }
 
+            // todo bind failure here, if failure do cancel, if success to remove edit template
             self.submit(self.forms[id]);
             self.removeEditTemplate(this, id);
         });
@@ -1134,10 +1135,10 @@ export class Form
             case 'pre':
             case 'article':
             case 'section':
-                src.innerHTML = value;
+                src.innerHTML = jsOMS.htmlspecialchars_encode(value);
                 break;
             default:
-                src.value = value;
+                src.value = jsOMS.htmlspecialchars_decode(value);
         }
     };
 
@@ -1148,13 +1149,13 @@ export class Form
             case 'pre':
             case 'article':
             case 'section':
-                src.innerHTML = value;
+                src.innerHTML = jsOMS.htmlspecialchars_encode(value);
                 break;
             case 'textarea':
                 // textarea only has value data in it's content and nothing else!
                 break;
             default:
-                src.value = value;
+                src.value = jsOMS.htmlspecialchars_decode(value);
         }
     };
 

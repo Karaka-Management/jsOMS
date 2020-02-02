@@ -57,6 +57,61 @@
         return str.replace(new RegExp("^[" + char + "]*"), '');
     };
 
+    jsOMS.htmlspecialchars = [
+        ['&', '&amp;'],
+        ['<', '&lt;'],
+        ['>', '&gt;'],
+        ['"', '&quot;']
+    ];
+
+    /**
+     * Encode none-html string
+     *
+     * @param {string} str String to encode
+     *
+     * @return {string}
+     *
+     * @since 1.0.0
+     */
+    jsOMS.htmlspecialchars_encode = function(str)
+    {
+        let escaped  = str;
+        const length = jsOMS.htmlspecialchars.length;
+
+        for (let i = 0; i < length; ++i) {
+            escaped = escaped.replace(
+                new RegExp(jsOMS.htmlspecialchars[i][0], 'g'),
+                jsOMS.htmlspecialchars[i][1]
+            );
+        }
+
+        return escaped;
+    };
+
+    /**
+     * Decode html string
+     *
+     * @param {string} str String to encode
+     *
+     * @return {string}
+     *
+     * @since 1.0.0
+     */
+    jsOMS.htmlspecialchars_decode = function(str)
+    {
+        let decoded  = str;
+        const length = jsOMS.htmlspecialchars.length;
+
+        for (let i = 0; i < length; ++i) {
+            decoded = decoded.replace(
+                new RegExp(jsOMS.htmlspecialchars[i][1], 'g'),
+                jsOMS.htmlspecialchars[i][0]
+            );
+        }
+
+        return decoded;
+    };
+
     /**
      * Validate json string
      *
@@ -157,32 +212,5 @@
         }
 
         return haystack.slice(min);
-    };
-
-    /**
-     * Encodes special html characters
-     *
-     * @param {string}  text   String to encode
-     * @param {boolean} quotes Should quotes be allowed
-     *
-     * @return {string}
-     *
-     * @since 1.0.0
-     */
-    jsOMS.htmlspecialchars = function (text, quotes) {
-        let map = {
-            '&': '&amp;',
-            '<': '&lt;',
-            '>': '&gt;',
-            '"': '&quot;',
-            "'": '&#039;'
-        };
-
-        if (quotes) {
-            map['"'] = '"';
-            map["'"] = "'";
-        }
-
-        return text.replace(/[&<>"']/g, function(m) { return map[m]; });
     };
 }(window.jsOMS = window.jsOMS || {}));
