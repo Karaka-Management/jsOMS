@@ -4,8 +4,8 @@ import { NotificationMessage } from '../../Message/Notification/NotificationMess
 import { NotificationType } from '../../Message/Notification/NotificationType.js';
 import { Request } from '../../Message/Request/Request.js';
 import { RequestMethod } from '../../Message/Request/RequestMethod.js';
+import { RequestType } from '../../Message/Request/RequestType.js';
 import { Response } from '../../Message/Response/Response.js';
-import { ResponseType } from '../../Message/Response/ResponseType.js';
 import { FormView } from '../../Views/FormView.js';
 
 /**
@@ -333,10 +333,9 @@ export class Form
             self      = this;
 
         request.setData(form.getData());
-        request.setType(ResponseType.JSON);
+        request.setType(RequestType.FORM_DATA);
         request.setUri(action ? action : form.getAction());
         request.setMethod(form.getMethod());
-        request.setRequestHeader('Content-Type', 'application/json');
         request.setSuccess(function (xhr)
         {
             console.log(xhr.response);

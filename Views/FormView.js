@@ -359,32 +359,39 @@ export class FormView
     /**
      * Get form data
      *
-     * @return {Object}
+     * @return {FormData}
      *
      * @since 1.0.0
      */
     getData ()
     {
         const data   = {},
+            formData = new FormData(),
             elements = this.getFormElements(),
             length   = elements.length;
 
         let value = null;
 
         for (let i = 0; i < length; ++i) {
+            const id = FormView.getElementId(elements[i]);
+            if (id === null) {
+                continue;
+            }
+
             if (elements[i].tagName.toLowerCase() === 'canvas') {
                 value = elements[i].toDataURL('image/png');
+            } else if (elements[i].tagName.toLowerCase() === 'input' && elements[i].type === 'file') {
+                const filesLength = elements[i].files.length;
+
+                for (let j = 0; j < filesLength; ++j) {
+                    formData.append(id + j, elements[i].files[j]);
+                }
             } else {
                 if (typeof elements[i].value !== 'undefined') {
                     value = elements[i].value;
                 } else if (typeof elements[i].getAttribute('data-value') !== 'undefined') {
                     value = elements[i].getAttribute('data-value');
                 }
-            }
-
-            const id = FormView.getElementId(elements[i]);
-            if (id === null) {
-                continue;
             }
 
             // handle array data (e.g. table rows with same name)
@@ -399,26 +406,13 @@ export class FormView
             }
         }
 
-        // Create FormData
-        /**
-         * @todo Orange-Management/Modules#202
-         *  Consider to use FormData
-         *  Form data is currently submitted in two steps if it contains media files.
-         *      1. Upload media data
-         *      2. Submit form data
-         *  Consider to use `FormData` in order to submit media files and form data at the same time.
-         */
-        /*
-        const formData = new FormData(),
-            dataLength = data.length;
-
         for (let key in data) {
             if (data.hasOwnProperty(key)) {
                 formData.append(key, data[key].constructor === Array ? JSON.stringify(data[key]) : data[key]);
             }
-        } */
+        }
 
-        return data;
+        return formData;
     };
 
     /**
