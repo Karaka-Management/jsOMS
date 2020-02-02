@@ -309,6 +309,7 @@ export class FormView
             specialExt     = document.querySelectorAll('[data-form=' + this.id + '] [data-name]'),
             inputLength    = inputs.length,
             externalLength = external.length;
+            specialLength  = specialExt.length;
 
         for (let i = 0; i < inputLength; ++i) {
             if ((inputs[i].type === 'checkbox' || inputs[i].type === 'radio') && !inputs[i].checked) {
@@ -324,6 +325,13 @@ export class FormView
 
             if ((external[i].type === 'checkbox' || external[i].type === 'radio') && !external[i].checked) {
                 delete external[i];
+            }
+        }
+
+        for (let i = 0; i < specialLength; ++i) {
+            if (form.contains(specialExt[i])) {
+                delete specialExt[i];
+                continue;
             }
         }
 
