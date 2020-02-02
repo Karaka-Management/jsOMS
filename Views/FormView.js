@@ -306,7 +306,7 @@ export class FormView
             canvas         = form.getElementsByTagName('canvas'),
             external       = [].slice.call(document.querySelectorAll(':not(#' + this.id + ') [form=' + this.id + ']')),
             special        = form.querySelectorAll('[data-name]'),
-            specialExt     = document.querySelectorAll('form:not(#' + this.id + ') [data-form=' + this.id + '] [data-name]'),
+            specialExt     = document.querySelectorAll('[data-form=' + this.id + '] [data-name]'),
             inputLength    = inputs.length,
             externalLength = external.length;
 
