@@ -14,7 +14,7 @@
      *
      * @param {string} equation Equation
      *
-     * @return {null|float|int}
+     * @return {null|int|float}
      *
      * @since 1.0.0
      */
@@ -55,7 +55,7 @@
      *
      * @param {string} value Value to parse
      *
-     * @return {float|int}
+     * @return {int|float}
      *
      * @since 1.0.0
      */
