@@ -54,14 +54,26 @@ export class GeneralUI
      */
     bindHref (e)
     {
-        e            = e !== null ? e.querySelectorAll('[data-href]') : document.querySelectorAll('[data-href]');
+        e            = e !== null ? e.querySelectorAll('[data-href], [href]') : document.querySelectorAll('[data-href], [href]');
         const length = e.length;
 
         for (let i = 0; i < length; ++i) {
+            if (e[i].getAttribute('data-action') !== null) {
+                continue;
+            }
+
             e[i].addEventListener('click', function(event) {
                 jsOMS.preventAll(event);
                 history.pushState(null, null, window.location);
-                window.location = UriFactory.build(this.getAttribute('data-href'));
+
+                let uri = this.getAttribute('data-href');
+                uri     = uri === null ? this.getAttribute('href') : uri;
+
+                if (this.getAttribute('target') === '_blank' || this.getAttribute(['data-target']) === '_blank') {
+                    window.open(UriFactory.build(uri), '_blank');
+                } else {
+                    window.location = UriFactory.build(uri);
+                }
             });
         }
     };

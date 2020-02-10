@@ -1,4 +1,4 @@
-import { Input } from '../UI/Component/Input.js';
+import { Input } from '/jsOMS/UI/Component/Input.js';
 
 /**
  * Form view.
@@ -312,24 +312,38 @@ export class FormView
             specialLength  = specialExt.length;
 
         for (let i = 0; i < inputLength; ++i) {
-            if ((inputs[i].type === 'checkbox' || inputs[i].type === 'radio') && !inputs[i].checked) {
+            if (inputs[i] === undefined
+                || (typeof inputs[i] !== 'undefined'
+                && (inputs[i].type === 'checkbox' || inputs[i].type === 'radio')
+                && !inputs[i].checked)
+            ) {
                 delete inputs[i];
             }
         }
 
         for (let i = 0; i < externalLength; ++i) {
-            if (form.contains(external[i])) {
+            if (external[i] === undefined
+                || (typeof external[i] !== 'undefined'
+                && form.contains(external[i]))
+            ) {
                 delete external[i];
                 continue;
             }
 
-            if ((external[i].type === 'checkbox' || external[i].type === 'radio') && !external[i].checked) {
+            if ( external[i] === undefined
+                || (typeof external[i] !== 'undefined'
+                && (external[i].type === 'checkbox' || external[i].type === 'radio')
+                && !external[i].checked)
+            ) {
                 delete external[i];
             }
         }
 
         for (let i = 0; i < specialLength; ++i) {
-            if (form.contains(specialExt[i])) {
+            if (specialExt[i] === undefined
+                || (typeof specialExt[i] !== 'undefined'
+                && form.contains(specialExt[i]))
+            ) {
                 delete specialExt[i];
                 continue;
             }

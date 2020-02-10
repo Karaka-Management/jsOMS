@@ -1,4 +1,5 @@
 import { Http } from './Http.js';
+import { FormView } from './../Views//FormView.js';
 
 /**
  * Uri factory.
@@ -190,7 +191,18 @@ export class UriFactory
                     const e = document.getElementById(match.substr(1));
 
                     if (e) {
-                        return e.value;
+                        if (e.tagName.toLowerCase() !== 'form') {
+                            return e.value;
+                        }
+
+                        let value  = '';
+                        const form = (new FormView(e.id)).getData();
+
+                        for (let pair of form.entries()) {
+                            value += '&' + pair[0] + '=' + pair[1];
+                        }
+
+                        return value;
                     }
 
                     return '';
