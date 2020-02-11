@@ -13,7 +13,7 @@ export function popupButtonAction (action, callback, id)
 
     const popup = action.base === 'self' ? (action.selector === '' ? [document.getElementById(id)] : document.getElementById(id).querySelectorAll(action.selector)) : document.querySelectorAll(action.selector);
 
-    for (let i in popup) {
+    for (const i in popup) {
         /** global: HTMLElement */
         if (!popup.hasOwnProperty(i) || !popup[i] || !(popup[i] instanceof HTMLElement)) {
             continue;
@@ -26,7 +26,7 @@ export function popupButtonAction (action, callback, id)
             document.getElementById('dim').classList.remove('vh');
         }
 
-        for (let j in clone) {
+        for (const j in clone) {
             if (!clone.hasOwnProperty(j) || !(clone[j] instanceof HTMLElement)) {
                 continue;
             }

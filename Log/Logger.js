@@ -62,7 +62,7 @@ export class Logger
     {
         message = typeof message === 'undefined' ? Logger.MSG_FULL : message;
 
-        for (let replace in context) {
+        for (const replace in context) {
             if (context.hasOwnProperty(replace) && typeof message === 'string') {
                 message = message.replace('{' + replace + '}', context[replace]);
             }

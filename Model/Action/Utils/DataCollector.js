@@ -12,14 +12,14 @@ export function dataCollectionAction (action, callback)
 
     let elements, data = {};
 
-    for (let selector in action.collect) {
+    for (const selector in action.collect) {
         if (!action.collect.hasOwnProperty(selector)) {
             continue;
         }
 
         elements = document.querySelectorAll(action.collect[selector]);
 
-        for (let e in elements) {
+        for (const e in elements) {
             if (!elements.hasOwnProperty(e)) {
                 continue;
             }

@@ -14,7 +14,7 @@ export function domGetValue (action, callback, id)
     const e   = action.base === 'self' ? (action.selector === '' || typeof action.selector === 'undefined' ? [document.getElementById(id)] : document.getElementById(id).querySelectorAll(action.selector)) : document.querySelectorAll(action.selector);
     let value = {};
 
-    for (let i in e) {
+    for (const i in e) {
         /** global: HTMLElement */
         if (!e.hasOwnProperty(i) || !(e[i] instanceof HTMLElement)) {
             continue;

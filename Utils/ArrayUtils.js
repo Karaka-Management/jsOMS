@@ -28,7 +28,7 @@
         let pathParts = jsOMS.ltrim(path, delim).split(delim);
         let current   = data;
 
-        for (let key in pathParts) {
+        for (const key in pathParts) {
             if (!pathParts.hasOwnProperty(key)) {
                 continue;
             }

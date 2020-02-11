@@ -56,7 +56,7 @@ export class EventManager
      */
     reset (group)
     {
-        for (let id in this.groups[group]) {
+        for (const id in this.groups[group]) {
             if (this.groups[group].hasOwnProperty(id)) {
                 this.groups[group][id] = false;
             }
@@ -78,7 +78,7 @@ export class EventManager
             return false;
         }
 
-        for (let id in this.groups[group]) {
+        for (const id in this.groups[group]) {
             if (!this.groups[group].hasOwnProperty(id) || !this.groups[group][id]) {
                 return true;
             }

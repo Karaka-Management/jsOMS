@@ -45,7 +45,7 @@
     {
         const out = jsOMS.clone(target);
 
-        for (let p in source) {
+        for (const p in source) {
             if (source.hasOwnProperty(p)) {
                 // Property in destination object set; update its value.
                 if (typeof source[p] === 'object') {

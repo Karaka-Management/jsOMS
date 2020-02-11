@@ -109,7 +109,7 @@ export class Request
      */
     static getOS()
     {
-        for (let os in OSType) {
+        for (const os in OSType) {
             if (OSType.hasOwnProperty(os)) {
                 /** global: navigator */
                 if (navigator.appVersion.toLowerCase().indexOf(OSType[os]) !== -1) {
@@ -330,7 +330,7 @@ export class Request
     queryfy(obj)
     {
         const str = [];
-        for (let p in obj) {
+        for (const p in obj) {
             if (obj.hasOwnProperty(p)) {
                 str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
             }
@@ -357,7 +357,7 @@ export class Request
         if (this.xhr.readyState !== 1) {
             this.xhr.open(this.method, UriFactory.build(this.uri));
 
-            for (let p in this.requestHeader) {
+            for (const p in this.requestHeader) {
                 if (this.requestHeader.hasOwnProperty(p) && this.requestHeader[p] !== '') {
                     this.xhr.setRequestHeader(p, this.requestHeader[p]);
                 }

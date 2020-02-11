@@ -80,7 +80,7 @@ validatePage = function(url)
 
             // analyze css usage
             let cssFound;
-            for (let i in cssSelectors) {
+            for (const i in cssSelectors) {
                 try {
                     cssFound        = document.querySelectorAll(i.replace(/:hover|:active/gi, ''));
                     cssSelectors[i] = cssFound === null ? 0 : cssFound.length

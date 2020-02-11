@@ -33,7 +33,7 @@ export function domSetValue (action, callback, id)
 
     const fill = action.base === 'self' ? (action.selector === '' ? [document.getElementById(id)] : document.getElementById(id).querySelectorAll(action.selector)) : document.querySelectorAll(action.selector);
 
-    for (let i in fill) {
+    for (const i in fill) {
         /** global: HTMLElement */
         if (!fill.hasOwnProperty(i) || !(fill[i] instanceof HTMLElement)) {
             continue;

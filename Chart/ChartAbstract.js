@@ -224,7 +224,7 @@
 
     jsOMS.Chart.ChartAbstract.prototype.findAxisDomain = function ()
     {
-        for (let id in this.axis) {
+        for (const id in this.axis) {
             if (!this.axis.hasOwnProperty(id)) {
                 continue;
             }

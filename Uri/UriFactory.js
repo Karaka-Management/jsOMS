@@ -97,7 +97,7 @@ export class UriFactory
         let success  = false;
         const regexp = new RegExp(pattern);
 
-        for (let key in UriFactory.uri) {
+        for (const key in UriFactory.uri) {
             if (UriFactory.uri.hasOwnProperty(key) && regexp.test(key)) {
                 delete UriFactory.uri[key];
                 success = true;
@@ -137,7 +137,7 @@ export class UriFactory
             }
 
             let pars = [];
-            for (let a in comps) {
+            for (const a in comps) {
                 if (comps.hasOwnProperty(a)) {
                     pars.push(a + '=' + comps[a]);
                 }
@@ -245,7 +245,7 @@ export class UriFactory
 
         const query = uri.getQuery();
 
-        for (let key in query) {
+        for (const key in query) {
             if (query.hasOwnProperty(key)) {
                 UriFactory.setQuery('?' + key, query[key]);
             }

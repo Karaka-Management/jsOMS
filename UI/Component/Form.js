@@ -275,7 +275,7 @@ export class Form
         }
 
         // Run all injects first
-        for (let property in injects) {
+        for (const property in injects) {
             if (injects.hasOwnProperty(property)) {
                 ++counter;
                 //this.app.eventManager.addGroup(form.getId(), counter);

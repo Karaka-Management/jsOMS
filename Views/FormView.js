@@ -428,7 +428,7 @@ export class FormView
             }
         }
 
-        for (let key in data) {
+        for (const key in data) {
             if (data.hasOwnProperty(key)) {
                 formData.append(key, data[key].constructor === Array ? JSON.stringify(data[key]) : data[key]);
             }

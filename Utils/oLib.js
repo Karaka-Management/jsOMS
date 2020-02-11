@@ -57,7 +57,7 @@
         const pathParts = jsOMS.ltrim(path, delim).split(delim);
         let current     = data;
 
-        for (let key in pathParts) {
+        for (const key in pathParts) {
             if (!pathParts.hasOwnProperty(key)) {
                 continue;
             }
@@ -528,7 +528,7 @@
     {
         const out = jsOMS.clone(target);
 
-        for (let p in source) {
+        for (const p in source) {
             if (source.hasOwnProperty(p)) {
                 // Property in destination object set; update its value.
                 if (typeof source[p] === 'object') {
