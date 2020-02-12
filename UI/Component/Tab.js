@@ -1,4 +1,4 @@
-import { Http } from '../../Uri/Http.js';
+import { Http } from '../../Uri/HttpUri.js';
 import { UriFactory } from '../../Uri/UriFactory.js';
 
 /**
@@ -65,7 +65,7 @@ export class Tab
         for (let i = 0; i < length; ++i) {
             nodes[i].addEventListener('click', function (evt)
             {
-                let fragmentString = window.location.href.includes('#') ? Http.parseUrl(window.location.href).fragment : '';
+                let fragmentString = window.location.href.includes('#') ? HttpUri.parseUrl(window.location.href).fragment : '';
 
                 /* Change Tab */
                 /* Remove selected tab */
@@ -121,7 +121,7 @@ export class Tab
      */
     activateTabUri(e)
     {
-        const fragmentString = window.location.href.includes('#') ? Http.parseUrl(window.location.href).fragment : '';
+        const fragmentString = window.location.href.includes('#') ? HttpUri.parseUrl(window.location.href).fragment : '';
         const fragments      = fragmentString.split(','),
             fragLength       = fragments.length;
 

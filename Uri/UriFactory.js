@@ -1,4 +1,4 @@
-import { Http } from './Http.js';
+import { HttpUri } from './HttpUri.js';
 import { FormView } from './../Views//FormView.js';
 
 /**
@@ -178,7 +178,7 @@ export class UriFactory
      */
     static build (uri, toMatch)
     {
-        const current = Http.parseUrl(window.location.href);
+        const current = HttpUri.parseUrl(window.location.href);
         let parsed    = uri.replace(new RegExp('\{[\/#\?%@\.\$][a-zA-Z0-9\-]*\}', 'g'), function (match)
             {
                 match = match.substr(1, match.length - 2);
@@ -207,7 +207,7 @@ export class UriFactory
 
                     return '';
                 } else if (match.indexOf('?') === 0) {
-                    return Http.getUriQueryParameter(current.query, match.substr(1));
+                    returnHttpUri.getUriQueryParameter(current.query, match.substr(1));
                 } else if (match.indexOf('/') === 0) {
                     return 'ERROR PATH';
                 } else if (match === '%') {

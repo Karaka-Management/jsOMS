@@ -8,7 +8,7 @@
  * @version   1.0.0
  * @since     1.0.0
  */
-export class Http
+export class HttpUri
 {
     /**
      * @constructor
@@ -149,7 +149,7 @@ export class Http
     {
         this.uri = uri;
 
-        const parsed = Http.parseUrl(this.uri, 'php');
+        const parsed = HttpUri.parseUrl(this.uri, 'php');
 
         this.scheme = parsed['scheme'];
         this.host   = parsed['host'];
@@ -165,7 +165,7 @@ export class Http
         this.queryString = typeof parsed['query'] !== 'undefined' ? parsed['query'] : [];
 
         if (this.queryString !== null) {
-            this.query = Http.getAllUriQueryParameters(this.queryString);
+            this.query =HttpUri.getAllUriQueryParameters(this.queryString);
         }
 
         this.fragment = typeof parsed['fragment'] !== 'undefined' ? parsed['fragment'] : '';

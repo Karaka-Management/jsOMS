@@ -1,4 +1,4 @@
-import { Http } from '../../Uri/Http.js';
+import { HttpUri } from '../../Uri/HttpUri.js';
 
 describe('HttpTest', function ()
 {
@@ -8,7 +8,7 @@ describe('HttpTest', function ()
     {
         it('Testing php parsing mode', function ()
         {
-            let parsed = Http.parseUrl('http://username:password@example.com:8080/test/path?test=123&two=ha#frag', 'php');
+            let parsed = HttpUri.parseUrl('http://username:password@example.com:8080/test/path?test=123&two=ha#frag', 'php');
 
             expect(parsed.scheme).toBe('http');
             expect(parsed.user).toBe('username');
@@ -22,7 +22,7 @@ describe('HttpTest', function ()
 
         it('Testing strict parsing mode', function ()
         {
-            let parsed = Http.parseUrl('http://username:password@example.com:8080/test/path?test=123&two=ha#frag', 'strict');
+            let parsed = HttpUri.parseUrl('http://username:password@example.com:8080/test/path?test=123&two=ha#frag', 'strict');
 
             expect(parsed.scheme).toBe('http');
             expect(parsed.user).toBe('username');
@@ -36,7 +36,7 @@ describe('HttpTest', function ()
 
         it('Testing loose parsing mode', function ()
         {
-            let parsed = Http.parseUrl('http://username:password@example.com:8080/test/path?test=123&two=ha#frag', 'loose');
+            let parsed = HttpUri.parseUrl('http://username:password@example.com:8080/test/path?test=123&two=ha#frag', 'loose');
 
             expect(parsed.scheme).toBe('http');
             expect(parsed.user).toBe('username');
@@ -52,7 +52,7 @@ describe('HttpTest', function ()
         {
             let thrown = function ()
             {
-                Http.parseUrl('http://username:password@example.com:8080/test/path?test=123&two=ha#frag', 'invalid');
+                HttpUri.parseUrl('http://username:password@example.com:8080/test/path?test=123&two=ha#frag', 'invalid');
             };
             expect(thrown).toThrowError(Error, 'Unexpected parsing mode.');
         });
@@ -62,12 +62,12 @@ describe('HttpTest', function ()
     {
         it('Testing query extraction', function ()
         {
-            let parsed = Http.parseUrl('http://username:password@example.com:8080/test/path?test=123&two=ha#frag', 'php');
-            let query  = Http.getUriQueryParameter(parsed.query, 'test');
+            let parsed = HttpUri.parseUrl('http://username:password@example.com:8080/test/path?test=123&two=ha#frag', 'php');
+            let query  =HttpUri.getUriQueryParameter(parsed.query, 'test');
 
             expect(query).toBe('123');
 
-            query = Http.getUriQueryParameter(parsed.query, 'two');
+            query =HttpUri.getUriQueryParameter(parsed.query, 'two');
             expect(query).toBe('ha');
         });
     });
