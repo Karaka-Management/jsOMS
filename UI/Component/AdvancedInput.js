@@ -95,7 +95,7 @@ export class AdvancedInput
                 }
             } else if (e.keyCode === 13 || e.keyCode === 9) {
                 self.clearDataListSelection(self);
-                self.addToResultList(self);
+                self.addToResultList(self, document.activeElement);
             }
         });
 
@@ -110,7 +110,7 @@ export class AdvancedInput
             }
 
             self.clearDataListSelection(self);
-            self.addToResultList(self);
+            self.addToResultList(self, document.activeElement);
             jsOMS.removeClass(self.dropdownElement, 'active');
         });
     };
@@ -165,6 +165,9 @@ export class AdvancedInput
                         jsOMS.getArray(fields[j].getAttribute('data-tpl-value'), data[i])
                     );
                 }
+
+                // set data cache
+                newRow.firstElementChild.setAttribute('data-data', JSON.stringify(data[i]));
 
                 self.dataListBody.appendChild(newRow);
                 self.dataListBody.lastElementChild.addEventListener('focusout', function(e) {
@@ -254,19 +257,21 @@ export class AdvancedInput
      *
      * This can add the selected dropdown elements to a table, badge list etc. depending on the template structure.
      *
-     * @param {Object} self This reference
+     * @param {Object}  self This reference
+     * @param {Element} e    Element
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    addToResultList(self) {
+    addToResultList(self, e) {
+        const data = JSON.parse(e.getAttribute('data-data'));
+
         if (self.inputField.getAttribute('data-autocomplete') === 'true') {
-            self.inputField.value = document.activeElement.querySelectorAll('[data-tpl-value="' + self.inputField.getAttribute('data-value') + '"]')[0].getAttribute('data-value');
+            self.inputField.value = jsOMS.getArray(self.inputField.getAttribute('data-value'), data);
         }
 
         if (self.tagElement !== null && self.tagElement.getAttribute('data-active') === 'true') {
-
             /**
              * @todo Orange-Management/jsOMS#71
              *  Make badges removable
@@ -280,9 +285,7 @@ export class AdvancedInput
             let value       = '';
 
             for (let j = 0; j < fieldLength; ++j) {
-                value = document.activeElement.querySelectorAll('[data-tpl-value="' + fields[j].getAttribute('data-tpl-value') + '"]')[0].getAttribute('data-value');
-                fields[j].setAttribute('data-value', value);
-
+                value = jsOMS.getArray(fields[j].getAttribute('data-tpl-value'), data);
                 uuid += value;
             }
 
@@ -304,8 +307,20 @@ export class AdvancedInput
             for (let j = 0; j < fieldLength; ++j) {
                 fields[j].appendChild(
                     document.createTextNode(
-                        document.activeElement.querySelectorAll('[data-tpl-text="' + fields[j].getAttribute('data-tpl-text') + '"]')[0].innerText
+                        jsOMS.getArray(fields[j].getAttribute('data-tpl-text'), data)
                     )
+                );
+            }
+
+            // set innerHtml (e.g. styles) {/path}
+            const regex   = /{\/.*?}/g;
+            const matches = newTag.firstElementChild.outerHTML.match(regex),
+                matchLength = matches === null ? 0 : matches.length;
+
+            for (let i = 0; i < matchLength; ++i) {
+                newTag.firstElementChild.outerHTML = newTag.firstElementChild.outerHTML.replace(
+                    matches[i],
+                    jsOMS.getArray(matches[i].substring(1, matches[i].length - 1), data)
                 );
             }
 
