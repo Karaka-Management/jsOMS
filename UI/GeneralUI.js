@@ -15,11 +15,14 @@ export class GeneralUI
     /**
      * @constructor
      *
+     * @param {Object} app Application object
+     *
      * @since 1.0.0
      */
-    constructor ()
+    constructor (app)
     {
         this.visObs = null;
+        this.app    = app;
     };
 
     /**
@@ -130,7 +133,7 @@ export class GeneralUI
         const length = e.length;
 
         for (let i = 0; i < length; ++i) {
-            new AdvancedInput(e[i]);
+            new AdvancedInput(e[i], this.app.eventManager, this.app.uiManager.getDOMObserver());
         }
     };
 };

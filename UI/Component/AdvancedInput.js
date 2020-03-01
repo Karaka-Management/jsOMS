@@ -17,7 +17,7 @@ export class AdvancedInput
      *
      * @since 1.0.0
      */
-    constructor (e)
+    constructor (e, eventManager, observer)
     {
         this.id              = e.id;
         this.inputComponent  = e;
@@ -113,6 +113,25 @@ export class AdvancedInput
             self.addToResultList(self, document.activeElement);
             jsOMS.removeClass(self.dropdownElement, 'active');
         });
+
+        observer.observe(this.tagElement, { childList: true, attributes: false, subtree: false });
+        eventManager.attach(this.id + '-tags-childList', function(data) {
+            const removes = data.target.querySelectorAll('.fa-times'),
+                removesLength = removes === null ? 0 : removes.length;
+
+            if (removesLength < 1) {
+                return;
+            }
+
+            removes[removesLength - 1].addEventListener('click', function(e) {
+                if (e.target.parentNode.parentNode === null) {
+                    return;
+                }
+
+                e.target.parentNode.parentNode.removeChild(e.target.parentNode);
+            });
+        });
+
     };
 
     /**

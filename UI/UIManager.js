@@ -30,7 +30,7 @@ export class UIManager
         this.tableManager  = new Table(this.app);
         this.actionManager = new ActionManager(this.app);
         this.dragNDrop     = new DragNDrop(this.app);
-        this.generalUI     = new GeneralUI();
+        this.generalUI     = new GeneralUI(this.app);
 
         const self = this;
         /** global: MutationObserver */
