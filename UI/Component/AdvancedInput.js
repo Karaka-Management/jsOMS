@@ -116,8 +116,8 @@ export class AdvancedInput
 
         observer.observe(this.tagElement, { childList: true, attributes: false, subtree: false });
         eventManager.attach(this.id + '-tags-childList', function(data) {
-            const removes = data.target.querySelectorAll('.fa-times'),
-                removesLength = removes === null ? 0 : removes.length;
+            const removes       = data.target.querySelectorAll('.fa-times');
+            const removesLength = removes === null ? 0 : removes.length;
 
             if (removesLength < 1) {
                 return;
@@ -332,9 +332,9 @@ export class AdvancedInput
             }
 
             // set innerHtml (e.g. styles) {/path}
-            const regex   = /{\/.*?}/g;
-            const matches = newTag.firstElementChild.outerHTML.match(regex),
-                matchLength = matches === null ? 0 : matches.length;
+            const regex       = /{\/.*?}/g;
+            const matches     = newTag.firstElementChild.outerHTML.match(regex);
+            const matchLength = matches === null ? 0 : matches.length;
 
             for (let i = 0; i < matchLength; ++i) {
                 newTag.firstElementChild.outerHTML = newTag.firstElementChild.outerHTML.replace(
