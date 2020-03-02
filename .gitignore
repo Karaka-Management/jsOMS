@@ -1,4 +1,4 @@
 tests/jasmin*
 vendor
 .vscode
-.php_cs.cache
+*.cache
