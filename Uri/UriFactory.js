@@ -144,7 +144,7 @@ export class UriFactory
 
             let pars = [];
             for (const a in comps) {
-                if (comps.hasOwnProperty(a)) {
+                if (comps.hasOwnProperty(a) && comps[a] !== '' && comps[a] !== null) {
                     pars.push(a + '=' + comps[a]);
                 }
             }
