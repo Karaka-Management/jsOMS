@@ -304,6 +304,11 @@ export class AdvancedInput
             let value       = '';
 
             for (let j = 0; j < fieldLength; ++j) {
+                fields[j].setAttribute(
+                    'data-value',
+                    jsOMS.getArray(fields[j].getAttribute('data-tpl-value'), data)
+                );
+
                 value = jsOMS.getArray(fields[j].getAttribute('data-tpl-value'), data);
                 uuid += value;
             }

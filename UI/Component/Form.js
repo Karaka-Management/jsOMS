@@ -19,7 +19,7 @@ import { FormView } from '../../Views/FormView.js';
  * data-ui-content = what is the main parent
  * data-ui-element = what are the elements to replace
  *
- * @tood Orange-Management/jsOMS#60
+ * @todo Orange-Management/jsOMS#60
  *  On change listener
  *  Allow to add a on change listener in a form. This should result in automatic submits after changing a form.
  *  Consider the following cases to submit the form:
