@@ -42,6 +42,7 @@ export class GeneralUI
         }
 
         this.bindHref(e);
+        this.bindIframe(e);
         this.bindLazyLoad(e);
         this.bindInput(e);
     };
@@ -80,6 +81,27 @@ export class GeneralUI
             });
         }
     };
+
+    /**
+     * Bind & rebind UI element.
+     *
+     * @param {Object} [e] Element id
+     *
+     * @return {void}
+     *
+     * @since 1.0.0
+     */
+    bindIframe (e)
+    {
+        e            = e !== null ? e : document.getElementsByTagName('iframe');
+        const length = e.length;
+
+        for (let i = 0; i < length; ++i) {
+            e[i].addEventListener('load', function() {
+                this.height = this.contentWindow.document.body.scrollHeight + 25;
+            });
+        }
+    }
 
     /**
      * Bind & rebind UI element.
