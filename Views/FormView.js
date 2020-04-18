@@ -430,7 +430,7 @@ export class FormView
 
         for (const key in data) {
             if (data.hasOwnProperty(key)) {
-                formData.append(key, data[key].constructor === Array ? JSON.stringify(data[key]) : data[key]);
+                formData.append(key, data[key] !== null && data[key].constructor === Array ? JSON.stringify(data[key]) : data[key]);
             }
         }
 
