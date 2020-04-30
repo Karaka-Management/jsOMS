@@ -652,14 +652,17 @@ export class Form
                 );
 
                 values = values.concat(
-                        parents[i].hasAttribute('data-tpl-value') ? parents[i] : Array.prototype.slice.call(parents[i].querySelectorAll('[data-tpl-value]'))
+                        parents[i].hasAttribute('data-tpl-value')
+                            ? parents[i]
+                            : Array.prototype.slice.call(parents[i].querySelectorAll('[data-tpl-value]'))
                     );
                 text   = text.concat(
-                        parents[i].hasAttribute('data-tpl-text') ? parents[i] : Array.prototype.slice.call(parents[i].querySelectorAll('[data-tpl-text]'))
+                        parents[i].hasAttribute('data-tpl-text')
+                            ? parents[i]
+                            : Array.prototype.slice.call(parents[i].querySelectorAll('[data-tpl-text]'))
                     );
 
                 jsOMS.addClass(parents[i], 'hidden');
-
                 newEle.push(subMain.getElementsByTagName('template')[selectorLength + i].content.cloneNode(true));
 
                 if (newEle[i].firstElementChild.id === null) {
@@ -677,7 +680,9 @@ export class Form
             const fields = [];
             for (let i = 0; i < selectorLength; ++i) {
                 fields.concat(
-                        newEle[i].firstElementChild.hasAttribute('data-form') ? newEle[i].firstElementChild : newEle[i].firstElementChild.querySelectorAll('[data-form="' + id + '"]')
+                        newEle[i].firstElementChild.hasAttribute('data-form')
+                            ? newEle[i].firstElementChild
+                            : newEle[i].firstElementChild.querySelectorAll('[data-form="' + id + '"]')
                     );
             }
 
@@ -690,7 +695,12 @@ export class Form
             length = values.length;
             for (let i = 0; i < length; ++i) {
                 for (let j = 0; j < selectorLength; ++j) {
-                    const matches = newEle[j].firstElementChild.hasAttribute('data-tpl-value') ? [newEle[j].firstElementChild] : newEle[j].firstElementChild.querySelectorAll('[data-tpl-value="' + values[i].getAttribute('data-tpl-value') + '"');
+                    const matches = newEle[j].firstElementChild.hasAttribute('data-tpl-value')
+                        && newEle[j].firstElementChild.getAttribute('data-tpl-value') === values[i].getAttribute('data-tpl-value')
+                        ? [newEle[j].firstElementChild]
+                        : newEle[j].firstElementChild.querySelectorAll(
+                            '[data-tpl-value="' + values[i].getAttribute('data-tpl-value') + '"'
+                        );
 
                     const matchLength = matches.length;
                     for (let c = 0; c < matchLength; ++c) {
@@ -720,7 +730,12 @@ export class Form
             length = text.length;
             for (let i = 0; i < length; ++i) {
                 for (let j = 0; j < selectorLength; ++j) {
-                    const matches = newEle[j].firstElementChild.hasAttribute('data-tpl-text') ? [newEle[j].firstElementChild] : newEle[j].firstElementChild.querySelectorAll('[data-tpl-text="' + text[i].getAttribute('data-tpl-text') + '"');
+                    const matches = newEle[j].firstElementChild.hasAttribute('data-tpl-text')
+                        && newEle[j].firstElementChild.getAttribute('data-tpl-text') === text[i].getAttribute('data-tpl-text')
+                        ? [newEle[j].firstElementChild]
+                        : newEle[j].firstElementChild.querySelectorAll(
+                            '[data-tpl-text="' + text[i].getAttribute('data-tpl-text') + '"'
+                        );
 
                     const matchLength = matches.length;
                     for (let c = 0; c < matchLength; ++c) {
@@ -1135,6 +1150,7 @@ export class Form
             case 'pre':
             case 'article':
             case 'section':
+            case 'h1':
                 src.innerHTML = jsOMS.htmlspecialchars_encode(value);
                 break;
             default:
@@ -1149,6 +1165,7 @@ export class Form
             case 'pre':
             case 'article':
             case 'section':
+            case 'h1':
                 src.innerHTML = jsOMS.htmlspecialchars_encode(value);
                 break;
             case 'textarea':
@@ -1166,6 +1183,7 @@ export class Form
             case 'pre':
             case 'article':
             case 'section':
+            case 'h1':
                 return src.innerHTML;
             default:
                 return src.value;
@@ -1179,6 +1197,7 @@ export class Form
             case 'pre':
             case 'article':
             case 'section':
+            case 'h1':
                 return src.innerHTML;
             default:
                 return src.value;
