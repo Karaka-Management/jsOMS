@@ -694,6 +694,7 @@ export class Form
             // insert row values data into form
             length = values.length;
             for (let i = 0; i < length; ++i) {
+                const path = values[i].hasAttribute('data-tpl-value-path') ? values[i].getAttribute('data-tpl-value-path') : null;
                 for (let j = 0; j < selectorLength; ++j) {
                     const matches = newEle[j].firstElementChild.hasAttribute('data-tpl-value')
                         && newEle[j].firstElementChild.getAttribute('data-tpl-value') === values[i].getAttribute('data-tpl-value')
@@ -707,7 +708,11 @@ export class Form
                         if (values[i].getAttribute('data-tpl-value').startsWith('http')
                             || values[i].getAttribute('data-tpl-value').startsWith('{')
                         ) {
-                            const request = new Request(values[i].getAttribute('data-tpl-value'));
+                            const uri = values[i].getAttribute('data-tpl-value').startsWith('/')
+                            ? document.getElementsByTagName('base')[0].href
+                            : '';
+
+                            const request = new Request(uri + values[i].getAttribute('data-tpl-value'));
                             request.setResultCallback(200, function(xhr) {
                                 /**
                                  * @todo Orange-Management/jsOMS#84
@@ -715,7 +720,10 @@ export class Form
                                  *  The data coming from the backend/api usually is not directly usable in the frontend.
                                  *  For that purpose some kind of value path should be defined to handle json responses in order to get only the data that is needed.
                                  */
-                                self.setValueOfElement(matches[c], xhr.response);
+                                self.setValueOfElement(matches[c],
+                                    path !== null ? jsOMS.getArray(path, JSON.parse(xhr.response)) : xhr.response
+                                );
+                                console.log(xhr);
                             });
 
                             request.send();
@@ -729,6 +737,7 @@ export class Form
             // insert row text data into form
             length = text.length;
             for (let i = 0; i < length; ++i) {
+                const path = text[i].hasAttribute('data-tpl-text-path') ? text[i].getAttribute('data-tpl-text-path') : null;
                 for (let j = 0; j < selectorLength; ++j) {
                     const matches = newEle[j].firstElementChild.hasAttribute('data-tpl-text')
                         && newEle[j].firstElementChild.getAttribute('data-tpl-text') === text[i].getAttribute('data-tpl-text')
@@ -742,7 +751,11 @@ export class Form
                         if (text[i].getAttribute('data-tpl-text').startsWith('http')
                             || text[i].getAttribute('data-tpl-text').startsWith('{')
                         ) {
-                            const request = new Request(text[i].getAttribute('data-tpl-text'));
+                            const uri = values[i].getAttribute('data-tpl-text').startsWith('/')
+                                ? document.getElementsByTagName('base')[0].href
+                                : '';
+
+                            const request = new Request(uri + text[i].getAttribute('data-tpl-text'));
                             request.setResultCallback(200, function(xhr) {
                                 /**
                                  * @todo Orange-Management/jsOMS#84
@@ -750,7 +763,9 @@ export class Form
                                  *  The data coming from the backend/api usually is not directly usable in the frontend.
                                  *  For that purpose some kind of value path should be defined to handle json responses in order to get only the data that is needed.
                                  */
-                                self.setTextOfElement(matches[c], xhr.response);
+                                self.setTextOfElement(matches[c],
+                                    path !== null ? jsOMS.getArray(path, JSON.parse(xhr.response)) : xhr.response
+                                );
                             });
 
                             request.send();
@@ -888,6 +903,7 @@ export class Form
             // overwrite old values data in ui
             length = values.length;
             for (let i = 0; i < length; ++i) {
+                const path = values[i].hasAttribute('data-tpl-value-path') ? values[i].getAttribute('data-tpl-value-path') : null;
                 for (let j = 0; j < selectorLength; ++j) {
                     const matches = parentsContent[j].querySelectorAll('[data-tpl-value="' + values[i].getAttribute('data-tpl-value') + '"');
 
@@ -896,7 +912,11 @@ export class Form
                         if (values[i].getAttribute('data-tpl-value').startsWith('http')
                             || values[i].getAttribute('data-tpl-value').startsWith('{')
                         ) {
-                            const request = new Request(values[i].getAttribute('data-tpl-value'));
+                            const uri = values[i].getAttribute('data-tpl-value').startsWith('/')
+                                ? document.getElementsByTagName('base')[0].href
+                                : '';
+
+                            const request = new Request(uri + values[i].getAttribute('data-tpl-value'));
                             request.setResultCallback(200, function(xhr) {
                                 /**
                                  * @todo Orange-Management/jsOMS#84
@@ -904,7 +924,9 @@ export class Form
                                  *  The data coming from the backend/api usually is not directly usable in the frontend.
                                  *  For that purpose some kind of value path should be defined to handle json responses in order to get only the data that is needed.
                                  */
-                                self.setValueOfElement(matches[c], xhr.response);
+                                self.setValueOfElement(matches[c],
+                                    path !== null ? jsOMS.getArray(path, JSON.parse(xhr.response)) : xhr.response
+                                );
                             });
 
                             request.send();
@@ -918,6 +940,7 @@ export class Form
             // overwrite old text data in ui
             length = text.length;
             for (let i = 0; i < length; ++i) {
+                const path = text[i].hasAttribute('data-tpl-text-path') ? text[i].getAttribute('data-tpl-text-path') : null;
                 for (let j = 0; j < selectorLength; ++j) {
                     const matches = parentsContent[j].querySelectorAll('[data-tpl-text="' + text[i].getAttribute('data-tpl-text') + '"');
 
@@ -926,7 +949,11 @@ export class Form
                         if (text[i].getAttribute('data-tpl-text').startsWith('http')
                             || text[i].getAttribute('data-tpl-text').startsWith('{')
                         ) {
-                            const request = new Request(text[i].getAttribute('data-tpl-text'));
+                            const uri = values[i].getAttribute('data-tpl-text').startsWith('/')
+                                ? document.getElementsByTagName('base')[0].href
+                                : '';
+
+                            const request = new Request(uri + text[i].getAttribute('data-tpl-text'));
                             request.setResultCallback(200, function(xhr) {
                                 /**
                                  * @todo Orange-Management/jsOMS#84
@@ -934,7 +961,9 @@ export class Form
                                  *  The data coming from the backend/api usually is not directly usable in the frontend.
                                  *  For that purpose some kind of value path should be defined to handle json responses in order to get only the data that is needed.
                                  */
-                                self.setTextOfElement(matches[c], xhr.response);
+                                self.setTextOfElement(matches[c],
+                                    path !== null ? jsOMS.getArray(path, JSON.parse(xhr.response)) : xhr.response
+                                );
                             });
 
                             request.send();
@@ -1040,42 +1069,18 @@ export class Form
             length = values.length;
             for (let i = 0; i < length; ++i) {
                 const matches = document.getElementById(formId).querySelectorAll('[data-tpl-value="' + values[i].getAttribute('data-tpl-value') + '"');
+                const path   = values[i].hasAttribute('data-tpl-value-path') ? values[i].getAttribute('data-tpl-value-path') : null;
 
                 const matchLength = matches.length;
                 for (let c = 0; c < matchLength; ++c) {
                     if (values[i].getAttribute('data-tpl-value').startsWith('http')
-                            || values[i].getAttribute('data-tpl-value').startsWith('{')
-                        ) {
-                            const request = new Request(values[i].getAttribute('data-tpl-value'));
-                            request.setResultCallback(200, function(xhr) {
-                                /**
-                                 * @todo Orange-Management/jsOMS#84
-                                 *  Remote data responses need to be parsed
-                                 *  The data coming from the backend/api usually is not directly usable in the frontend.
-                                 *  For that purpose some kind of value path should be defined to handle json responses in order to get only the data that is needed.
-                                 */
-                                self.setValueOfElement(matches[c], xhr.response);
-                            });
-
-                            request.send();
-                        } else {
-                            self.setValueOfElement(matches[c], self.getValueFromDataSource(values[i]));
-                        }
-                }
-            }
-
-            // insert row text data into form
-            length = text.length;
-            for (let i = 0; i < length; ++i) {
-                const matches = document.getElementById(formId).querySelectorAll('[data-tpl-text="' + text[i].getAttribute('data-tpl-text') + '"');
-
-                // todo: consider pulling this out because it exists like 3x2 = 6 times in a similar way or at least 3 times very similarly
-                const matchLength = matches.length;
-                for (let c = 0; c < matchLength; ++c) {
-                    if (text[i].getAttribute('data-tpl-text').startsWith('http')
-                        || text[i].getAttribute('data-tpl-text').startsWith('{')
+                        || values[i].getAttribute('data-tpl-value').startsWith('{')
                     ) {
-                        const request = new Request(text[i].getAttribute('data-tpl-text'));
+                        const uri = values[i].getAttribute('data-tpl-value').startsWith('/')
+                            ? document.getElementsByTagName('base')[0].href
+                            : '';
+
+                        const request = new Request(uri + values[i].getAttribute('data-tpl-value'));
                         request.setResultCallback(200, function(xhr) {
                             /**
                              * @todo Orange-Management/jsOMS#84
@@ -1083,7 +1088,45 @@ export class Form
                              *  The data coming from the backend/api usually is not directly usable in the frontend.
                              *  For that purpose some kind of value path should be defined to handle json responses in order to get only the data that is needed.
                              */
-                            self.setTextOfElement(matches[c], xhr.response);
+                            self.setValueOfElement(matches[c],
+                                path !== null ? jsOMS.getArray(path, JSON.parse(xhr.response)) : xhr.response
+                            );
+                        });
+
+                        request.send();
+                    } else {
+                        self.setValueOfElement(matches[c], self.getValueFromDataSource(values[i]));
+                    }
+                }
+            }
+
+            // insert row text data into form
+            length = text.length;
+            for (let i = 0; i < length; ++i) {
+                const matches = document.getElementById(formId).querySelectorAll('[data-tpl-text="' + text[i].getAttribute('data-tpl-text') + '"');
+                const path    = text[i].hasAttribute('data-tpl-text-path') ? text[i].getAttribute('data-tpl-text-path') : null;
+
+                // todo: consider pulling this out because it exists like 3x2 = 6 times in a similar way or at least 3 times very similarly
+                const matchLength = matches.length;
+                for (let c = 0; c < matchLength; ++c) {
+                    if (text[i].getAttribute('data-tpl-text').startsWith('http')
+                        || text[i].getAttribute('data-tpl-text').startsWith('{')
+                    ) {
+                        const uri = values[i].getAttribute('data-tpl-text').startsWith('/')
+                                ? document.getElementsByTagName('base')[0].href
+                                : '';
+
+                        const request = new Request(uri + text[i].getAttribute('data-tpl-text'));
+                        request.setResultCallback(200, function(xhr) {
+                            /**
+                             * @todo Orange-Management/jsOMS#84
+                             *  Remote data responses need to be parsed
+                             *  The data coming from the backend/api usually is not directly usable in the frontend.
+                             *  For that purpose some kind of value path should be defined to handle json responses in order to get only the data that is needed.
+                             */
+                            self.setTextOfElement(matches[c],
+                                path !== null ? jsOMS.getArray(path, JSON.parse(xhr.response)) : xhr.response
+                            );
                         });
 
                         request.send();
