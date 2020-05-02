@@ -145,7 +145,7 @@ export class UriFactory
             let pars = [];
             for (const a in comps) {
                 if (comps.hasOwnProperty(a) && comps[a] !== '' && comps[a] !== null) {
-                    pars.push(a + '=' + comps[a]);
+                    pars.push(a + '=' + encodeURIComponent(comps[a]));
                 }
             }
 
@@ -196,24 +196,24 @@ export class UriFactory
                 } else if (match.indexOf('#') === 0) {
                     const e = document.getElementById(match.substr(1));
 
-                    if (e) {
-                        if (e.tagName.toLowerCase() !== 'form') {
-                            return e.value;
-                        }
-
-                        let value  = '';
-                        const form = (new FormView(e.id)).getData();
-
-                        for (let pair of form.entries()) {
-                            value += '&' + pair[0] + '=' + pair[1];
-                        }
-
-                        return value;
+                    if (!e) {
+                        return '';
                     }
 
-                    return '';
+                    if (e.tagName.toLowerCase() !== 'form') {
+                        return e.value;
+                    }
+
+                    let value  = '';
+                    const form = (new FormView(e.id)).getData();
+
+                    for (let pair of form.entries()) {
+                        value += '&' + pair[0] + '=' + pair[1];
+                    }
+
+                    return value;
                 } else if (match.indexOf('?') === 0) {
-                    returnHttpUri.getUriQueryParameter(current.query, match.substr(1));
+                    return HttpUri.getUriQueryParameter(current.query, match.substr(1));
                 } else if (match.indexOf('/') === 0) {
                     return 'ERROR PATH';
                 } else if (match === '%') {
