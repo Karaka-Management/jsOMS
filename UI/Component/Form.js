@@ -1069,7 +1069,7 @@ export class Form
             length = values.length;
             for (let i = 0; i < length; ++i) {
                 const matches = document.getElementById(formId).querySelectorAll('[data-tpl-value="' + values[i].getAttribute('data-tpl-value') + '"');
-                const path   = values[i].hasAttribute('data-tpl-value-path') ? values[i].getAttribute('data-tpl-value-path') : null;
+                const path    = values[i].hasAttribute('data-tpl-value-path') ? values[i].getAttribute('data-tpl-value-path') : null;
 
                 const matchLength = matches.length;
                 for (let c = 0; c < matchLength; ++c) {
