@@ -130,6 +130,8 @@ export class UriFactory
         const parts = url.replace(/\?/g, '&').split('&'),
             full    = parts[0];
 
+        // @todo: handle fragment
+
         if (parts.length > 1) {
             parts.shift();
 
@@ -145,7 +147,7 @@ export class UriFactory
             let pars = [];
             for (const a in comps) {
                 if (comps.hasOwnProperty(a) && comps[a] !== '' && comps[a] !== null) {
-                    pars.push(a + '=' + encodeURIComponent(comps[a]));
+                    pars.push(a + '=' + encodeURIComponent(comps[a]).replace(/%25/ig, '%'));
                 }
             }
 
@@ -155,6 +157,8 @@ export class UriFactory
         // unique fragments
         const fragments = url.match(/\#[a-zA-Z0-9\-,]+/g),
             fragLength  = fragments !== null ? fragments.length : 0;
+
+        // @todo: don't remove fragments, some might be used = none tab fragments
 
         for (let i = 0; i < fragLength - 1; ++i) {
             // remove all from old url
