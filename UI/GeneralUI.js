@@ -66,14 +66,18 @@ export class GeneralUI
                 continue;
             }
 
-            e[i].addEventListener('click', function(event) {
+            e[i].addEventListener('mouseup', function(event) {
+                if (event.button !== 0 && event.button !== 1) {
+                    return;
+                }
+
                 jsOMS.preventAll(event);
                 history.pushState(null, null, window.location);
 
                 let uri = this.getAttribute('data-href');
                 uri     = uri === null ? this.getAttribute('href') : uri;
 
-                if (this.getAttribute('target') === '_blank' || this.getAttribute(['data-target']) === '_blank') {
+                if (this.getAttribute('target') === '_blank' || this.getAttribute(['data-target']) === '_blank' || event.button === 1) {
                     window.open(UriFactory.build(uri), '_blank');
                 } else {
                     window.location = UriFactory.build(uri);
