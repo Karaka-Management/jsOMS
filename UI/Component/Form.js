@@ -692,7 +692,8 @@ export class Form
             }
 
             // insert row values data into form
-            length = values.length;
+            const remoteValueUrls = {};
+            length                = values.length;
             for (let i = 0; i < length; ++i) {
                 const path = values[i].hasAttribute('data-tpl-value-path') ? values[i].getAttribute('data-tpl-value-path') : null;
                 for (let j = 0; j < selectorLength; ++j) {
@@ -712,21 +713,11 @@ export class Form
                             ? document.getElementsByTagName('base')[0].href
                             : '';
 
-                            const request = new Request(uri + values[i].getAttribute('data-tpl-value'));
-                            request.setResultCallback(200, function(xhr) {
-                                /**
-                                 * @todo Orange-Management/jsOMS#84
-                                 *  Remote data responses need to be parsed
-                                 *  The data coming from the backend/api usually is not directly usable in the frontend.
-                                 *  For that purpose some kind of value path should be defined to handle json responses in order to get only the data that is needed.
-                                 */
-                                self.setValueOfElement(matches[c],
-                                    path !== null ? jsOMS.getArray(path, JSON.parse(xhr.response)) : xhr.response
-                                );
-                                console.log(xhr);
-                            });
+                            if (remoteValueUrls[uri + values[i].getAttribute('data-tpl-value')] === undefined) {
+                                remoteValueUrls[uri + values[i].getAttribute('data-tpl-value')] = [];
+                            }
 
-                            request.send();
+                            remoteValueUrls[uri + values[i].getAttribute('data-tpl-value')].push({path: path, element: matches[c]});
                         } else {
                             self.setValueOfElement(matches[c], self.getValueFromDataSource(values[i]));
                         }
@@ -734,8 +725,30 @@ export class Form
                 }
             }
 
+            for (const e in remoteValueUrls) {
+                const request = new Request(e);
+                request.setResultCallback(200, function(xhr) {
+                    /**
+                     * @todo Orange-Management/jsOMS#84
+                     *  Remote data responses need to be parsed
+                     *  The data coming from the backend/api usually is not directly usable in the frontend.
+                     *  For that purpose some kind of value path should be defined to handle json responses in order to get only the data that is needed.
+                     */
+                    const remoteValueUrlsLength = remoteValueUrls[e].length;
+                    for (let k = 0; k < remoteValueUrlsLength; ++k) {
+                        const path = remoteValueUrls[e][k].path;
+                        self.setValueOfElement(remoteValueUrls[e][k].element,
+                            path !== null ? jsOMS.getArray(path, JSON.parse(xhr.response)) : xhr.response
+                        );
+                    }
+                });
+
+                request.send();
+            }
+
             // insert row text data into form
-            length = text.length;
+            const remoteTextUrls = {};
+            length               = text.length;
             for (let i = 0; i < length; ++i) {
                 const path = text[i].hasAttribute('data-tpl-text-path') ? text[i].getAttribute('data-tpl-text-path') : null;
                 for (let j = 0; j < selectorLength; ++j) {
@@ -755,25 +768,37 @@ export class Form
                                 ? document.getElementsByTagName('base')[0].href
                                 : '';
 
-                            const request = new Request(uri + text[i].getAttribute('data-tpl-text'));
-                            request.setResultCallback(200, function(xhr) {
-                                /**
-                                 * @todo Orange-Management/jsOMS#84
-                                 *  Remote data responses need to be parsed
-                                 *  The data coming from the backend/api usually is not directly usable in the frontend.
-                                 *  For that purpose some kind of value path should be defined to handle json responses in order to get only the data that is needed.
-                                 */
-                                self.setTextOfElement(matches[c],
-                                    path !== null ? jsOMS.getArray(path, JSON.parse(xhr.response)) : xhr.response
-                                );
-                            });
+                            if (remoteTextUrls[uri + text[i].getAttribute('data-tpl-value')] === undefined) {
+                                remoteTextUrls[uri + text[i].getAttribute('data-tpl-value')] = [];
+                            }
 
-                            request.send();
+                            remoteTextUrls[uri + text[i].getAttribute('data-tpl-value')].push({path: path, element: matches[c]});
                         } else {
                             self.setTextOfElement(matches[c], self.getTextFromDataSource(text[i]));
                         }
                     }
                 }
+            }
+
+            for (const e in remoteTextUrls) {
+                const request = new Request(e);
+                request.setResultCallback(200, function(xhr) {
+                    /**
+                     * @todo Orange-Management/jsOMS#84
+                     *  Remote data responses need to be parsed
+                     *  The data coming from the backend/api usually is not directly usable in the frontend.
+                     *  For that purpose some kind of value path should be defined to handle json responses in order to get only the data that is needed.
+                     */
+                    const remoteTextUrlsLength = remoteTextUrls[e].length;
+                    for (let k = 0; k < remoteTextUrlsLength; ++k) {
+                        const path = remoteTextUrls[e][k].path;
+                        self.setTextOfElement(remoteTextUrls[e][k].element,
+                            path !== null ? jsOMS.getArray(path, JSON.parse(xhr.response)) : xhr.response
+                        );
+                    }
+                });
+
+                request.send();
             }
 
             for (let i = 0; i < selectorLength; ++i) {
@@ -849,21 +874,23 @@ export class Form
 
         save.addEventListener('click', function () {
             const formElement    = document.getElementById(id);
-            const parentsTpl     = [];
-            const parentsContent = [];
+            const parentsTpl     = {};
+            const parentsContent = {};
             const selectors      = formElement.getAttribute('data-ui-element').split(','),
                 selectorLength   = selectors.length;
 
             let values = [];
             let text   = [];
 
+            // find all values, texts and parents for every selector
             for (let i = 0; i < selectorLength; ++i) {
                 // todo: similar logic is in updatable Inline and probably in External... pull out?
                 // this handles selectors such as 'ancestor > child/or/sibling' and many more
                 let selector = selectors[i].trim(' ').split(' ');
                 let closest  = selector[0].trim();
 
-                // template elements
+                // template elements (= elements which just got added due to the update/edit button, here the new data is stored)
+                // @todo i don't really remember how this works and why this was needed. Try to understand it and write a comment afterwards
                 let subSelector = '';
                 if (selector.length !== 0) {
                     selector.shift();
@@ -872,9 +899,11 @@ export class Form
                     closest += '[data-marker=tpl]';
                 }
 
-                parentsTpl.push(
-                    selector.length === 0 ? this.closest(closest) : this.closest(closest).querySelector(subSelector)
-                );
+                const parentTplName = selector.length === 0 ? closest : closest + subSelector;
+                if (!parentsTpl.hasOwnProperty(parentTplName)) {
+                    parentsTpl[parentTplName] = selector.length === 0 ? this.closest(closest) : this.closest(closest).querySelector(subSelector);
+                    /* @todo: parentNode because of media edit. maybe I need a data-ui-parent element? */
+                }
 
                 // content elements
                 selector    = selectors[i].trim(' ').split(' ');
@@ -887,28 +916,40 @@ export class Form
                     closest += ':not([data-marker=tpl])';
                 }
 
-                parentsContent.push(
-                    selector.length === 0 ? this.closest(closest) : this.closest(closest).querySelector(subSelector).parentNode
-                    /* parentNode because of media edit. maybe I need a data-ui-parent element? */
-                );
+                const parentContentName = selector.length === 0 ? closest : closest + subSelector;
+                if (!parentsContent.hasOwnProperty(parentContentName)) {
+                    parentsContent[parentContentName] = selector.length === 0 ? this.closest(closest) : this.closest(closest).querySelector(subSelector).parentNode;
+                    /* @todo: parentNode because of media edit. maybe I need a data-ui-parent element? */
+                }
 
                 values = values.concat(
-                    parentsTpl[i].hasAttribute('data-tpl-value') ? parentsTpl[i] : Array.prototype.slice.call(parentsTpl[i].querySelectorAll('[data-tpl-value]'))
+                    parentsTpl[parentTplName].hasAttribute('data-tpl-value') ? parentsTpl[parentTplName] : Array.prototype.slice.call(parentsTpl[parentTplName].querySelectorAll('[data-tpl-value]'))
                 );
                 text   = text.concat(
-                    parentsTpl[i].hasAttribute('data-tpl-text') ? parentsTpl[i] : Array.prototype.slice.call(parentsTpl[i].querySelectorAll('[data-tpl-text]'))
+                    parentsContent[parentContentName].hasAttribute('data-tpl-text') ? parentsContent[parentContentName] : Array.prototype.slice.call(parentsContent[parentContentName].querySelectorAll('[data-tpl-text]'))
                 );
             }
 
+            values = values.filter(function(value, index, self) { return self.indexOf(value) === index; });
+            text   = text.filter(function(value, index, self) { return self.indexOf(value) === index; });
+
             // overwrite old values data in ui
-            length = values.length;
-            for (let i = 0; i < length; ++i) {
-                const path = values[i].hasAttribute('data-tpl-value-path') ? values[i].getAttribute('data-tpl-value-path') : null;
-                for (let j = 0; j < selectorLength; ++j) {
-                    const matches = parentsContent[j].querySelectorAll('[data-tpl-value="' + values[i].getAttribute('data-tpl-value') + '"');
+            const remoteValueUrls   = {};
+            const changedValueNodes = []; // prevent same node touching
+            length                  = values.length;
+            for (let parent in parentsTpl) { // loop every selector which has elements to change
+                for (let i = 0; i < length; ++i) { // loop every value
+                    const matches = parentsTpl[parent].querySelectorAll('[data-tpl-value="' + values[i].getAttribute('data-tpl-value') + '"');
 
                     const matchLength = matches.length;
-                    for (let c = 0; c < matchLength; ++c) {
+                    for (let c = 0; c < matchLength; ++c) { // loop every found element in the selector to change
+                        if (changedValueNodes.includes(matches[c])) {
+                            continue;
+                        }
+
+                        changedValueNodes.push(matches[c]);
+                        const path = matches[c].hasAttribute('data-tpl-value-path') ? matches[c].getAttribute('data-tpl-value-path') : null;
+
                         if (values[i].getAttribute('data-tpl-value').startsWith('http')
                             || values[i].getAttribute('data-tpl-value').startsWith('{')
                         ) {
@@ -916,20 +957,11 @@ export class Form
                                 ? document.getElementsByTagName('base')[0].href
                                 : '';
 
-                            const request = new Request(uri + values[i].getAttribute('data-tpl-value'));
-                            request.setResultCallback(200, function(xhr) {
-                                /**
-                                 * @todo Orange-Management/jsOMS#84
-                                 *  Remote data responses need to be parsed
-                                 *  The data coming from the backend/api usually is not directly usable in the frontend.
-                                 *  For that purpose some kind of value path should be defined to handle json responses in order to get only the data that is needed.
-                                 */
-                                self.setValueOfElement(matches[c],
-                                    path !== null ? jsOMS.getArray(path, JSON.parse(xhr.response)) : xhr.response
-                                );
-                            });
+                            if (remoteValueUrls[uri + values[i].getAttribute('data-tpl-value')] === undefined) {
+                                remoteValueUrls[uri + values[i].getAttribute('data-tpl-value')] = [];
+                            }
 
-                            request.send();
+                            remoteValueUrls[uri + values[i].getAttribute('data-tpl-value')].push({path: path, element: matches[c]});
                         } else {
                             self.setValueOfElement(matches[c], self.getValueFromDataSource(values[i]));
                         }
@@ -938,35 +970,34 @@ export class Form
             }
 
             // overwrite old text data in ui
-            length = text.length;
-            for (let i = 0; i < length; ++i) {
-                const path = text[i].hasAttribute('data-tpl-text-path') ? text[i].getAttribute('data-tpl-text-path') : null;
-                for (let j = 0; j < selectorLength; ++j) {
-                    const matches = parentsContent[j].querySelectorAll('[data-tpl-text="' + text[i].getAttribute('data-tpl-text') + '"');
+            const remoteTextUrls   = {};
+            const changedTextNodes = [];
+            length                 = text.length;
+            for (let parent in parentsContent) {
+                for (let i = 0; i < length; ++i) {
+                    const matches = parentsContent[parent].querySelectorAll('[data-tpl-text="' + text[i].getAttribute('data-tpl-text') + '"');
 
                     const matchLength = matches.length;
                     for (let c = 0; c < matchLength; ++c) {
+                        if (changedTextNodes.includes(matches[c])) {
+                            continue;
+                        }
+
+                        changedTextNodes.push(matches[c]);
+
+                        const path = matches[c].hasAttribute('data-tpl-text-path') ? matches[c].getAttribute('data-tpl-text-path') : null;
                         if (text[i].getAttribute('data-tpl-text').startsWith('http')
                             || text[i].getAttribute('data-tpl-text').startsWith('{')
                         ) {
-                            const uri = values[i].getAttribute('data-tpl-text').startsWith('/')
+                            const uri = text[i].getAttribute('data-tpl-text').startsWith('/')
                                 ? document.getElementsByTagName('base')[0].href
                                 : '';
 
-                            const request = new Request(uri + text[i].getAttribute('data-tpl-text'));
-                            request.setResultCallback(200, function(xhr) {
-                                /**
-                                 * @todo Orange-Management/jsOMS#84
-                                 *  Remote data responses need to be parsed
-                                 *  The data coming from the backend/api usually is not directly usable in the frontend.
-                                 *  For that purpose some kind of value path should be defined to handle json responses in order to get only the data that is needed.
-                                 */
-                                self.setTextOfElement(matches[c],
-                                    path !== null ? jsOMS.getArray(path, JSON.parse(xhr.response)) : xhr.response
-                                );
-                            });
+                            if (remoteTextUrls[uri + text[i].getAttribute('data-tpl-value')] === undefined) {
+                                remoteTextUrls[uri + text[i].getAttribute('data-tpl-value')] = [];
+                            }
 
-                            request.send();
+                            remoteTextUrls[uri + text[i].getAttribute('data-tpl-value')].push({path: path, element: matches[c]});
                         } else {
                             self.setTextOfElement(matches[c], self.getTextFromDataSource(text[i]));
                         }
@@ -974,7 +1005,55 @@ export class Form
                 }
             }
 
+
+
             // todo bind failure here, if failure do cancel, if success to remove edit template
+            self.forms[id].setSuccess(function() {
+                // overwrite old values from remote response
+                for (const e in remoteValueUrls) {
+                    const request = new Request(e);
+                    request.setResultCallback(200, function(xhr) {
+                        /**
+                         * @todo Orange-Management/jsOMS#84
+                         *  Remote data responses need to be parsed
+                         *  The data coming from the backend/api usually is not directly usable in the frontend.
+                         *  For that purpose some kind of value path should be defined to handle json responses in order to get only the data that is needed.
+                         */
+                        const remoteValueUrlsLength = remoteValueUrls[e].length;
+                        for (let k = 0; k < remoteValueUrlsLength; ++k) {
+                            const path = remoteValueUrls[e][k].path;
+                            self.setValueOfElement(remoteValueUrls[e][k].element,
+                                path !== null ? jsOMS.getArray(path, JSON.parse(xhr.response)) : xhr.response
+                            );
+                        }
+                    });
+
+                    request.send();
+                }
+
+                // overwrite old values from remote response
+                for (const e in remoteTextUrls) {
+                    const request = new Request(e);
+                    request.setResultCallback(200, function(xhr) {
+                        /**
+                         * @todo Orange-Management/jsOMS#84
+                         *  Remote data responses need to be parsed
+                         *  The data coming from the backend/api usually is not directly usable in the frontend.
+                         *  For that purpose some kind of value path should be defined to handle json responses in order to get only the data that is needed.
+                         */
+                        const remoteTextUrlsLength = remoteTextUrls[e].length;
+                        for (let k = 0; k < remoteTextUrlsLength; ++k) {
+                            const path = remoteTextUrls[e][k].path;
+
+                            self.setTextOfElement(remoteTextUrls[e][k].element,
+                                path !== null ? jsOMS.getArray(path, JSON.parse(xhr.response)) : xhr.response
+                            );
+                        }
+                    });
+
+                    request.send();
+                }
+            });
             self.submit(self.forms[id]);
             self.removeEditTemplate(this, id);
         });
@@ -1194,6 +1273,10 @@ export class Form
             case 'article':
             case 'section':
             case 'h1':
+                if (src.hasAttribute('data-tpl-text')) {
+                    break; // prevent overwriting setTextOfElement
+                }
+
                 src.innerHTML = jsOMS.htmlspecialchars_encode(value);
                 break;
             default:
@@ -1208,6 +1291,8 @@ export class Form
             case 'pre':
             case 'article':
             case 'section':
+                src.innerHTML = value;
+                break;
             case 'h1':
                 src.innerHTML = jsOMS.htmlspecialchars_encode(value);
                 break;
