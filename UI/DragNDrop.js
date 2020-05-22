@@ -61,7 +61,7 @@ export class DragNDrop
     };
 
     /**
-     * Bind DOM elment
+     * Bind DOM element
      *
      * @param {string} id DOM element
      *
@@ -87,7 +87,10 @@ export class DragNDrop
         }, false);
 
         element.addEventListener('dragenter', function(e) {
-            // todo: highlight
+            /**
+             * @todo Orange-Management/jsOMS#??? [t:feature] [p:low] [d:medium]
+             *  Highlight the drop area
+             */
         }, false);
 
         element.addEventListener('dragover', function(e) {
@@ -99,16 +102,21 @@ export class DragNDrop
         element.addEventListener('dragleave', function(e) {
             e.preventDefault();
 
-            // todo: don't highlight
+            /**
+             * @todo Orange-Management/jsOMS#??? [t:feature] [p:low] [d:medium]
+             *  Stop highlighting the drop area
+             */
         }, false);
 
         element.addEventListener('dragend', function(e) {
             e.preventDefault();
 
-            // todo: reset all changes
+            /**
+             * @todo Orange-Management/jsOMS#??? [t:feature] [p:low] [d:medium]
+             *  Reset all UI states
+             */
         }, false);
 
-        //element.addEventListener('drag', function(e) {});
         element.addEventListener('drop', function(e) {
             e.stopPropagation();
             e.preventDefault();
@@ -120,8 +128,10 @@ export class DragNDrop
             self.dragging.innerHTML = this.innerHTML;
             this.innerHTML          = e.dataTransfer.getData('text/html');
 
-            // todo: add to now destination
-            // todo: remove from old destination
+            /**
+             * @todo Orange-Management/jsOMS#??? [t:feature] [p:low] [d:medium]
+             *  Remove from old destination if UI element and add to new destination
+             */
 
             self.dragging = null;
         }, false);

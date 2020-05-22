@@ -66,11 +66,8 @@ export class GeneralUI
                 continue;
             }
 
-            e[i].addEventListener('mouseup', function(event) {
-                if (event.button !== 0 && event.button !== 1) {
-                    return;
-                }
-
+            // @todo: implement middle mouse click
+            e[i].addEventListener('click', function(event) {
                 jsOMS.preventAll(event);
                 history.pushState(null, null, window.location);
 

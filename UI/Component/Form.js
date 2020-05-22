@@ -169,6 +169,8 @@ export class Form
             this.bindSaveInline(save[i], id);
         }
 
+        // @todo implement bindSaveExternal ???
+
         if (document.getElementById(id).getAttribute('data-ui-form') !== null) {
             this.bindAddExternal(id);
         }
@@ -901,7 +903,9 @@ export class Form
 
                 const parentTplName = selector.length === 0 ? closest : closest + subSelector;
                 if (!parentsTpl.hasOwnProperty(parentTplName)) {
-                    parentsTpl[parentTplName] = selector.length === 0 ? this.closest(closest) : this.closest(closest).querySelector(subSelector);
+                    parentsTpl[parentTplName] = selector.length === 0
+                        ? this.closest(closest)
+                        : this.closest(closest).querySelector(subSelector);
                     /* @todo: parentNode because of media edit. maybe I need a data-ui-parent element? */
                 }
 
@@ -918,15 +922,21 @@ export class Form
 
                 const parentContentName = selector.length === 0 ? closest : closest + subSelector;
                 if (!parentsContent.hasOwnProperty(parentContentName)) {
-                    parentsContent[parentContentName] = selector.length === 0 ? this.closest(closest) : this.closest(closest).querySelector(subSelector).parentNode;
+                    parentsContent[parentContentName] = selector.length === 0
+                        ? this.closest(closest)
+                        : this.closest(closest).querySelector(subSelector).parentNode;
                     /* @todo: parentNode because of media edit. maybe I need a data-ui-parent element? */
                 }
 
                 values = values.concat(
-                    parentsTpl[parentTplName].hasAttribute('data-tpl-value') ? parentsTpl[parentTplName] : Array.prototype.slice.call(parentsTpl[parentTplName].querySelectorAll('[data-tpl-value]'))
+                    parentsTpl[parentTplName].hasAttribute('data-tpl-value')
+                        ? parentsTpl[parentTplName]
+                        : Array.prototype.slice.call(parentsTpl[parentTplName].querySelectorAll('[data-tpl-value]'))
                 );
                 text   = text.concat(
-                    parentsContent[parentContentName].hasAttribute('data-tpl-text') ? parentsContent[parentContentName] : Array.prototype.slice.call(parentsContent[parentContentName].querySelectorAll('[data-tpl-text]'))
+                    parentsContent[parentContentName].hasAttribute('data-tpl-text')
+                        ? parentsContent[parentContentName]
+                        : Array.prototype.slice.call(parentsContent[parentContentName].querySelectorAll('[data-tpl-text]'))
                 );
             }
 
@@ -1185,7 +1195,10 @@ export class Form
                 const matches = document.getElementById(formId).querySelectorAll('[data-tpl-text="' + text[i].getAttribute('data-tpl-text') + '"');
                 const path    = text[i].hasAttribute('data-tpl-text-path') ? text[i].getAttribute('data-tpl-text-path') : null;
 
-                // todo: consider pulling this out because it exists like 3x2 = 6 times in a similar way or at least 3 times very similarly
+                /**
+                 * @todo Orange-Management/jsOMS#??? [t:question] [p:low] [d:medium]
+                 *  Consider pulling this out because it exists like 3x2 = 6 times in a similar way or at least 3 times very similarly
+                 */
                 const matchLength = matches.length;
                 for (let c = 0; c < matchLength; ++c) {
                     if (text[i].getAttribute('data-tpl-text').startsWith('http')
