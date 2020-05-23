@@ -147,7 +147,7 @@ export class UriFactory
             let pars = [];
             for (const a in comps) {
                 if (comps.hasOwnProperty(a) && comps[a] !== '' && comps[a] !== null) {
-                    pars.push(a + '=' + encodeURIComponent(comps[a]).replace(/%25/ig, '%'));
+                    pars.push(a + '=' + comps[a]);
                 }
             }
 
