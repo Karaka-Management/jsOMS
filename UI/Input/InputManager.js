@@ -1,6 +1,6 @@
 import { KeyboardManager } from '../../../jsOMS/UI/Input/Keyboard/KeyboardManager.js';
-import { MouseManager } from '../../../jsOMS/UI/Input/Mouse/MouseManager.js';
-import { VoiceManager } from '../../../jsOMS/UI/Input/Voice/VoiceManager.js';
+import { MouseManager }    from '../../../jsOMS/UI/Input/Mouse/MouseManager.js';
+import { VoiceManager }    from '../../../jsOMS/UI/Input/Voice/VoiceManager.js';
 
 /**
  * UI manager class.

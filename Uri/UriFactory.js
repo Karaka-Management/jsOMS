@@ -1,4 +1,4 @@
-import { HttpUri } from './HttpUri.js';
+import { HttpUri }  from './HttpUri.js';
 import { FormView } from './../Views//FormView.js';
 
 /**

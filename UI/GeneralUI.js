@@ -1,5 +1,5 @@
 
-import { UriFactory } from '../Uri/UriFactory.js';
+import { UriFactory }    from '../Uri/UriFactory.js';
 import { AdvancedInput } from './Component/AdvancedInput.js';
 
 /**

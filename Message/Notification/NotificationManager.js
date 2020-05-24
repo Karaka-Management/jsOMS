@@ -1,6 +1,6 @@
-import { AppNotification } from '../../../jsOMS/Message/Notification/App/AppNotification.js';
-import { BrowserNotification } from '../../../jsOMS/Message/Notification/Browser/BrowserNotification.js';
-import { NotificationType } from '../../../jsOMS/Message/Notification/NotificationType.js';
+import { AppNotification }     from '../../Message/Notification/App/AppNotification.js';
+import { BrowserNotification } from '../../Message/Notification/Browser/BrowserNotification.js';
+import { NotificationType }    from '../../Message/Notification/NotificationType.js';
 
 /**
  * Notification manager.

@@ -1,9 +1,9 @@
-import { Form } from '../UI/Component/Form.js';
-import { Tab } from '../UI/Component/Tab.js';
-import { Table } from '../UI/Component/Table.js';
+import { Form }          from '../UI/Component/Form.js';
+import { Tab }           from '../UI/Component/Tab.js';
+import { Table }         from '../UI/Component/Table.js';
 import { ActionManager } from '../UI/ActionManager.js';
-import { DragNDrop } from '../UI/DragNDrop.js';
-import { GeneralUI } from '../UI/GeneralUI.js';
+import { DragNDrop }     from '../UI/DragNDrop.js';
+import { GeneralUI }     from '../UI/GeneralUI.js';
 
 /**
  * UI manager for handling basic ui elements.
