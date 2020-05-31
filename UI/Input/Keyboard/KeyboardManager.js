@@ -22,8 +22,8 @@ export class KeyboardManager
     /**
      * Add input listener.
      *
-     * @param {string} element Container id
-     * @param {Array} keys Keyboard keys
+     * @param {string} element    Container id
+     * @param {Array} keys        Keyboard keys
      * @param {callback} callback Callback
      *
      * @return {void}
@@ -52,22 +52,23 @@ export class KeyboardManager
      */
     bind (element)
     {
-        const elements = document.querySelectorAll(element);
-        const self     = this,
+        const self     = this;
+        const elements = element === '' ? [document] : document.querySelectorAll(element),
             length     = elements.length;
-
 
         for (let i = 0; i < length; ++i) {
             elements[i].addEventListener('keydown', function keyBind(event)
             {
                 self.down.push(event.keyCode);
+                self.run(element, event);
             });
 
             elements[i].addEventListener('keyup', function keyBind(event)
             {
-                if (self.down.length > 0) {
-                    self.run(element, event);
-                    self.down = [];
+                let index = self.down.indexOf(event.keyCode);
+                while (index > -1) {
+                    self.down.splice(index, 1);
+                    index = self.down.indexOf(event.keyCode);
                 }
             });
         }
@@ -77,7 +78,7 @@ export class KeyboardManager
      * Execute callback based on key presses.
      *
      * @param {string} element Container id
-     * @param {Object} event Key event
+     * @param {Object} event   Key event
      *
      * @return {void}
      *
@@ -91,25 +92,35 @@ export class KeyboardManager
             throw 'Unexpected elmenet!';
         }
 
-        const actions = this.elements[element],
-            length    = actions.length,
-            keyLength = this.down.length;
-        let match     = false;
+        const actions = this.elements[element].concat(this.elements['']),
+            actionsLength = actions.length,
+            downKeyLength = this.down.length;
 
-        for (let i = 0; i < length; ++i) {
-            for (let j = 0; j < keyLength; ++j) {
-                if (actions[i].keys.indexOf(this.down[j]) === -1) {
+        for (let i = 0; i < actionsLength; ++i) {
+            const actionKeyLength = actions[i].keys.length;
+            let match             = true;
+
+            for (let j = 0; j < actionKeyLength; ++j) {
+                if (this.down.indexOf(actions[i].keys[j]) === -1) {
                     match = false;
 
                     break;
                 }
+            }
 
-                match = true;
+            if (match) {
+                for (let j = 0; j < downKeyLength; ++j) {
+                    if (actions[i].keys.indexOf(this.down[j]) === -1) {
+                        match = false;
+
+                        break;
+                    }
+                }
             }
 
             if (match) {
                 jsOMS.preventAll(event);
-                actions[i].callback();
+                actions[i].callback(event);
 
                 break;
             }

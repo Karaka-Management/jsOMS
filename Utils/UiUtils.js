@@ -133,14 +133,9 @@
      */
     jsOMS.preventAll = function (event)
     {
-        if (event.stopPropagation) {
-            event.stopPropagation();
-        } else {
-            event.cancelBubble = true;
-        }
-
         event.preventDefault();
-    };
+        event.stopImmediatePropagation();
+        event.cancelBubble = true;
 
     /**
      * Ready invoke
