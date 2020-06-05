@@ -92,7 +92,7 @@ export class KeyboardManager
             throw 'Unexpected elmenet!';
         }
 
-        const actions = this.elements[element].concat(this.elements['']),
+        const actions     = this.elements[element].concat(this.elements['']),
             actionsLength = actions.length,
             downKeyLength = this.down.length;
 
