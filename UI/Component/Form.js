@@ -213,8 +213,7 @@ export class Form
         const self = this;
 
         imageUpload.addEventListener('change', function () {
-            const formElement = document.getElementById(id);
-            const preview     = formElement.querySelector('img#preview-' + imageUpload.getAttribute('name'));
+            const preview = document.querySelector('#preview-' + imageUpload.getAttribute('name'));
 
             preview.src    = window.URL.createObjectURL(imageUpload.files[0]);
             preview.onload = function () {
