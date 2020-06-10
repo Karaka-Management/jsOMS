@@ -59,12 +59,18 @@ export class VoiceManager
         }
 
         this.recognition.onstart  = function() {};
+        this.recognition.addEventListener('end', this.recognition.start);
+
         this.recognition.onresult = function(event)
         {
             let result = jsOMS.trim(event.results[event.resultIndex][0].transcript);
 
-            if (self.commands.hasOwnProperty(result)) {
-                self.commands[result]();
+            const commands = Object.keys(self.commands);
+
+            for (let command of commands) {
+                if (result.startsWith(command)) {
+                    self.commands[command](result.substr(command.length).trim());
+                }
             }
         };
 
