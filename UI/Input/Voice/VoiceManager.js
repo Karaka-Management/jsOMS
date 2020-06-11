@@ -58,7 +58,7 @@ export class VoiceManager
             this.recognition.grammars = this.speechRecognitionList;
         }
 
-        this.recognition.onstart  = function() {};
+        this.recognition.onstart = function() {};
         this.recognition.addEventListener('end', this.recognition.start);
 
         this.recognition.onresult = function(event)
