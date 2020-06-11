@@ -770,6 +770,10 @@ export class Form
                 ? document.querySelector(formElement.getAttribute('data-update-content'))
                 : formElement.querySelector(formElement.getAttribute('data-update-content'));
 
+            if (formElement.getAttribute('data-id') !== null) {
+                UriFactory.setQuery('$id', formElement.getAttribute('data-id'));
+            }
+
             let values   = [];
             let text     = [];
             const newEle = [];
