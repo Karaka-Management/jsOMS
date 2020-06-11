@@ -115,6 +115,7 @@ export class Form
 
             for (let i = 0; i < length; ++i) {
                 let formId = forms[i].getAttribute('id');
+
                 if (typeof formId !== 'undefined' && formId !== null && typeof this.ignore[formId] === 'undefined') {
                     this.bindForm(formId);
                 }
@@ -432,7 +433,6 @@ export class Form
             for (let i = 0; i < selectorLength; ++i) {
                 // this handles selectors such as 'ancestor > child/or/sibling' and many more
                 const selector = selectors[i].trim(' ').split(' ');
-                const closest  = selector[0].trim();
 
                 let subSelector = '';
                 if (selector.length !== 0) {
@@ -766,10 +766,6 @@ export class Form
                 selectorLength = selectors.length;
             const updatableTpl = formElement.getAttribute('data-update-tpl').split(',');
 
-            const subMain = formElement.getAttribute('data-update-content').charAt(0) === '#'
-                ? document.querySelector(formElement.getAttribute('data-update-content'))
-                : formElement.querySelector(formElement.getAttribute('data-update-content'));
-
             if (formElement.getAttribute('data-id') !== null) {
                 UriFactory.setQuery('$id', formElement.getAttribute('data-id'));
             }
@@ -779,21 +775,26 @@ export class Form
             const newEle = [];
 
             for (let i = 0; i < selectorLength; ++i) {
+                selectors[i] = selectors[i].trim();
                 // this handles selectors such as 'ancestor > child/or/sibling' and many more
-                const selector = selectors[i].trim(' ').split(' ');
-                const closest  = selector[0].trim();
+                const selector  = !selectors[i].startsWith('#') ? selectors[i].split(' ') : [selectors[i]];
+                const selLength = selector.length;;
+                const closest   = selector[0].trim();
 
                 let subSelector = '';
-                if (selector.length !== 0) {
+                if (selLength > 1) {
                     selector.shift();
                     subSelector = selector.join(' ').trim();
                 }
 
-                parents.push(
-                    selector.length === 0
+                if (selLength === 1 && selector[0].startsWith('#')) {
+                    parents.push(document.querySelector(selector[0]));
+                } else {
+                    parents.push(selLength === 1
                         ? this.closest(closest)
                         : this.closest(closest).querySelector(subSelector)
-                );
+                    );
+                }
 
                 values = values.concat(
                         parents[i].hasAttribute('data-tpl-value')
@@ -1022,46 +1023,68 @@ export class Form
 
             // find all values, texts and parents for every selector
             for (let i = 0; i < selectorLength; ++i) {
+                selectors[i] = selectors[i].trim();
                 // todo: similar logic is in updatable Inline and probably in External... pull out?
                 // this handles selectors such as 'ancestor > child/or/sibling' and many more
-                let selector = selectors[i].trim(' ').split(' ');
-                let closest  = selector[0].trim();
+                let selector    = !selectors[i].startsWith('#') ? selectors[i].split(' ') : [selectors[i]];
+                const selLength = selector.length;;
+                let closest     = selector[0].trim();
 
                 // template elements (= elements which just got added due to the update/edit button, here the new data is stored)
                 // @todo i don't really remember how this works and why this was needed. Try to understand it and write a comment afterwards
                 let subSelector = '';
-                if (selector.length !== 0) {
+                if (selLength > 1) {
                     selector.shift();
                     subSelector = selector.join(' ').trim() + '[data-marker=tpl]';
                 } else {
                     closest += '[data-marker=tpl]';
                 }
 
-                const parentTplName = selector.length === 0 ? closest : closest + subSelector;
+                let parentTplName;
+                if (selLength === 1 && selector[0].startsWith('#')) {
+                    parentTplName = selector[0] + '[data-marker=tpl]';
+                } else {
+                    parentTplName = selLength === 1 ? closest : closest + subSelector;
+                }
+
                 if (!parentsTpl.hasOwnProperty(parentTplName)) {
-                    parentsTpl[parentTplName] = selector.length === 0
+                    if (selLength === 1 && selector[0].startsWith('#')) {
+                        parentsTpl[parentTplName] = document.querySelector(selector[0]).parentNode;
+                    } else {
+                        parentsTpl[parentTplName] = selLength === 1
                         ? this.closest(closest)
                         : this.closest(closest).querySelector(subSelector);
-                    /* @todo: parentNode because of media edit. maybe I need a data-ui-parent element? */
+                        /* @todo: parentNode because of media edit. maybe I need a data-ui-parent element? */
+                    }
                 }
 
                 // content elements
-                selector    = selectors[i].trim(' ').split(' ');
+                selector    = !selectors[i].startsWith('#') ? selectors[i].split(' ') : [selectors[i]];
                 closest     = selector[0].trim();
                 subSelector = '';
-                if (selector.length !== 0) {
+                if (selLength > 1) {
                     selector.shift();
                     subSelector = selector.join(' ').trim() + ':not([data-marker=tpl])';
                 } else {
                     closest += ':not([data-marker=tpl])';
                 }
 
-                const parentContentName = selector.length === 0 ? closest : closest + subSelector;
+                let parentContentName;
+                if (selLength === 1 && selector[0].startsWith('#')) {
+                    parentContentName = selector[0] + ':not([data-marker=tpl])';
+                } else {
+                    parentContentName = selLength === 1 ? closest : closest + subSelector;
+                }
+
                 if (!parentsContent.hasOwnProperty(parentContentName)) {
-                    parentsContent[parentContentName] = selector.length === 0
+                    if (selLength === 1 && selector[0].startsWith('#')) {
+                        parentsContent[parentContentName] = document.querySelector(selector[0]).parentNode;
+                    } else {
+                        parentsContent[parentContentName] = selLength === 1
                         ? this.closest(closest)
                         : this.closest(closest).querySelector(subSelector).parentNode;
-                    /* @todo: parentNode because of media edit. maybe I need a data-ui-parent element? */
+                        /* @todo: parentNode because of media edit. maybe I need a data-ui-parent element? */
+                    }
                 }
 
                 values = values.concat(
@@ -1212,17 +1235,28 @@ export class Form
         const selectors    = formElement.getAttribute('data-update-element').split(','),
             selectorLength = selectors.length;
 
+
+
         for (let i = 0; i < selectorLength; ++i) {
-            let selector = selectors[i].trim(' ').split(' ');
-            let closest  = selector[0].trim();
+            selectors[i] = selectors[i].trim();
+
+            const selector  = !selectors[i].startsWith('#') ? selectors[i].split(' ') : [selectors[i]];
+            const selLength = selector.length;;
+            const closest   = selector[0].trim();
 
             let subSelector = '';
-            if (selector.length !== 0) {
+            if (selLength > 1) {
                 selector.shift();
                 subSelector = selector.join(' ').trim();
             }
 
-            let content    = selector.length === 0 ? ele.closest(closest) : ele.closest(closest).querySelector(subSelector);
+            let content;
+            if (selLength === 1 && selector[0].startsWith('#')) {
+                content = document.querySelector(selector[0]);
+            } else {
+                content = selLength === 1 ? ele.closest(closest) : ele.closest(closest).querySelector(subSelector);
+            }
+
             const tpls     = content.parentNode.querySelectorAll('[data-marker=tpl]'),
                 tplsLength = tpls.length;
 
@@ -1230,7 +1264,12 @@ export class Form
                 tpls[j].parentNode.removeChild(tpls[j]);
             }
 
-            content = selector.length === 0 ? ele.closest(closest) : ele.closest(closest).querySelector(subSelector);
+            if (selLength === 1 && selector[0].startsWith('#')) {
+                content = document.querySelector(selector[0]);
+            } else {
+                content = selLength === 1 ? ele.closest(closest) : ele.closest(closest).querySelector(subSelector);
+            }
+
             jsOMS.removeClass(content, 'hidden');
         }
 
