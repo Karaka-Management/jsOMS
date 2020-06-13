@@ -59,7 +59,8 @@ export class VoiceManager
         }
 
         this.recognition.onstart = function() {};
-        this.recognition.addEventListener('end', this.recognition.start);
+        // @todo find a way to run a re-init after end every x seconds (where x = 3 or 5 seconds)
+        //this.recognition.addEventListener('end', reset(function() {return self.recognition.start}, 3000));
 
         this.recognition.onresult = function(event)
         {
