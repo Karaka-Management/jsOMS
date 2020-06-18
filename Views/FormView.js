@@ -1,4 +1,4 @@
-import { Input } from '/jsOMS/UI/Component/Input.js';
+import { Input } from '../UI/Component/Input.js';
 
 /**
  * Form view.
