@@ -34,6 +34,9 @@ export class Request
         this.data          = {};
 
         this.requestHeader['Content-Type'] = this.setContentTypeBasedOnType(this.type);
+        if (this.type === RequestType.FORM_DATA) {
+            delete this.requestHeader['Content-Type']
+        }
 
         this.result[0] = function(xhr)
         {
@@ -304,6 +307,10 @@ export class Request
     {
         this.type                          = type;
         this.requestHeader['Content-Type'] = this.setContentTypeBasedOnType(this.type);
+
+        if (this.type === RequestType.FORM_DATA) {
+            delete this.requestHeader['Content-Type']
+        }
     };
 
     /**
