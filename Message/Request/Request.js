@@ -35,7 +35,7 @@ export class Request
 
         this.requestHeader['Content-Type'] = this.setContentTypeBasedOnType(this.type);
         if (this.type === RequestType.FORM_DATA) {
-            delete this.requestHeader['Content-Type']
+            delete this.requestHeader['Content-Type'];
         }
 
         this.result[0] = function(xhr)
@@ -197,6 +197,10 @@ export class Request
     setRequestHeader(type, header)
     {
         this.requestHeader[type] = header;
+
+        if (header === 'multipart/form-data') {
+            delete this.requestHeader[type];
+        }
     };
 
     /**
@@ -309,7 +313,7 @@ export class Request
         this.requestHeader['Content-Type'] = this.setContentTypeBasedOnType(this.type);
 
         if (this.type === RequestType.FORM_DATA) {
-            delete this.requestHeader['Content-Type']
+            delete this.requestHeader['Content-Type'];
         }
     };
 
