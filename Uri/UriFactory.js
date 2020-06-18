@@ -1,5 +1,5 @@
 import { HttpUri }  from './HttpUri.js';
-import { FormView } from './../Views//FormView.js';
+import { FormView } from './../Views/FormView.js';
 
 /**
  * Uri factory.
