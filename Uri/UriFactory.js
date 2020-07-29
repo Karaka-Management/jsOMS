@@ -189,7 +189,7 @@ export class UriFactory
     static build (uri, toMatch)
     {
         const current = HttpUri.parseUrl(window.location.href);
-        let parsed    = uri.replace(new RegExp('\{[\/#\?%@\.\$][a-zA-Z0-9\-]*\}', 'g'), function (match)
+        let parsed    = uri.replace(new RegExp('\{[\/#\?%@\.\$\!][a-zA-Z0-9\-\#\.]*\}', 'g'), function (match)
             {
                 match = match.substr(1, match.length - 2);
 
