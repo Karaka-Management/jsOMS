@@ -197,8 +197,8 @@ export class UriFactory
                     return toMatch[match];
                 } else if (typeof UriFactory.uri[match] !== 'undefined') {
                     return UriFactory.uri[match];
-                } else if (match.indexOf('#') === 0) {
-                    const e = document.getElementById(match.substr(1));
+                } else if (match.indexOf('!') === 0) {
+                    const e = document.querySelector(match.substr(1));
 
                     if (!e) {
                         return '';
@@ -218,6 +218,8 @@ export class UriFactory
                     return value;
                 } else if (match.indexOf('?') === 0) {
                     return HttpUri.getUriQueryParameter(current.query, match.substr(1));
+                } else if (match.indexOf('#') === 0) {
+                    return HttpUri.getFragment();
                 } else if (match.indexOf('/') === 0) {
                     return 'ERROR PATH';
                 } else if (match === '%') {
