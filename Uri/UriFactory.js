@@ -219,7 +219,15 @@ export class UriFactory
                 } else if (match.indexOf('?') === 0) {
                     return HttpUri.getUriQueryParameter(current.query, match.substr(1));
                 } else if (match.indexOf('#') === 0) {
-                    return HttpUri.getFragment();
+                    return current.fragment;
+                } else if (match.indexOf('?') === 0) {
+                    return current.query();
+                } else if (match.indexOf('/') === 0) {
+                    return current.path;
+                } else if (match.indexOf(':user') === 0) {
+                    return current.user;
+                } else if (match.indexOf(':pass') === 0) {
+                    return current.pass;
                 } else if (match.indexOf('/') === 0) {
                     return 'ERROR PATH';
                 } else if (match === '%') {
@@ -248,15 +256,10 @@ export class UriFactory
         UriFactory.setQuery('/scheme', uri.getScheme());
         UriFactory.setQuery('/host', uri.getHost());
         UriFactory.setQuery('/base', jsOMS.rtrim(uri.getBase(), '/'));
-        UriFactory.setQuery('?', uri.getQuery());
-        UriFactory.setQuery('%', uri.getUri());
-        UriFactory.setQuery('#', uri.getFragment());
-        UriFactory.setQuery('/', uri.getPath());
-        UriFactory.setQuery(':user', uri.getUser());
-        UriFactory.setQuery(':pass', uri.getPass());
 
         const query = uri.getQuery();
 
+        // @todo consider to move this to the build function like all the other components. The reason for this is that JS may change the query values on the fly on the frontend and therefore these values will not be the current values!
         for (const key in query) {
             if (query.hasOwnProperty(key)) {
                 UriFactory.setQuery('?' + key, query[key]);
