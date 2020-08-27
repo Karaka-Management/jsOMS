@@ -234,8 +234,10 @@
     {
         return typeof ele !== 'undefined'
             && ele !== null
-            && typeof ele.className !== 'undefined'
-            && ele.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)')) !== null;
+            && ((typeof ele.className === 'string'
+                    && ele.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)')) !== null)
+                || (typeof ele.className.baseVal === 'string'
+                    && ele.className.baseVal.match(new RegExp('(\\s|^)' + cls + '(\\s|$)')) !== null));
     };
 
     /**
@@ -253,7 +255,11 @@
     jsOMS.addClass = function (ele, cls)
     {
         if (!jsOMS.hasClass(ele, cls)) {
-            ele.className += ele.className !== '' ? " " + cls : cls;
+            if (typeof ele.className === 'string') {
+                ele.className += ele.className !== '' ? " " + cls : cls;
+            } else if (typeof ele.className.baseVal === 'string') {
+                ele.className.baseVal += ele.className.baseVal !== '' ? ' ' + cls : cls;
+            }
         }
     };
 
@@ -273,7 +279,12 @@
     {
         if (jsOMS.hasClass(ele, cls)) {
             const reg     = new RegExp('(\\s|^)' + cls + '(\\s|$)');
-            ele.className = ele.className.replace(reg, '');
+
+            if (typeof ele.className === 'string') {
+                ele.className = ele.className.replace(reg, '');
+            } else if (typeof ele.className.baseVal === 'string') {
+                ele.className.baseVal = ele.className.baseVal.replace(reg, '');
+            }
         }
     };
 
