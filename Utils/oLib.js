@@ -278,7 +278,7 @@
     jsOMS.removeClass = function (ele, cls)
     {
         if (jsOMS.hasClass(ele, cls)) {
-            const reg     = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+            const reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
 
             if (typeof ele.className === 'string') {
                 ele.className = ele.className.replace(reg, '');

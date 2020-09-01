@@ -778,7 +778,7 @@ export class Form
                 selectors[i] = selectors[i].trim();
                 // this handles selectors such as 'ancestor > child/or/sibling' and many more
                 const selector  = !selectors[i].startsWith('#') ? selectors[i].split(' ') : [selectors[i]];
-                const selLength = selector.length;;
+                const selLength = selector.length;
                 const closest   = selector[0].trim();
 
                 let subSelector = '';
@@ -1027,7 +1027,7 @@ export class Form
                 // todo: similar logic is in updatable Inline and probably in External... pull out?
                 // this handles selectors such as 'ancestor > child/or/sibling' and many more
                 let selector    = !selectors[i].startsWith('#') ? selectors[i].split(' ') : [selectors[i]];
-                const selLength = selector.length;;
+                const selLength = selector.length;
                 let closest     = selector[0].trim();
 
                 // template elements (= elements which just got added due to the update/edit button, here the new data is stored)
@@ -1241,7 +1241,7 @@ export class Form
             selectors[i] = selectors[i].trim();
 
             const selector  = !selectors[i].startsWith('#') ? selectors[i].split(' ') : [selectors[i]];
-            const selLength = selector.length;;
+            const selLength = selector.length;
             const closest   = selector[0].trim();
 
             let subSelector = '';
