@@ -224,8 +224,6 @@ export class Table
     {
         sorting.addEventListener('click', function (event)
         {
-            jsOMS.preventAll(event);
-
             const table   = document.getElementById(id),
                 rows      = table.getElementsByTagName('tbody')[0].rows,
                 rowLength = rows.length,
@@ -251,11 +249,11 @@ export class Table
                 for (j = 0; j < rowLength - 1; ++j) {
                     shouldSwitch = false;
                     row1         = rows[j].getElementsByTagName('td')[cellId];
-                    content1     = row1.getAttribute('data-content') !== null ? row1.getAttribute('data-content') : row1.textContent;
+                    content1     = row1.getAttribute('data-content') !== null ? row1.getAttribute('data-content').toLowerCase() : row1.textContent.toLowerCase();
 
                     for (i = j + 1; i < rowLength; ++i) {
                         row2     = rows[i].getElementsByTagName('td')[cellId];
-                        content2 = row2.getAttribute('data-content') !== null ? row2.getAttribute('data-content') : row2.textContent;
+                        content2 = row2.getAttribute('data-content') !== null ? row2.getAttribute('data-content').toLowerCase() : row2.textContent.toLowerCase();
 
                         if (sortType === 1 && content1 > content2) {
                             shouldSwitch = true;
