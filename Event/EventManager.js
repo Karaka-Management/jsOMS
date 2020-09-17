@@ -88,38 +88,53 @@ export class EventManager
     };
 
     /**
-     * Trigger event finished
+     * Trigger event based on regex for group and/or id
      *
-     * Executes the callback specified for this group if all events are finished
-     *
-     * @param {string|int} group  Group id
-     * @param {string|int} [id]   Event id
+     * @param {string|int} group  Group id (can be regex)
+     * @param {string|int} [id]   Event id (can be regex)
      * @param {Object}     [data] Data for event
      *
      * @return {boolean}
      *
      * @since 1.0.0
      */
-    trigger (group, id = '', data = null)
+    triggerSimilar (group, id = '', data = null)
     {
-        if (this.callbacks.hasOwnProperty(group)) {
-            return this.triggerSingleEvent(group, id, data);
+        const groupIsRegex = group.startsWith('/');
+        const idIsRegex    = id.startsWith('/');
+
+        const groups = {};
+        if (groupIsRegex) {
+            for (const groupName in this.groups) {
+                if (groupName.match(group)) {
+                    groups[groupName] = [];
+                }
+            }
+        } else {
+            groups[group] = [];
         }
 
-        const allGroups = Object.keys(this.callbacks),
-            regex       = new RegExp(group),
-            length      = allGroups.length;
-
-        let result = false;
-
-        for (let i = 0; i < length; ++i) {
-            if (regex.test(allGroups[i])) {
-                result = result && this.triggerSingleEvent(allGroups[i], id, data);
+        for (const groupName in groups) {
+            if (idIsRegex) {
+                for (const idName in this.groups[groupName]) {
+                    if (idName.match(id)) {
+                        groups[groupName].push(idName);
+                    }
+                }
+            } else {
+                groups[groupName].push(id);
             }
         }
 
-        return result;
-    };
+        let triggerValue = false;
+        for (const groupName in groups) {
+            for (const id in groups[groupName]) {
+                triggerValue = triggerValue || this.trigger(groupName, id, data);
+            }
+        }
+
+        return triggerValue;
+    }
 
     /**
      * Trigger event finished
@@ -134,8 +149,12 @@ export class EventManager
      *
      * @since 1.0.0
      */
-    triggerSingleEvent (group, id = '', data = null)
+    trigger (group, id = '', data = null)
     {
+        if (typeof this.callback[group] === 'undefined') {
+            return false;
+        }
+
         if (Math.abs(Date.now() - this.callbacks[group].lastRun) < 500) {
             return false;
         }
