@@ -151,7 +151,7 @@ export class EventManager
      */
     trigger (group, id = '', data = null)
     {
-        if (typeof this.callback[group] === 'undefined') {
+        if (typeof this.callbacks[group] === 'undefined') {
             return false;
         }
 
