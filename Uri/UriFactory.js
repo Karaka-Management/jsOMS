@@ -218,8 +218,26 @@ export class UriFactory
                     return value;
                 } else if (match.indexOf('?') === 0) {
                     return HttpUri.getUriQueryParameter(current.query, match.substr(1));
-                } else if (match.indexOf('#') === 0) {
+                } else if (match === '#') {
                     return current.fragment;
+                } else if (match.indexOf('#') === 0) {
+                    const e = document.getElementById(match.substr(1));
+                    if (e) {
+                        if (e.tagName.toLowerCase() !== 'form') {
+                            return e.value;
+                        }
+
+                        let value  = '';
+                        const form = (new FormView(e.id)).getData();
+
+                        for (let pair of form.entries()) {
+                            value += '&' + pair[0] + '=' + pair[1];
+                        }
+
+                        return value;
+                    }
+
+                    return '';
                 } else if (match.indexOf('?') === 0) {
                     return current.query();
                 } else if (match.indexOf('/') === 0) {
