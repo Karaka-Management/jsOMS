@@ -306,7 +306,7 @@ export class FormView
             canvas         = form.getElementsByTagName('canvas'),
             external       = [].slice.call(document.querySelectorAll(':not(#' + this.id + ') [form=' + this.id + ']')),
             special        = form.querySelectorAll('[data-name]'),
-            specialExt     = document.querySelectorAll('[data-form=' + this.id + '] [data-name]'),
+            specialExt     = document.querySelectorAll(':not(#' + this.id + ') [data-form=' + this.id + ']'),
             inputLength    = inputs.length,
             externalLength = external.length,
             specialLength  = specialExt.length;
@@ -408,6 +408,32 @@ export class FormView
                 for (let j = 0; j < filesLength; ++j) {
                     formData.append(id + j, elements[i].files[j]);
                 }
+            } else if (elements[i].tagName.toLowerCase() === 'iframe') {
+                const iframeElements = Array.prototype.slice.call(
+                        elements[i].contentWindow.document.querySelectorAll('[form=' + this.id + ']')
+                    ).concat(
+                        Array.prototype.slice.call(
+                            elements[i].contentWindow.document.querySelectorAll('[data-form=' + this.id + '] [data-name]')
+                        )
+                    ).filter(function(val) { return val; });
+
+                const iframeLength = iframeElements.length;
+                for (let j = 0; j < iframeLength; ++j) {
+                    value = iframeElements[j].value;
+
+                    const iframeId = FormView.getElementId(iframeElements[j]);
+                    if (data.hasOwnProperty(iframeId)) {
+                        if (data[iframeId].constructor !== Array) {
+                            data[iframeId] = [data[iframeId]];
+                        }
+
+                        data[iframeId].push(value);
+                    } else {
+                        data[iframeId] = value;
+                    }
+                }
+
+                continue;
             } else {
                 if (typeof elements[i].value !== 'undefined') {
                     value = elements[i].value;
