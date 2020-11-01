@@ -98,13 +98,10 @@ export class GeneralUI
         const length = e.length;
 
         for (let i = 0; i < length; ++i) {
-            if (e[i].contentWindow.document.readyState === 'complete') {
-                e[i].height = e[i].contentWindow.document.body.scrollHeight + 25;
-            } else {
-                e[i].addEventListener('load', function() {
-                    this.height = this.contentWindow.document.body.scrollHeight + 25;
-                });
-            }
+            e[i].height = e[i].contentWindow.document.body.scrollHeight + 25;
+            e[i].addEventListener('load', function() {
+                this.height = this.contentWindow.document.body.scrollHeight + 25;
+            });
         }
     }
 
