@@ -126,32 +126,33 @@ export class UriFactory
      */
     static unique (url)
     {
-        // unique queries
-        const parts = url.replace(/\?/g, '&').split('&'),
-            full    = parts[0];
+        const parsed = HttpUri.parseUrl(url);
+        if (parsed.hasOwnProperty('query')) {
+            // unique queries
+            const parts = parsed.query.replace(/\?/g, '&').split('&'),
+                full    = parts[0];
 
-        // @todo: handle fragment
+            if (parts.length > 1) {
+                parts.shift();
 
-        if (parts.length > 1) {
-            parts.shift();
+                let comps  = {},
+                    spl    = null,
+                    length = parts.length;
 
-            let comps  = {},
-                spl    = null,
-                length = parts.length;
-
-            for (let i = 0; i < length; ++i) {
-                spl           = parts[i].split('=');
-                comps[spl[0]] = spl[1];
-            }
-
-            let pars = [];
-            for (const a in comps) {
-                if (comps.hasOwnProperty(a) && comps[a] !== '' && comps[a] !== null) {
-                    pars.push(a + '=' + (comps[a].includes('%') ? comps[a] : encodeURIComponent(comps[a])));
+                for (let i = 0; i < length; ++i) {
+                    spl           = parts[i].split('=');
+                    comps[spl[0]] = spl[1];
                 }
-            }
 
-            url = full + '?' + pars.join('&');
+                let pars = [];
+                for (const a in comps) {
+                    if (comps.hasOwnProperty(a) && comps[a] !== '' && comps[a] !== null) {
+                        pars.push(a + '=' + (comps[a].includes('%') ? comps[a] : encodeURIComponent(comps[a])));
+                    }
+                }
+
+                url = full + '?' + pars.join('&');
+            }
         }
 
         // unique fragments
