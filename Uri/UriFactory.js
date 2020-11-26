@@ -126,33 +126,30 @@ export class UriFactory
      */
     static unique (url)
     {
-        const parsed = HttpUri.parseUrl(url);
-        if (parsed.hasOwnProperty('query')) {
+        if (url.includes('?')) {
+            const parsed = HttpUri.parseUrl(url);
+
             // unique queries
             const parts = parsed.query.replace(/\?/g, '&').split('&'),
-                full    = parts[0];
+                full = url.split('?')[0],
+                pars = [];
 
-            if (parts.length > 1) {
-                parts.shift();
+            let comps  = {},
+                spl    = null,
+                length = parts.length;
 
-                let comps  = {},
-                    spl    = null,
-                    length = parts.length;
-
-                for (let i = 0; i < length; ++i) {
-                    spl           = parts[i].split('=');
-                    comps[spl[0]] = spl[1];
-                }
-
-                let pars = [];
-                for (const a in comps) {
-                    if (comps.hasOwnProperty(a) && comps[a] !== '' && comps[a] !== null) {
-                        pars.push(a + '=' + (comps[a].includes('%') ? comps[a] : encodeURIComponent(comps[a])));
-                    }
-                }
-
-                url = full + '?' + pars.join('&');
+            for (let i = 0; i < length; ++i) {
+                spl           = parts[i].split('=');
+                comps[spl[0]] = spl[1];
             }
+
+            for (const a in comps) {
+                if (comps.hasOwnProperty(a) && comps[a] !== '' && comps[a] !== null) {
+                    pars.push(a + '=' + (comps[a].includes('%') ? comps[a] : encodeURIComponent(comps[a])));
+                }
+            }
+
+            url = full + '?' + pars.join('&');
         }
 
         // unique fragments
