@@ -131,8 +131,8 @@ export class UriFactory
 
             // unique queries
             const parts = parsed.query.replace(/\?/g, '&').split('&'),
-                full = url.split('?')[0],
-                pars = [];
+                full    = url.split('?')[0],
+                pars    = [];
 
             let comps  = {},
                 spl    = null,
