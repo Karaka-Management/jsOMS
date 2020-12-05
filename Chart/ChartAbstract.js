@@ -324,25 +324,23 @@
             let div = this.chartSelect.append("div").attr("class", "charttooltip").style("opacity", 0);
             div.html(self.axis.x.label.text + ': ' + 100 + "<br/>" + self.axis.y.label.text + ': ' + 100);
 
-            temp.on("mouseover", function (d)
-                {
-                    let dim = div.node().getBoundingClientRect();
-                    let pos = this.getBoundingClientRect();
+            temp.on("mouseover", function (d) {
+                let dim = div.node().getBoundingClientRect();
+                let pos = this.getBoundingClientRect();
 
-                    div.transition()
-                        .duration(200)
-                        .style("opacity", .9);
+                div.transition()
+                    .duration(200)
+                    .style("opacity", .9);
 
-                    div.html(self.axis.x.label.text + ': ' + d.x + "<br/>" + self.axis.y.label.text + ': ' + d.y)
-                    .style("left", (x(d.x) + dim.width / 2) + "px")
-                    .style("top", (y(d.y) + dim.height) + "px");
-                })
-                .on("mouseout", function (d)
-                {
-                    div.transition()
-                        .duration(500)
-                        .style("opacity", 0);
-                });
+                div.html(self.axis.x.label.text + ': ' + d.x + "<br/>" + self.axis.y.label.text + ': ' + d.y)
+                .style("left", (x(d.x) + dim.width / 2) + "px")
+                .style("top", (y(d.y) + dim.height) + "px");
+            })
+            .on("mouseout", function (d) {
+                div.transition()
+                    .duration(500)
+                    .style("opacity", 0);
+            });
         }
     };
 

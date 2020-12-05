@@ -11,13 +11,13 @@ export function timerAction (action, callback, data)
 {
     "use strict";
 
-   if (timerActionDelay[action.id]) {
-       clearTimeout(timerActionDelay[action.id]);
-       delete timerActionDelay[action.id]
-   }
+    if (timerActionDelay[action.id]) {
+        clearTimeout(timerActionDelay[action.id]);
+        delete timerActionDelay[action.id]
+    }
 
-   timerActionDelay[action.id] = setTimeout(function() {
-       delete timerActionDelay[action.id];
-       callback(data);
+    timerActionDelay[action.id] = setTimeout(function() {
+        delete timerActionDelay[action.id];
+        callback(data);
     }, action.delay);
 };

@@ -586,7 +586,7 @@ export class FormView
         const elements = this.getFormElements(),
             length     = elements.length;
 
-            for (let i = 0; i < length; ++i) {
+        for (let i = 0; i < length; ++i) {
             switch (elements[i].tagName.toLowerCase()) {
                 case 'input':
                     Input.bindElement(elements[i]);

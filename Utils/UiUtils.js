@@ -136,6 +136,7 @@
         event.preventDefault();
         event.stopImmediatePropagation();
         event.cancelBubble = true;
+    };
 
     /**
      * Ready invoke

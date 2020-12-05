@@ -85,65 +85,65 @@
             let year   = d.split('-')[0],
                 length = self.chart.dataset.length;
 
-                for (let i = 0; i < length; ++i) {
-                    if (self.chart.dataset[i].name != year) {
-                        continue;
-                    }
-
-                    let dataLength = self.chart.dataset[i].points.length;
-
-                    for (let j = 0; j < dataLength; ++j) {
-                        if (self.chart.dataset[i].points[j].x === d) {
-                            return true;
-                        }
-                    }
-
-                    return false;
+            for (let i = 0; i < length; ++i) {
+                if (self.chart.dataset[i].name != year) {
+                    continue;
                 }
 
-              return false;
+                let dataLength = self.chart.dataset[i].points.length;
+
+                for (let j = 0; j < dataLength; ++j) {
+                    if (self.chart.dataset[i].points[j].x === d) {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
+            return false;
         })
-            .attr("class", function(d) {
-                let year = d.split('-')[0],
-                length   = self.chart.dataset.length;
+        .attr("class", function(d) {
+            let year = d.split('-')[0],
+            length   = self.chart.dataset.length;
 
-                for (let i = 0; i < length; ++i) {
-                    if (self.chart.dataset[i].name != year) {
-                        continue;
-                    }
-
-                    let dataLength = self.chart.dataset[i].points.length;
-
-                    for (let j = 0; j < dataLength; ++j) {
-                        if (self.chart.dataset[i].points[j].x === d) {
-                             return "day " + self.chart.color(self.chart.dataset[i].points[j].y);
-                        }
-                    }
-
-                    throw "Should not happen";
+            for (let i = 0; i < length; ++i) {
+                if (self.chart.dataset[i].name != year) {
+                    continue;
                 }
-            })
-            .select("title")
-            .text(function(d) {
-                let year = d.split('-')[0],
-                length   = self.chart.dataset.length;
 
-                for (let i = 0; i < length; ++i) {
-                    if (self.chart.dataset[i].name != year) {
-                        continue;
+                let dataLength = self.chart.dataset[i].points.length;
+
+                for (let j = 0; j < dataLength; ++j) {
+                    if (self.chart.dataset[i].points[j].x === d) {
+                         return "day " + self.chart.color(self.chart.dataset[i].points[j].y);
                     }
-
-                    let dataLength = self.chart.dataset[i].points.length;
-
-                    for (let j = 0; j < dataLength; ++j) {
-                        if (self.chart.dataset[i].points[j].x === d) {
-                             return d + ": " + self.chart.dataset[i].points[j].y;
-                        }
-                    }
-
-                    throw "Should not happen";
                 }
-            });
+
+                throw "Should not happen";
+            }
+        })
+        .select("title")
+        .text(function(d) {
+            let year = d.split('-')[0],
+            length   = self.chart.dataset.length;
+
+            for (let i = 0; i < length; ++i) {
+                if (self.chart.dataset[i].name != year) {
+                    continue;
+                }
+
+                let dataLength = self.chart.dataset[i].points.length;
+
+                for (let j = 0; j < dataLength; ++j) {
+                    if (self.chart.dataset[i].points[j].x === d) {
+                         return d + ": " + self.chart.dataset[i].points[j].y;
+                    }
+                }
+
+                throw "Should not happen";
+            }
+        });
     };
 
     jsOMS.Chart.CalendarChart.prototype.redraw = function ()

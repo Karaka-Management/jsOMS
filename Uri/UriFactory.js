@@ -187,21 +187,39 @@ export class UriFactory
     static build (uri, toMatch)
     {
         const current = HttpUri.parseUrl(window.location.href);
-        let parsed    = uri.replace(new RegExp('\{[\/#\?%@\.\$\!][a-zA-Z0-9\-\#\.]*\}', 'g'), function (match)
-            {
-                match = match.substr(1, match.length - 2);
+        let parsed    = uri.replace(new RegExp('\{[\/#\?%@\.\$\!][a-zA-Z0-9\-\#\.]*\}', 'g'), function (match) {
+            match = match.substr(1, match.length - 2);
 
-                if (typeof toMatch !== 'undefined' && toMatch.hasOwnProperty(match)) {
-                    return toMatch[match];
-                } else if (typeof UriFactory.uri[match] !== 'undefined') {
-                    return UriFactory.uri[match];
-                } else if (match.indexOf('!') === 0) {
-                    const e = document.querySelector(match.substr(1));
+            if (typeof toMatch !== 'undefined' && toMatch.hasOwnProperty(match)) {
+                return toMatch[match];
+            } else if (typeof UriFactory.uri[match] !== 'undefined') {
+                return UriFactory.uri[match];
+            } else if (match.indexOf('!') === 0) {
+                const e = document.querySelector(match.substr(1));
 
-                    if (!e) {
-                        return '';
-                    }
+                if (!e) {
+                    return '';
+                }
 
+                if (e.tagName.toLowerCase() !== 'form') {
+                    return e.value;
+                }
+
+                let value  = '';
+                const form = (new FormView(e.id)).getData();
+
+                for (let pair of form.entries()) {
+                    value += '&' + pair[0] + '=' + pair[1];
+                }
+
+                return value;
+            } else if (match.indexOf('?') === 0) {
+                return HttpUri.getUriQueryParameter(current.query, match.substr(1));
+            } else if (match === '#') {
+                return current.fragment;
+            } else if (match.indexOf('#') === 0) {
+                const e = document.getElementById(match.substr(1));
+                if (e) {
                     if (e.tagName.toLowerCase() !== 'form') {
                         return e.value;
                     }
@@ -214,44 +232,25 @@ export class UriFactory
                     }
 
                     return value;
-                } else if (match.indexOf('?') === 0) {
-                    return HttpUri.getUriQueryParameter(current.query, match.substr(1));
-                } else if (match === '#') {
-                    return current.fragment;
-                } else if (match.indexOf('#') === 0) {
-                    const e = document.getElementById(match.substr(1));
-                    if (e) {
-                        if (e.tagName.toLowerCase() !== 'form') {
-                            return e.value;
-                        }
-
-                        let value  = '';
-                        const form = (new FormView(e.id)).getData();
-
-                        for (let pair of form.entries()) {
-                            value += '&' + pair[0] + '=' + pair[1];
-                        }
-
-                        return value;
-                    }
-
-                    return '';
-                } else if (match.indexOf('?') === 0) {
-                    return current.query();
-                } else if (match.indexOf('/') === 0) {
-                    return current.path;
-                } else if (match.indexOf(':user') === 0) {
-                    return current.user;
-                } else if (match.indexOf(':pass') === 0) {
-                    return current.pass;
-                } else if (match.indexOf('/') === 0) {
-                    return 'ERROR PATH';
-                } else if (match === '%') {
-                    return window.location.href;
-                } else {
-                    return match;
                 }
-            });
+
+                return '';
+            } else if (match.indexOf('?') === 0) {
+                return current.query();
+            } else if (match.indexOf('/') === 0) {
+                return current.path;
+            } else if (match.indexOf(':user') === 0) {
+                return current.user;
+            } else if (match.indexOf(':pass') === 0) {
+                return current.pass;
+            } else if (match.indexOf('/') === 0) {
+                return 'ERROR PATH';
+            } else if (match === '%') {
+                return window.location.href;
+            } else {
+                return match;
+            }
+        });
 
         if (parsed.indexOf('?') === -1) {
             parsed = parsed.replace('&', '?');
