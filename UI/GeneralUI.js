@@ -98,7 +98,10 @@ export class GeneralUI
         const length = e.length;
 
         for (let i = 0; i < length; ++i) {
-            e[i].height = e[i].contentWindow.document.body.scrollHeight + 25;
+            if (e[i].contentWindow.document.body !== null) {
+                e[i].height = e[i].contentWindow.document.body.scrollHeight + 25;
+            }
+
             e[i].addEventListener('load', function() {
                 this.height = this.contentWindow.document.body.scrollHeight + 25;
             });
