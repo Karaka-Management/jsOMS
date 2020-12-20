@@ -71,7 +71,7 @@ export class Tab
                 /* Remove selected tab */
                 const oldActive = this.parentNode.getElementsByClassName('active');
                 if (oldActive.length > 0) {
-                    let fragments = fragmentString.split(',');
+                    let fragments = fragmentString.split('&');
                     const index   = fragments.indexOf(oldActive[0].getElementsByTagName('label')[0].getAttribute('for'));
 
                     if (index > -1) {
@@ -79,12 +79,12 @@ export class Tab
                     }
 
                     // find old active and remove it
-                    fragmentString = fragments.join(',');
+                    fragmentString = fragments.join('&');
 
                     jsOMS.removeClass(oldActive[0], 'active');
                 }
 
-                let fragments = fragmentString.split(',');
+                let fragments = fragmentString.split('&');
                 const index   = fragments.indexOf(this.getElementsByTagName('label')[0].getAttribute('for'));
 
                 if (index > -1) {
@@ -92,14 +92,14 @@ export class Tab
                 }
 
                 // find old active and remove it
-                fragmentString = fragments.join(',');
+                fragmentString = fragments.join('&');
 
                 jsOMS.addClass(this, 'active');
 
                 /* Add selected tab */
                 window.history.replaceState(null, '',
                     UriFactory.build(
-                        '{%}#' + (fragmentString === '' ? '' : fragmentString + ',') + this.getElementsByTagName('label')[0].getAttribute('for')
+                        '{%}#' + (fragmentString === '' ? '' : fragmentString + '&') + this.getElementsByTagName('label')[0].getAttribute('for')
                     )
                 );
             });
@@ -122,7 +122,7 @@ export class Tab
     activateTabUri(e)
     {
         const fragmentString = window.location.href.includes('#') ? HttpUri.parseUrl(window.location.href).fragment : '';
-        const fragments      = fragmentString.split(','),
+        const fragments      = fragmentString.split('&'),
             fragLength       = fragments.length;
 
         if (fragLength > 0 && fragmentString !== '') {
