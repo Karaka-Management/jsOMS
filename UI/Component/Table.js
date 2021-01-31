@@ -199,7 +199,6 @@ export class Table
                 rowId     = this.closest('tr').rowIndex,
                 orderType = jsOMS.hasClass(this, 'order-up') ? 1 : -1;
 
-
             if (orderType === 1 && rowId > 1) {
                 rows[rowId].parentNode.insertBefore(rows[rowId - 2], rows[rowId]);
             } else if (orderType === -1 && rowId < rowLength) {
