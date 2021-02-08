@@ -342,28 +342,52 @@ export class Form
         {
             console.log(xhr.response);
 
-            try {
-                const o           = JSON.parse(xhr.response)[0],
-                    response      = new Response(o);
-                let successInject = null;
+            if (xhr.getResponseHeader('content-type') === 'application/octet-stream') {
+                const blob = new Blob([xhr.response], { type: 'application/octet-stream' });
+                const doc = document.createElement('a');
+                doc.style = 'display: none';
+                document.body.appendChild(doc);
+                const url = window.URL.createObjectURL(blob);
+                doc.href = url;
 
-                if ((successInject = form.getSuccess()) !== null) {
-                    successInject(response);
-                } else if (typeof response.get('type') !== 'undefined') {
-                    self.app.responseManager.run(response.get('type'), response.get(), request);
-                } else if (typeof o.status !== 'undefined' && o.status !== NotificationLevel.HIDDEN) {
-                    self.app.notifyManager.send(
-                        new NotificationMessage(o.status, o.title, o.message), NotificationType.APP_NOTIFICATION
+                const disposition = xhr.getResponseHeader('content-disposition');
+                let filename = '';
+                if (disposition && disposition.indexOf('attachment') !== -1) {
+                    const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+                    const matches = filenameRegex.exec(disposition);
+                    if (matches !== null && matches[1]) {
+                        filename = matches[1].replace(/['"]/g, '');
+                    }
+                }
+
+                doc.download = filename;
+                doc.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(doc);
+            } else {
+                try {
+                    const o           = JSON.parse(xhr.response)[0],
+                        response      = new Response(o);
+                    let successInject = null;
+
+                    if ((successInject = form.getSuccess()) !== null) {
+                        successInject(response);
+                    } else if (typeof response.get('type') !== 'undefined') {
+                        self.app.responseManager.run(response.get('type'), response.get(), request);
+                    } else if (typeof o.status !== 'undefined' && o.status !== NotificationLevel.HIDDEN) {
+                        self.app.notifyManager.send(
+                            new NotificationMessage(o.status, o.title, o.message), NotificationType.APP_NOTIFICATION
+                        );
+                    }
+                } catch (e) {
+                    console.log(e);
+
+                    Logger.instance.error('Invalid form response. \n'
+                        + 'URL: ' + form.getAction() + '\n'
+                        + 'Request: ' + JSON.stringify(form.getData()) + '\n'
+                        + 'Response: ' + xhr.response
                     );
                 }
-            } catch (e) {
-                console.log(e);
-
-                Logger.instance.error('Invalid form response. \n'
-                    + 'URL: ' + form.getAction() + '\n'
-                    + 'Request: ' + JSON.stringify(form.getData()) + '\n'
-                    + 'Response: ' + xhr.response
-                );
             }
         });
 
