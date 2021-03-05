@@ -104,24 +104,36 @@ export class EventManager
         const idIsRegex    = id.startsWith('/');
 
         const groups = {};
-        if (groupIsRegex) {
-            for (const groupName in this.groups) {
+        for (const groupName in this.groups) {
+            const groupNameIsRegex = groupName.startsWith('/');
+
+            if (groupIsRegex) {
                 if (groupName.match(group)) {
                     groups[groupName] = [];
                 }
+            } else if (groupNameIsRegex && group.match(groupName)) {
+                groups[groupName] = [];
+            } else if (groupName === group) {
+                groups[groupName] = [];
             }
-        } else {
-            groups[group] = [];
         }
 
         for (const groupName in groups) {
-            if (idIsRegex) {
-                for (const idName in this.groups[groupName]) {
+            for (const idName in this.groups[groupName]) {
+                const idNameIsRegex = idName.startsWith('/');
+
+                if (idIsRegex) {
                     if (idName.match(id)) {
                         groups[groupName].push(idName);
                     }
+                } else if (idNameIsRegex && id.match(idName)) {
+                    groups[groupName].push(id);
+                } else if (idName === id) {
+                    groups[groupName].push([]);
                 }
-            } else {
+            }
+
+            if (groups[groupName].length === 0) {
                 groups[groupName].push(id);
             }
         }
@@ -129,7 +141,7 @@ export class EventManager
         let triggerValue = false;
         for (const groupName in groups) {
             for (const id in groups[groupName]) {
-                triggerValue = triggerValue || this.trigger(groupName, id, data);
+                triggerValue = this.trigger(groupName, id, data) || triggerValue;
             }
         }
 
@@ -155,7 +167,7 @@ export class EventManager
             return false;
         }
 
-        if (Math.abs(Date.now() - this.callbacks[group].lastRun) < 500) {
+        if (Math.abs(Date.now() - this.callbacks[group].lastRun) < 300) {
             return false;
         }
 
@@ -163,24 +175,24 @@ export class EventManager
             this.groups[group][id] = true;
         }
 
-        if (!this.hasOutstanding(group)) {
-            const length                  = this.callbacks[group].callbacks.length;
-            this.callbacks[group].lastRun = Date.now();
-
-            for (let i = 0; i < length; ++i) {
-                this.callbacks[group].callbacks[i](data);
-            }
-
-            if (this.callbacks[group].remove) {
-                this.detach(group);
-            } else if (this.callbacks[group].reset) {
-                this.reset(group);
-            }
-
-            return true;
+        if (this.hasOutstanding(group)) {
+            return false;
         }
 
-        return false;
+        const length                  = this.callbacks[group].callbacks.length;
+        this.callbacks[group].lastRun = Date.now();
+
+        for (let i = 0; i < length; ++i) {
+            this.callbacks[group].callbacks[i](data);
+        }
+
+        if (this.callbacks[group].remove) {
+            this.detach(group);
+        } else if (this.callbacks[group].reset) {
+            this.reset(group);
+        }
+
+        return true;
     };
 
     /**
