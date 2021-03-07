@@ -68,6 +68,19 @@ export class GeneralUI
 
             // @todo: implement middle mouse click
             e[i].addEventListener('click', function(event) {
+                if ((event.target.parentElement !== this
+                        && event.target.parentElement.getElementsByTagName('input').length > 0)
+                    || (event.target.getElementsByTagName('input').length > 0)
+                ) {
+                    const input = event.target.querySelector('input');
+
+                    if (input !== null) {
+                        input.click();
+                    }
+
+                    return;
+                }
+
                 jsOMS.preventAll(event);
                 history.pushState(null, null, window.location);
 

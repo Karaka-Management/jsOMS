@@ -135,6 +135,20 @@ export class TableView
     };
 
     /**
+     * Get table header elements which provide filter functionality
+     *
+     * @return {Array}
+     *
+     * @since 1.0.0
+     */
+    getCheckboxes()
+    {
+        return document.querySelectorAll(
+            '#' + this.id + ' thead input[type=checkbox]'
+        );
+    };
+
+    /**
      * Get row elements which allow to swap the current row with another row
      *
      * @return {Array}

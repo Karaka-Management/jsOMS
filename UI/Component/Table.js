@@ -145,6 +145,12 @@ export class Table
         for (let i = 0; i < length; ++i) {
             this.bindFiltering(filters[i], id);
         }
+
+        const checkboxes = this.tables[id].getCheckboxes();
+        length           = checkboxes.length;
+        for (let i = 0; i < length; ++i) {
+            this.bindCheckbox(checkboxes[i], id);
+        }
     };
 
     /**
@@ -235,6 +241,7 @@ export class Table
 
             const columnName = this.closest('td').getAttribute('data-name');
 
+            // only necessary for retrieving remote data
             table.setAttribute('data-sorting', (sortType > 0 ? '+' : '-') + (columnName !== null ? columnName : cellId));
 
             if (table.getAttribute('data-src') !== null) {
@@ -349,6 +356,32 @@ export class Table
             tpl.parentNode.appendChild(output);
         });
     };
+
+    /**
+     * Checkbox select.
+     *
+     * @param {Element} checkbox Filter button
+     * @param {Object}  id       Table id
+     *
+     * @return {void}
+     *
+     * @since 1.0.0
+     */
+    bindCheckbox(checkbox, id)
+    {
+        checkbox.addEventListener('click', function (event)
+        {
+            const columnId = checkbox.closest('td').cellIndex;
+            const rows = checkbox.closest('table').querySelectorAll('tbody tr');
+            const rowLength = rows.length;
+            const status = checkbox.checked;
+
+            for (let i = 0; i < rowLength; ++i) {
+                const box = rows[i].cells[columnId].querySelector('input[type=checkbox]');
+                box.checked = status;
+            }
+        });
+    }
 
     static getRemoteData (table)
     {
