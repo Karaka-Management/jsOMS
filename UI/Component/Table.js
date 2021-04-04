@@ -263,8 +263,10 @@ export class Table
 
                         if (sortType === 1 && content1 > content2) {
                             shouldSwitch = true;
+                            break;
                         } else if (sortType === -1 && content1 < content2) {
                             shouldSwitch = true;
+                            break;
                         } else {
                             break;
                         }
@@ -378,7 +380,10 @@ export class Table
 
             for (let i = 0; i < rowLength; ++i) {
                 const box = rows[i].cells[columnId].querySelector('input[type=checkbox]');
-                box.checked = status;
+
+                if (box !== null) {
+                    box.checked = status;
+                }
             }
         });
     }

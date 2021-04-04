@@ -126,11 +126,13 @@ export class UriFactory
      */
     static unique (url)
     {
+        // @todo: there is a bug for uris which have a parameter without a value and a fragment e.g. ?debug#something.
+        // The fragment is ignored in such a case.
         if (url.includes('?')) {
             const parsed = HttpUri.parseUrl(url);
 
             // unique queries
-            const parts = parsed.query.replace(/\?/g, '&').split('&'),
+            const parts = typeof parsed.query === 'undefined' ? [] : parsed.query.replace(/\?/g, '&').split('&'),
                 full    = url.split('?')[0],
                 pars    = [];
 
@@ -140,12 +142,14 @@ export class UriFactory
 
             for (let i = 0; i < length; ++i) {
                 spl           = parts[i].split('=');
-                comps[spl[0]] = spl[1];
+                comps[spl[0]] = spl.length < 2 ? '' : spl[1];
             }
 
             for (const a in comps) {
-                if (comps.hasOwnProperty(a) && comps[a] !== '' && comps[a] !== null) {
+                if (comps.hasOwnProperty(a) && comps[a] !== '' && comps[a] !== null && typeof comps[a] !== 'undefined') {
                     pars.push(a + '=' + (comps[a].includes('%') ? comps[a] : encodeURIComponent(comps[a])));
+                } else if (comps.hasOwnProperty(a)) {
+                    pars.push(a);
                 }
             }
 

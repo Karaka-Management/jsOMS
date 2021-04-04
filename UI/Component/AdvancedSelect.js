@@ -28,7 +28,7 @@ export class AdvancedSelect
         this.id              = e.id;
         this.selectComponent = e;
         this.selectField     = this.selectComponent.getElementsByClassName('input')[0];
-        this.dropdownElement = document.getElementById(this.id + '-dropdown');
+        this.dropdownElement = document.getElementById(this.id + '-popup');
         this.tagElement      = document.getElementById(this.id + '-tags');
         this.dataList        = this.dropdownElement.getElementsByTagName('table')[0];
         this.dataListBody    = this.dataList.getElementsByTagName('tbody')[0];
@@ -47,7 +47,7 @@ export class AdvancedSelect
             if (e.relatedTarget === null ||
                 e.relatedTarget.parentElement === null ||
                 e.relatedTarget.parentElement.parentElement === null ||
-                !jsOMS.hasClass(e.relatedTarget.parentElement.parentElement.parentElement, 'dropdown')
+                !jsOMS.hasClass(e.relatedTarget.parentElement.parentElement.parentElement, 'popup')
             ) {
                 jsOMS.removeClass(self.dropdownElement, 'active');
             }
