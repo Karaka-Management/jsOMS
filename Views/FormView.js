@@ -482,10 +482,10 @@ export class FormView
      *
      * @since 1.0.0
      */
-    isValid ()
+    isValid (data)
     {
-        const elements = this.getFormElements(),
-            length     = elements.length;
+        const elements = typeof data === 'undefined' ? this.getFormElements() : data;
+        const length   = elements.length;
 
         try {
             for (let i = 0; i < length; ++i) {

@@ -373,10 +373,10 @@ export class Table
     {
         checkbox.addEventListener('click', function (event)
         {
-            const columnId = checkbox.closest('td').cellIndex;
-            const rows = checkbox.closest('table').querySelectorAll('tbody tr');
+            const columnId  = checkbox.closest('td').cellIndex;
+            const rows      = checkbox.closest('table').querySelectorAll('tbody tr');
             const rowLength = rows.length;
-            const status = checkbox.checked;
+            const status    = checkbox.checked;
 
             for (let i = 0; i < rowLength; ++i) {
                 const box = rows[i].cells[columnId].querySelector('input[type=checkbox]');

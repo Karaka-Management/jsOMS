@@ -309,7 +309,9 @@ export class Form
     {
         action = typeof action !== 'undefined' ? action : null;
 
-        if (!form.isValid()) {
+        const data = form.getData();
+
+        if (!form.isValid(data)) {
             this.app.notifyManager.send(
                 new NotificationMessage(
                     NotificationLevel.INFO,
@@ -334,7 +336,7 @@ export class Form
         const request = new Request(),
             self      = this;
 
-        request.setData(form.getData());
+        request.setData(data);
         request.setType(RequestType.FORM_DATA);
         request.setUri(action ? action : form.getAction());
         request.setMethod(form.getMethod());
@@ -344,17 +346,19 @@ export class Form
 
             if (xhr.getResponseHeader('content-type') === 'application/octet-stream') {
                 const blob = new Blob([xhr.response], { type: 'application/octet-stream' });
-                const doc = document.createElement('a');
-                doc.style = 'display: none';
+                const doc  = document.createElement('a');
+                doc.style  = 'display: none';
                 document.body.appendChild(doc);
+
                 const url = window.URL.createObjectURL(blob);
-                doc.href = url;
+                doc.href  = url;
 
                 const disposition = xhr.getResponseHeader('content-disposition');
-                let filename = '';
+                let filename      = '';
                 if (disposition && disposition.indexOf('attachment') !== -1) {
                     const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
-                    const matches = filenameRegex.exec(disposition);
+                    const matches       = filenameRegex.exec(disposition);
+
                     if (matches !== null && matches[1]) {
                         filename = matches[1].replace(/['"]/g, '');
                     }
