@@ -65,7 +65,7 @@ export class Tab
         for (let i = 0; i < length; ++i) {
             nodes[i].addEventListener('click', function (evt)
             {
-                let fragmentString = window.location.href.includes('#') ? HttpUri.parseUrl(window.location.href).fragment : '';
+                let fragmentString = this.querySelector('label').getAttribute('for');
 
                 /* Change Tab */
                 /* Remove selected tab */
@@ -87,9 +87,10 @@ export class Tab
                 let fragments = fragmentString.split('&');
                 const index   = fragments.indexOf(this.getElementsByTagName('label')[0].getAttribute('for'));
 
+                /**
                 if (index > -1) {
                     fragments.splice(index, 1);
-                }
+                }*/
 
                 // find old active and remove it
                 fragmentString = fragments.join('&');
@@ -99,7 +100,7 @@ export class Tab
                 /* Add selected tab */
                 window.history.replaceState(null, '',
                     UriFactory.build(
-                        '{%}#' + (fragmentString === '' ? '' : fragmentString + '&') + this.getElementsByTagName('label')[0].getAttribute('for')
+                        '{%}#' + (fragmentString === '' ? '' : fragmentString)
                     )
                 );
             });

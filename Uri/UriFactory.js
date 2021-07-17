@@ -128,13 +128,12 @@ export class UriFactory
     {
         // @todo: there is a bug for uris which have a parameter without a value and a fragment e.g. ?debug#something.
         // The fragment is ignored in such a case.
-        if (url.includes('?')) {
-            const parsed = HttpUri.parseUrl(url);
+        const parsed = HttpUri.parseUrl(url);
+        const pars = [];
 
+        if (url.includes('?')) {
             // unique queries
-            const parts = typeof parsed.query === 'undefined' ? [] : parsed.query.replace(/\?/g, '&').split('&'),
-                full    = url.split('?')[0],
-                pars    = [];
+            const parts = typeof parsed.query === 'undefined' ? [] : parsed.query.replace(/\?/g, '&').split('&');
 
             let comps  = {},
                 spl    = null,
@@ -152,20 +151,18 @@ export class UriFactory
                     pars.push(a);
                 }
             }
-
-            url = full + '?' + pars.join('&');
         }
 
-        // unique fragments
-        const fragments = url.match(/\#[a-zA-Z0-9\-,]+/g),
-            fragLength  = fragments !== null ? fragments.length : 0;
+        const fragments = typeof parsed.fragment !== 'undefined' ? parsed.fragment.split('#') : null;
 
-        // @todo: don't remove fragments, some might be used = none tab fragments
-
-        for (let i = 0; i < fragLength - 1; ++i) {
-            // remove all from old url
-            url = url.replace(fragments[i], '');
-        }
+        url = (typeof parsed.scheme !== 'undefined' ? parsed.scheme + '://' : '')
+            + (typeof parsed.username !== 'undefined' ? parsed.username + ':' : '')
+            + (typeof parsed.password !== 'undefined' ? parsed.password + '@' : '')
+            + (typeof parsed.host !== 'undefined' ? parsed.host : '')
+            + (typeof parsed.port !== 'undefined' ? parsed.port : '')
+            + (typeof parsed.path !== 'undefined' ? parsed.path : '')
+            + (typeof parsed.query !== 'undefined' ? '?' + pars.join('&') : '')
+            + (typeof parsed.fragment !== 'undefined' ? '#' + fragments[fragments.length - 1] : '');
 
         return url;
     };
