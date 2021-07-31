@@ -22,7 +22,7 @@
      *
      * @since 1.0.0
      */
-    jsOMS.trim = function(str, char = ' ')
+    jsOMS.trim = function (str, char = ' ')
     {
         return jsOMS.ltrim(jsOMS.rtrim(str, char), char);
     };
@@ -37,7 +37,7 @@
      *
      * @since 1.0.0
      */
-    jsOMS.rtrim = function(str, char = ' ')
+    jsOMS.rtrim = function (str, char = ' ')
     {
         return str.replace(new RegExp("[" + char + "]*$"), '');
     };
@@ -52,7 +52,7 @@
      *
      * @since 1.0.0
      */
-    jsOMS.ltrim = function(str, char = ' ')
+    jsOMS.ltrim = function (str, char = ' ')
     {
         return str.replace(new RegExp("^[" + char + "]*"), '');
     };
@@ -73,7 +73,7 @@
      *
      * @since 1.0.0
      */
-    jsOMS.htmlspecialchars_encode = function(str)
+    jsOMS.htmlspecialchars_encode = function (str)
     {
         let escaped  = str;
         const length = jsOMS.htmlspecialchars.length;
@@ -97,7 +97,7 @@
      *
      * @since 1.0.0
      */
-    jsOMS.htmlspecialchars_decode = function(str)
+    jsOMS.htmlspecialchars_decode = function (str)
     {
         let decoded  = str;
         const length = jsOMS.htmlspecialchars.length;
@@ -141,7 +141,7 @@
      *
      * @since 1.0.0
      */
-    jsOMS.substr_count = function(str, substr) {
+    jsOMS.substr_count = function (str, substr) {
         str    += '';
         substr += '';
 

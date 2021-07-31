@@ -129,7 +129,7 @@ export class UriFactory
         // @todo: there is a bug for uris which have a parameter without a value and a fragment e.g. ?debug#something.
         // The fragment is ignored in such a case.
         const parsed = HttpUri.parseUrl(url);
-        const pars = [];
+        const pars   = [];
 
         if (url.includes('?')) {
             // unique queries

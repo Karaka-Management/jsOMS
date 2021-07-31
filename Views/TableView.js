@@ -130,7 +130,7 @@ export class TableView
     getFilter()
     {
         return document.querySelectorAll(
-            '#' + this.id + ' thead .filter'
+            '#' + this.id + ' .filter'
         );
     };
 

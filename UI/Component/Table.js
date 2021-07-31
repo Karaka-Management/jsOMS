@@ -299,63 +299,7 @@ export class Table
     {
         filtering.addEventListener('click', function (event)
         {
-            jsOMS.preventAll(event);
 
-            const tpl = document.getElementById('table-filter-tpl');
-
-            if (tpl === null || document.getElementById(tpl.content.firstElementChild.id) !== null) {
-                return;
-            }
-
-            const posY = event.pageY + document.body.scrollTop + document.documentElement.scrollTop + tpl.parentNode.scrollTop - tpl.parentNode.getBoundingClientRect().top;
-            const posX = event.pageX + document.body.scrollLeft + document.documentElement.scrollLeft + tpl.parentNode.scrollLeft - tpl.parentNode.getBoundingClientRect().left;
-
-            const output = document.importNode(tpl.content, true);
-            output.firstElementChild.setAttribute('style', 'position: absolute; top: ' + posY + 'px; left: ' + posX + 'px;')
-            output.firstElementChild.setAttribute('data-ui', this.closest('table').id);
-            output.firstElementChild.setAttribute('data-ui-column', this.closest('td').cellIndex);
-
-            // todo: set existing filtering option in ui here
-
-            output.firstElementChild.querySelectorAll('button[type="submit"], input[type="submit"]')[0].addEventListener('click', function (event) {
-                jsOMS.preventAll(event);
-
-                const input  = document.getElementById('table-filter').querySelectorAll('input, select');
-                const length = input.length;
-
-                let filter = [];
-
-                for (let i = 0; i < length; ++i) {
-                    filter.push(input[i].value);
-                }
-
-                const table = document.getElementById(document.getElementById('table-filter').getAttribute('data-ui'));
-
-                table.querySelectorAll('thead td')[
-                    document.getElementById('table-filter').getAttribute('data-ui-column')
-                ].setAttribute('data-filter', JSON.stringify(filter));
-
-                /**
-                 * @todo Orange-Management/jsOMS#88
-                 *  If a filter is active it should be highlighted/marked in the table
-                 *
-                 * @todo Orange-Management/jsOMS#89
-                 *  Filter locally and if a data-src is defined a remote filtering endpoint should be used.
-                 */
-
-                document.getElementById('table-filter').parentNode.removeChild(document.getElementById('table-filter'));
-
-                if (table.getAttribute('data-src') !== null) {
-                    Table.getRemoteData(table);
-                    return;
-                }
-            });
-
-            output.firstElementChild.querySelectorAll('button[type="reset"], input[type="reset"]')[0].addEventListener('click', function (event) {
-                document.getElementById('table-filter').parentNode.removeChild(document.getElementById('table-filter'));
-            });
-
-            tpl.parentNode.appendChild(output);
         });
     };
 
