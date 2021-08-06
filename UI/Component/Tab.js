@@ -98,11 +98,13 @@ export class Tab
                 jsOMS.addClass(this, 'active');
 
                 /* Add selected tab */
-                window.history.replaceState(null, '',
-                    UriFactory.build(
-                        '{%}#' + (fragmentString === '' ? '' : fragmentString)
-                    )
-                );
+                if (jsOMS.hasClass(this.closest('.tabview'), 'url-rewrite')) {
+                    window.history.replaceState(null, '',
+                        UriFactory.build(
+                            '{%}#' + (fragmentString === '' ? '' : fragmentString)
+                        )
+                    );
+                }
             });
         }
 
