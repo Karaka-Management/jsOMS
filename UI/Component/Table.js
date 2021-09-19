@@ -256,18 +256,26 @@ export class Table
                     shouldSwitch = false;
                     row1         = rows[j].getElementsByTagName('td')[cellId];
                     content1     = row1.getAttribute('data-content') !== null ? row1.getAttribute('data-content').toLowerCase() : row1.textContent.toLowerCase();
+                    content1     = !isNaN(content1)
+                                    ? parseFloat(content1)
+                                    : (!isNaN(new Date(content1))
+                                        ? new Date(content1)
+                                        : content1);
 
                     for (i = j + 1; i < rowLength; ++i) {
                         row2     = rows[i].getElementsByTagName('td')[cellId];
                         content2 = row2.getAttribute('data-content') !== null ? row2.getAttribute('data-content').toLowerCase() : row2.textContent.toLowerCase();
+                        content2 = !isNaN(content2)
+                                    ? parseFloat(content2)
+                                    : (!isNaN(new Date(content2))
+                                        ? new Date(content2)
+                                        : content2);
 
                         if (sortType === 1 && content1 > content2) {
                             shouldSwitch = true;
                             break;
                         } else if (sortType === -1 && content1 < content2) {
                             shouldSwitch = true;
-                            break;
-                        } else {
                             break;
                         }
                     }
@@ -278,7 +286,7 @@ export class Table
                 }
 
                 if (shouldSwitch) {
-                    rows[j].parentNode.insertBefore(rows[i - 1], rows[j]);
+                    rows[j].parentNode.insertBefore(rows[i], rows[j]);
                     order = true;
                 }
             } while (order);
