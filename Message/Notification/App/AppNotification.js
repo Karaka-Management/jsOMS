@@ -51,11 +51,23 @@ export class AppNotification
 
         let output = document.importNode(tpl.content, true);
         output.querySelector('.log-msg').classList.add('log-msg-status-' + msg.status);
-        output.querySelector('.log-msg-title').innerHTML   = msg.title;
         output.querySelector('.log-msg-content').innerHTML = msg.message;
+        output.querySelector('.close').addEventListeenr('click', function() {
+            this.parent.remove();
+        });
+
+        if (msg.title && msg.title !== '') {
+            output.querySelector('.log-msg-title').innerHTML = msg.title;
+        } else {
+            output.querySelector('.log-msg-title').remove();
+        }
 
         tpl.parentNode.appendChild(output);
         window.navigator.vibrate(msg.vibrate ? 200 : 0);
+
+        if (msg.isSticky) {
+            return;
+        }
 
         setTimeout(function ()
         {

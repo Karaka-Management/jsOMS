@@ -18,11 +18,12 @@ export class NotificationMessage
      *
      * @since 1.0.0
      */
-    constructor(status, title, message, vibrate = false)
+    constructor(status, title, message, vibrate = false, isSticky = false)
     {
-        this.status  = status;
-        this.title   = title;
-        this.message = message;
-        this.vibrate = vibrate
+        this.status   = status;
+        this.title    = title;
+        this.message  = message;
+        this.vibrate  = vibrate
+        this.isSticky = isSticky
     };
 };
