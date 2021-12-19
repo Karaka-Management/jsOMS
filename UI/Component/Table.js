@@ -27,6 +27,10 @@ import { ResponseType } from '../../Message/Response/ResponseType.js';
  *  Data download
  *  There is a small icon in the top right corner of tables which allows (not yet to be honest) to download the data in the table.
  *  Whether the backend should be queried for this or only the frontend data should be collected (current situation) should depend on if the table has an api endpoint defined.
+ *
+ * @todo Allow column drag/drop ordering which is also saved in the front end
+ *
+ * @todo Save column visibility filter and apply that filter on page load
  */
 export class Table
 {
@@ -151,6 +155,9 @@ export class Table
         for (let i = 0; i < length; ++i) {
             this.bindCheckbox(checkboxes[i], id);
         }
+
+        const header = this.tables[id].getHeader();
+        this.bindColumnVisibility(header, id);
     };
 
     /**
@@ -183,6 +190,90 @@ export class Table
         });
     };
 
+     /**
+     * Bind column visibility
+     *
+     * @param {Element} header Header
+     *
+     * @return {void}
+     *
+     * @since 1.0.0
+     */
+    bindColumnVisibility(header)
+    {
+        header.addEventListener('contextmenu', function (event) {
+            jsOMS.preventAll(event);
+
+            if (document.getElementById('table-context-menu') !== null) {
+                return;
+            }
+
+            const tpl = document.getElementById('table-context-menu-tpl');
+
+            if (tpl === null) {
+                return;
+            }
+
+            const output = document.importNode(tpl.content, true);
+            tpl.parentNode.appendChild(output);
+            const menu = document.getElementById('table-context-menu');
+
+            const columns = header.querySelectorAll('td');
+            let length = columns.length;
+
+            let baseMenuLine = menu.getElementsByClassName('context-line')[0].cloneNode(true);
+
+            for (let i = 0; i < length; ++i) {
+                if (typeof columns[i].firstChild === 'undefined'
+                    || typeof columns[i].firstChild.data === 'undefined'
+                    || columns[i].firstChild.data.trim() === ''
+                ) {
+                    continue;
+                }
+
+                const menuLine = baseMenuLine.cloneNode(true);
+                const lineId = menuLine.firstElementChild.getAttribute('get') + i;
+
+                menuLine.firstElementChild.setAttribute('for', lineId);
+                menuLine.firstElementChild.firstElementChild.setAttribute('id', lineId);
+                menuLine.firstElementChild.appendChild(document.createTextNode(columns[i].firstChild.data.trim()));
+
+                menu.getElementsByTagName('ul')[0].appendChild(menuLine);
+                menu.querySelector('ul').lastElementChild.querySelector('input[type="checkbox"]').checked = columns[i].style.display !== 'none';
+
+                menu.querySelector('ul').lastElementChild.querySelector('input[type="checkbox"]').addEventListener('change', function () {
+                    const rows = header.parentElement.getElementsByTagName('tr');
+                    const rowLength = rows.length;
+
+                    for (let j = 0; j < rowLength; ++j) {
+                        const cols = rows[j].getElementsByTagName('td');
+
+                        cols[i].style.display = cols[i].style.display === 'none' ? '' : 'none';
+                    }
+                });
+            }
+
+            menu.getElementsByTagName('ul')[0].removeChild(menu.getElementsByClassName('context-line')[0]);
+
+            const rect = tpl.parentElement.getBoundingClientRect();
+            menu.style.top = (event.clientY - rect.top) + "px";
+            menu.style.left = (event.clientX - rect.left) + "px";
+
+            document.addEventListener('click', Table.hideMenuClickHandler);
+        });
+    };
+
+    static hideMenuClickHandler(event)
+    {
+        const menu = document.getElementById('table-context-menu');
+        const isClickedOutside = !menu.contains(event.target);
+
+        if (isClickedOutside) {
+            menu.parentNode.removeChild(menu);
+            document.removeEventListener('click', Table.hideMenuClickHandler);
+        }
+    };
+
     /**
      * Swaps the row on click.
      *
@@ -202,16 +293,14 @@ export class Table
             const table   = document.getElementById(id),
                 rows      = table.getElementsByTagName('tbody')[0].rows,
                 rowLength = rows.length,
-                rowId     = this.closest('tr').rowIndex,
+                rowId     = this.closest('tr').rowIndex - 1,
                 orderType = jsOMS.hasClass(this, 'order-up') ? 1 : -1;
 
-            if (orderType === 1 && rowId > 1) {
-                rows[rowId].parentNode.insertBefore(rows[rowId - 2], rows[rowId]);
+            if (orderType === 1 && rowId > 0) {
+                rows[rowId].parentNode.insertBefore(rows[rowId], rows[rowId - 1]);
             } else if (orderType === -1 && rowId < rowLength) {
-                rows[rowId - 1].parentNode.insertBefore(rows[rowId], rows[rowId - 1]);
+                rows[rowId].parentNode.insertBefore(rows[rowId], rows[rowId + 2]);
             }
-
-            // continue implementation
         });
     };
 

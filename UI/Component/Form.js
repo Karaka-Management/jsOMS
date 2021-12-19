@@ -1487,6 +1487,34 @@ export class Form
 
                 src.innerHTML = jsOMS.htmlspecialchars_encode(value);
                 break;
+            case 'select':
+                const optionLength = src.options.length;
+                for (let i = 0; i < optionLength; ++i) {
+                    if (src.options[i].value === value) {
+                        src.options[i].selected = true;
+
+                        break;
+                    }
+                }
+
+                break;
+            case 'input':
+                if (src.type === 'radio') {
+                    src.checked = false;
+                    if (src.value === value) {
+                        src.checked = true;
+                    }
+
+                    break;
+                } else if (src.type === 'checkbox') {
+                    src.checked = false;
+                    const values = value.split(',');
+                    if (values.includes(src.value)) {
+                        src.checked = true;
+                    }
+
+                    break;
+                }
             default:
                 src.value = jsOMS.htmlspecialchars_decode(value);
         }
@@ -1495,6 +1523,8 @@ export class Form
     setTextOfElement(src, value)
     {
         switch (src.tagName.toLowerCase()) {
+            case 'select':
+                break;
             case 'div':
             case 'span':
             case 'pre':
@@ -1505,24 +1535,28 @@ export class Form
             case 'h1':
                 src.innerHTML = jsOMS.htmlspecialchars_encode(value);
                 break;
-            case 'textarea':
-                // textarea only has value data in it's content and nothing else!
-                break;
             default:
-                src.value = jsOMS.htmlspecialchars_decode(value);
+                if (src.value === '') {
+                    src.value = jsOMS.htmlspecialchars_decode(value);
+                }
         }
     };
 
     getValueFromDataSource(src)
     {
+        if (src.getAttribute('data-value') !== null) {
+            return src.getAttribute('data-value');
+        }
+
         switch (src.tagName.toLowerCase()) {
+            case 'td':
             case 'div':
             case 'span':
             case 'pre':
             case 'article':
             case 'section':
             case 'h1':
-                return src.innerHTML;
+                return src.innerText;
             default:
                 return src.value;
         }
@@ -1531,6 +1565,7 @@ export class Form
     getTextFromDataSource(src)
     {
         switch (src.tagName.toLowerCase()) {
+            case 'td':
             case 'div':
             case 'span':
             case 'pre':

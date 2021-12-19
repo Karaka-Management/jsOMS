@@ -135,6 +135,20 @@ export class TableView
     };
 
     /**
+     * Get table header
+     *
+     * @return {Array}
+     *
+     * @since 1.0.0
+     */
+    getHeader()
+    {
+        return document.querySelector(
+            '#' + this.id + ' thead'
+        );
+    };
+
+    /**
      * Get table header elements which provide filter functionality
      *
      * @return {Array}

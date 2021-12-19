@@ -49,11 +49,11 @@ export class AppNotification
             return;
         }
 
-        let output = document.importNode(tpl.content, true);
+        const output = document.importNode(tpl.content, true);
         output.querySelector('.log-msg').classList.add('log-msg-status-' + msg.status);
         output.querySelector('.log-msg-content').innerHTML = msg.message;
-        output.querySelector('.close').addEventListeenr('click', function() {
-            this.parent.remove();
+        output.querySelector('.close').addEventListener('click', function() {
+            this.parentNode.remove();
         });
 
         if (msg.title && msg.title !== '') {
@@ -63,6 +63,9 @@ export class AppNotification
         }
 
         tpl.parentNode.appendChild(output);
+
+        const logs = document.getElementsByClassName('log-msg');
+        const lastElementAdded = logs[logs.length - 1];
         window.navigator.vibrate(msg.vibrate ? 200 : 0);
 
         if (msg.isSticky) {
@@ -71,7 +74,9 @@ export class AppNotification
 
         setTimeout(function ()
         {
-            document.getElementsByClassName('log-msg')[0].remove();
+            if (lastElementAdded !== null && lastElementAdded.parentNode !== null) {
+                lastElementAdded.parentNode.removeChild(lastElementAdded);
+            }
         }, 3000);
     };
 };

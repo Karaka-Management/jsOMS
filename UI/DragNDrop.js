@@ -53,9 +53,7 @@ export class DragNDrop
                 length     = !elements ? 0 : elements.length;
 
             for (let i = 0; i < length; ++i) {
-                if (typeof elements[i].getAttribute('id') !== 'undefined' && elements[i].getAttribute('id') !== null) {
-                    this.bindElement(elements[i].getAttribute('id'));
-                }
+                    this.bindElement(elements[i]);
             }
         }
     };
@@ -69,10 +67,9 @@ export class DragNDrop
      *
      * @since 1.0.0
      */
-    bindElement (id)
+    bindElement (element)
     {
-        const element = document.getElementById(id),
-            self      = this;
+        const self = this;
 
         if (!element) {
             return;
@@ -87,10 +84,31 @@ export class DragNDrop
         }, false);
 
         element.addEventListener('dragenter', function(e) {
-            /**
-             * @todo Orange-Management/jsOMS#??? [t:feature] [p:low] [d:medium]
-             *  Highlight the drop area
-             */
+            const rowIndex = Array.from(this.parentElement.children).indexOf(this);
+            const dragIndex = Array.from(self.dragging.parentElement.children).indexOf(self.dragging);
+
+            const oldPlaceholder = this.parentNode.querySelector('.drag-placeholder');
+            if (oldPlaceholder !== null) {
+                this.parentNode.removeChild(oldPlaceholder);
+            }
+
+            const placeholder = document.createElement(self.dragging.tagName);
+
+            if (self.dragging.tagName.toLowerCase() === 'tr') {
+                const placeholderTd = document.createElement('td');
+                placeholderTd.setAttribute('colspan', 42);
+                placeholder.appendChild(placeholderTd);
+            }
+
+            placeholder.setAttribute('draggable', 'true');
+
+            jsOMS.addClass(placeholder, 'drag-placeholder');
+
+            if (dragIndex < rowIndex) {
+                this.parentNode.insertBefore(placeholder, this.nextSibling);
+            } else {
+                this.parentNode.insertBefore(placeholder, this);
+            }
         }, false);
 
         element.addEventListener('dragover', function(e) {
@@ -101,39 +119,25 @@ export class DragNDrop
 
         element.addEventListener('dragleave', function(e) {
             e.preventDefault();
-
-            /**
-             * @todo Orange-Management/jsOMS#??? [t:feature] [p:low] [d:medium]
-             *  Stop highlighting the drop area
-             */
         }, false);
 
         element.addEventListener('dragend', function(e) {
             e.preventDefault();
 
-            /**
-             * @todo Orange-Management/jsOMS#??? [t:feature] [p:low] [d:medium]
-             *  Reset all UI states
-             */
+            const oldPlaceholder = this.parentNode.querySelector('.drag-placeholder');
+            if (oldPlaceholder === null) {
+                return;
+            }
+
+            this.parentNode.insertBefore(self.dragging, oldPlaceholder);
+            this.parentNode.removeChild(oldPlaceholder);
+
+            self.dragging = null;
         }, false);
 
         element.addEventListener('drop', function(e) {
             e.stopPropagation();
             e.preventDefault();
-
-            if (self.dragging === this) {
-                return;
-            }
-
-            self.dragging.innerHTML = this.innerHTML;
-            this.innerHTML          = e.dataTransfer.getData('text/html');
-
-            /**
-             * @todo Orange-Management/jsOMS#??? [t:feature] [p:low] [d:medium]
-             *  Remove from old destination if UI element and add to new destination
-             */
-
-            self.dragging = null;
         }, false);
     }
 };
