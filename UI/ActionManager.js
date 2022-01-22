@@ -10,7 +10,7 @@ import { Logger } from '../Log/Logger.js';
  *
  * @todo Orange-Management/jsOMS#26
  *  Sync/Async events
- *  Events so fare can be created sync and async depending on the implementation.
+ *  Events so far can be created sync and async depending on the implementation.
  *  It would be better to make it sync/async depending on a option flag.
  *
  * @todo Orange-Management/jsOMS#35

@@ -126,7 +126,6 @@ export class UriFactory
      */
     static unique (url)
     {
-        // @todo: there is a bug for uris which have a parameter without a value and a fragment e.g. ?debug#something.
         // The fragment is ignored in such a case.
         const parsed = HttpUri.parseUrl(url);
         const pars   = [];
@@ -138,6 +137,16 @@ export class UriFactory
             let comps  = {},
                 spl    = null,
                 length = parts.length;
+
+            // fix bug for queries such as https://127.0.0.1/test?something#frag where no value is specified for a query parameter
+            if ((typeof parsed.fragment === 'undefined' || parsed.fragment === null)
+                && parts[length - 1].includes('#')
+            ) {
+                const lastQuery = parts[length - 1].split('#')[1];;
+
+                parsed.fragment   = lastQuery[1];
+                parts[length - 1] = lastQuery[0];
+            }
 
             for (let i = 0; i < length; ++i) {
                 spl           = parts[i].split('=');
@@ -188,7 +197,15 @@ export class UriFactory
     static build (uri, toMatch)
     {
         const current = HttpUri.parseUrl(window.location.href);
-        let parsed    = uri.replace(new RegExp('\{[\/#\?%@\.\$\!][a-zA-Z0-9\-\#\.]*\}', 'g'), function (match) {
+
+        const query = HttpUri.getAllUriQueryParameters(typeof current.query === 'undefined' ? {} : current.query);
+        for (const key in query) {
+            if (query.hasOwnProperty(key)) {
+                UriFactory.setQuery('?' + key, query[key]);
+            }
+        }
+
+        let parsed = uri.replace(new RegExp('\{[\/#\?%@\.\$\!][a-zA-Z0-9\-\#\.]*\}', 'g'), function (match) {
             match = match.substr(1, match.length - 2);
 
             if (typeof toMatch !== 'undefined' && toMatch.hasOwnProperty(match)) {
@@ -272,15 +289,6 @@ export class UriFactory
         UriFactory.setQuery('/scheme', uri.getScheme());
         UriFactory.setQuery('/host', uri.getHost());
         UriFactory.setQuery('/base', jsOMS.rtrim(uri.getBase(), '/'));
-
-        const query = uri.getQuery();
-
-        // @todo consider to move this to the build function like all the other components. The reason for this is that JS may change the query values on the fly on the frontend and therefore these values will not be the current values!
-        for (const key in query) {
-            if (query.hasOwnProperty(key)) {
-                UriFactory.setQuery('?' + key, query[key]);
-            }
-        }
     };
 };
 

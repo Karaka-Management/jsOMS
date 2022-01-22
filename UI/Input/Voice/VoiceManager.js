@@ -165,7 +165,7 @@ export class VoiceManager
 };
 
 /**
- * @todo Orange-Management/jsOMS#66
+ * @todo SpeechRecognition polyfill
  *  Remove the speech recognition wrapper once it is obsolete and supported by the major browsers.
  */
 /** global: webkitSpeechRecognition */

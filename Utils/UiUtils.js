@@ -47,12 +47,12 @@
     jsOMS.triggerEvent = function (element, eventName)
     {
         if (document.createEvent) {
-            event = document.createEvent('HTMLEvents');
+            const event = document.createEvent('HTMLEvents');
             event.initEvent(eventName, true, true);
             event.eventName = eventName;
             element.dispatchEvent(event);
         } else {
-            event           = document.createEventObject();
+            const event     = document.createEventObject();
             event.eventName = eventName;
             event.eventType = eventName;
             element.fireEvent(event.eventType, event);
@@ -263,15 +263,5 @@
         for (let i = 0; i < length; ++i) {
             e[i].addEventListener(event, callback);
         }
-    };
-
-    /**
-     * @todo Orange-Management/jsOMS#64
-     *  Implement a function which returns the nearest dom element based on a selector.
-     *  Nearest is defined as vertical and horizontal distance.
-     */
-    jsOMS.nearest = function (e, selector)
-    {
-
     };
 }(window.jsOMS = window.jsOMS || {}));

@@ -64,7 +64,7 @@ export class AppNotification
 
         tpl.parentNode.appendChild(output);
 
-        const logs = document.getElementsByClassName('log-msg');
+        const logs             = document.getElementsByClassName('log-msg');
         const lastElementAdded = logs[logs.length - 1];
         window.navigator.vibrate(msg.vibrate ? 200 : 0);
 

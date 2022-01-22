@@ -115,16 +115,23 @@ export class Logger
         }
 
         if (this.ui) {
-            /**
-             * @todo Orange-Management/jsOMS#67
-             *  Implement UI logging
-             *  Create a dom element with inline css for UI logging.
-             */
+            this.writeUi(message, context, level);
         }
 
         if (this.remote) {
             this.writeRemote(message, context, level);
         }
+    };
+
+    writeUi (message, context, level)
+    {
+        if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
+            Notification.requestPermission().then(function(permission) { });
+        }
+
+        /** global: Notification */
+        const notification = new Notification('Logger', {body: this.interpolate(message, context, level)});
+        setTimeout(notification.close.bind(notification), 4000);
     };
 
     /**

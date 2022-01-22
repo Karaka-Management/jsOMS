@@ -60,9 +60,9 @@ export class BrowserNotification
     {
         /** global: Notification */
         if (Notification.permission === "granted") {
-            let notification = new Notification(msg.title, { body: msg.message, vibrate: [msg.vibrate ? 200 : 0] });
+            const notification = new Notification(msg.title, { body: msg.message, vibrate: [msg.vibrate ? 200 : 0] });
 
-            setTimeout(notification.close.bind(notification), 4000);
+            setTimeout(notification.close.bind(notification), 5000);
         }
     };
 };

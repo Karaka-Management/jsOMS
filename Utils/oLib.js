@@ -27,12 +27,12 @@
     jsOMS.triggerEvent = function (element, eventName)
     {
         if (document.createEvent) {
-            event = document.createEvent('HTMLEvents');
+            const event = document.createEvent('HTMLEvents');
             event.initEvent(eventName, true, true);
             event.eventName = eventName;
             element.dispatchEvent(event);
         } else {
-            event           = document.createEventObject();
+            const event     = document.createEventObject();
             event.eventName = eventName;
             event.eventType = eventName;
             element.fireEvent(event.eventType, event);
@@ -278,12 +278,12 @@
     jsOMS.removeClass = function (ele, cls)
     {
         if (jsOMS.hasClass(ele, cls)) {
-            const reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+            const reg = new RegExp('(\\s|^)' + cls);
 
             if (typeof ele.className === 'string') {
-                ele.className = ele.className.replace(reg, '');
+                ele.className = ele.className.replace(reg, '').trim();
             } else if (typeof ele.className.baseVal === 'string') {
-                ele.className.baseVal = ele.className.baseVal.replace(reg, '');
+                ele.className.baseVal = ele.className.baseVal.replace(reg, '').trim();
             }
         }
     };

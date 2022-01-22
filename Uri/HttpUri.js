@@ -168,7 +168,7 @@ export class HttpUri
         this.queryString = typeof parsed['query'] !== 'undefined' ? parsed['query'] : [];
 
         if (this.queryString !== null) {
-            this.query =HttpUri.getAllUriQueryParameters(this.queryString);
+            this.query = HttpUri.getAllUriQueryParameters(this.queryString);
         }
 
         this.fragment = typeof parsed['fragment'] !== 'undefined' ? parsed['fragment'] : '';

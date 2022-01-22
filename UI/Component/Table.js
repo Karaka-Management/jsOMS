@@ -182,7 +182,7 @@ export class Table
             console.log(exports.serialize());
             /**
              * @todo Orange-Management/jsOMS#90
-             *  mplement export
+             *  Implement export
              *  Either create download in javascript from this data or make round trip to server who then sends the data.
              *  The export should be possible (if available) in json, csv, excel, word, pdf, ...
              *  If no endpoint is specified or reachable the client side should create a json or csv export.
@@ -219,7 +219,7 @@ export class Table
             const menu = document.getElementById('table-context-menu');
 
             const columns = header.querySelectorAll('td');
-            let length = columns.length;
+            let length    = columns.length;
 
             let baseMenuLine = menu.getElementsByClassName('context-line')[0].cloneNode(true);
 
@@ -232,7 +232,7 @@ export class Table
                 }
 
                 const menuLine = baseMenuLine.cloneNode(true);
-                const lineId = menuLine.firstElementChild.getAttribute('get') + i;
+                const lineId   = menuLine.firstElementChild.getAttribute('get') + i;
 
                 menuLine.firstElementChild.setAttribute('for', lineId);
                 menuLine.firstElementChild.firstElementChild.setAttribute('id', lineId);
@@ -242,7 +242,7 @@ export class Table
                 menu.querySelector('ul').lastElementChild.querySelector('input[type="checkbox"]').checked = columns[i].style.display !== 'none';
 
                 menu.querySelector('ul').lastElementChild.querySelector('input[type="checkbox"]').addEventListener('change', function () {
-                    const rows = header.parentElement.getElementsByTagName('tr');
+                    const rows      = header.parentElement.getElementsByTagName('tr');
                     const rowLength = rows.length;
 
                     for (let j = 0; j < rowLength; ++j) {
@@ -255,8 +255,8 @@ export class Table
 
             menu.getElementsByTagName('ul')[0].removeChild(menu.getElementsByClassName('context-line')[0]);
 
-            const rect = tpl.parentElement.getBoundingClientRect();
-            menu.style.top = (event.clientY - rect.top) + "px";
+            const rect      = tpl.parentElement.getBoundingClientRect();
+            menu.style.top  = (event.clientY - rect.top) + "px";
             menu.style.left = (event.clientX - rect.left) + "px";
 
             document.addEventListener('click', Table.hideMenuClickHandler);
@@ -265,7 +265,7 @@ export class Table
 
     static hideMenuClickHandler(event)
     {
-        const menu = document.getElementById('table-context-menu');
+        const menu             = document.getElementById('table-context-menu');
         const isClickedOutside = !menu.contains(event.target);
 
         if (isClickedOutside) {
@@ -495,7 +495,7 @@ export class Table
 
             table.appendChild(newRow);
 
-            // todo: bind buttons if required (e.g. remove, edit button)
+            // @todo: bind buttons if required (e.g. remove, edit button)
         }
     };
 };

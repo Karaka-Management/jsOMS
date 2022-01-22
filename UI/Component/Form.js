@@ -7,6 +7,7 @@ import { RequestMethod }       from '../../Message/Request/RequestMethod.js';
 import { RequestType }         from '../../Message/Request/RequestType.js';
 import { Response }            from '../../Message/Response/Response.js';
 import { FormView }            from '../../Views/FormView.js';
+import { GeneralUI }           from '../GeneralUI.js';
 import { UriFactory }          from '../../Uri/UriFactory.js';
 
 /**
@@ -28,11 +29,6 @@ import { UriFactory }          from '../../Uri/UriFactory.js';
  *      * on Change (by using a timer)
  *      * on Leave (all elements)
  *  The listener should be defined in the form definition once and in js be applied to all form elements.
- *
- * @todo Orange-Management/Modules#177
- *  Hotkey for saving forms for creation/edit
- *  Instead of using the mouse to click save the user should be able to use a hotkey to save/create/update the current form.
- *  The hotkey on PC should be alt+enter or alt+shift+enter or alt+s
  */
 export class Form
 {
@@ -152,38 +148,7 @@ export class Form
         const submitLength = submits.length;
 
         this.unbind(id);
-
-        const removable = this.forms[id].getRemove();
-        length          = removable === null ? 0 : removable.length;
-        for (let i = 0; i < length; ++i) {
-            this.bindRemovable(removable[i], id);
-        }
-
-        const addable = this.forms[id].getAdd();
-        length        = addable === null ? 0 : addable.length;
-        for (let i = 0; i < length; ++i) {
-            this.bindAdd(addable[i], id);
-        }
-
-        const save = this.forms[id].getSave();
-        length     = save === null ? 0 : save.length;
-        for (let i = 0; i < length; ++i) {
-            this.bindSaveInline(save[i], id);
-        }
-
-        // @todo implement bindSaveExternal ???
-
-        const cancel = this.forms[id].getCancel();
-        length       = cancel === null ? 0 : cancel.length;
-        for (let i = 0; i < length; ++i) {
-            this.bindCancelInline(cancel[i], id);
-        }
-
-        const update = this.forms[id].getUpdate();
-        length       = update === null ? 0 : update.length;
-        for (let i = 0; i < length; ++i) {
-            this.bindUpdatable(update[i], id);
-        }
+        this.bindButtons(id);
 
         const imgPreviews = this.forms[id].getImagePreviews();
         length            = imgPreviews === null ? 0 : imgPreviews.length;
@@ -195,8 +160,45 @@ export class Form
             submits[i].addEventListener('click', function (event)
             {
                 jsOMS.preventAll(event);
-                self.submit(self.forms[id], submits[i].getAttribute('formaction'));
+                self.submit(self.forms[id], submits[i]);
             });
+        }
+    };
+
+    bindButtons (id, e = null)
+    {
+        let length = 0;
+
+        const removable = this.forms[id].getRemove(e);
+        length          = removable === null ? 0 : removable.length;
+        for (let i = 0; i < length; ++i) {
+            this.bindRemovable(removable[i], id);
+        }
+
+        const addable = this.forms[id].getAdd(e);
+        length        = addable === null ? 0 : addable.length;
+        for (let i = 0; i < length; ++i) {
+            this.bindAdd(addable[i], id);
+        }
+
+        const save = this.forms[id].getSave(e);
+        length     = save === null ? 0 : save.length;
+        for (let i = 0; i < length; ++i) {
+            this.bindSaveInline(save[i], id);
+        }
+
+        // @todo implement bindSaveExternal ???
+
+        const cancel = this.forms[id].getCancel(e);
+        length       = cancel === null ? 0 : cancel.length;
+        for (let i = 0; i < length; ++i) {
+            this.bindCancel(cancel[i], id);
+        }
+
+        const update = this.forms[id].getUpdate(e);
+        length       = update === null ? 0 : update.length;
+        for (let i = 0; i < length; ++i) {
+            this.bindUpdatable(update[i], id);
         }
     };
 
@@ -210,9 +212,7 @@ export class Form
     *
     * @since  1.0.0
     */
-    bindImagePreview(imageUpload, id) {
-        const self = this;
-
+    bindImagePreview (imageUpload, id) {
         imageUpload.addEventListener('change', function () {
             const preview = document.querySelector('#preview-' + imageUpload.getAttribute('name'));
 
@@ -221,7 +221,7 @@ export class Form
                 window.URL.revokeObjectURL(this.src);
             }
         });
-    }
+    };
 
     /**
      * Unbind form
@@ -250,20 +250,24 @@ export class Form
      * Calls injections first before executing the actual form submit
      *
      * @param {Object} form   Form object
-     * @param {string} [action] Action different from the form action (e.g. formaction=*)
+     * @param {Element} button Action different from the form action (e.g. formaction=*)
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    submit (form, action = null)
+    submit (form, button)
     {
-        action = typeof action !== 'undefined' ? action : null;
-
         /* Handle injects */
         const self  = this,
             injects = form.getSubmitInjects();
         let counter = 0;
+
+        let action = null;
+
+        if (button !== null) {
+            action = button.getAttribute('formaction');
+        }
 
         // Register normal form behavior
         if (!this.app.eventManager.isAttached(form.getId())) {
@@ -291,6 +295,10 @@ export class Form
         if (counter < 1) {
             this.app.eventManager.trigger(form.getId());
         }
+
+        // select first input element (this allows fast consecutive data input)
+        const firstFormInputElement = form.getFirstInputElement();
+        firstFormInputElement.focus();
     };
 
     /**
@@ -307,8 +315,6 @@ export class Form
      */
     submitForm (form, action = null)
     {
-        action = typeof action !== 'undefined' ? action : null;
-
         const data = form.getData();
 
         if (!form.isValid(data)) {
@@ -413,6 +419,20 @@ export class Form
         }
     };
 
+    static formClickEvent(event)
+    {
+        // submit button?
+
+        // filter
+        // sort
+        // reorder
+        // remove
+        // add
+        // save
+        // update
+        // dragndrop
+    };
+
     /**
      * Count the bound forms
      *
@@ -444,6 +464,10 @@ export class Form
          *  Currently only one add button is allowed per form. Allow multiple/different add buttons in a form.
          */
         create.addEventListener('click', function () {
+            if (!self.forms[id].isValid()) {
+                return;
+            }
+
             const formElement  = document.getElementById(id);
             const parents      = [];
             const selectors    = formElement.getAttribute('data-add-element').split(','),
@@ -470,10 +494,15 @@ export class Form
 
                 newEle.push(document.querySelector(addTpl[i]).content.cloneNode(true));
 
+                const tplValue = newEle[i].querySelector('[data-tpl-value]').getAttribute('data-tpl-value');
                 parents.push(
-                    selector.length === 0
-                        ? newEle[i].firstElementChild
-                        : newEle[i].firstElementChild.querySelector(subSelector)
+                    tplValue.startsWith('http') || tplValue.startsWith('{')
+                        ? ( // data is only added from remote response after adding
+                            selector.length === 0
+                                ? newEle[i].firstElementChild
+                                : newEle[i].firstElementChild.querySelector(subSelector)
+                        )
+                        : formElement // data comes from the form (even if the api returns something after adding). What if remote returns a DB id? how do we add it? is this a @todo ? probably yes, maybe first use local data and then if remote data available replace local data?
                 );
 
                 values = values.concat(
@@ -487,114 +516,27 @@ export class Form
                             : Array.prototype.slice.call(parents[i].querySelectorAll('[data-tpl-text]'))
                     );
 
-                if (newEle[i].firstElementChild.id === null) {
-                    let eleId = '';
-
-                    do {
-                        eleId = 'f' + Math.random().toString(36).substring(7);
-                    } while (document.getElementById(eleId) !== null);
-
-                    // root element is form even if it has a different tag than <form> also <tr> can be a form!
-                    newEle[i].firstElementChild.id = eleId;
-                }
+                    Form.setRandomIdForTemplateElement(newEle[i]);
             }
 
-            const remoteUrls        = {};
-            const changedValueNodes = []; // prevent same node touching
-            length                  = values.length;
-            for (let i = 0; i < length; ++i) {
-                const path = values[i].hasAttribute('data-tpl-value-path') ? values[i].getAttribute('data-tpl-value-path') : null;
-
-                for (let j = 0; j < selectorLength; ++j) {
-                    const matches = newEle[j].firstElementChild.hasAttribute('data-tpl-value')
-                        && newEle[j].firstElementChild.getAttribute('data-tpl-value') === values[i].getAttribute('data-tpl-value')
-                        ? [newEle[j].firstElementChild]
-                        : newEle[j].firstElementChild.querySelectorAll(
-                            '[data-tpl-value="' + values[i].getAttribute('data-tpl-value') + '"'
-                        );
-
-                    const matchLength = matches.length;
-                    for (let c = 0; c < matchLength; ++c) {
-                        if (changedValueNodes.includes(matches[c])
-                            || (path !== null && path !== matches[c].getAttribute('data-tpl-value-path')) // ensure correct element. if this doesn't exist the matches from above contains alle elements with the same uri/path but eventually different tpl-paths @todo maybe fix it by improving the loop nesting or instead of storing the uri in the remoteUrls store the path? and then just check the path?
-                        ) {
-                            continue;
-                        }
-
-                        changedValueNodes.push(matches[c]);
-
-                        if (values[i].getAttribute('data-tpl-value').startsWith('http')
-                            || values[i].getAttribute('data-tpl-value').startsWith('{')
-                        ) {
-                            const uri = values[i].getAttribute('data-tpl-value').startsWith('/')
-                            ? document.getElementsByTagName('base')[0].href
-                            : '';
-
-                            if (remoteUrls[uri + values[i].getAttribute('data-tpl-value')] === undefined) {
-                                remoteUrls[uri + values[i].getAttribute('data-tpl-value')] = [];
-                            }
-
-                            remoteUrls[uri + values[i].getAttribute('data-tpl-value')].push({
-                                path: path,
-                                element: matches[c],
-                                type: 'value'
-                            });
-                        } else {
-                            self.setValueOfElement(matches[c], self.getValueFromDataSource(values[i]));
-                        }
-                    }
-                }
-            }
+            // insert row values data into form
+            const remoteUrls = {};
+            Form.insertDataIntoNewFormElement('value', newEle, values, remoteUrls);
 
             // insert row text data into form
-            const changedTextNodes = [];
-            length                 = text.length;
-            for (let i = 0; i < length; ++i) {
-                const path = text[i].hasAttribute('data-tpl-text-path') ? text[i].getAttribute('data-tpl-text-path') : null;
-                for (let j = 0; j < selectorLength; ++j) {
-                    const matches = newEle[j].firstElementChild.hasAttribute('data-tpl-text')
-                        && newEle[j].firstElementChild.getAttribute('data-tpl-text') === text[i].getAttribute('data-tpl-text')
-                        ? [newEle[j].firstElementChild]
-                        : newEle[j].firstElementChild.querySelectorAll(
-                            '[data-tpl-text="' + text[i].getAttribute('data-tpl-text') + '"'
-                        );
-
-                    const matchLength = matches.length;
-                    for (let c = 0; c < matchLength; ++c) {
-                        if (changedTextNodes.includes(matches[c])
-                            || (path !== null && path !== matches[c].getAttribute('data-tpl-text-path')) // ensure correct element. if this doesn't exist the matches from above contains alle elements with the same uri/path but eventually different tpl-paths @todo maybe fix it by improving the loop nesting or instead of storing the uri in the remoteUrls store the path? and then just check the path?
-                        ) {
-                            continue;
-                        }
-
-                        changedTextNodes.push(matches[c]);
-
-                        if (text[i].getAttribute('data-tpl-text').startsWith('http')
-                            || text[i].getAttribute('data-tpl-text').startsWith('{')
-                        ) {
-                            const uri = text[i].getAttribute('data-tpl-text').startsWith('/')
-                                ? document.getElementsByTagName('base')[0].href
-                                : '';
-
-                            if (remoteUrls[uri + text[i].getAttribute('data-tpl-text')] === undefined) {
-                                remoteUrls[uri + text[i].getAttribute('data-tpl-text')] = [];
-                            }
-
-                            remoteUrls[uri + text[i].getAttribute('data-tpl-text')].push({
-                                path: path,
-                                element: matches[c],
-                                type: 'text'
-                            });
-                        } else {
-                            self.setTextOfElement(matches[c], self.getTextFromDataSource(text[i]));
-                        }
-                    }
-                }
-            }
-
-            console.log(remoteUrls);
+            Form.insertDataIntoNewFormElement('text', newEle, text, remoteUrls)
 
             for (let i = 0; i < selectorLength; ++i) {
+                // The data could be added to an external element which uses external forms for updates.
+                // The buttons then belong to the external element and not the update form!
+                const formId = document.querySelector('[data-update-form="' + id + '"]');
+
+                self.bindButtons(formId === null ? id : formId.id, newEle[i].firstElementChild);
+
+                // @todo: bind added element in general (e.g. self.app.uiManager.bind(newEle[i].firstElementChild));
+                // Problem 1 is sometimes the bind functions expect an id, sometimes an element
+                // Problem 2 is that sorting is handled in the Table.js which should be part of the form? because a new sorting should also get submitted to the backend!
+
                 subMain.appendChild(newEle[i].firstElementChild);
             }
 
@@ -609,35 +551,10 @@ export class Form
 
                 UriFactory.setQuery('$id', response.get('response').id);
 
-                // set values
-                for (const e in remoteUrls) {
-                    const request = new Request(e);
-                    request.setResultCallback(200, function(xhr) {
-                        /**
-                         * @todo Orange-Management/jsOMS#84
-                         *  Remote data responses need to be parsed
-                         *  The data coming from the backend/api usually is not directly usable in the frontend.
-                         *  For that purpose some kind of value path should be defined to handle json responses in order to get only the data that is needed.
-                         */
-                        const remoteUrlsLength = remoteUrls[e].length;
-                        for (let k = 0; k < remoteUrlsLength; ++k) {
-                            const path = remoteUrls[e][k].path;
-
-                            if (remoteUrls[e][k].type === 'value') {
-                                self.setValueOfElement(remoteUrls[e][k].element,
-                                    path !== null ? jsOMS.getArray(path, JSON.parse(xhr.response)) : xhr.response
-                                );
-                            } else {
-                                self.setTextOfElement(remoteUrls[e][k].element,
-                                    path !== null ? jsOMS.getArray(path, JSON.parse(xhr.response)) : xhr.response
-                                );
-                            }
-                        }
-                    });
-
-                    request.send();
-                }
+                Form.setDataFromRemoteUrls(remoteUrls);
             });
+
+            self.forms[id].resetValues();
 
             // @todo bind update
         });
@@ -646,6 +563,135 @@ export class Form
          * @todo Orange-Management/jsOMS#85
          *  Invalid backend/api responses (!201) should undo/stop UI changes
          */
+    };
+
+    static setDataFromRemoteUrls (remoteUrls)
+    {
+        for (const e in remoteUrls) {
+            const request = new Request(e);
+            request.setResultCallback(200, function(xhr) {
+                /**
+                 * @todo Orange-Management/jsOMS#84
+                 *  Remote data responses need to be parsed
+                 *  The data coming from the backend/api usually is not directly usable in the frontend.
+                 *  For that purpose some kind of value path should be defined to handle json responses in order to get only the data that is needed.
+                 */
+                const remoteUrlsLength = remoteUrls[e].length;
+                for (let k = 0; k < remoteUrlsLength; ++k) {
+                    const path = remoteUrls[e][k].path;
+
+                    if (remoteUrls[e][k].type === 'value') {
+                        GeneralUI.setValueOfElement(remoteUrls[e][k].element,
+                            path !== null ? jsOMS.getArray(path, JSON.parse(xhr.response)) : xhr.response
+                        );
+                    } else {
+                        GeneralUI.setTextOfElement(remoteUrls[e][k].element,
+                            path !== null ? jsOMS.getArray(path, JSON.parse(xhr.response)) : xhr.response
+                        );
+                    }
+                }
+            });
+
+            request.send();
+        }
+    };
+
+    static setRandomIdForTemplateElement (templateElement)
+    {
+        if (templateElement.firstElementChild.id !== null) {
+            return;
+        }
+
+        let eleId = '';
+
+        do {
+            eleId = 'f' + Math.random().toString(36).substring(7);
+        } while (document.getElementById(eleId) !== null);
+
+        templateElement.firstElementChild.id = eleId;
+    };
+
+    static insertDataIntoNewFormElement (type, templateElements, data, remoteUrls = {})
+    {
+        const changedNodes   = []; // prevent same node touching
+        const length         = data.length;
+        const templateLength = templateElements.length;
+        for (let i = 0; i < length; ++i) {
+            const path = data[i].hasAttribute('data-tpl-' + type + '-path') ? data[i].getAttribute('data-tpl-' + type + '-path') : null;
+
+            for (let j = 0; j < templateLength; ++j) {
+                const matches = templateElements[j].firstElementChild.hasAttribute('data-tpl-' + type)
+                    && templateElements[j].firstElementChild.getAttribute('data-tpl-' + type) === data[i].getAttribute('data-tpl-' + type)
+                    ? [templateElements[j].firstElementChild]
+                    : templateElements[j].firstElementChild.querySelectorAll(
+                        '[data-tpl-' + type + '="' + data[i].getAttribute('data-tpl-' + type) + '"'
+                    );
+
+                const matchLength = matches.length;
+                for (let c = 0; c < matchLength; ++c) {
+                    if (changedNodes.includes(matches[c])
+                        || (path !== null && path !== matches[c].getAttribute('data-tpl-' + type + '-path')) // ensure correct element. if this doesn't exist the matches from above contains alle elements with the same uri/path but eventually different tpl-paths @todo maybe fix it by improving the loop nesting or instead of storing the uri in the remoteUrls store the path? and then just check the path?
+                    ) {
+                        continue;
+                    }
+
+                    changedNodes.push(matches[c]);
+
+                    if (data[i].getAttribute('data-tpl-' + type).startsWith('http')
+                        || data[i].getAttribute('data-tpl-' + type).startsWith('{')
+                    ) {
+                        Form.populateRemoteUrls(type, data[i], path, remoteUrls)
+                    } else {
+                        if (type === 'value') {
+                            GeneralUI.setValueOfElement(matches[c], GeneralUI.getValueFromDataSource(data[i]));
+                        } else {
+                            GeneralUI.setTextOfElement(matches[c], GeneralUI.getTextFromDataSource(data[i]));
+                        }
+                    }
+                }
+            }
+        }
+    };
+
+    static insertDataIntoForm (type, formId, data, remoteUrls = {})
+    {
+        const length = data.length;
+        for (let i = 0; i < length; ++i) {
+            const matches = document.getElementById(formId).querySelectorAll('[data-tpl-' + type + '="' + data[i].getAttribute('data-tpl-' + type) + '"');
+            const path    = data[i].hasAttribute('data-tpl-' + type + '-path') ? data[i].getAttribute('data-tpl-' + type + '-path') : null;
+
+            const matchLength = matches.length;
+            for (let c = 0; c < matchLength; ++c) {
+                if (data[i].getAttribute('data-tpl-' + type).startsWith('http')
+                    || data[i].getAttribute('data-tpl-' + type).startsWith('{')
+                ) {
+                    Form.populateRemoteUrls(type, data[i], path, remoteUrls)
+                } else {
+                    if (type === 'value') {
+                        GeneralUI.setValueOfElement(matches[c], GeneralUI.getValueFromDataSource(data[i]));
+                    } else {
+                        GeneralUI.setTextOfElement(matches[c], GeneralUI.getTextFromDataSource(data[i]));
+                    }
+                }
+            }
+        }
+    };
+
+    static populateRemoteUrls (type, data, path, remoteUrls)
+    {
+        const uri = data[i].getAttribute('data-tpl-' + type).startsWith('/')
+            ? document.getElementsByTagName('base')[0].href
+            : '';
+
+        if (remoteUrls[uri + data[i].getAttribute('data-tpl-' + type)] === undefined) {
+            remoteUrls[uri + data[i].getAttribute('data-tpl-' + type)] = [];
+        }
+
+        remoteUrls[uri + data[i].getAttribute('data-tpl-' + type)].push({
+            path: path,
+            element: matches[c],
+            type: type
+        });
     };
 
     /**
@@ -698,9 +744,6 @@ export class Form
             /**
              * @todo Orange-Management/jsOMS#82
              *  The container element for inline adding isn't always tbody
-             *
-             * @todo Orange-Management/jsOMS#83
-             *  Removing a dynamically added form from the dom should also be removed and unbound from the FormManager
              */
             self.app.uiManager.getFormManager().get(eleId + '-form').injectSubmit(function () {
                 document.getElementById(id).getElementsByTagName('tbody')[0].removeChild(
@@ -839,16 +882,7 @@ export class Form
 
                 newEle.push(document.querySelector(updatableTpl[i]).content.cloneNode(true));
 
-                if (newEle[i].firstElementChild.id === null) {
-                    let eleId = '';
-
-                    do {
-                        eleId = 'f' + Math.random().toString(36).substring(7);
-                    } while (document.getElementById(eleId) !== null);
-
-                    // root element is form even if it has a different tag than <form> also <tr> can be a form!
-                    newEle[i].firstElementChild.id = eleId;
-                }
+                Form.setRandomIdForTemplateElement(newEle[i]);
             }
 
             const fields = [];
@@ -867,117 +901,23 @@ export class Form
 
             // insert row values data into form
             const remoteUrls = {};
-            length           = values.length;
-            for (let i = 0; i < length; ++i) {
-                const path = values[i].hasAttribute('data-tpl-value-path') ? values[i].getAttribute('data-tpl-value-path') : null;
-                for (let j = 0; j < selectorLength; ++j) {
-                    const matches = newEle[j].firstElementChild.hasAttribute('data-tpl-value')
-                        && newEle[j].firstElementChild.getAttribute('data-tpl-value') === values[i].getAttribute('data-tpl-value')
-                        ? [newEle[j].firstElementChild]
-                        : newEle[j].firstElementChild.querySelectorAll(
-                            '[data-tpl-value="' + values[i].getAttribute('data-tpl-value') + '"'
-                        );
-
-                    const matchLength = matches.length;
-                    for (let c = 0; c < matchLength; ++c) {
-                        if (values[i].getAttribute('data-tpl-value').startsWith('http')
-                            || values[i].getAttribute('data-tpl-value').startsWith('{')
-                        ) {
-                            const uri = values[i].getAttribute('data-tpl-value').startsWith('/')
-                            ? document.getElementsByTagName('base')[0].href
-                            : '';
-
-                            if (remoteUrls[uri + values[i].getAttribute('data-tpl-value')] === undefined) {
-                                remoteUrls[uri + values[i].getAttribute('data-tpl-value')] = [];
-                            }
-
-                            remoteUrls[uri + values[i].getAttribute('data-tpl-value')].push({
-                                path: path,
-                                element: matches[c],
-                                type: 'value'
-                            });
-                        } else {
-                            self.setValueOfElement(matches[c], self.getValueFromDataSource(values[i]));
-                        }
-                    }
-                }
-            }
+            Form.insertDataIntoNewFormElement('value', newEle, values, remoteUrls);
 
             // insert row text data into form
-            length = text.length;
-            for (let i = 0; i < length; ++i) {
-                const path = text[i].hasAttribute('data-tpl-text-path') ? text[i].getAttribute('data-tpl-text-path') : null;
-                for (let j = 0; j < selectorLength; ++j) {
-                    const matches = newEle[j].firstElementChild.hasAttribute('data-tpl-text')
-                        && newEle[j].firstElementChild.getAttribute('data-tpl-text') === text[i].getAttribute('data-tpl-text')
-                        ? [newEle[j].firstElementChild]
-                        : newEle[j].firstElementChild.querySelectorAll(
-                            '[data-tpl-text="' + text[i].getAttribute('data-tpl-text') + '"'
-                        );
+            Form.insertDataIntoNewFormElement('text', newEle, text, remoteUrls);
 
-                    const matchLength = matches.length;
-                    for (let c = 0; c < matchLength; ++c) {
-                        if (text[i].getAttribute('data-tpl-text').startsWith('http')
-                            || text[i].getAttribute('data-tpl-text').startsWith('{')
-                        ) {
-                            const uri = text[i].getAttribute('data-tpl-text').startsWith('/')
-                                ? document.getElementsByTagName('base')[0].href
-                                : '';
-
-                            if (remoteUrls[uri + text[i].getAttribute('data-tpl-text')] === undefined) {
-                                remoteUrls[uri + text[i].getAttribute('data-tpl-text')] = [];
-                            }
-
-                            remoteUrls[uri + text[i].getAttribute('data-tpl-text')].push({
-                                path: path,
-                                element: matches[c],
-                                type: 'text'
-                            });
-                        } else {
-                            self.setTextOfElement(matches[c], self.getTextFromDataSource(text[i]));
-                        }
-                    }
-                }
-            }
-
-            for (const e in remoteUrls) {
-                const request = new Request(e);
-                request.setResultCallback(200, function(xhr) {
-                    /**
-                     * @todo Orange-Management/jsOMS#84
-                     *  Remote data responses need to be parsed
-                     *  The data coming from the backend/api usually is not directly usable in the frontend.
-                     *  For that purpose some kind of value path should be defined to handle json responses in order to get only the data that is needed.
-                     */
-                    const remoteUrlsLength = remoteUrls[e].length;
-                    for (let k = 0; k < remoteUrlsLength; ++k) {
-                        const path = remoteUrls[e][k].path;
-
-                        if (remoteUrls[e][k].type === 'value') {
-                            self.setValueOfElement(remoteUrls[e][k].element,
-                                path !== null ? jsOMS.getArray(path, JSON.parse(xhr.response)) : xhr.response
-                            );
-                        } else {
-                            self.setTextOfElement(remoteUrls[e][k].element,
-                                path !== null ? jsOMS.getArray(path, JSON.parse(xhr.response)) : xhr.response
-                            );
-                        }
-                    }
-                });
-
-                request.send();
-            }
+            Form.setDataFromRemoteUrls(remoteUrls);
 
             for (let i = 0; i < selectorLength; ++i) {
                 newEle[i].firstElementChild.setAttribute('data-marker', 'tpl');
                 parents[i].parentNode.insertBefore(newEle[i].firstElementChild, parents[i]);
             }
 
-            //self.bindCreateForm(eleId, id); // todo: why this bind???
-            // todo: this is not working!!!!!!!!!!
+            //self.bindCreateForm(eleId, id); // @todo: why this bind???
+            // @todo: this is not working!!!!!!!!!!
             /*
             self.app.uiManager.getFormManager().get(eleId).injectSubmit(function () {
-                // todo: simplify this?
+                // @todo: simplify this?
                 self.closest(self.getAttribute('data-ui-element')).parentNode.removeChild(
                     document.getElementById(eleId)
                 );
@@ -997,13 +937,33 @@ export class Form
                 jsOMS.removeClass(cancelButtons[i], 'hidden');
             }
 
-            // todo: on save button click insert data into hidden row and show hidden row again, delete form row
+            // @todo: on save button click insert data into hidden row and show hidden row again, delete form row
         });
 
         /**
          * @todo Orange-Management/jsOMS#85
          *  Invalid backend/api responses (!201) should undo/stop UI changes
          */
+    };
+
+    /**
+     * Bind cancel button
+     *
+     * @param {string} update Update button
+     * @param {Object} id     Id
+     *
+     * @return {void}
+     *
+     * @since 1.0.0
+     */
+    bindCancel(cancel, id)
+    {
+        const ele = document.getElementById(id);
+        if (ele.getAttribute('data-update-form') === null && ele.tagName.toLowerCase() !== 'form') {
+            this.bindCancelInline(cancel, id);
+        } else {
+            this.bindCancelExternal(cancel, id);
+        }
     };
 
     /**
@@ -1022,6 +982,48 @@ export class Form
 
         cancel.addEventListener('click', function () {
             self.removeEditTemplate(this, id);
+        });
+    };
+
+    /**
+     * Bind external/form cancel button
+     *
+     * @param {string} cancel Cancel button
+     * @param {Object} id     Id
+     *
+     * @return {void}
+     *
+     * @since 1.0.0
+     */
+    bindCancelExternal(cancel, id)
+    {
+        const self = this;
+
+        cancel.addEventListener('click', function (e) {
+            self.forms[id].resetValues();
+
+            let length = 0;
+
+            // show add button + hide update + hide cancel
+            const addButtons = self.forms[id].getAdd();
+            length           = addButtons.length;
+            for (let i = 0; i < length; ++i) {
+                jsOMS.removeClass(addButtons[i], 'hidden');
+            }
+
+            const saveButtons = self.forms[id].getSave();
+            length            = saveButtons.length;
+            for (let i = 0; i < length; ++i) {
+                jsOMS.addClass(saveButtons[i], 'hidden');
+            }
+
+            const cancelButtons = self.forms[id].getCancel();
+            length              = cancelButtons.length;
+            for (let i = 0; i < length; ++i) {
+                jsOMS.addClass(cancelButtons[i], 'hidden');
+            }
+
+            jsOMS.preventAll(e);
         });
     };
 
@@ -1052,7 +1054,6 @@ export class Form
             // find all values, texts and parents for every selector
             for (let i = 0; i < selectorLength; ++i) {
                 selectors[i] = selectors[i].trim();
-                // todo: similar logic is in updatable Inline and probably in External... pull out?
                 // this handles selectors such as 'ancestor > child/or/sibling' and many more
                 let selector    = !selectors[i].startsWith('#') ? selectors[i].split(' ') : [selectors[i]];
                 const selLength = selector.length;
@@ -1150,21 +1151,9 @@ export class Form
                         if (values[i].getAttribute('data-tpl-value').startsWith('http')
                             || values[i].getAttribute('data-tpl-value').startsWith('{')
                         ) {
-                            const uri = values[i].getAttribute('data-tpl-value').startsWith('/')
-                                ? document.getElementsByTagName('base')[0].href
-                                : '';
-
-                            if (remoteUrls[uri + values[i].getAttribute('data-tpl-value')] === undefined) {
-                                remoteUrls[uri + values[i].getAttribute('data-tpl-value')] = [];
-                            }
-
-                            remoteUrls[uri + values[i].getAttribute('data-tpl-value')].push({
-                                path: path,
-                                element: matches[c],
-                                type: 'value'
-                            });
+                            Form.populateRemoteUrls('value', values[i], path, remoteUrls)
                         } else {
-                            self.setValueOfElement(matches[c], self.getValueFromDataSource(values[i]));
+                            GeneralUI.setValueOfElement(matches[c], GeneralUI.getValueFromDataSource(values[i]));
                         }
                     }
                 }
@@ -1189,21 +1178,9 @@ export class Form
                         if (text[i].getAttribute('data-tpl-text').startsWith('http')
                             || text[i].getAttribute('data-tpl-text').startsWith('{')
                         ) {
-                            const uri = text[i].getAttribute('data-tpl-text').startsWith('/')
-                                ? document.getElementsByTagName('base')[0].href
-                                : '';
-
-                            if (remoteUrls[uri + text[i].getAttribute('data-tpl-text')] === undefined) {
-                                remoteUrls[uri + text[i].getAttribute('data-tpl-text')] = [];
-                            }
-
-                            remoteUrls[uri + text[i].getAttribute('data-tpl-text')].push({
-                                path: path,
-                                element: matches[c],
-                                type: 'text'
-                            });
+                            Form.populateRemoteUrls('text', text[i], path, remoteUrls)
                         } else {
-                            self.setTextOfElement(matches[c], self.getTextFromDataSource(text[i]));
+                            GeneralUI.setTextOfElement(matches[c], GeneralUI.getTextFromDataSource(text[i]));
                         }
                     }
                 }
@@ -1212,40 +1189,14 @@ export class Form
             // todo bind failure here, if failure do cancel, if success to remove edit template
             self.forms[id].setSuccess(function() {
                 // overwrite old values from remote response
-                for (const e in remoteUrls) {
-                    const request = new Request(e);
-                    request.setResultCallback(200, function(xhr) {
-                        /**
-                         * @todo Orange-Management/jsOMS#84
-                         *  Remote data responses need to be parsed
-                         *  The data coming from the backend/api usually is not directly usable in the frontend.
-                         *  For that purpose some kind of value path should be defined to handle json responses in order to get only the data that is needed.
-                         */
-                        const remoteUrlsLength = remoteUrls[e].length;
-                        for (let k = 0; k < remoteUrlsLength; ++k) {
-                            const path = remoteUrls[e][k].path;
-
-                            if (remoteUrls[e][k].type === 'value') {
-                                self.setValueOfElement(remoteUrls[e][k].element,
-                                    path !== null ? jsOMS.getArray(path, JSON.parse(xhr.response)) : xhr.response
-                                );
-                            } else {
-                                self.setTextOfElement(remoteUrls[e][k].element,
-                                    path !== null ? jsOMS.getArray(path, JSON.parse(xhr.response)) : xhr.response
-                                );
-                            }
-                        }
-                    });
-
-                    request.send();
-                }
+                Form.setDataFromRemoteUrls(remoteUrls);
             });
 
             // @todo: does this submit and the previous submit in updatable mean I'm sending the data twice???? That would be bad!
             self.submit(self.forms[id]);
             self.removeEditTemplate(this, id);
         });
-    }
+    };
 
     /**
      * Remove inline edit template
@@ -1263,7 +1214,23 @@ export class Form
         const selectors    = formElement.getAttribute('data-update-element').split(','),
             selectorLength = selectors.length;
 
+        const saveButtons = this.forms[id].getSave();
+        let length        = saveButtons.length;
+        for (let i = 0; i < length; ++i) {
+            jsOMS.addClass(saveButtons[i], 'hidden');
+        }
 
+        const cancelButtons = this.forms[id].getCancel();
+        length              = cancelButtons.length;
+        for (let i = 0; i < length; ++i) {
+            jsOMS.addClass(cancelButtons[i], 'hidden');
+        }
+
+        const update = this.forms[id].getUpdate();
+        length       = update === null ? 0 : update.length;
+        for (let i = 0; i < length; ++i) {
+            jsOMS.removeClass(update[i], 'hidden');
+        }
 
         for (let i = 0; i < selectorLength; ++i) {
             selectors[i] = selectors[i].trim();
@@ -1300,24 +1267,6 @@ export class Form
 
             jsOMS.removeClass(content, 'hidden');
         }
-
-        const saveButtons = this.forms[id].getSave();
-        let length        = saveButtons.length;
-        for (let i = 0; i < length; ++i) {
-            jsOMS.addClass(saveButtons[i], 'hidden');
-        }
-
-        const cancelButtons = this.forms[id].getCancel();
-        length              = cancelButtons.length;
-        for (let i = 0; i < length; ++i) {
-            jsOMS.addClass(cancelButtons[i], 'hidden');
-        }
-
-        const update = this.forms[id].getUpdate();
-        length       = update === null ? 0 : update.length;
-        for (let i = 0; i < length; ++i) {
-            jsOMS.removeClass(update[i], 'hidden');
-        }
     };
 
     /**
@@ -1342,90 +1291,58 @@ export class Form
             const text        = parent.querySelectorAll('[data-tpl-text]');
 
             const fields = document.getElementById(formId).querySelectorAll('[data-form="' + id + '"]');
-            let length   = fields.length;
+            let length   = 0;
 
+            // clear form values to prevent old values getting mixed with update values
+            self.forms[formId].resetValues();
+
+            // hide add button + show update + show cancel
+            const addButtons = self.forms[formId].getAdd();
+            length           = addButtons.length;
+            for (let i = 0; i < length; ++i) {
+                jsOMS.addClass(addButtons[i], 'hidden');
+            }
+
+            const saveButtons = self.forms[formId].getSave();
+            length            = saveButtons.length;
+            for (let i = 0; i < length; ++i) {
+                jsOMS.removeClass(saveButtons[i], 'hidden');
+            }
+
+            const cancelButtons = self.forms[formId].getCancel();
+            length              = cancelButtons.length;
+            for (let i = 0; i < length; ++i) {
+                jsOMS.removeClass(cancelButtons[i], 'hidden');
+            }
+
+            // set form id to fields for easier identification
+            length = fields.length;
             for (let i = 0; i < length; ++i) {
                 fields[i].setAttribute('data-form', eleId);
             }
 
             // insert row values data into form
-            length = values.length;
-            for (let i = 0; i < length; ++i) {
-                const matches = document.getElementById(formId).querySelectorAll('[data-tpl-value="' + values[i].getAttribute('data-tpl-value') + '"');
-                const path    = values[i].hasAttribute('data-tpl-value-path') ? values[i].getAttribute('data-tpl-value-path') : null;
-
-                const matchLength = matches.length;
-                for (let c = 0; c < matchLength; ++c) {
-                    if (values[i].getAttribute('data-tpl-value').startsWith('http')
-                        || values[i].getAttribute('data-tpl-value').startsWith('{')
-                    ) {
-                        const uri = values[i].getAttribute('data-tpl-value').startsWith('/')
-                            ? document.getElementsByTagName('base')[0].href
-                            : '';
-
-                        const request = new Request(uri + values[i].getAttribute('data-tpl-value'));
-                        request.setResultCallback(200, function(xhr) {
-                            /**
-                             * @todo Orange-Management/jsOMS#84
-                             *  Remote data responses need to be parsed
-                             *  The data coming from the backend/api usually is not directly usable in the frontend.
-                             *  For that purpose some kind of value path should be defined to handle json responses in order to get only the data that is needed.
-                             */
-                            self.setValueOfElement(matches[c],
-                                path !== null ? jsOMS.getArray(path, JSON.parse(xhr.response)) : xhr.response
-                            );
-                        });
-
-                        request.send();
-                    } else {
-                        self.setValueOfElement(matches[c], self.getValueFromDataSource(values[i]));
-                    }
-                }
-            }
+            const remoteUrls = {};
+            Form.insertDataIntoForm('value', formId, values, remoteUrls);
 
             // insert row text data into form
-            length = text.length;
-            for (let i = 0; i < length; ++i) {
-                const matches = document.getElementById(formId).querySelectorAll('[data-tpl-text="' + text[i].getAttribute('data-tpl-text') + '"');
-                const path    = text[i].hasAttribute('data-tpl-text-path') ? text[i].getAttribute('data-tpl-text-path') : null;
+            Form.insertDataIntoForm('text', formId, text, remoteUrls);
 
-                /**
-                 * @todo Orange-Management/jsOMS#??? [t:question] [p:low] [d:medium]
-                 *  Consider pulling this out because it exists like 3x2 = 6 times in a similar way or at least 3 times very similarly
-                 */
-                const matchLength = matches.length;
-                for (let c = 0; c < matchLength; ++c) {
-                    if (text[i].getAttribute('data-tpl-text').startsWith('http')
-                        || text[i].getAttribute('data-tpl-text').startsWith('{')
-                    ) {
-                        const uri = text[i].getAttribute('data-tpl-text').startsWith('/')
-                                ? document.getElementsByTagName('base')[0].href
-                                : '';
-
-                        const request = new Request(uri + text[i].getAttribute('data-tpl-text'));
-                        request.setResultCallback(200, function(xhr) {
-                            /**
-                             * @todo Orange-Management/jsOMS#84
-                             *  Remote data responses need to be parsed
-                             *  The data coming from the backend/api usually is not directly usable in the frontend.
-                             *  For that purpose some kind of value path should be defined to handle json responses in order to get only the data that is needed.
-                             */
-                            self.setTextOfElement(matches[c],
-                                path !== null ? jsOMS.getArray(path, JSON.parse(xhr.response)) : xhr.response
-                            );
-                        });
-
-                        request.send();
-                    } else {
-                        self.setTextOfElement(matches[c], self.getTextFromDataSource(text[i]));
-                    }
+            self.forms[formId].setSuccess(function(response) {
+                if (response.get('status') !== 'undefined' && response.get('status') !== NotificationLevel.HIDDEN) {
+                    self.app.notifyManager.send(
+                        new NotificationMessage(response.get('status'), response.get('title'), response.get('message')), NotificationType.APP_NOTIFICATION
+                    );
                 }
-            }
+
+                console.log(remoteUrls);
+
+                UriFactory.setQuery('$id', response.get('response').id);
+
+                Form.setDataFromRemoteUrls(remoteUrls);
+            });
 
             /**
-             * @todo Orange-Management/jsOMS#86
-             *  On edit replace add button with save and cancel
-             *
              * @todo Orange-Management/jsOMS#85
              *  Invalid backend/api responses (!201) should undo/stop UI changes
              *
@@ -1470,111 +1387,5 @@ export class Form
                 callback();
             }
         });
-    };
-
-    setValueOfElement(src, value)
-    {
-        switch (src.tagName.toLowerCase()) {
-            case 'div':
-            case 'span':
-            case 'pre':
-            case 'article':
-            case 'section':
-            case 'h1':
-                if (src.hasAttribute('data-tpl-text')) {
-                    break; // prevent overwriting setTextOfElement
-                }
-
-                src.innerHTML = jsOMS.htmlspecialchars_encode(value);
-                break;
-            case 'select':
-                const optionLength = src.options.length;
-                for (let i = 0; i < optionLength; ++i) {
-                    if (src.options[i].value === value) {
-                        src.options[i].selected = true;
-
-                        break;
-                    }
-                }
-
-                break;
-            case 'input':
-                if (src.type === 'radio') {
-                    src.checked = false;
-                    if (src.value === value) {
-                        src.checked = true;
-                    }
-
-                    break;
-                } else if (src.type === 'checkbox') {
-                    src.checked = false;
-                    const values = value.split(',');
-                    if (values.includes(src.value)) {
-                        src.checked = true;
-                    }
-
-                    break;
-                }
-            default:
-                src.value = jsOMS.htmlspecialchars_decode(value);
-        }
-    };
-
-    setTextOfElement(src, value)
-    {
-        switch (src.tagName.toLowerCase()) {
-            case 'select':
-                break;
-            case 'div':
-            case 'span':
-            case 'pre':
-            case 'article':
-            case 'section':
-                src.innerHTML = value;
-                break;
-            case 'h1':
-                src.innerHTML = jsOMS.htmlspecialchars_encode(value);
-                break;
-            default:
-                if (src.value === '') {
-                    src.value = jsOMS.htmlspecialchars_decode(value);
-                }
-        }
-    };
-
-    getValueFromDataSource(src)
-    {
-        if (src.getAttribute('data-value') !== null) {
-            return src.getAttribute('data-value');
-        }
-
-        switch (src.tagName.toLowerCase()) {
-            case 'td':
-            case 'div':
-            case 'span':
-            case 'pre':
-            case 'article':
-            case 'section':
-            case 'h1':
-                return src.innerText;
-            default:
-                return src.value;
-        }
-    };
-
-    getTextFromDataSource(src)
-    {
-        switch (src.tagName.toLowerCase()) {
-            case 'td':
-            case 'div':
-            case 'span':
-            case 'pre':
-            case 'article':
-            case 'section':
-            case 'h1':
-                return src.innerHTML;
-            default:
-                return src.value;
-        }
     };
 };

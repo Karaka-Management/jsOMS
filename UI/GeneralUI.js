@@ -50,7 +50,7 @@ export class GeneralUI
     /**
      * Bind & rebind UI element.
      *
-     * @param {Object} [e] Element id
+     * @param {Object} [e] Element
      *
      * @return {void}
      *
@@ -174,6 +174,123 @@ export class GeneralUI
 
         for (let i = 0; i < length; ++i) {
             new AdvancedInput(e[i], this.app.eventManager, this.app.uiManager.getDOMObserver());
+        }
+    };
+
+    static setValueOfElement(src, value)
+    {
+        if (src.hasAttribute('data-value')) {
+            src.setAttribute('data-value', value);
+        }
+
+        switch (src.tagName.toLowerCase()) {
+            case 'div':
+            case 'span':
+            case 'pre':
+            case 'article':
+            case 'section':
+            case 'h1':
+                if (src.hasAttribute('data-tpl-text')) {
+                    break; // prevent overwriting setTextOfElement
+                }
+
+                src.innerHTML = jsOMS.htmlspecialchars_encode(value);
+                break;
+            case 'select':
+                const optionLength = src.options.length;
+                for (let i = 0; i < optionLength; ++i) {
+                    if (src.options[i].value === value) {
+                        src.options[i].selected = true;
+
+                        break;
+                    }
+                }
+
+                break;
+            case 'input':
+                if (src.type === 'radio') {
+                    src.checked = false;
+                    if (src.value === value) {
+                        src.checked = true;
+                    }
+
+                    break;
+                } else if (src.type === 'checkbox') {
+                    src.checked  = false;
+                    const values = value.split(',');
+                    if (values.includes(src.value)) {
+                        src.checked = true;
+                    }
+
+                    break;
+                }
+            default:
+                src.value = jsOMS.htmlspecialchars_decode(value);
+        }
+    };
+
+    static setTextOfElement(src, value)
+    {
+        switch (src.tagName.toLowerCase()) {
+            case 'select':
+                break;
+            case 'div':
+            case 'td':
+            case 'span':
+            case 'pre':
+            case 'article':
+            case 'section':
+                src.innerHTML = value;
+                break;
+            case 'h1':
+                src.innerHTML = jsOMS.htmlspecialchars_encode(value);
+                break;
+            default:
+                if (src.value === '') {
+                    src.value = jsOMS.htmlspecialchars_decode(value);
+                }
+        }
+    };
+
+    static getValueFromDataSource(src)
+    {
+        if (src.getAttribute('data-value') !== null) {
+            return src.getAttribute('data-value');
+        }
+
+        switch (src.tagName.toLowerCase()) {
+            case 'td':
+            case 'div':
+            case 'span':
+            case 'pre':
+            case 'article':
+            case 'section':
+            case 'h1':
+                return src.innerText.trim(' ');
+            default:
+                return src.value;
+        }
+    };
+
+    static getTextFromDataSource(src)
+    {
+        switch (src.tagName.toLowerCase()) {
+            case 'td':
+            case 'div':
+            case 'span':
+            case 'pre':
+            case 'article':
+            case 'section':
+            case 'h1':
+                return src.innerHTML.trim(' ');
+            case 'select':
+                return src.options[src.selectedIndex].text;
+            case 'input':
+                if (src.getAttribute('type') === 'checkbox' || src.getAttribute('type') === 'radio') {
+                    return document.querySelector('label[for="' + src.id + '"]').innerText.trim(' ');
+                }
+            default:
+                return src.value;
         }
     };
 };

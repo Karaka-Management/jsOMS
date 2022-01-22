@@ -38,16 +38,16 @@ export class DragNDrop
     /**
      * Bind element
      *
-     * @param {Object} [id] DOM element
+     * @param {Object} [element] DOM element
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    bind (id)
+    bind (element)
     {
-        if (typeof id !== 'undefined') {
-            this.bindElement(id);
+        if (typeof element !== 'undefined') {
+            this.bindElement(element);
         } else {
             const elements = document.querySelectorAll('[draggable]'),
                 length     = !elements ? 0 : elements.length;
@@ -84,7 +84,7 @@ export class DragNDrop
         }, false);
 
         element.addEventListener('dragenter', function(e) {
-            const rowIndex = Array.from(this.parentElement.children).indexOf(this);
+            const rowIndex  = Array.from(this.parentElement.children).indexOf(this);
             const dragIndex = Array.from(self.dragging.parentElement.children).indexOf(self.dragging);
 
             const oldPlaceholder = this.parentNode.querySelector('.drag-placeholder');

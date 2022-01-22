@@ -113,14 +113,17 @@ export class FormView
      *
      * @since 1.0.0
      */
-    getSubmit ()
+    getSubmit (e = null)
     {
-        return document.querySelectorAll(
+        const parent = e === null ? document : e;
+
+        return parent.querySelectorAll(
             '#' + this.id + ' input[type=submit], '
             + 'button[form=' + this.id + '][type=submit], '
             + '#' + this.id + ' button[type=submit], '
             + '.submit[data-form=' + this.id + '], '
             + '#' + this.id + ' .submit'
+            + (e !== null ? '  .submit' : '')
         );
     };
 
@@ -144,12 +147,15 @@ export class FormView
      *
      * @since 1.0.0
      */
-    getUpdate ()
+    getUpdate (e = null)
     {
-        return document.querySelectorAll(
-            'button[form=' + this.id + '].update, '
-            + '.update[data-form=' + this.id + '], '
-            + '#' + this.id + ' .update'
+        const parent = e === null ? document : e;
+
+        return parent.querySelectorAll(
+            'button[form=' + this.id + '].update-form, '
+            + '.update-form[data-form=' + this.id + '], '
+            + '#' + this.id + ' .update-form'
+            + (e !== null ? ', .update-form' : '')
         );
     };
 
@@ -160,12 +166,15 @@ export class FormView
     *
     * @since 1.0.0
     */
-    getSave ()
+    getSave (e = null)
     {
-        return document.querySelectorAll(
-            'button[form=' + this.id + '].save, '
-            + '.save[data-form=' + this.id + '], '
-            + '#' + this.id + ' .save'
+        const parent = e === null ? document : e;
+
+        return parent.querySelectorAll(
+            'button[form=' + this.id + '].save-form, '
+            + '.save-form[data-form=' + this.id + '], '
+            + '#' + this.id + ' .save-form'
+            + (e !== null ? ', .save-form' : '')
         );
     };
 
@@ -176,12 +185,15 @@ export class FormView
     *
     * @since 1.0.0
     */
-    getCancel ()
+    getCancel (e = null)
     {
-        return document.querySelectorAll(
-            'button[form=' + this.id + '].cancel, '
-            + '.cancel[data-form=' + this.id + '], '
-            + '#' + this.id + ' .cancel'
+        const parent = e === null ? document : e;
+
+        return parent.querySelectorAll(
+            'button[form=' + this.id + '].cancel-form, '
+            + '.cancel-form[data-form=' + this.id + '], '
+            + '#' + this.id + ' .cancel-form'
+            + (e !== null ? ', .cancel-form' : '')
         );
     };
 
@@ -192,12 +204,15 @@ export class FormView
      *
      * @since 1.0.0
      */
-    getRemove ()
+    getRemove (e = null)
     {
-        return document.querySelectorAll(
-            'button[form=' + this.id + '].remove, '
-            + '.remove[data-form=' + this.id + '], '
-            + '#' + this.id + ' .remove'
+        const parent = e === null ? document : e;
+
+        return parent.querySelectorAll(
+            'button[form=' + this.id + '].remove-form, '
+            + '.remove-form[data-form=' + this.id + '], '
+            + '#' + this.id + ' .remove-form'
+            + (e !== null ? ', .remove-form' : '')
         );
     };
 
@@ -210,12 +225,15 @@ export class FormView
      *
      * @since 1.0.0
      */
-    getAdd ()
+    getAdd (e = null)
     {
-        return document.querySelectorAll(
-            'button[form=' + this.id + '].add, '
-            + '.add[data-form=' + this.id + '], '
-            + '#' + this.id + ' .add'
+        const parent = e === null ? document : e;
+
+        return parent.querySelectorAll(
+            'button[form=' + this.id + '].add-form, '
+            + '.add-form[data-form=' + this.id + '], '
+            + '#' + this.id + ' .add-form'
+            + (e !== null ? ', .add-form' : '')
         );
     };
 
@@ -360,6 +378,19 @@ export class FormView
         ).filter(function(val) { return val; });
     };
 
+    getFirstInputElement (e = null)
+    {
+        const parent = e === null ? document : e;
+
+        return parent.querySelector(
+            '#' + this.id + ' input, '
+            + '#' + this.id + ' textarea, '
+            + '#' + this.id + ' select, '
+            + '[form=' + this.id + '], '
+            + '[data-form=' + this.id + ']'
+        );
+    };
+
     /**
      * Get unique form elements
      *
@@ -463,6 +494,30 @@ export class FormView
         return formData;
     };
 
+    resetValues ()
+    {
+        const elements = this.getFormElements(),
+            length     = elements.length;
+
+        const form = document.getElementById(this.id);
+        form.reset();
+
+        for (let i = 0; i < length; ++i) {
+            const id = FormView.getElementId(elements[i]);
+            if (id === null) {
+                continue;
+            }
+
+            if (elements[i].tagName.toLowerCase() === 'canvas') {
+                elements[i].clearRect(0, 0, elements[i].width, elements[i].height);
+            }
+
+            if (elements[i].getAttribute('data-value') !== null) {
+                elements[i].setAttribute('data-value', '');
+            }
+        }
+    }
+
     /**
      * Get form id
      *
@@ -491,8 +546,12 @@ export class FormView
             for (let i = 0; i < length; ++i) {
                 if ((elements[i].required && elements[i].value === '')
                     || (typeof elements[i].pattern !== 'undefined'
-                    && elements[i].pattern !== ''
-                    && !(new RegExp(elements[i].pattern)).test(elements[i].value))
+                        && elements[i].pattern !== ''
+                        && !(new RegExp(elements[i].pattern)).test(elements[i].value))
+                        || (typeof elements[i].maxlength !== 'undefined' && elements[i].maxlength !== '' && elements[i].value.length > elements[i].maxlength)
+                        || (typeof elements[i].minlength !== 'undefined' && elements[i].minlength !== '' && elements[i].value.length < elements[i].minlength)
+                        || (typeof elements[i].max !== 'undefined' && elements[i].max !== '' && elements[i].value > elements[i].max)
+                        || (typeof elements[i].min !== 'undefined' && elements[i].min !== '' && elements[i].value < elements[i].min)
                 ) {
                     return false;
                 }
@@ -503,6 +562,34 @@ export class FormView
 
         return true;
     };
+
+    getInvalid (data)
+    {
+        const elements = typeof data === 'undefined' ? this.getFormElements() : data;
+        const length   = elements.length;
+
+        const invalid = [];
+
+        try {
+            for (let i = 0; i < length; ++i) {
+                if ((elements[i].required && elements[i].value === '')
+                    || (typeof elements[i].pattern !== 'undefined'
+                        && elements[i].pattern !== ''
+                        && !(new RegExp(elements[i].pattern)).test(elements[i].value))
+                    || (typeof elements[i].maxlength !== 'undefined' && elements[i].maxlength !== '' && elements[i].value.length > elements[i].maxlength)
+                    || (typeof elements[i].minlength !== 'undefined' && elements[i].minlength !== '' && elements[i].value.length < elements[i].minlength)
+                    || (typeof elements[i].max !== 'undefined' && elements[i].max !== '' && elements[i].value > elements[i].max)
+                    || (typeof elements[i].min !== 'undefined' && elements[i].min !== '' && elements[i].value < elements[i].min)
+                ) {
+                    invalid.push(elements[i]);
+                }
+            }
+        } catch (e) {
+            jsOMS.Log.Logger.instance.error(e);
+        }
+
+        return invalid;
+    }
 
     /**
      * Get form element
