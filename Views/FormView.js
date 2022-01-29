@@ -34,12 +34,14 @@ export class FormView
     {
         this.id = id;
 
-        this.initializeMembers();
-        this.bind();
-
         this.success    = null;
         this.finally    = null;
         this.lastSubmit = 0;
+
+        this.form = null;
+
+        this.initializeMembers();
+        this.bind();
     };
 
     /**
@@ -104,6 +106,13 @@ export class FormView
     updateLastSubmit ()
     {
         this.lastSubmit = Math.floor(Date.now());
+    };
+
+    isOnChange ()
+    {
+        const isOnChange = this.getFormElement().getAttribute('data-on-change');
+
+        return (isOnChange === 'true' || isOnChange === '1');
     };
 
     /**
@@ -305,13 +314,15 @@ export class FormView
     /**
      * Get form elements
      *
+     * @param {object} container Data container, null = entire form or element e.g. table row
+     *
      * @return {Array}
      *
      * @since 1.0.0
      */
-    getFormElements ()
+    getFormElements (container = null)
     {
-        const form = document.getElementById(this.id);
+        const form = container === null ? this.getFormElement() : container;
 
         if (!form) {
             return [];
@@ -412,15 +423,17 @@ export class FormView
     /**
      * Get form data
      *
+     * @param {container} Data container. Null = entire form, container e.g. single row in a table
+     *
      * @return {FormData}
      *
      * @since 1.0.0
      */
-    getData ()
+    getData (container = null)
     {
         const data   = {},
             formData = new FormData(),
-            elements = this.getFormElements(),
+            elements = this.getFormElements(container),
             length   = elements.length;
 
         let value = null;
@@ -499,7 +512,7 @@ export class FormView
         const elements = this.getFormElements(),
             length     = elements.length;
 
-        const form = document.getElementById(this.id);
+        const form = this.getFormElement();
         form.reset();
 
         for (let i = 0; i < length; ++i) {
@@ -528,6 +541,11 @@ export class FormView
     getId ()
     {
         return this.id;
+    };
+
+    getFormElement ()
+    {
+        return this.form === null ? (this.form = document.getElementById(this.id)) : this.form;
     };
 
     /**
@@ -592,18 +610,6 @@ export class FormView
     }
 
     /**
-     * Get form element
-     *
-     * @return {Object}
-     *
-     * @since 1.0.0
-     */
-    getElement ()
-    {
-        return document.getElementById(this.getId());
-    };
-
-    /**
      * Get form element id
      *
      * @return {string}
@@ -648,7 +654,7 @@ export class FormView
     {
         this.clean();
 
-        const e = document.getElementById(this.id);
+        const e = this.getFormElement();
 
         if (!e) {
             return;

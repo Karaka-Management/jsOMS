@@ -163,6 +163,30 @@ export class Form
                 self.submit(self.forms[id], submits[i]);
             });
         }
+
+        // if true submit form on change
+        if (this.forms[id].isOnChange()) {
+            const hasUiContainer = this.forms[id].getFormElement().getAttribute('data-ui-content');
+            const onChangeContainer = hasUiContainer !== null
+                ? this.forms[id].getFormElement().querySelector(hasUiContainer)
+                : this.forms[id].getFormElement();
+
+            onChangeContainer.addEventListener('change', function (event)
+            {
+                jsOMS.preventAll(event);
+
+                const target = event.target.tagName.toLowerCase();
+
+                if (target === 'input' || target === 'textarea') {
+                    let dataParent = null;
+                    if (self.forms[id].getFormElement().tagName.toLowerCase() === 'table') {
+                        dataParent = event.srcElement.closest(self.forms[id].getFormElement().getAttribute('data-ui-element'));
+                    }
+
+                    self.submit(self.forms[id], null, dataParent);
+                }
+            });
+        }
     };
 
     bindButtons (id, e = null)
@@ -256,7 +280,7 @@ export class Form
      *
      * @since 1.0.0
      */
-    submit (form, button)
+    submit (form, button = null, container = null)
     {
         /* Handle injects */
         const self  = this,
@@ -273,7 +297,7 @@ export class Form
         if (!this.app.eventManager.isAttached(form.getId())) {
             this.app.eventManager.attach(form.getId(), function ()
             {
-                self.submitForm(form, action);
+                self.submitForm(form, action, container);
             }, true);
         }
 
@@ -313,9 +337,9 @@ export class Form
      *
      * @since 1.0.0
      */
-    submitForm (form, action = null)
+    submitForm (form, action = null, container = null)
     {
-        const data = form.getData();
+        const data = form.getData(container);
 
         if (!form.isValid(data)) {
             this.app.notifyManager.send(
@@ -468,7 +492,7 @@ export class Form
                 return;
             }
 
-            const formElement  = document.getElementById(id);
+            const formElement  = self.forms[id].getFormElement();
             const parents      = [];
             const selectors    = formElement.getAttribute('data-add-element').split(','),
                 selectorLength = selectors.length;
@@ -657,7 +681,7 @@ export class Form
     {
         const length = data.length;
         for (let i = 0; i < length; ++i) {
-            const matches = document.getElementById(formId).querySelectorAll('[data-tpl-' + type + '="' + data[i].getAttribute('data-tpl-' + type) + '"');
+            const matches = self.forms[formId].getFormElement().querySelectorAll('[data-tpl-' + type + '="' + data[i].getAttribute('data-tpl-' + type) + '"');
             const path    = data[i].hasAttribute('data-tpl-' + type + '-path') ? data[i].getAttribute('data-tpl-' + type + '-path') : null;
 
             const matchLength = matches.length;
@@ -709,7 +733,7 @@ export class Form
         const self = this;
 
         createForm.addEventListener('click', function () {
-            const formElement = document.getElementById(id);
+            const formElement = self.forms[id].getFormElement();
             const subMain     = formElement.getAttribute('data-add-content').charAt(0) === '#'
                 ? document.querySelector(formElement.getAttribute('data-add-content'))
                 : formElement.querySelector(formElement.getAttribute('data-add-content'));
@@ -746,7 +770,7 @@ export class Form
              *  The container element for inline adding isn't always tbody
              */
             self.app.uiManager.getFormManager().get(eleId + '-form').injectSubmit(function () {
-                document.getElementById(id).getElementsByTagName('tbody')[0].removeChild(
+                self.forms[id].getFormElement().getElementsByTagName('tbody')[0].removeChild(
                     document.getElementById(eleId)
                 );
             });
@@ -831,7 +855,7 @@ export class Form
         const self = this;
 
         update.addEventListener('click', function () {
-            const formElement  = document.getElementById(id);
+            const formElement  = self.forms[id].getFormElement();
             const parents      = [];
             const selectors    = formElement.getAttribute('data-update-element').split(','),
                 selectorLength = selectors.length;
@@ -1042,7 +1066,7 @@ export class Form
         const self = this;
 
         save.addEventListener('click', function () {
-            const formElement    = document.getElementById(id);
+            const formElement    = self.forms[id].getFormElement();
             const parentsTpl     = {};
             const parentsContent = {};
             const selectors      = formElement.getAttribute('data-update-element').split(','),
@@ -1284,13 +1308,13 @@ export class Form
         const self = this;
 
         update.addEventListener('click', function () {
-            const formElement = document.getElementById(id);
+            const formElement = self.forms[id].getFormElement();
             const parent      = this.closest(formElement.getAttribute('data-update-element'));
             const formId      = formElement.getAttribute('data-update-form');
             const values      = parent.querySelectorAll('[data-tpl-value]');
             const text        = parent.querySelectorAll('[data-tpl-text]');
 
-            const fields = document.getElementById(formId).querySelectorAll('[data-form="' + id + '"]');
+            const fields = self.forms[formId].getFormElement().querySelectorAll('[data-form="' + id + '"]');
             let length   = 0;
 
             // clear form values to prevent old values getting mixed with update values

@@ -2,3 +2,4 @@ tests/jasmin*
 vendor
 .vscode
 *.cache
+.directory
