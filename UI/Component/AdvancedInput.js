@@ -33,7 +33,7 @@ export class AdvancedInput
         const self = this;
         this.inputField.addEventListener('focusout', function(e) {
             /**
-             * @todo Orange-Management/Modules#63
+             * @todo Karaka/Modules#63
              *  If you click anything outside of the input element the dropdown list closes.
              *  This is also true if you click something inside of the dropdown list e.g. sort/filter etc.
              *  This might be fixable by changing the focus from the input element to the dropdown element and keep the dropdown element visible if it has focus.
@@ -70,11 +70,11 @@ export class AdvancedInput
             jsOMS.preventAll(e);
 
             /**
-             * @todo Orange-Management/jsOMS#61
+             * @todo Karaka/jsOMS#61
              *  Jumping out of the dropdown list is a little bit annoying for handheld users.
              *  A solution could be to add a exit/none element which closes the dropdown when clicked.
              *
-             * @todo Orange-Management/jsOMS#62
+             * @todo Karaka/jsOMS#62
              *  If the data for the input element is only locally defined the filter or sort should be done by the best match.
              */
             if (e.keyCode === 27 || e.keyCode === 46 || e.keyCode === 8) {
@@ -239,7 +239,7 @@ export class AdvancedInput
         e.focus();
 
         /**
-         * @todo Orange-Management/jsOMS#70
+         * @todo Karaka/jsOMS#70
          *  Implement external styles for selections instead of inline css
          */
         e.setAttribute('style', 'background: #f00');
@@ -263,7 +263,7 @@ export class AdvancedInput
         for (let i = 0; i < length; ++i) {
 
             /**
-             * @todo Orange-Management/jsOMS#70
+             * @todo Karaka/jsOMS#70
              *  Implement external styles for selections instead of inline css
              */
             list[i].setAttribute('style', '');
@@ -292,7 +292,7 @@ export class AdvancedInput
 
         if (self.tagElement !== null && self.tagElement.getAttribute('data-active') === 'true') {
             /**
-             * @todo Orange-Management/jsOMS#71
+             * @todo Karaka/jsOMS#71
              *  Make badges removable
              */
             const newTag = self.tagTpl.content.cloneNode(true);
@@ -314,7 +314,7 @@ export class AdvancedInput
             }
 
             /**
-             * @todo Orange-Management/jsOMS#72
+             * @todo Karaka/jsOMS#72
              *  Allow duplication
              *  Create a `data-duplicat=true` attribute to allow duplication and then have a count as part of the uuid (maybe row id).
              */

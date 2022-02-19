@@ -8,12 +8,12 @@ import { Logger } from '../Log/Logger.js';
  * @version   1.0.0
  * @since     1.0.0
  *
- * @todo Orange-Management/jsOMS#26
+ * @todo Karaka/jsOMS#26
  *  Sync/Async events
  *  Events so far can be created sync and async depending on the implementation.
  *  It would be better to make it sync/async depending on a option flag.
  *
- * @todo Orange-Management/jsOMS#35
+ * @todo Karaka/jsOMS#35
  *  Template actions cannot be overwritten
  *  Templates by nature get added and removed from a page (often in order to reuse existing html to minimize the html load).
  *  The problem with templates is that they need to register in the ActionManager.js.
@@ -99,7 +99,7 @@ export class ActionManager
             }
 
             /**
-             * @todo Orange-Management/jsOMS#69
+             * @todo Karaka/jsOMS#69
              *  If a element has a selector defined this means the action is defined for all child elements of this selector.
              *  This usually is done in order to avoid defining the same behavior multiple times for similar elements (e.g. elements in a list).
              *  However, in this case it's not unusual that the child elements get changed dynamically (added, changed, removed).

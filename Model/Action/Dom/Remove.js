@@ -25,7 +25,7 @@ export function removeButtonAction (action, callback, id)
         }
 
         /**
-         * @todo Orange-Management/jsOMS#68
+         * @todo Karaka/jsOMS#68
          *  Adding a remove action to a list of elements will stop working after removing the first element.
          *  This could be because after removing the first sibling the action or the listener is removed for the siblings?
          */

@@ -21,7 +21,7 @@ import { UriFactory }          from '../../Uri/UriFactory.js';
  * data-ui-content = what is the main parent
  * data-ui-element = what are the elements to replace
  *
- * @todo Orange-Management/jsOMS#60
+ * @todo Karaka/jsOMS#60
  *  On change listener
  *  Allow to add a on change listener in a form. This should result in automatic submits after changing a form.
  *  Consider the following cases to submit the form:
@@ -484,7 +484,7 @@ export class Form
         const self = this;
 
         /**
-         * @todo Orange-Management/jsOMS#75
+         * @todo Karaka/jsOMS#75
          *  Currently only one add button is allowed per form. Allow multiple/different add buttons in a form.
          */
         create.addEventListener('click', function () {
@@ -584,7 +584,7 @@ export class Form
         });
 
         /**
-         * @todo Orange-Management/jsOMS#85
+         * @todo Karaka/jsOMS#85
          *  Invalid backend/api responses (!201) should undo/stop UI changes
          */
     };
@@ -595,7 +595,7 @@ export class Form
             const request = new Request(e);
             request.setResultCallback(200, function(xhr) {
                 /**
-                 * @todo Orange-Management/jsOMS#84
+                 * @todo Karaka/jsOMS#84
                  *  Remote data responses need to be parsed
                  *  The data coming from the backend/api usually is not directly usable in the frontend.
                  *  For that purpose some kind of value path should be defined to handle json responses in order to get only the data that is needed.
@@ -739,7 +739,7 @@ export class Form
                 : formElement.querySelector(formElement.getAttribute('data-add-content'));
 
             /**
-             * @todo Orange-Management/jsOMS#76
+             * @todo Karaka/jsOMS#76
              *  In the beginning there was a fixed amount of templates required (even if some were not used) for adding new dom elements to a lest, table etc.
              *  This no longer works especially for inline editing
              *  ```js
@@ -766,7 +766,7 @@ export class Form
             subMain.appendChild(newEle.firstElementChild);
 
             /**
-             * @todo Orange-Management/jsOMS#82
+             * @todo Karaka/jsOMS#82
              *  The container element for inline adding isn't always tbody
              */
             self.app.uiManager.getFormManager().get(eleId + '-form').injectSubmit(function () {
@@ -776,21 +776,21 @@ export class Form
             });
 
             /**
-             * @todo Orange-Management/jsOMS#78
+             * @todo Karaka/jsOMS#78
              *  After adding a new element some require a binding for removal
              *
-             * @todo Orange-Management/jsOMS#79
+             * @todo Karaka/jsOMS#79
              *  After adding a new element some require a binding for editing
              */
         });
 
         /**
-         * @todo Orange-Management/jsOMS#80
+         * @todo Karaka/jsOMS#80
          *  Consider to do UI action as success inject after a backend response.
          *  This will prevent bugs where the backand couldn't complete a action but the user sees it in the frontend.
          *  This should be probably optional optional because sometimes there will be no calls to the backend.
          *
-         * @todo Orange-Management/jsOMS#81
+         * @todo Karaka/jsOMS#81
          *  A template can contain elements which must/should have an id (e.g. a form).
          *  If this element gets added to the DOM the id should be changed to a unique id because it could be added multiple times to the DOM.
          *  In order to bind these elements (e.g. forms) they must have a unique id.
@@ -965,7 +965,7 @@ export class Form
         });
 
         /**
-         * @todo Orange-Management/jsOMS#85
+         * @todo Karaka/jsOMS#85
          *  Invalid backend/api responses (!201) should undo/stop UI changes
          */
     };
@@ -1367,10 +1367,10 @@ export class Form
             });
 
             /**
-             * @todo Orange-Management/jsOMS#85
+             * @todo Karaka/jsOMS#85
              *  Invalid backend/api responses (!201) should undo/stop UI changes
              *
-             * @todo Orange-Management/jsOMS#87
+             * @todo Karaka/jsOMS#87
              *  On edit highlight the data which is changed
              */
         });

@@ -12,7 +12,7 @@ import { Input } from '../UI/Component/Input.js';
  * @version   1.0.0
  * @since     1.0.0
  *
- * @tood Orange-Management/jsOMS#60
+ * @tood Karaka/jsOMS#60
  *  On change listener
  *  Allow to add a on change listener in a form. This should result in automatic submits after changing a form.
  *  Consider the following cases to submit the form:

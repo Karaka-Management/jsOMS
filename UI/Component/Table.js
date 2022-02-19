@@ -10,20 +10,20 @@ import { ResponseType } from '../../Message/Response/ResponseType.js';
  * @version   1.0.0
  * @since     1.0.0
  *
- * @todo Orange-Management/jsOMS#50
+ * @todo Karaka/jsOMS#50
  *  Add basic table handling (no db and pagination)
  *
- * @todo Orange-Management/jsOMS#55
+ * @todo Karaka/jsOMS#55
  *  Implement filtering and sorting based on backend
  *
- * @todo Orange-Management/jsOMS#57
+ * @todo Karaka/jsOMS#57
  *  Advanced filtering
  *  The current filtering implementation is only column by column connected with &&.
  *  Consider to implement a much more advanced filtering where different combinations are possible such as || &&, different ordering with parenthesis etc.
  *  This can be extremely powerful but will be complex for standard users.
  *  This advanced filtering should probably be a little bit hidden?
  *
- * @todo Orange-Management/jsOMS#59
+ * @todo Karaka/jsOMS#59
  *  Data download
  *  There is a small icon in the top right corner of tables which allows (not yet to be honest) to download the data in the table.
  *  Whether the backend should be queried for this or only the frontend data should be collected (current situation) should depend on if the table has an api endpoint defined.
@@ -112,7 +112,7 @@ export class Table
         this.bindExport(this.tables[id]);
 
         /**
-         * @todo Orange-Management/jsOMS#89
+         * @todo Karaka/jsOMS#89
          *  Implement local and remote filtering
          *  Options:
          *      * alphanumeric
@@ -181,7 +181,7 @@ export class Table
         {
             console.log(exports.serialize());
             /**
-             * @todo Orange-Management/jsOMS#90
+             * @todo Karaka/jsOMS#90
              *  Implement export
              *  Either create download in javascript from this data or make round trip to server who then sends the data.
              *  The export should be possible (if available) in json, csv, excel, word, pdf, ...
