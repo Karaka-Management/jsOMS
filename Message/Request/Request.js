@@ -375,6 +375,7 @@ export class Request
             }
         }
 
+        console.log(UriFactory.build(this.uri));
         console.log(this.xhr);
 
         this.xhr.onreadystatechange = function()
