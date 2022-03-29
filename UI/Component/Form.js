@@ -166,7 +166,7 @@ export class Form
 
         // if true submit form on change
         if (this.forms[id].isOnChange()) {
-            const hasUiContainer = this.forms[id].getFormElement().getAttribute('data-ui-content');
+            const hasUiContainer    = this.forms[id].getFormElement().getAttribute('data-ui-content');
             const onChangeContainer = hasUiContainer !== null
                 ? this.forms[id].getFormElement().querySelector(hasUiContainer)
                 : this.forms[id].getFormElement();
