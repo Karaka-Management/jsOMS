@@ -1,6 +1,6 @@
 describe('MtlLoaderTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

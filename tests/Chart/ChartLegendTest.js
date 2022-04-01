@@ -1,6 +1,6 @@
 describe('ChartLegendTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

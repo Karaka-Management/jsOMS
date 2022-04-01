@@ -9,7 +9,7 @@
  */
 export function reloadButtonAction (action, callback, id)
 {
-    "use strict";
+    'use strict';
 
     setTimeout(function () {
         document.location.reload(true);

@@ -8,7 +8,7 @@
  */
 (function (jsOMS)
 {
-    "use strict";
+    'use strict';
 
     /** @namespace jsOMS.Animation.Canvas */
     jsOMS.Autoloader.defineNamespace('jsOMS.Animation.Canvas');
@@ -28,13 +28,13 @@
 
             this.radius = radius;
 
-            this.color = {r: 255, g: 255, b: 255, a: 0.5};
+            this.color = { r: 255, g: 255, b: 255, a: 0.5 };
         };
 
         /**
          * Get particle radius
          *
-         * @return {int}
+         * @return {number}
          *
          * @method
          *
@@ -48,8 +48,8 @@
         /**
          * Set particle position
          *
-         * @param {int} posX Position x
-         * @param {int} posY Position y
+         * @param {number} posX Position x
+         * @param {number} posY Position y
          *
          * @return {void}
          *
@@ -74,7 +74,7 @@
          */
         getPosition ()
         {
-            return {x: this.posX, y: this.posY};
+            return { x: this.posX, y: this.posY };
         };
 
         /**
@@ -106,7 +106,7 @@
          */
         getVelocity ()
         {
-            return {x: this.velX, y: this.velY};
+            return { x: this.velX, y: this.velY };
         };
 
         /**
@@ -127,5 +127,5 @@
             ctx.arc(this.posX, this.posY, this.radius, 0, Math.PI * 2, false);
             ctx.fill();
         };
-    }
+    };
 }(window.jsOMS = window.jsOMS || {}));

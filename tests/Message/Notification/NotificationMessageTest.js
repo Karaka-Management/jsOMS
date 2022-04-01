@@ -2,7 +2,7 @@ import { NotificationMessage } from '../Message/Notification/NotificationMessage
 
 describe('NotificationMessageTest', function ()
 {
-    "use strict";
+    'use strict';
 
     describe('testDefault', function ()
     {

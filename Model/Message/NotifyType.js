@@ -13,4 +13,3 @@ export const EnumNotifyType = Object.freeze({
     ERROR: 3,
     FATAL: 4
 });
-

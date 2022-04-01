@@ -8,7 +8,7 @@
  */
 export function hideAction (action, callback)
 {
-    "use strict";
+    'use strict';
 
     const hide = document.getElementById(action.id);
 

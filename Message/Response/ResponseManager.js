@@ -1,3 +1,5 @@
+import { Request } from '../Request/Request.js';
+
 /**
  * Response manager class.
  *
@@ -15,8 +17,9 @@ export class ResponseManager
      *
      * @since 1.0.0
      */
-    constructor()
+    constructor ()
     {
+        /** @type {Object} messages */
         this.messages = {};
     };
 
@@ -25,15 +28,15 @@ export class ResponseManager
      *
      * This allows the response handler to generally handle responses and also handle specific requests if defined.
      *
-     * @param {string} key Response key
-     * @param {requestCallback} message Callback for message
-     * @param {string} [request] Request id in order to only handle a specific request
+     * @param {string}      key       Response key
+     * @param {function}    message   Callback for message
+     * @param {null|string} [request] Request id in order to only handle a specific request
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    add(key, message, request)
+    add (key, message, request = null)
     {
         request = typeof request !== 'undefined' ? request : 'any';
         if (typeof this.messages[key] === 'undefined') {
@@ -48,17 +51,20 @@ export class ResponseManager
      *
      * Tries to execute a request specific callback or otherwise a general callback if defined.
      *
-     * @param {string} key Response key
-     * @param {Array|Object} data Date to use in callback
-     * @param {jsOMS.Message.Request.Request} [request] Request id for request specific execution
+     * @param {string}       key       Response key
+     * @param {Object}       data      Date to use in callback
+     * @param {null|Request} [request] Request id for request specific execution
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    run(key, data, request)
+    run (key, data, request = null)
     {
-        if (typeof request !== 'undefined' && typeof this.messages[key] !== 'undefined' && typeof this.messages[key][request] !== 'undefined') {
+        if (request !== null
+            && typeof this.messages[key] !== 'undefined'
+            && typeof this.messages[key][request] !== 'undefined'
+        ) {
             this.messages[key][request](data);
         } else if (typeof this.messages[key] !== 'undefined') {
             this.messages[key].any(data);

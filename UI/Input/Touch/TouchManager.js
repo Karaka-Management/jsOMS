@@ -33,7 +33,7 @@ export class TouchManager
      */
     resetSwipe ()
     {
-        this.activeSwipe = {'startX': null, 'startY': null, 'time': null};
+        this.activeSwipe = { startX: null, startY: null, time: null };
     };
 
     /**
@@ -41,14 +41,16 @@ export class TouchManager
      *
      * Forwarding swipe to arrow keys.
      *
+     * @param {string} surface Surface id
+     *
      * @return {void}
      *
      * @since 1.0.0
      */
     add (surface)
     {
-        const e  = document.getElementById(surface),
-            self = this;
+        const e    = document.getElementById(surface);
+        const self = this;
 
         if (!e) {
             return;
@@ -72,17 +74,17 @@ export class TouchManager
 
         e.addEventListener('touchend', function (event)
         {
-            const touch     = this.changedTouches[0],
-                distX       = touch.pageX - self.activeSwipe.startX,
-                distY       = touch.pageY - self.activeSwipe.startY,
-                elapsedTime = new Date().getTime() - self.activeSwipe.time;
+            const touch       = this.changedTouches[0];
+            const distX       = touch.pageX - self.activeSwipe.startX;
+            const distY       = touch.pageY - self.activeSwipe.startY;
+            const elapsedTime = new Date().getTime() - self.activeSwipe.time;
 
             self.resetSwipe();
 
             if (elapsedTime > 300 && distY < 3 && distX < 3) {
                 jsOMS.preventAll(event);
 
-                let rightClick = MouseEvent('click',
+                const rightClick = MouseEvent('click',
                     {
                         bubbles: true,
                         cancelable: true,

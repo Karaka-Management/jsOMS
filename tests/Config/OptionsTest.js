@@ -2,7 +2,7 @@ import { Options } from '../Config/Options.js';
 
 describe('OptionsTest', function ()
 {
-    "use strict";
+    'use strict';
 
     describe('testDefault', function ()
     {

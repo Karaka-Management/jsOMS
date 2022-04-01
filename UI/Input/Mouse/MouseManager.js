@@ -18,17 +18,17 @@ export class MouseManager
     constructor ()
     {
         this.elements = {};
-        this.click    = {time: 0};
+        this.click    = { time: 0 };
     };
 
     /**
      * Add input listener.
      *
-     * @param {string} element Container id
-     * @param {int} type Action type
-     * @param {int} button Button
-     * @param {callback} callback Callback
-     * @param {bool} exact ??? todo: can't remember why this was important oO!!!
+     * @param {string}   element Container id
+     * @param {number}   type Action type
+     * @param {number}   button Button
+     * @param {function} callback Callback
+     * @param {boolean}  exact ??? todo: can't remember why this was important oO!!!
      *
      * @return {void}
      *
@@ -41,14 +41,14 @@ export class MouseManager
         }
 
         this.bind(element, type);
-        this.elements[element].push({callback: callback, type: type, button: button, exact: exact});
+        this.elements[element].push({ callback: callback, type: type, button: button, exact: exact });
     };
 
     /**
      * Add input listener.
      *
      * @param {string} element Element id
-     * @param {int} type Action type
+     * @param {number} type Action type
      *
      * @return {void}
      *
@@ -56,8 +56,8 @@ export class MouseManager
      */
     bind (element, type)
     {
-        const self = this,
-            e      = document.getElementById(element);
+        const self = this;
+        const e    = document.getElementById(element);
 
         if (!e) {
             return;
@@ -96,7 +96,7 @@ export class MouseManager
      * Run mouse input callback.
      *
      * @param {string} element Element id
-     * @param {Object} event Click event
+     * @param {Event}  event Click event
      *
      * @return {void}
      *
@@ -105,11 +105,11 @@ export class MouseManager
     run (element, event)
     {
         if (typeof this.elements[element] === 'undefined') {
-            throw 'Unexpected elmenet!';
+            throw new Error('Unexpected elmenet!');
         }
 
-        const actions = this.elements[element],
-            length    = actions.length;
+        const actions = this.elements[element];
+        const length  = actions.length;
 
         for (let i = 0; i < length; ++i) {
             if ((!actions[i].exact || event.target.getAttribute('id') === element)

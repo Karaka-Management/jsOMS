@@ -8,7 +8,7 @@
  */
 (function (jsOMS)
 {
-    "use strict";
+    'use strict';
 
     /** @namespace jsOMS.Animation.Canvas */
     jsOMS.Autoloader.defineNamespace('jsOMS.Animation.Canvas');
@@ -103,10 +103,10 @@
          */
         updateParticles ()
         {
-            let particle,
-                pos,
-                vel,
-                radius;
+            let particle;
+            let pos;
+            let vel;
+            let radius;
 
             const length = this.particles.length;
 
@@ -155,14 +155,14 @@
          */
         updateDistance (p1, p2)
         {
-            const pos1 = p1.getPosition(),
-                pos2   = p2.getPosition(),
-                dx     = pos1.x - pos2.x,
-                dy     = pos1.y - pos2.y,
-                dist   = Math.sqrt(dx * dx + dy * dy);
+            const pos1 = p1.getPosition();
+            const pos2 = p2.getPosition();
+            const dx   = pos1.x - pos2.x;
+            const dy   = pos1.y - pos2.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
 
-            let vel1 = p1.getVelocity(),
-                vel2 = p2.getVelocity();
+            const vel1 = p1.getVelocity();
+            const vel2 = p2.getVelocity();
 
             // Draw line if particles are close
             if (dist <= this.maxDistance) {
@@ -174,8 +174,8 @@
                 this.ctx.closePath();
 
                 // Accelerate based on distance (no acceleration yet)
-                let ax = dx / this.gravitation,
-                    ay = dy / this.gravitation;
+                const ax = dx / this.gravitation;
+                const ay = dy / this.gravitation;
 
                 vel1.x -= ax;
                 vel1.y -= ay;
@@ -186,5 +186,5 @@
                 p2.setVelocity(vel2.x, vel2.y);
             }
         };
-    }
+    };
 }(window.jsOMS = window.jsOMS || {}));

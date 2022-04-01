@@ -1,6 +1,6 @@
 describe('InputManagerTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

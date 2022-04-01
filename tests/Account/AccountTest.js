@@ -2,7 +2,7 @@ import { Account } from '../Account/Account.js';
 
 describe('AccountTest', function ()
 {
-    "use strict";
+    'use strict';
 
     describe('testDefault', function ()
     {

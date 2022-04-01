@@ -7,29 +7,29 @@
  * @since     1.0.0
  */
 (function (jsOMS) {
-    "use strict";
+    'use strict';
 
     /**
      * Evaluate math formula
      *
      * @param {string} equation Equation
      *
-     * @return {null|int|float}
+     * @return {null|number}
      *
      * @since 1.0.0
      */
-    jsOMS.mathEvaluate = function(equation)
+    jsOMS.mathEvaluate = function (equation)
     {
-        const stack = [],
-            postfix = jsOMS.shuntingYard(equation);
-            length  = postfix.length;
+        const stack   = [];
+        const postfix = jsOMS.shuntingYard(equation);
+        const length  = postfix.length;
 
         for (let i = 0; i < length; ++i) {
             if (!isNaN(parseFloat(postfix[i])) && isFinite(postfix[i])) {
                 stack.push(postfix[i]);
             } else {
-                let a = jsOMS.parseValue(stack.pop());
-                let b = jsOMS.parseValue(stack.pop());
+                const a = jsOMS.parseValue(stack.pop());
+                const b = jsOMS.parseValue(stack.pop());
 
                 if (postfix[i] === '+') {
                     stack.push(a + b);
@@ -55,14 +55,14 @@
      *
      * @param {string} value Value to parse
      *
-     * @return {int|float}
+     * @return {number}
      *
      * @since 1.0.0
      */
-    jsOMS.parseValue = function(value)
+    jsOMS.parseValue = function (value)
     {
         return typeof value === 'string' ? (value.indexOf('.') === -1 ? parseInt(value) : parseFloat(value)) : value;
-    }
+    };
 
     /**
      * Perform shunting yard
@@ -73,20 +73,20 @@
      *
      * @since 1.0.0
      */
-    jsOMS.shuntingYard = function(equation)
+    jsOMS.shuntingYard = function (equation)
     {
         const stack     = [];
         const operators = {
-            '^': {precedence: 4, order: 1},
-            '*': {precedence: 3, order: -1},
-            '/': {precedence: 3, order: -1},
-            '+': {precedence: 2, order: -1},
-            '-': {precedence: 2, order: -1},
+            '^': { precedence: 4, order: 1 },
+            '*': { precedence: 3, order: -1 },
+            '/': { precedence: 3, order: -1 },
+            '+': { precedence: 2, order: -1 },
+            '-': { precedence: 2, order: -1 }
         };
-        let output      = [];
+        const output    = [];
 
         equation = equation.replace(/\s+/g, '');
-        equation = equation.split(/([\+\-\*\/\^\(\)])/).filter(function (n) { return n !== '' });
+        equation = equation.split(/([\+\-\*\/\^\(\)])/).filter(function (n) { return n !== ''; });
 
         const length = equation.length;
         let token;
@@ -97,8 +97,8 @@
             if (!isNaN(parseFloat(token)) && isFinite(token)) {
                 output.push(token);
             } else if ('^*/+-'.indexOf(token) !== -1) {
-                let o1 = token;
-                let o2 = stack[stack.length - 1];
+                const o1 = token;
+                let o2   = stack[stack.length - 1];
 
                 while ('^*/+-'.indexOf(o2) !== -1
                     && ((operators[o1].order === -1 && operators[o1].precedence <= operators[o2].precedence)
@@ -126,6 +126,4 @@
 
         return output;
     };
-
-
 }(window.jsOMS = window.jsOMS || {}));

@@ -1,6 +1,6 @@
 describe('StorageManagerTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

@@ -9,7 +9,7 @@
  */
 export function showAction (action, callback, id)
 {
-    "use strict";
+    'use strict';
 
     const show = document.getElementById(action.id);
 

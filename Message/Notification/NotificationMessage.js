@@ -1,5 +1,5 @@
 /**
- * App notification.
+ * App notification message.
  *
  * @copyright Dennis Eichhorn
  * @license   OMS License 1.0
@@ -11,19 +11,29 @@ export class NotificationMessage
     /**
      * @constructor
      *
-     * @param {string} status    Message status
-     * @param {string} title     Message title
-     * @param {string} message   Message content
-     * @param {bool}   [vibrate] Vibrate
+     * @param {string}  status     Message status
+     * @param {string}  title      Message title
+     * @param {string}  message    Message content
+     * @param {boolean} [vibrate]  Vibrate
+     * @param {boolean} [isSticky] Should remain in the ui until manually removed
      *
      * @since 1.0.0
      */
-    constructor(status, title, message, vibrate = false, isSticky = false)
+    constructor (status, title, message, vibrate = false, isSticky = false)
     {
-        this.status   = status;
-        this.title    = title;
-        this.message  = message;
-        this.vibrate  = vibrate
-        this.isSticky = isSticky
+        /** @type {number} status */
+        this.status = status;
+
+        /** @type {string} title */
+        this.title = title;
+
+        /** @type {string} message */
+        this.message = message;
+
+        /** @type {boolean} vibrate */
+        this.vibrate  = vibrate;
+
+        /** @type {boolean} isSticky */
+        this.isSticky = isSticky;
     };
 };

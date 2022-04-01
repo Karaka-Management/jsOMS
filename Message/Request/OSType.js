@@ -23,7 +23,7 @@ export const OSType = Object.freeze({
     MAC_OS_X: 'macintosh', /* Mac OS X */
     MAC_OS_X_2: 'mac os x', /* Mac OS X */
     MAC_OS_9: 'mac_powerpc', /* Mac OS 9 */
-    LINUX : 'linux', /* Linux */
+    LINUX: 'linux', /* Linux */
     UBUNTU: 'ubuntu', /* Ubuntu */
     IPHONE: 'iphone', /* IPhone */
     IPOD: 'ipod', /* IPod */

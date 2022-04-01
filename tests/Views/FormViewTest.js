@@ -1,6 +1,6 @@
 describe('FormViewTest', function ()
 {
-    "use strict";
+    'use strict';
     var testId = 'testForm';
 
     beforeEach(function ()

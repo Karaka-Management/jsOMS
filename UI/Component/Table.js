@@ -41,7 +41,7 @@ export class Table
      *
      * @since 1.0.0
      */
-    constructor(app)
+    constructor (app)
     {
         this.app = app;
 
@@ -53,22 +53,22 @@ export class Table
     /**
      * Bind & rebind UI elements.
      *
-     * @param {string} [id] Element id
+     * @param {null|string} [id] Element id
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    bind (id)
+    bind (id = null)
     {
-        if (typeof id !== 'undefined' && typeof this.ignore[id] === 'undefined') {
+        if (id !== null && typeof this.ignore[id] === 'undefined') {
             this.bindTable(id);
         } else {
-            const tables = document.getElementsByTagName('table'),
-                length   = !tables ? 0 : tables.length;
+            const tables = document.getElementsByTagName('table');
+            const length = !tables ? 0 : tables.length;
 
             for (let i = 0; i < length; ++i) {
-                let tableId = tables[i].getAttribute('id');
+                const tableId = tables[i].getAttribute('id');
                 if (typeof tableId !== 'undefined' && tableId !== null && typeof this.ignore[tableId] === 'undefined') {
                     this.bindTable(tableId);
                 }
@@ -138,12 +138,6 @@ export class Table
             this.bindSorting(sorting[i], id);
         }
 
-        const order = this.tables[id].getSortableRows();
-        length      = order.length;
-        for (let i = 0; i < length; ++i) {
-            this.bindReorder(order[i], id);
-        }
-
         const filters = this.tables[id].getFilter();
         length        = filters.length;
         for (let i = 0; i < length; ++i) {
@@ -169,7 +163,7 @@ export class Table
      *
      * @since 1.0.0
      */
-    bindExport(exports)
+    bindExport (exports)
     {
         const button = exports.getExport();
 
@@ -190,7 +184,7 @@ export class Table
         });
     };
 
-     /**
+    /**
      * Bind column visibility
      *
      * @param {Element} header Header
@@ -199,7 +193,7 @@ export class Table
      *
      * @since 1.0.0
      */
-    bindColumnVisibility(header)
+    bindColumnVisibility (header)
     {
         header.addEventListener('contextmenu', function (event) {
             jsOMS.preventAll(event);
@@ -219,9 +213,9 @@ export class Table
             const menu = document.getElementById('table-context-menu');
 
             const columns = header.querySelectorAll('td');
-            let length    = columns.length;
+            const length  = columns.length;
 
-            let baseMenuLine = menu.getElementsByClassName('context-line')[0].cloneNode(true);
+            const baseMenuLine = menu.getElementsByClassName('context-line')[0].cloneNode(true);
 
             for (let i = 0; i < length; ++i) {
                 if (typeof columns[i].firstChild === 'undefined'
@@ -256,14 +250,14 @@ export class Table
             menu.getElementsByTagName('ul')[0].removeChild(menu.getElementsByClassName('context-line')[0]);
 
             const rect      = tpl.parentElement.getBoundingClientRect();
-            menu.style.top  = (event.clientY - rect.top) + "px";
-            menu.style.left = (event.clientX - rect.left) + "px";
+            menu.style.top  = (event.clientY - rect.top) + 'px';
+            menu.style.left = (event.clientX - rect.left) + 'px';
 
             document.addEventListener('click', Table.hideMenuClickHandler);
         });
     };
 
-    static hideMenuClickHandler(event)
+    static hideMenuClickHandler (event)
     {
         const menu             = document.getElementById('table-context-menu');
         const isClickedOutside = !menu.contains(event.target);
@@ -275,58 +269,33 @@ export class Table
     };
 
     /**
-     * Swaps the row on click.
-     *
-     * @param {Element} sorting Swap button
-     * @param {Object}  id      Element id
-     *
-     * @return {void}
-     *
-     * @since 1.0.0
-     */
-    bindReorder(sorting, id)
-    {
-        sorting.addEventListener('click', function (event)
-        {
-            jsOMS.preventAll(event);
-
-            const table   = document.getElementById(id),
-                rows      = table.getElementsByTagName('tbody')[0].rows,
-                rowLength = rows.length,
-                rowId     = this.closest('tr').rowIndex - 1,
-                orderType = jsOMS.hasClass(this, 'order-up') ? 1 : -1;
-
-            if (orderType === 1 && rowId > 0) {
-                rows[rowId].parentNode.insertBefore(rows[rowId], rows[rowId - 1]);
-            } else if (orderType === -1 && rowId < rowLength) {
-                rows[rowId].parentNode.insertBefore(rows[rowId], rows[rowId + 2]);
-            }
-        });
-    };
-
-    /**
      * Sorts the table.
      *
      * @param {Element} sorting Sort button
-     * @param {Object}  id      Table id
+     * @param {string}  id      Table id
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    bindSorting(sorting, id)
+    bindSorting (sorting, id)
     {
         sorting.addEventListener('click', function (event)
         {
-            const table   = document.getElementById(id),
-                rows      = table.getElementsByTagName('tbody')[0].rows,
-                rowLength = rows.length,
-                cellId    = this.closest('td').cellIndex,
-                sortType  = jsOMS.hasClass(this, 'sort-asc') ? 1 : -1;
+            const table     = document.getElementById(id);
+            const rows      = table.getElementsByTagName('tbody')[0].rows;
+            const rowLength = rows.length;
+            const cellId    = this.closest('td').cellIndex;
+            const sortType  = jsOMS.hasClass(this, 'sort-asc') ? 1 : -1;
 
-            let j, i, row1, row2, content1, content2,
-                order        = false,
-                shouldSwitch = false;
+            let j;
+            let i;
+            let row1;
+            let row2;
+            let content1;
+            let content2;
+            let order        = false;
+            let shouldSwitch = false;
 
             const columnName = this.closest('td').getAttribute('data-name');
 
@@ -346,10 +315,11 @@ export class Table
                     row1         = rows[j].getElementsByTagName('td')[cellId];
                     content1     = row1.getAttribute('data-content') !== null ? row1.getAttribute('data-content').toLowerCase() : row1.textContent.toLowerCase();
                     content1     = !isNaN(content1)
-                                    ? parseFloat(content1)
-                                    : (!isNaN(new Date(content1))
-                                        ? new Date(content1)
-                                        : content1);
+                        ? parseFloat(content1)
+                        : (!isNaN(new Date(content1))
+                            ? new Date(content1)
+                            : content1
+                        );
 
                     for (i = j + 1; i < rowLength; ++i) {
                         row2     = rows[i].getElementsByTagName('td')[cellId];
@@ -386,13 +356,13 @@ export class Table
      * Filters the table.
      *
      * @param {Element} filtering Filter button
-     * @param {Object}  id        Table id
+     * @param {string}  id        Table id
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    bindFiltering(filtering, id)
+    bindFiltering (filtering, id)
     {
         filtering.addEventListener('click', function (event)
         {
@@ -404,13 +374,13 @@ export class Table
      * Checkbox select.
      *
      * @param {Element} checkbox Filter button
-     * @param {Object}  id       Table id
+     * @param {string}  id       Table id
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    bindCheckbox(checkbox, id)
+    bindCheckbox (checkbox, id)
     {
         checkbox.addEventListener('click', function (event)
         {
@@ -452,7 +422,7 @@ export class Table
         request.send();
     };
 
-    static emptyTable(table)
+    static emptyTable (table)
     {
         const rows   = table.getElementsByTagName('tr');
         const length = rows.length;
@@ -462,7 +432,7 @@ export class Table
         }
     };
 
-    static addToTable(table, data)
+    static addToTable (table, data)
     {
         const dataLength = data.length;
 

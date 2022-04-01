@@ -10,12 +10,12 @@ import { Request } from '../../../Message/Request/Request.js';
  */
 export function requestAction (action, callback)
 {
-    "use strict";
+    'use strict';
 
     /** global: jsOMS */
     const request = new Request(action.uri, action.method, action.request_type);
 
-    request.setSuccess(function(xhr) {
+    request.setSuccess(function (xhr) {
         console.log(xhr.responseText);
         callback(JSON.parse(xhr.responseText));
     });

@@ -1,3 +1,5 @@
+import { NotificationMessage } from '../NotificationMessage.js';
+
 /**
  * Browser notification.
  *
@@ -13,15 +15,16 @@ export class BrowserNotification
      *
      * @since 1.0.0
      */
-    constructor()
+    constructor ()
     {
+        /** @type {number} status */
         this.status = 0;
     };
 
     /**
      * Set notification status.
      *
-     * @param {int} status Notification status
+     * @param {number} status Notification status
      *
      * @return {void}
      *
@@ -43,14 +46,14 @@ export class BrowserNotification
     {
         /** global: Notification */
         if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
-            Notification.requestPermission().then(function(permission) { });
+            Notification.requestPermission().then(function (permission) { });
         }
     };
 
     /**
      * Create notification
      *
-     * @param {Object} msg Notification
+     * @param {NotificationMessage} msg Notification
      *
      * @return {void}
      *
@@ -59,7 +62,7 @@ export class BrowserNotification
     send (msg)
     {
         /** global: Notification */
-        if (Notification.permission === "granted") {
+        if (Notification.permission === 'granted') {
             const notification = new Notification(msg.title, { body: msg.message, vibrate: [msg.vibrate ? 200 : 0] });
 
             setTimeout(notification.close.bind(notification), 5000);

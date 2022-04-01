@@ -1,6 +1,6 @@
 describe('UISoundTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

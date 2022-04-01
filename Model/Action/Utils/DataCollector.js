@@ -8,19 +8,20 @@
  */
 export function dataCollectionAction (action, callback)
 {
-    "use strict";
+    'use strict';
 
-    let elements, data = {};
+    let elements;
+    const data = {};
 
     for (const selector in action.collect) {
-        if (!action.collect.hasOwnProperty(selector)) {
+        if (!Object.prototype.hasOwnProperty.call(action.collect, selector)) {
             continue;
         }
 
         elements = document.querySelectorAll(action.collect[selector]);
 
         for (const e in elements) {
-            if (!elements.hasOwnProperty(e)) {
+            if (!Object.prototype.hasOwnProperty.call(elements, e)) {
                 continue;
             }
 

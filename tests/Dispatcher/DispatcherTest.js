@@ -1,6 +1,6 @@
 describe('DispatcherTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

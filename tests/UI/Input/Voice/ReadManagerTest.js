@@ -1,6 +1,6 @@
 describe('ReadManagerTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

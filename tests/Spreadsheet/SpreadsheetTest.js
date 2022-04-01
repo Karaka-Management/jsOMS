@@ -1,6 +1,6 @@
 describe('SpreadsheetTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

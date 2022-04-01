@@ -2,7 +2,7 @@ import { BrowserType } from '../Message/Request/BrowserType.js';
 
 describe('BrowserTypeTest', function ()
 {
-    "use strict";
+    'use strict';
 
     describe('testEnum', function ()
     {

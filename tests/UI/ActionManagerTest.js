@@ -1,6 +1,6 @@
 describe('ActionManagerTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

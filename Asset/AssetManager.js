@@ -15,7 +15,9 @@ export class AssetManager
      */
     constructor ()
     {
+        /** @type {string[]} assets */
         this.assets = {};
+
         this.registerLoadedAssets();
     };
 
@@ -28,8 +30,8 @@ export class AssetManager
      */
     registerLoadedAssets ()
     {
-        const scripts = document.getElementsByTagName('script'),
-            length    = !scripts ? 0 : scripts.length;
+        const scripts = document.getElementsByTagName('script');
+        const length  = !scripts ? 0 : scripts.length;
 
         this.assets = {};
 
@@ -41,16 +43,17 @@ export class AssetManager
     /**
      * Load asset.
      *
-     * @param {string}          path       Asset path
-     * @param {string}          filetype   Filetype of the asset
-     * @param {requestCallback} [callback] Callback after load
+     * @param {string}   path     Asset path
+     * @param {string}   filetype Filetype of the asset
+     * @param {function} callback Callback after load
      *
-     * @return {string|boolean}
+     * @return {boolean|number}
      *
      * @since 1.0.0
      */
     load (path, filetype, callback)
     {
+        /** @type {number} hash */
         let hash;
 
         if (!this.assets[(hash = jsOMS.hash(path))]) {
@@ -92,7 +95,7 @@ export class AssetManager
             }
 
             if (callback) {
-                fileref.onreadystatechange ()
+                fileref.onreadystatechange = function ()
                 {
                     if (this.readyState === 'complete') {
                         callback();
@@ -113,12 +116,13 @@ export class AssetManager
      *
      * @param {string} key Key of the asset
      *
-     * @return {null|string}
+     * @return {null|number}
      *
      * @since 1.0.0
      */
     get (key)
     {
+        /** @type {number} key */
         key = jsOMS.hash(key);
 
         if (this.assets[key]) {
@@ -139,6 +143,7 @@ export class AssetManager
      */
     remove (key)
     {
+        /** @type {number} key */
         key = jsOMS.hash(key);
 
         if (typeof this.assets[key] !== 'undefined') {
@@ -150,4 +155,3 @@ export class AssetManager
         return false;
     };
 };
-

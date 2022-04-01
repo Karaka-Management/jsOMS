@@ -23,37 +23,24 @@ export class DragNDrop
     };
 
     /**
-     * Unbind element
-     *
-     * @param {Object} element DOM element
-     *
-     * @return {void}
-     *
-     * @since 1.0.0
-     */
-    unbind (element)
-    {
-    };
-
-    /**
      * Bind element
      *
-     * @param {Object} [element] DOM element
+     * @param {null|Element} element DOM element
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    bind (element)
+    bind (element = null)
     {
-        if (typeof element !== 'undefined') {
+        if (element !== null) {
             this.bindElement(element);
         } else {
-            const elements = document.querySelectorAll('[draggable]'),
-                length     = !elements ? 0 : elements.length;
+            const elements = document.querySelectorAll('.dragcontainer');
+            const length   = !elements ? 0 : elements.length;
 
             for (let i = 0; i < length; ++i) {
-                    this.bindElement(elements[i]);
+                this.bindElement(elements[i]);
             }
         }
     };
@@ -61,7 +48,7 @@ export class DragNDrop
     /**
      * Bind DOM element
      *
-     * @param {string} id DOM element
+     * @param {Element} element DOM element
      *
      * @return {void}
      *
@@ -75,21 +62,23 @@ export class DragNDrop
             return;
         }
 
-        element.addEventListener('dragstart', function(e) {
+        element.addEventListener('dragstart', function (e) {
             if (self.dragging === null) {
-                self.dragging                = this;
+                self.dragging                = e.target;
                 e.dataTransfer.effectAllowed = 'move';
-                e.dataTransfer.setData('text/html', this.innerHTML);
+                e.dataTransfer.setData('text/html', e.target.innerHTML);
             }
         }, false);
 
-        element.addEventListener('dragenter', function(e) {
-            const rowIndex  = Array.from(this.parentElement.children).indexOf(this);
-            const dragIndex = Array.from(self.dragging.parentElement.children).indexOf(self.dragging);
+        element.addEventListener('dragenter', function (e) {
+            const thisElement = e.target.closest('.dragcontainer ' + this.children[this.children.length - 1].tagName);
 
-            const oldPlaceholder = this.parentNode.querySelector('.drag-placeholder');
+            const rowIndex  = Array.from(this.children).indexOf(thisElement);
+            const dragIndex = Array.from(self.dragging.children).indexOf(self.dragging);
+
+            const oldPlaceholder = this.querySelector('.drag-placeholder');
             if (oldPlaceholder !== null) {
-                this.parentNode.removeChild(oldPlaceholder);
+                this.removeChild(oldPlaceholder);
             }
 
             const placeholder = document.createElement(self.dragging.tagName);
@@ -105,37 +94,37 @@ export class DragNDrop
             jsOMS.addClass(placeholder, 'drag-placeholder');
 
             if (dragIndex < rowIndex) {
-                this.parentNode.insertBefore(placeholder, this.nextSibling);
+                this.insertBefore(placeholder, thisElement.nextSibling);
             } else {
-                this.parentNode.insertBefore(placeholder, this);
+                this.insertBefore(placeholder, thisElement);
             }
         }, false);
 
-        element.addEventListener('dragover', function(e) {
+        element.addEventListener('dragover', function (e) {
             e.preventDefault();
 
             e.dataTransfer.dropEffect = 'move';
         }, false);
 
-        element.addEventListener('dragleave', function(e) {
+        element.addEventListener('dragleave', function (e) {
             e.preventDefault();
         }, false);
 
-        element.addEventListener('dragend', function(e) {
+        element.addEventListener('dragend', function (e) {
             e.preventDefault();
 
-            const oldPlaceholder = this.parentNode.querySelector('.drag-placeholder');
+            const oldPlaceholder = this.querySelector('.drag-placeholder');
             if (oldPlaceholder === null) {
                 return;
             }
 
-            this.parentNode.insertBefore(self.dragging, oldPlaceholder);
-            this.parentNode.removeChild(oldPlaceholder);
+            this.insertBefore(self.dragging, oldPlaceholder);
+            this.removeChild(oldPlaceholder);
 
             self.dragging = null;
         }, false);
 
-        element.addEventListener('drop', function(e) {
+        element.addEventListener('drop', function (e) {
             e.stopPropagation();
             e.preventDefault();
         }, false);

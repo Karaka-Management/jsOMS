@@ -1,6 +1,6 @@
 describe('GanttChartTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

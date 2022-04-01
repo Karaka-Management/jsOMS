@@ -9,7 +9,7 @@
  */
 export function formSubmitAction (action, callback, id)
 {
-    "use strict";
+    'use strict';
 
     const submit = action.base === 'self' ? (action.selector === '' ? [document.getElementById(id)] : document.getElementById(id).querySelectorAll(action.selector)) : document.querySelectorAll(action.selector);
 

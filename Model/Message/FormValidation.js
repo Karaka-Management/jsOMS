@@ -16,7 +16,7 @@ export function formValidationMessage (data) {
 
     while (eEles.length > 0) {
         eEles[0].parentNode.removeChild(eEles[0]);
-    }
+    };
 
     /**
      * @param {{msg:string}} error Error data
@@ -28,8 +28,8 @@ export function formValidationMessage (data) {
             return;
         }
 
-        const msgEle = document.createElement('i'),
-            msg      = document.createTextNode(error.msg);
+        const msgEle = document.createElement('i');
+        const msg    = document.createTextNode(error.msg);
 
         msgEle.id    = 'i-' + error.id;
         msgEle.class = 'i-' + data.form;

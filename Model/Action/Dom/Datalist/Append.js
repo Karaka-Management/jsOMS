@@ -8,10 +8,10 @@
  */
 export function datalistAppend (action, callback)
 {
-    "use strict";
+    'use strict';
 
-    const datalist = document.getElementById(action.id),
-        dataLength = action.data.length;
+    const datalist   = document.getElementById(action.id);
+    const dataLength = action.data.length;
 
     let option;
 

@@ -1,6 +1,6 @@
 describe('oLibTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

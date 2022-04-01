@@ -1,6 +1,6 @@
 describe('LineChartTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

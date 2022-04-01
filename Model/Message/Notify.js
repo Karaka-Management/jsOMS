@@ -9,11 +9,11 @@ export function notifyMessage (data)
 {
     setTimeout(function ()
     {
-        const notify = document.createElement('div'),
-            h        = document.createElement('h1'),
-            inner    = document.createElement('div'),
-            title    = document.createTextNode(data.title),
-            content  = document.createTextNode(data.msg);
+        const notify  = document.createElement('div');
+        const h       = document.createElement('h1');
+        const inner   = document.createElement('div');
+        const title   = document.createTextNode(data.title);
+        const content = document.createTextNode(data.msg);
 
         notify.id    = 'notify';
         notify.class = data.level;

@@ -1,6 +1,6 @@
 describe('AuthTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

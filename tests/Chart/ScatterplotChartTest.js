@@ -1,6 +1,6 @@
 describe('ScatterplotChartTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

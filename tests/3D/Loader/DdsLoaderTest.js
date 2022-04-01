@@ -1,6 +1,6 @@
 describe('DdsLoaderTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

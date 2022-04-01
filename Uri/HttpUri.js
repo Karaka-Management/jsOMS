@@ -17,19 +17,40 @@ export class HttpUri
      *
      * @since 1.0.0
      */
-    constructor(uri)
+    constructor (uri)
     {
-        this.uri         = '';
-        this.scheme      = '';
-        this.host        = '';
-        this.port        = '';
-        this.user        = '';
-        this.pass        = '';
-        this.query       = null;
+        /** @type {string} uri */
+        this.uri = '';
+
+        /** @type {string} scheme */
+        this.scheme = '';
+
+        /** @type {string} host */
+        this.host = '';
+
+        /** @type {string} port */
+        this.port = '';
+
+        /** @type {string} user */
+        this.user = '';
+
+        /** @type {string} pass */
+        this.pass = '';
+
+        /** @type {null|Object} query */
+        this.query = null;
+
+        /** @type {null|string} queryString */
         this.queryString = '';
-        this.fragment    = '';
-        this.base        = '';
-        this.root        = '/';
+
+        /** @type {string} fragment */
+        this.fragment = '';
+
+        /** @type {string} base */
+        this.base = '';
+
+        /** @type {string} root */
+        this.root = '/';
 
         this.set(uri);
     };
@@ -44,29 +65,30 @@ export class HttpUri
      *
      * @throws {Error}
      *
-     * @todo The default parseer fails for uris which have a query without a value but a fragment e.g. ?debug#something.
+     * @todo The default parser fails for uris which have a query without a value but a fragment e.g. ?debug#something.
      *          In such a case something#something is returned as fragment instead of just #something or something
      *
      * @since 1.0.0
      */
     static parseUrl (str, mode = 'php')
     {
-        const key  = ['source', 'scheme', 'authority', 'userInfo', 'user', 'pass', 'host', 'port',
+        const key = ['source', 'scheme', 'authority', 'userInfo', 'user', 'pass', 'host', 'port',
                 'relative', 'path', 'directory', 'file', 'query', 'fragment'
-            ],
-            parser = {
-                php:    /^(?:([^:\/?#]+):)?(?:\/\/()(?:(?:()(?:([^:@]*):?([^:@]*))?@)?([^:\/?#]*)(?::(\d*))?))?()(?:(()(?:(?:[^?#\/]*\/)*)()(?:[^?#]*))(?:\?([^#]*))?(?:#(.*))?)/,
+            ];
+
+        const parser = {
+                php: /^(?:([^:\/?#]+):)?(?:\/\/()(?:(?:()(?:([^:@]*):?([^:@]*))?@)?([^:\/?#]*)(?::(\d*))?))?()(?:(()(?:(?:[^?#\/]*\/)*)()(?:[^?#]*))(?:\?([^#]*))?(?:#(.*))?)/,
                 strict: /^(?:([^:\/?#]+):)?(?:\/\/((?:(([^:@]*):?([^:@]*))?@)?([^:\/?#]*)(?::(\d*))?))?((((?:[^?#\/]*\/)*)([^?#]*))(?:\?([^#]*))?(?:#(.*))?)/,
-                loose:  /^(?:(?![^:@]+:[^:@\/]*@)([^:\/?#.]+):)?(?:\/\/\/?)?((?:(([^:@]*):?([^:@]*))?@)?([^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/ // Added one optional slash to post-scheme to catch file:/// (should restrict this)
+                loose: /^(?:(?![^:@]+:[^:@\/]*@)([^:\/?#.]+):)?(?:\/\/\/?)?((?:(([^:@]*):?([^:@]*))?@)?([^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/ // Added one optional slash to post-scheme to catch file:/// (should restrict this)
             };
 
-        if (!parser.hasOwnProperty(mode)) {
+        if (!Object.prototype.hasOwnProperty.call(parser, mode)) {
             throw new Error('Unexpected parsing mode.', 'UriFactory', 52);
         }
 
-        const m = parser[mode].exec(str),
-            uri = {};
-        let i   = 14;
+        const m   = parser[mode].exec(str);
+        const uri = {};
+        let i     = 14;
 
         while (--i) {
             if (m[i]) {
@@ -85,16 +107,16 @@ export class HttpUri
      * @param {string} query Uri query
      * @param {string} name  Name of the query to return
      *
-     * @return {null|string}
+     * @return {string}
      *
      * @since 1.0.0
      */
     static getUriQueryParameter (query, name)
     {
-        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
 
-        const regex = new RegExp("[\\?&]*" + name + "=([^&#]*)"),
-            results = regex.exec(query);
+        const regex   = new RegExp('[\\?&]*' + name + '=([^&#]*)');
+        const results = regex.exec(query);
 
         return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
     };
@@ -111,14 +133,14 @@ export class HttpUri
     static getAllUriQueryParameters (query)
     {
         const params    = {};
-        let keyValPairs = [],
-            pairNum     = null;
+        let keyValPairs = [];
+        let pairNum     = null;
 
         if (query.length) {
             keyValPairs = query.split('&');
 
             for (pairNum in keyValPairs) {
-                if (!keyValPairs.hasOwnProperty(pairNum)) {
+                if (!Object.prototype.hasOwnProperty.call(keyValPairs, pairNum)) {
                     continue;
                 }
 
@@ -154,24 +176,24 @@ export class HttpUri
 
         const parsed = HttpUri.parseUrl(this.uri, 'php');
 
-        this.scheme = parsed['scheme'];
-        this.host   = parsed['host'];
-        this.port   = parsed['port'];
-        this.user   = parsed['user'];
-        this.pass   = parsed['pass'];
-        this.path   = parsed['path'];
+        this.scheme = parsed.scheme;
+        this.host   = parsed.host;
+        this.port   = parsed.port;
+        this.user   = parsed.user;
+        this.pass   = parsed.pass;
+        this.path   = parsed.path;
 
         if (this.path.endsWith('.php')) {
             this.path = this.path.substr(0, -4);
         }
 
-        this.queryString = typeof parsed['query'] !== 'undefined' ? parsed['query'] : [];
+        this.queryString = typeof parsed.query !== 'undefined' ? parsed.query : [];
 
         if (this.queryString !== null) {
             this.query = HttpUri.getAllUriQueryParameters(this.queryString);
         }
 
-        this.fragment = typeof parsed['fragment'] !== 'undefined' ? parsed['fragment'] : '';
+        this.fragment = typeof parsed.fragment !== 'undefined' ? parsed.fragment : '';
         this.base     = this.scheme + '://' + this.host + this.root;
     };
 
@@ -184,7 +206,7 @@ export class HttpUri
      *
      * @since 1.0.0
      */
-    setRootPath(rootPath)
+    setRootPath (rootPath)
     {
         this.root = rootPath;
         this.set(this.uri);
@@ -197,7 +219,7 @@ export class HttpUri
      *
      * @since 1.0.0
      */
-    getBase()
+    getBase ()
     {
         return this.base;
     };
@@ -209,7 +231,7 @@ export class HttpUri
      *
      * @since 1.0.0
      */
-    getScheme()
+    getScheme ()
     {
         return this.scheme;
     };
@@ -221,7 +243,7 @@ export class HttpUri
      *
      * @since 1.0.0
      */
-    getHost()
+    getHost ()
     {
         return this.host;
     };
@@ -233,7 +255,7 @@ export class HttpUri
      *
      * @since 1.0.0
      */
-    getPort()
+    getPort ()
     {
         return this.port;
     };
@@ -245,7 +267,7 @@ export class HttpUri
      *
      * @since 1.0.0
      */
-    getUser()
+    getUser ()
     {
         return this.user;
     };
@@ -257,7 +279,7 @@ export class HttpUri
      *
      * @since 1.0.0
      */
-    getPass()
+    getPass ()
     {
         return this.pass;
     };
@@ -269,7 +291,7 @@ export class HttpUri
      *
      * @since 1.0.0
      */
-    getQuery()
+    getQuery ()
     {
         return this.queryString;
     };
@@ -281,7 +303,7 @@ export class HttpUri
      *
      * @since 1.0.0
      */
-    getUri()
+    getUri ()
     {
         return this.uri;
     };
@@ -293,7 +315,7 @@ export class HttpUri
      *
      * @since 1.0.0
      */
-    getFragment()
+    getFragment ()
     {
         return this.fragment;
     };
@@ -305,7 +327,7 @@ export class HttpUri
      *
      * @since 1.0.0
      */
-    getPath()
+    getPath ()
     {
         return this.path;
     };
@@ -313,11 +335,11 @@ export class HttpUri
     /**
      * Get Uri path offset
      *
-     * @return {int}
+     * @return {number}
      *
      * @since 1.0.0
      */
-    getPathOffset()
+    getPathOffset ()
     {
         return jsOMS.substr_count(this.root, '/') - 1;
     };

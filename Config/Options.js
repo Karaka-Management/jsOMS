@@ -24,9 +24,9 @@ export class Options
     /**
      * Set option.
      *
-     * @param {int|string}                     key         Option key
-     * @param {boolean|int|float|string|Array} value       Option value
-     * @param {boolean}                        [overwrite] Overwrite value
+     * @param {number|string}                key         Option key
+     * @param {boolean|number|string|Object} value       Option value
+     * @param {boolean}                      [overwrite] Overwrite value
      *
      * @return {boolean}
      *
@@ -46,9 +46,9 @@ export class Options
     /**
      * Get option.
      *
-     * @param {int|string} key Option key
+     * @param {number|string} key Option key
      *
-     * @return {boolean|int|float|string|Array}
+     * @return {null|boolean|number|string|Object}
      *
      * @since 1.0.0
      */
@@ -64,7 +64,7 @@ export class Options
     /**
      * Remove option.
      *
-     * @param {int|string} key Option key
+     * @param {number|string} key Option key
      *
      * @return {boolean}
      *

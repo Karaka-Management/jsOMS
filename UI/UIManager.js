@@ -3,6 +3,7 @@ import { Tab }           from '../UI/Component/Tab.js';
 import { Table }         from '../UI/Component/Table.js';
 import { ActionManager } from '../UI/ActionManager.js';
 import { DragNDrop }     from '../UI/DragNDrop.js';
+import { Order }         from '../UI/Order.js';
 import { GeneralUI }     from '../UI/GeneralUI.js';
 
 /**
@@ -22,7 +23,7 @@ export class UIManager
      *
      * @since 1.0.0
      */
-    constructor(app)
+    constructor (app)
     {
         this.app           = app;
         this.formManager   = new Form(this.app);
@@ -30,11 +31,12 @@ export class UIManager
         this.tableManager  = new Table(this.app);
         this.actionManager = new ActionManager(this.app);
         this.dragNDrop     = new DragNDrop(this.app);
+        this.order         = new Order(this.app);
         this.generalUI     = new GeneralUI(this.app);
 
         const self = this;
         /** global: MutationObserver */
-        this.domObserver = new MutationObserver(function(mutations) {
+        this.domObserver = new MutationObserver(function (mutations) {
             const length = mutations.length;
 
             for (let i = 0; i < length; ++i) {
@@ -52,7 +54,7 @@ export class UIManager
      *
      * @since 1.0.0
      */
-    bind(id)
+    bind (id)
     {
         if (typeof id === 'undefined') {
             this.formManager.bind();
@@ -60,6 +62,7 @@ export class UIManager
             this.tableManager.bind();
             this.actionManager.bind();
             this.dragNDrop.bind();
+            this.order.bind();
             this.generalUI.bind();
         } else {
             const tag = document.getElementById(id);
@@ -89,7 +92,7 @@ export class UIManager
      *
      * @since 1.0.0
      */
-    getFormManager()
+    getFormManager ()
     {
         return this.formManager;
     };
@@ -101,7 +104,7 @@ export class UIManager
      *
      * @since 1.0.0
      */
-    getActionManager()
+    getActionManager ()
     {
         return this.actionManager;
     };
@@ -113,9 +116,21 @@ export class UIManager
      *
      * @since 1.0.0
      */
-    getDragNDrop()
+    getDragNDrop ()
     {
         return this.dragNDrop;
+    };
+
+    /**
+     * Get drag and drop manager.
+     *
+     * @return {Object}
+     *
+     * @since 1.0.0
+     */
+    getOrder ()
+    {
+        return this.order;
     };
 
     /**
@@ -125,7 +140,7 @@ export class UIManager
      *
      * @since 1.0.0
      */
-    getTabManager()
+    getTabManager ()
     {
         return this.tabManager;
     };
@@ -137,7 +152,7 @@ export class UIManager
      *
      * @since 1.0.0
      */
-    getTableManager()
+    getTableManager ()
     {
         return this.tabManager;
     };
@@ -149,7 +164,7 @@ export class UIManager
      *
      * @since 1.0.0
      */
-    getDOMObserver()
+    getDOMObserver ()
     {
         return this.domObserver;
     };
@@ -161,7 +176,7 @@ export class UIManager
      *
      * @since 1.0.0
      */
-    getGeneralUI()
+    getGeneralUI ()
     {
         return this.generalUI;
     };

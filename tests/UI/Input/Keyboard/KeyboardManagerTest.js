@@ -1,6 +1,6 @@
 describe('KeyboardManagerTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

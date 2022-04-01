@@ -15,13 +15,14 @@ export class Account
      */
     constructor ()
     {
+        /** @type {number} id Account id */
         this.id = 0;
     };
 
     /**
      * Get id.
      *
-     * @return {int}
+     * @return {number}
      *
      * @since 1.0.0
      */

@@ -1,6 +1,6 @@
 describe('UnhandledExceptionTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

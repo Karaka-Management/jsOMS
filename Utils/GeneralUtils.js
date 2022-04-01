@@ -10,7 +10,7 @@
  */
 (function (jsOMS)
 {
-    "use strict";
+    'use strict';
 
     /**
      * Delayed watcher
@@ -21,7 +21,7 @@
      *
      * @since 1.0.0
      */
-    jsOMS.watcher = function ()
+    jsOMS.watcher = (function ()
     {
         var timer = 0;
         return function (callback, ms)
@@ -29,7 +29,7 @@
             clearTimeout(timer);
             timer = setTimeout(callback, ms);
         };
-    }();
+    })();
 
     /**
      * Merging two arrays recursively
@@ -46,14 +46,12 @@
         const out = jsOMS.clone(target);
 
         for (const p in source) {
-            if (source.hasOwnProperty(p)) {
+            if (Object.prototype.hasOwnProperty.call(source, p)) {
                 // Property in destination object set; update its value.
                 if (typeof source[p] === 'object') {
                     out[p] = jsOMS.merge(out[p], source[p]);
-
                 } else {
                     out[p] = source[p];
-
                 }
             } else {
                 out[p] = source[p];

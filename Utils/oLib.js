@@ -10,12 +10,12 @@
  */
 (function (jsOMS)
 {
-    "use strict";
+    'use strict';
 
     /**
      * Trigger an event
      *
-     * @param {element} element Element where the event is assigned
+     * @param {Element} element Element where the event is assigned
      * @param {string}  eventName Name of the event
      *
      * @return void
@@ -42,11 +42,11 @@
     /**
      * Trim char from string
      *
-     * @param {string} path Array path
-     * @param {Object} data Object
-     * @param {string} delim Path delimiter
+     * @param {string} path    Array path
+     * @param {Object} data    Object
+     * @param {string} [delim] Path delimiter
      *
-     * @return
+     * @return {any}
      *
      * @function
      *
@@ -58,11 +58,11 @@
         let current     = data;
 
         for (const key in pathParts) {
-            if (!pathParts.hasOwnProperty(key)) {
+            if (!Object.prototype.hasOwnProperty.call(pathParts, key)) {
                 continue;
             }
 
-            if (typeof current === 'undefined' || !current.hasOwnProperty(pathParts[key])) {
+            if (typeof current === 'undefined' || !Object.prototype.hasOwnProperty.call(current, pathParts[key])) {
                 return null;
             }
 
@@ -75,8 +75,8 @@
     /**
      * Trim char from string
      *
-     * @param {string} str String to trim from
-     * @param {string} char Char to trim
+     * @param {string} str    String to trim from
+     * @param {string} [char] Char to trim
      *
      * @return {string}
      *
@@ -92,8 +92,8 @@
     /**
      * Trim char from right part of string
      *
-     * @param {string} str String to trim from
-     * @param {string} char Char to trim
+     * @param {string} str    String to trim from
+     * @param {string} [char] Char to trim
      *
      * @return {string}
      *
@@ -103,14 +103,14 @@
      */
     jsOMS.rtrim = function (str, char = ' ')
     {
-        return str.replace(new RegExp("[" + char + "]*$"), '');
+        return str.replace(new RegExp('[' + char + ']*$'), '');
     };
 
     /**
      * Trim char from left part of string
      *
-     * @param {string} str String to trim from
-     * @param {string} char Char to trim
+     * @param {string} str    String to trim from
+     * @param {string} [char] Char to trim
      *
      * @return {string}
      *
@@ -120,7 +120,7 @@
      */
     jsOMS.ltrim = function (str, char = ' ')
     {
-        return str.replace(new RegExp("^[" + char + "]*"), '');
+        return str.replace(new RegExp('^[' + char + ']*'), '');
     };
 
     jsOMS.htmlspecialchars = [
@@ -184,13 +184,14 @@
      * @param {string} str String to inspect
      * @param {string} substr Substring to count
      *
-     * @return {int}
+     * @return {number}
      *
      * @function
      *
      * @since 1.0.0
      */
-    jsOMS.substr_count = function (str, substr) {
+    jsOMS.substr_count = function (str, substr)
+    {
         str    += '';
         substr += '';
 
@@ -198,9 +199,9 @@
             return (str.length + 1);
         }
 
-        let n    = 0,
-            pos  = 0,
-            step = substr.length;
+        let n      = 0;
+        let pos    = 0;
+        const step = substr.length;
 
         while (true) {
             pos = str.indexOf(substr, pos);
@@ -221,8 +222,8 @@
      *
      * Checking if a element has a class
      *
-     * @param {Object} ele DOM Element
-     * @param {string} cls Class to find
+     * @param {Element} ele DOM Element
+     * @param {string}  cls Class to find
      *
      * @return {boolean}
      *
@@ -245,8 +246,10 @@
      *
      * Adding a class to an element
      *
-     * @param ele DOM Element
-     * @param cls Class to add
+     * @param {Element} DOM Element
+     * @param {string}  Class to add
+     *
+     * @return {void}
      *
      * @function
      *
@@ -256,7 +259,7 @@
     {
         if (!jsOMS.hasClass(ele, cls)) {
             if (typeof ele.className === 'string') {
-                ele.className += ele.className !== '' ? " " + cls : cls;
+                ele.className += ele.className !== '' ? ' ' + cls : cls;
             } else if (typeof ele.className.baseVal === 'string') {
                 ele.className.baseVal += ele.className.baseVal !== '' ? ' ' + cls : cls;
             }
@@ -268,8 +271,10 @@
      *
      * Removing a class form an element
      *
-     * @param ele DOM Element
-     * @param cls Class to remove
+     * @param {Element} DOM Element
+     * @param {string}  Class to remove
+     *
+     * @return {void}
      *
      * @function
      *
@@ -293,11 +298,13 @@
      *
      * Used to fire event after delay
      *
+     * @return {callback}
+     *
      * @function
      *
      * @since 1.0.0
      */
-    jsOMS.watcher = function ()
+    jsOMS.watcher = (function ()
     {
         var timer = 0;
         return function (callback, ms)
@@ -305,14 +312,16 @@
             clearTimeout(timer);
             timer = setTimeout(callback, ms);
         };
-    }();
+    })();
 
     /**
      * Action prevent
      *
      * Preventing event from firering and passing through
      *
-     * @param event Event Event to stop
+     * @param {Event} Event Event to stop
+     *
+     * @return {boolean}
      *
      * @function
      *
@@ -332,7 +341,9 @@
      *
      * Invoking a function after page load
      *
-     * @param func Callback function
+     * @param {function} Callback function
+     *
+     * @return {void}
      *
      * @function
      *
@@ -343,7 +354,7 @@
         if (document.readyState === 'complete' || document.readyState === 'loaded' || document.readyState === 'interactive') {
             func();
         } else {
-            document.addEventListener("DOMContentLoaded", function (event)
+            document.addEventListener('DOMContentLoaded', function (event)
             {
                 func();
             });
@@ -353,7 +364,7 @@
     /**
      * Get element value
      *
-     * @param ele DOM Element
+     * @param {Element} DOM Element
      *
      * @return {string}
      *
@@ -377,7 +388,9 @@
      *
      * Deleting content from element
      *
-     * @param ele DOM Element
+     * @param {Element} DOM Element
+     *
+     * @return {void}
      *
      * @function
      *
@@ -395,7 +408,7 @@
      *
      * @param {string} str String to hash
      *
-     * @return {int}
+     * @return {number}
      *
      * @function
      *
@@ -418,7 +431,7 @@
      *
      * Checking if a selection is a node
      *
-     * @param ele DOM Node
+     * @param {Node} DOM Node
      *
      * @return {boolean}
      *
@@ -430,7 +443,7 @@
     {
         /** global: Node */
         return (
-            typeof Node === "object" ? ele instanceof Node : ele && typeof ele === "object" && typeof ele.nodeType === "number" && typeof ele.nodeName === "string"
+            typeof Node === 'object' ? ele instanceof Node : ele && typeof ele === 'object' && typeof ele.nodeType === 'number' && typeof ele.nodeName === 'string'
         );
     };
 
@@ -439,7 +452,7 @@
      *
      * Checking if a selection is a element
      *
-     * @param o DOM Element
+     * @param {HTMLElement} DOM Element
      *
      * @return {boolean}
      *
@@ -451,7 +464,7 @@
     {
         /** global: HTMLElement */
         return (
-            typeof HTMLElement === "object" ? o instanceof HTMLElement : o && typeof o === "object" && o !== null && o.nodeType === 1 && typeof o.nodeName === "string"
+            typeof HTMLElement === 'object' ? o instanceof HTMLElement : o && typeof o === 'object' && o !== null && o.nodeType === 1 && typeof o.nodeName === 'string'
         );
     };
 
@@ -460,10 +473,10 @@
      *
      * Getting a element by class in the first level
      *
-     * @param ele DOM Element
-     * @param cls Class to find
+     * @param {Element} DOM Element
+     * @param {string}  Class to find
      *
-     * @return Element
+     * @return {null|Element}
      *
      * @function
      *
@@ -485,9 +498,11 @@
     /**
      * Adding event listener to multiple elements
      *
-     * @param e DOM Elements
-     * @param {string} event Event name
+     * @param {Element}  e        DOM Elements
+     * @param {string}   event    Event name
      * @param {function} callback Event callback
+     *
+     * @return {void}
      *
      * @function
      *
@@ -507,6 +522,8 @@
      *
      * @param {string} jsonString String to validate
      *
+     * @return {boolean}
+     *
      * @function
      *
      * @since 1.0.0
@@ -524,10 +541,10 @@
     /**
      * Merging two arrays recursively
      *
-     * @param target Target array
-     * @param source Source array
+     * @param {Object} target Target object
+     * @param {Object} source Source object
      *
-     * @return Array
+     * @return {Object}
      *
      * @function
      *
@@ -538,14 +555,12 @@
         const out = jsOMS.clone(target);
 
         for (const p in source) {
-            if (source.hasOwnProperty(p)) {
+            if (Object.prototype.hasOwnProperty.call(source, p)) {
                 // Property in destination object set; update its value.
                 if (typeof source[p] === 'object') {
                     out[p] = jsOMS.merge(out[p], source[p]);
-
                 } else {
                     out[p] = source[p];
-
                 }
             } else {
                 out[p] = source[p];
@@ -569,11 +584,30 @@
         return { ...obj };
     };
 
+    /**
+     * Is variable set
+     *
+     * @param {any} variable Variable
+     *
+     * @returns {boolean}
+     *
+     * @since 1.0.0
+     */
     jsOMS.isset = function (variable)
     {
         return typeof variable !== 'undefined' && variable !== null;
     };
 
+    /**
+     * Get the remaining string after finding a certain char
+     *
+     * @param {string} haystack String to to search in
+     * @param {Array}  chars    Chars to search for
+     *
+     * @return {string}
+     *
+     * @since 1.0.0
+     */
     jsOMS.strpbrk = function (haystack, chars)
     {
         const length = chars.length;
@@ -587,11 +621,5 @@
         }
 
         return haystack.slice(min);
-    };
-
-    jsOMS.nearest = function (e, selector) {
-        // same level first
-        // parent level second
-        // child level third
     };
 }(window.jsOMS = window.jsOMS || {}));

@@ -1,6 +1,6 @@
 describe('MouseManagerTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

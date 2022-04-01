@@ -10,7 +10,7 @@
  */
 (function (jsOMS)
 {
-    "use strict";
+    'use strict';
 
     /**
      * Class finder
@@ -35,7 +35,7 @@
     /**
      * Trigger an event
      *
-     * @param {element} element Element where the event is assigned
+     * @param {Element} element Element where the event is assigned
      * @param {string}  eventName Name of the event
      *
      * @return void
@@ -64,8 +64,8 @@
      *
      * Adding a class to an element
      *
-     * @param ele DOM Element
-     * @param cls Class to add
+     * @param {Element} DOM Element
+     * @param {string}  Class to add
      *
      * @return {void}
      *
@@ -74,7 +74,7 @@
     jsOMS.addClass = function (ele, cls)
     {
         if (!jsOMS.hasClass(ele, cls)) {
-            ele.className += ele.className !== '' ? " " + cls : cls;
+            ele.className += ele.className !== '' ? ' ' + cls : cls;
         }
     };
 
@@ -83,8 +83,8 @@
      *
      * Removing a class form an element
      *
-     * @param ele DOM Element
-     * @param cls Class to remove
+     * @param {Element} DOM Element
+     * @param {string}  Class to remove
      *
      * @return {void}
      *
@@ -101,7 +101,7 @@
     /**
      * Get element value
      *
-     * @param ele DOM Element
+     * @param {Element} DOM Element
      *
      * @return {string}
      *
@@ -125,7 +125,7 @@
      *
      * Preventing event from firing and passing through
      *
-     * @param event Event Event to stop
+     * @param {Event} event Event to stop
      *
      * @return {void}
      *
@@ -143,7 +143,7 @@
      *
      * Invoking a function after page load
      *
-     * @param {callback} func Callback function
+     * @param {function} func Callback function
      *
      * @return {void}
      *
@@ -157,7 +157,7 @@
         ) {
             func();
         } else {
-            document.addEventListener("DOMContentLoaded", function (event)
+            document.addEventListener('DOMContentLoaded', function (event)
             {
                 func();
             });
@@ -169,7 +169,7 @@
      *
      * Deleting content from element
      *
-     * @param ele DOM Element
+     * @param {Element} DOM Element
      *
      * @return {void}
      *
@@ -187,7 +187,7 @@
      *
      * Checking if a selection is a node
      *
-     * @param ele DOM Node
+     * @param {Node} DOM Node
      *
      * @return {boolean}
      *
@@ -197,7 +197,7 @@
     {
         /** global: Node */
         return (
-            typeof Node === "object" ? ele instanceof Node : ele && typeof ele === "object" && typeof ele.nodeType === "number" && typeof ele.nodeName === "string"
+            typeof Node === 'object' ? ele instanceof Node : ele && typeof ele === 'object' && typeof ele.nodeType === 'number' && typeof ele.nodeName === 'string'
         );
     };
 
@@ -206,7 +206,7 @@
      *
      * Checking if a selection is a element
      *
-     * @param o DOM Element
+     * @param {HTMLElement} DOM Element
      *
      * @return {boolean}
      *
@@ -216,7 +216,7 @@
     {
         /** global: HTMLElement */
         return (
-            typeof HTMLElement === "object" ? o instanceof HTMLElement : o && typeof o === "object" && o !== null && o.nodeType === 1 && typeof o.nodeName === "string"
+            typeof HTMLElement === 'object' ? o instanceof HTMLElement : o && typeof o === 'object' && o !== null && o.nodeType === 1 && typeof o.nodeName === 'string'
         );
     };
 
@@ -225,10 +225,10 @@
      *
      * Getting a element by class in the first level
      *
-     * @param ele DOM Element
-     * @param cls Class to find
+     * @param {Element} DOM Element
+     * @param {string}  Class to find
      *
-     * @return {Element}
+     * @return {null|Element}
      *
      * @since 1.0.0
      */
@@ -248,7 +248,7 @@
     /**
      * Adding event listener to multiple elements
      *
-     * @param            e        DOM Elements
+     * @param {Element}  e        DOM Elements
      * @param {string}   event    Event name
      * @param {function} callback Event callback
      *

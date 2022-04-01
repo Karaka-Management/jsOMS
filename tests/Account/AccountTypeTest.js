@@ -2,7 +2,7 @@ import { AccountType } from '../Account/AccountType.js';
 
 describe('AccountTypeTest', function ()
 {
-    "use strict";
+    'use strict';
 
     describe('testEnum', function ()
     {

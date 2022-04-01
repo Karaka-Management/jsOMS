@@ -8,7 +8,7 @@
  */
 export function datalistClear (action, callback)
 {
-    "use strict";
+    'use strict';
 
     const e = document.getElementById(action.id);
 

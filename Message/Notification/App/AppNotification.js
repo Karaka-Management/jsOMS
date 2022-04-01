@@ -1,3 +1,5 @@
+import { NotificationMessage } from '../NotificationMessage.js';
+
 /**
  * App notification.
  *
@@ -15,13 +17,14 @@ export class AppNotification
      */
     constructor ()
     {
+        /** @type {number} status */
         this.status = 0;
     };
 
     /**
      * Set notification status.
      *
-     * @param {int} status Notification status
+     * @param {number} status Notification status
      *
      * @return {void}
      *
@@ -35,7 +38,7 @@ export class AppNotification
     /**
      * Create notification
      *
-     * @param {Object} msg Notification
+     * @param {NotificationMessage} msg Notification
      *
      * @return {void}
      *
@@ -52,7 +55,7 @@ export class AppNotification
         const output = document.importNode(tpl.content, true);
         output.querySelector('.log-msg').classList.add('log-msg-status-' + msg.status);
         output.querySelector('.log-msg-content').innerHTML = msg.message;
-        output.querySelector('.close').addEventListener('click', function() {
+        output.querySelector('.close').addEventListener('click', function () {
             this.parentNode.remove();
         });
 

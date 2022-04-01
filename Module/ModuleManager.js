@@ -16,7 +16,7 @@ export class ModuleManager
      *
      * @since 1.0.0
      */
-    constructor(app)
+    constructor (app)
     {
         this.modules = {};
         this.app     = app;

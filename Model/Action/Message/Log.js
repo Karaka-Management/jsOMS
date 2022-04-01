@@ -12,7 +12,7 @@ import { NotificationType } from '../../../Message/Notification/NotificationType
  */
 export function logAction (action, callback, id)
 {
-    "use strict";
+    'use strict';
 
     window.omsApp.notifyManager.send(
         new NotificationMessage(

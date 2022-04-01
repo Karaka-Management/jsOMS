@@ -10,30 +10,31 @@
  */
 (function (jsOMS)
 {
-    "use strict";
+    'use strict';
 
     /**
      * Get value from array/object
      *
-     * @param {string} path Array path
-     * @param {Object} data Object
-     * @param {string} delim Path delimiter
+     * @param {string} path    Array path
+     * @param {Object} data    Object
+     * @param {string} [delim] Path delimiter
      *
-     * @return {mixed}
+     * @return {any}
      *
      * @since 1.0.0
      */
-    jsOMS.getArray = function(path, data, delim = '/')
+    jsOMS.getArray = function (path, data, delim = '/')
     {
-        let pathParts = jsOMS.ltrim(path, delim).split(delim);
-        let current   = data;
+        /** @type {Object} pathParts */
+        const pathParts = jsOMS.ltrim(path, delim).split(delim);
+        let current     = data;
 
         for (const key in pathParts) {
-            if (!pathParts.hasOwnProperty(key)) {
+            if (!Object.prototype.hasOwnProperty.call(pathParts, key)) {
                 continue;
             }
 
-            if (typeof current === 'undefined' || !current.hasOwnProperty(pathParts[key])) {
+            if (typeof current === 'undefined' || !Object.prototype.hasOwnProperty.call(current, pathParts[key])) {
                 return null;
             }
 

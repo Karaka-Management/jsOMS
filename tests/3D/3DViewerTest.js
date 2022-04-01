@@ -1,6 +1,6 @@
 describe('3DViewerTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

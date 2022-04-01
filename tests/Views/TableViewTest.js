@@ -1,6 +1,6 @@
 describe('TableViewTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

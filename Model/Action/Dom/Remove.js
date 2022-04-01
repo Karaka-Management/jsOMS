@@ -9,14 +9,19 @@
  */
 export function removeButtonAction (action, callback, id)
 {
-    "use strict";
+    'use strict';
 
-    const e   = action.base === 'self' ? (action.selector === '' || typeof action.selector === 'undefined' ? [document.getElementById(id)] : document.getElementById(id).querySelectorAll(action.selector)) : document.querySelectorAll(action.selector);
+    const e = action.base === 'self'
+        ? (action.selector === '' || typeof action.selector === 'undefined'
+            ? [document.getElementById(id)]
+            : document.getElementById(id).querySelectorAll(action.selector))
+        : document.querySelectorAll(action.selector);
+
     const dim = document.getElementById('dim');
 
     for (const i in e) {
         /** global: HTMLElement */
-        if (!e.hasOwnProperty(i) || !e[i] || !(e[i] instanceof HTMLElement)) {
+        if (!Object.prototype.hasOwnProperty.call(e, i) || !e[i] || !(e[i] instanceof HTMLElement)) {
             continue;
         }
 

@@ -1,6 +1,6 @@
 describe('MathProcessorTest', function ()
 {
-    "use strict";
+    'use strict';
 
     describe('testBasicEvaluation', function ()
     {

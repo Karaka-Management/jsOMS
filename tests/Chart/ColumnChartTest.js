@@ -1,6 +1,6 @@
 describe('ColumnChartTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

@@ -10,13 +10,13 @@
  */
 (function (jsOMS)
 {
-    "use strict";
+    'use strict';
 
     /**
      * Trim char from string
      *
-     * @param {string} str  String to trim from
-     * @param {string} char Char to trim
+     * @param {string} str    String to trim from
+     * @param {string} [char] Char to trim
      *
      * @return {string}
      *
@@ -30,8 +30,8 @@
     /**
      * Trim char from right part of string
      *
-     * @param {string} str  String to trim from
-     * @param {string} char Char to trim
+     * @param {string} str    String to trim from
+     * @param {string} [char] Char to trim
      *
      * @return {string}
      *
@@ -39,14 +39,14 @@
      */
     jsOMS.rtrim = function (str, char = ' ')
     {
-        return str.replace(new RegExp("[" + char + "]*$"), '');
+        return str.replace(new RegExp('[' + char + ']*$'), '');
     };
 
     /**
      * Trim char from left part of string
      *
-     * @param {string} str  String to trim from
-     * @param {string} char Char to trim
+     * @param {string} str    String to trim from
+     * @param {string} [char] Char to trim
      *
      * @return {string}
      *
@@ -54,7 +54,7 @@
      */
     jsOMS.ltrim = function (str, char = ' ')
     {
-        return str.replace(new RegExp("^[" + char + "]*"), '');
+        return str.replace(new RegExp('^[' + char + ']*'), '');
     };
 
     jsOMS.htmlspecialchars = [
@@ -137,11 +137,12 @@
      * @param {string} str    String to inspect
      * @param {string} substr Substring to count
      *
-     * @return {int}
+     * @return {number}
      *
      * @since 1.0.0
      */
-    jsOMS.substr_count = function (str, substr) {
+    jsOMS.substr_count = function (str, substr)
+    {
         str    += '';
         substr += '';
 
@@ -151,8 +152,8 @@
             return (str.length + 1);
         }
 
-        let n   = 0,
-            pos = 0;
+        let n   = 0;
+        let pos = 0;
 
         while (true) {
             pos = str.indexOf(substr, pos);
@@ -173,13 +174,13 @@
      *
      * @param {string} str String to hash
      *
-     * @return {int}
+     * @return {number}
      *
      * @since 1.0.0
      */
     jsOMS.hash = function (str)
     {
-        let res   = 0
+        let res   = 0;
         const len = str.length;
 
         for (let i = 0; i < len; ++i) {
@@ -193,7 +194,7 @@
      * Get the remaining string after finding a certain char
      *
      * @param {string} haystack String to to search in
-     * @param {Array} chars     Chars to search for
+     * @param {Array}  chars    Chars to search for
      *
      * @return {string}
      *

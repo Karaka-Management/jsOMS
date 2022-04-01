@@ -1,6 +1,6 @@
 describe('VWaterfallChartTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

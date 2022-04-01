@@ -41,7 +41,7 @@ export class ReadManager
     read (text)
     {
         /** global: SpeechSynthesisUtterance */
-        let utter   = new SpeechSynthesisUtterance(text);
+        const utter = new SpeechSynthesisUtterance(text);
         utter.lang  = this.lang;
         utter.voice = this.voice;
         utter.pitch = this.pitch;

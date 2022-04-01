@@ -28,11 +28,9 @@ export class UriFactory
      *
      * @since 1.0.0
      */
-    static setQuery (key, value, overwrite)
+    static setQuery (key, value, overwrite = true)
     {
-        overwrite = typeof overwrite !== 'undefined' ? overwrite : true;
-
-        if (overwrite || !UriFactory.uri.hasOwnProperty(key)) {
+        if (overwrite || !Object.prototype.hasOwnProperty.call(UriFactory.uri, key)) {
             UriFactory.uri[key] = value;
 
             return true;
@@ -52,7 +50,7 @@ export class UriFactory
      */
     static getQuery (key)
     {
-        return UriFactory.uri.hasOwnProperty(key) ? UriFactory.uri[key] : null;
+        return Object.prototype.hasOwnProperty.call(UriFactory.uri, key) ? UriFactory.uri[key] : null;
     };
 
     /**
@@ -80,7 +78,7 @@ export class UriFactory
      */
     static clear (key)
     {
-        if (UriFactory.uri.hasOwnProperty(key)) {
+        if (Object.prototype.hasOwnProperty.call(UriFactory.uri, key)) {
             delete UriFactory.uri[key];
 
             return true;
@@ -104,7 +102,7 @@ export class UriFactory
         const regexp = new RegExp(pattern);
 
         for (const key in UriFactory.uri) {
-            if (UriFactory.uri.hasOwnProperty(key) && regexp.test(key)) {
+            if (Object.prototype.hasOwnProperty.call(UriFactory.uri, key) && regexp.test(key)) {
                 delete UriFactory.uri[key];
                 success = true;
             }
@@ -134,15 +132,15 @@ export class UriFactory
             // unique queries
             const parts = typeof parsed.query === 'undefined' ? [] : parsed.query.replace(/\?/g, '&').split('&');
 
-            let comps  = {},
-                spl    = null,
-                length = parts.length;
+            const comps  = {};
+            const length = parts.length;
+            let spl      = null;
 
             // fix bug for queries such as https://127.0.0.1/test?something#frag where no value is specified for a query parameter
             if ((typeof parsed.fragment === 'undefined' || parsed.fragment === null)
                 && parts[length - 1].includes('#')
             ) {
-                const lastQuery = parts[length - 1].split('#')[1];;
+                const lastQuery = parts[length - 1].split('#')[1];
 
                 parsed.fragment   = lastQuery[1];
                 parts[length - 1] = lastQuery[0];
@@ -154,9 +152,9 @@ export class UriFactory
             }
 
             for (const a in comps) {
-                if (comps.hasOwnProperty(a) && comps[a] !== '' && comps[a] !== null && typeof comps[a] !== 'undefined') {
+                if (Object.prototype.hasOwnProperty.call(comps, a) && comps[a] !== '' && comps[a] !== null && typeof comps[a] !== 'undefined') {
                     pars.push(a + '=' + (comps[a].includes('%') ? comps[a] : encodeURIComponent(comps[a])));
-                } else if (comps.hasOwnProperty(a)) {
+                } else if (Object.prototype.hasOwnProperty.call(comps, a)) {
                     pars.push(a);
                 }
             }
@@ -187,20 +185,20 @@ export class UriFactory
      * $ = Other data
      * % = Current url
      *
-     * @param {string} uri       Raw uri
-     * @param {Object} [toMatch] Key/value pair to replace in raw
+     * @param {string}      uri       Raw uri
+     * @param {null|Object} [toMatch] Key/value pair to replace in raw
      *
      * @return {string}
      *
      * @since 1.0.0
      */
-    static build (uri, toMatch)
+    static build (uri, toMatch = null)
     {
         const current = HttpUri.parseUrl(window.location.href);
 
         const query = HttpUri.getAllUriQueryParameters(typeof current.query === 'undefined' ? {} : current.query);
         for (const key in query) {
-            if (query.hasOwnProperty(key)) {
+            if (Object.prototype.hasOwnProperty.call(query, key)) {
                 UriFactory.setQuery('?' + key, query[key]);
             }
         }
@@ -208,7 +206,7 @@ export class UriFactory
         let parsed = uri.replace(new RegExp('\{[\/#\?%@\.\$\!][a-zA-Z0-9\-\#\.]*\}', 'g'), function (match) {
             match = match.substr(1, match.length - 2);
 
-            if (typeof toMatch !== 'undefined' && toMatch.hasOwnProperty(match)) {
+            if (toMatch !== null && Object.prototype.hasOwnProperty.call(toMatch, match)) {
                 return toMatch[match];
             } else if (typeof UriFactory.uri[match] !== 'undefined') {
                 return UriFactory.uri[match];
@@ -226,7 +224,7 @@ export class UriFactory
                 let value  = '';
                 const form = (new FormView(e.id)).getData();
 
-                for (let pair of form.entries()) {
+                for (const pair of form.entries()) {
                     value += '&' + pair[0] + '=' + pair[1];
                 }
 
@@ -245,7 +243,7 @@ export class UriFactory
                     let value  = '';
                     const form = (new FormView(e.id)).getData();
 
-                    for (let pair of form.entries()) {
+                    for (const pair of form.entries()) {
                         value += '&' + pair[0] + '=' + pair[1];
                     }
 
@@ -280,6 +278,8 @@ export class UriFactory
     /**
      * Set uri builder components.
      *
+     * @param {HttpUri} uri Uri
+     *
      * @return {void}
      *
      * @since 1.0.0
@@ -299,4 +299,3 @@ export class UriFactory
  * @since 1.0.0
  */
 UriFactory.uri = {};
-

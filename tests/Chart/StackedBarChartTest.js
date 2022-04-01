@@ -1,6 +1,6 @@
 describe('StackedBarChartTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

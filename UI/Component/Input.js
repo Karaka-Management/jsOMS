@@ -1,4 +1,7 @@
 import { Request } from '../../Message/Request/Request.js';
+import { Response } from '../../Message/Response/Response.js';
+import { RequestMethod } from '../../Message/Request/RequestMethod.js';
+import { ResponseType } from '../../Message/Response/ResponseType.js';
 
 /**
  * Form manager class.
@@ -23,32 +26,32 @@ export class Input
     /**
      * Unbind input element
      *
-     * @param {Object} input Input element
+     * @param {Element} input Input element
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    static unbind(input)
+    static unbind (input)
     {
         this.app.inputManager.getKeyboardManager().unbind(input);
         /** global: changeBind */
-        input.removeEventListener('change', changeBind, false);
+        // input.removeEventListener('change', changeBind, false);
     };
 
     /**
      * Bind input element
      *
-     * @param {Object} input Input element
+     * @param {Element} input Input element
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    static bindElement(input)
+    static bindElement (input = null)
     {
-        if (typeof input === 'undefined') {
-            throw 'Input element required';
+        if (input === null) {
+            throw new Error('Input element required');
         }
 
         const type = input.type;
@@ -56,7 +59,7 @@ export class Input
         const removeContentButton = input.parentNode.querySelector('.fa-times');
         if (removeContentButton !== null
             && type !== 'submit' && type !== 'button') {
-            removeContentButton.addEventListener('click', function() {
+            removeContentButton.addEventListener('click', function () {
                 input.value = '';
                 input.focus();
             });
@@ -68,14 +71,14 @@ export class Input
      *
      * This only applies for datalists that have remote options
      *
-     * @param {Object} input    Input element
-     * @param {Object} datalist Datalist element
+     * @param {Element} input    Input element
+     * @param {Element} datalist Datalist element
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    static addRemoteDatalistOptions(input, datalist)
+    static addRemoteDatalistOptions (input, datalist)
     {
         this.clearDatalistOptions(datalist);
 
@@ -88,18 +91,18 @@ export class Input
         request.setSuccess(function (xhr)
         {
             try {
-                const o            = JSON.parse(xhr.response),
-                    response       = new Response(o),
-                    responseLength = response.count();
-                let tempResponse   = null,
-                    success        = null;
+                const o              = JSON.parse(xhr.response);
+                const response       = new Response(o);
+                const responseLength = response.count();
+                let tempResponse     = null;
+                let success          = null;
 
                 for (let k = 0; k < responseLength; ++k) {
                     tempResponse = response.getByIndex(k);
 
-                    let option = null,
-                        data   = tempResponse.getData(),
-                        length = data.length;
+                    let option   = null;
+                    const data   = tempResponse.getData();
+                    const length = data.length;
 
                     for (let i = 0; i < length; ++i) {
                         option       = document.createElement('option');
@@ -120,13 +123,13 @@ export class Input
     /**
      * Remove all datalist options from datalist
      *
-     * @param {Object} datalist Datalist element
+     * @param {Element} datalist Datalist element
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    static clearDatalistOptions(datalist)
+    static clearDatalistOptions (datalist)
     {
         const length = datalist.options.length;
 

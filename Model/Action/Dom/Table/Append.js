@@ -8,15 +8,17 @@
  */
 export function tableAppend (action, callback)
 {
-    "use strict";
+    'use strict';
 
-    const table      = document.getElementById(action.id),
-        tbody        = table !== null && typeof table !== 'undefined' ? table.getElementsByTagName('tbody')[0] : null,
-        headers      = table !== null && typeof table !== 'undefined' ? table.getElementsByTagName('thead')[0].getElementsByTagName('th') : null,
-        dataLength   = action.data.length,
-        headerLength = headers !== null && typeof headers !== 'undefined' ? headers.length : 0;
+    const table        = document.getElementById(action.id);
+    const tbody        = table !== null && typeof table !== 'undefined' ? table.getElementsByTagName('tbody')[0] : null;
+    const headers      = table !== null && typeof table !== 'undefined' ? table.getElementsByTagName('thead')[0].getElementsByTagName('th') : null;
+    const dataLength   = action.data.length;
+    const headerLength = headers !== null && typeof headers !== 'undefined' ? headers.length : 0;
 
-    let row, cell, text, rawText;
+    let row;
+    let cell;
+    let rawText;
 
     for (let i = 0; i < dataLength; ++i) {
         if (tbody === null) {

@@ -9,15 +9,14 @@
  */
 export function domSetValue (action, callback, id)
 {
-    "use strict";
+    'use strict';
 
-    let dataPath      = action['value'],
-        path          = '',
-        tempDataValue = '',
-        values        = [],
-        replaceText   = '',
-        start         = 0,
-        end           = 0;
+    let dataPath      = action.value;
+    let path          = '';
+    let tempDataValue = '';
+    let replaceText   = '';
+    let start         = 0;
+    let end           = 0;
 
     while ((start = dataPath.indexOf('{', start)) !== -1) {
         end = dataPath.indexOf('}', start);
@@ -31,11 +30,15 @@ export function domSetValue (action, callback, id)
         dataPath    = dataPath.replace(new RegExp(replaceText.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), tempDataValue);
     }
 
-    const fill = action.base === 'self' ? (action.selector === '' ? [document.getElementById(id)] : document.getElementById(id).querySelectorAll(action.selector)) : document.querySelectorAll(action.selector);
+    const fill = action.base === 'self'
+        ? (action.selector === ''
+            ? [document.getElementById(id)]
+            : document.getElementById(id).querySelectorAll(action.selector))
+        : document.querySelectorAll(action.selector);
 
     for (const i in fill) {
         /** global: HTMLElement */
-        if (!fill.hasOwnProperty(i) || !(fill[i] instanceof HTMLElement)) {
+        if (!Object.prototype.hasOwnProperty.call(fill, i) || !(fill[i] instanceof HTMLElement)) {
             continue;
         }
 

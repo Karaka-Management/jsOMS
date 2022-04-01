@@ -1,6 +1,6 @@
 describe('TabTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

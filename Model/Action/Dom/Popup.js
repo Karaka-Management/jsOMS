@@ -9,13 +9,17 @@
  */
 export function popupButtonAction (action, callback, id)
 {
-    "use strict";
+    'use strict';
 
-    const popup = action.base === 'self' ? (action.selector === '' ? [document.getElementById(id)] : document.getElementById(id).querySelectorAll(action.selector)) : document.querySelectorAll(action.selector);
+    const popup = action.base === 'self'
+        ? (action.selector === ''
+            ? [document.getElementById(id)]
+            : document.getElementById(id).querySelectorAll(action.selector))
+        : document.querySelectorAll(action.selector);
 
     for (const i in popup) {
         /** global: HTMLElement */
-        if (!popup.hasOwnProperty(i) || !popup[i] || !(popup[i] instanceof HTMLElement)) {
+        if (!Object.prototype.hasOwnProperty.call(popup, i) || !popup[i] || !(popup[i] instanceof HTMLElement)) {
             continue;
         }
 
@@ -27,7 +31,7 @@ export function popupButtonAction (action, callback, id)
         }
 
         for (const j in clone) {
-            if (!clone.hasOwnProperty(j) || !(clone[j] instanceof HTMLElement)) {
+            if (!Object.prototype.hasOwnProperty.call(clone, j) || !(clone[j] instanceof HTMLElement)) {
                 continue;
             }
 
@@ -36,7 +40,7 @@ export function popupButtonAction (action, callback, id)
 
         document.body.insertBefore(clone, document.body.firstChild);
 
-        let e = document.getElementById(popup[i].id.substr(0, popup[i].id.length - 4));
+        const e = document.getElementById(popup[i].id.substr(0, popup[i].id.length - 4));
 
         if (!e) {
             continue;

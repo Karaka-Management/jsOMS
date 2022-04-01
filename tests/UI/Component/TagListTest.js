@@ -1,6 +1,6 @@
 describe('TagListTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

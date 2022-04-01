@@ -1,6 +1,7 @@
-import { Request } from '../../Message/Request/Request.js';
-import { RequestMethod } from '../../Message/Request/RequestMethod.js';
-import { RequestType } from '../../Message/Request/RequestType.js';
+import { Account }       from '../Account/Account.js';
+import { Request }       from '../Message/Request/Request.js';
+import { RequestMethod } from '../Message/Request/RequestMethod.js';
+import { RequestType }   from '../Message/Request/RequestType.js';
 
 /**
  * Auth class.
@@ -21,14 +22,17 @@ export class Auth
      */
     constructor (uri)
     {
+        /** @type {Account} account */
         this.account = null;
-        this.uri     = uri;
+
+        /** @type {string} uri */
+        this.uri = uri;
     };
 
     /**
      * Set account for authentication.
      *
-     * @param {Object} account Account
+     * @param {Account} account Account
      *
      * @since 1.0.0
      */
@@ -40,7 +44,7 @@ export class Auth
     /**
      * Get account.
      *
-     * @return {Object}
+     * @return {Account}
      *
      * @since 1.0.0
      */
@@ -64,6 +68,8 @@ export class Auth
         authRequest.setMethod(RequestMethod.POST);
         authRequest.setResponseType(RequestType.JSON);
         authRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+        /** @type {XMLHttpRequest} xhr */
         authRequest.setSuccess(function (xhr)
         {
             this.loginResult(xhr);
@@ -86,6 +92,8 @@ export class Auth
 
     /**
      * Handle login result.
+     *
+     * @param {XMLHttpRequest} xhr Request
      *
      * @return {void}
      *

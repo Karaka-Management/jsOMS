@@ -1,6 +1,6 @@
 describe('FormattingTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

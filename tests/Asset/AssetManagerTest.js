@@ -2,7 +2,7 @@ import { AssetManager } from '../Asset/AssetManager.js';
 
 describe('AssetManagerTest', function ()
 {
-    "use strict";
+    'use strict';
 
     describe('testDefault', function ()
     {

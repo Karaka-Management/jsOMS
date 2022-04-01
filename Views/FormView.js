@@ -32,15 +32,30 @@ export class FormView
      */
     constructor (id)
     {
+        /** @type {string} id */
         this.id = id;
 
-        this.success    = null;
-        this.finally    = null;
+        /** @type {function} success */
+        this.success = null;
+
+        /** @type {function} finally */
+        this.finally = null;
+
+        /** @type {number} lastSubmit Last submit date time */
         this.lastSubmit = 0;
 
+        /** @type {null|Element} form */
         this.form = null;
 
-        this.initializeMembers();
+        /** @type {Array} submitInjects */
+        this.submitInjects = [];
+
+        /** @type {string} method */
+        this.method = 'POST';
+
+        /** @type {string} action */
+        this.action = '';
+
         this.bind();
     };
 
@@ -108,6 +123,13 @@ export class FormView
         this.lastSubmit = Math.floor(Date.now());
     };
 
+    /**
+     * Is form data submitted on change?
+     *
+     * @return {boolean}
+     *
+     * @since 1.0.0
+     */
     isOnChange ()
     {
         const isOnChange = this.getFormElement().getAttribute('data-on-change');
@@ -117,6 +139,8 @@ export class FormView
 
     /**
      * Get submit elements
+     *
+     * @param {null|Element} [e] Root element for search (null = whole document)
      *
      * @return {NodeListOf<any>}
      *
@@ -143,7 +167,7 @@ export class FormView
      *
      * @since 1.0.0
      */
-    getImagePreviews() {
+    getImagePreviews () {
         return document.querySelectorAll(
             '#' + this.id + ' input[type=file].preview'
         );
@@ -152,7 +176,9 @@ export class FormView
     /**
      * Get edit elements
      *
-     * @return {NodeListOf<any>}
+     * @param {null|Element} [e] Root element for search (null = whole document)
+     *
+     * @return {NodeListOf<Element>}
      *
      * @since 1.0.0
      */
@@ -171,7 +197,9 @@ export class FormView
     /**
     * Get save elements
     *
-    * @return {NodeListOf<any>}
+    * @param {null|Element} [e] Root element for search (null = whole document)
+    *
+    * @return {NodeListOf<Element>}
     *
     * @since 1.0.0
     */
@@ -190,7 +218,9 @@ export class FormView
     /**
     * Get save elements
     *
-    * @return {NodeListOf<any>}
+    * @param {null|Element} [e] Root element for search (null = whole document)
+    *
+    * @return {NodeListOf<Element>}
     *
     * @since 1.0.0
     */
@@ -209,7 +239,9 @@ export class FormView
     /**
      * Get remove buttons
      *
-     * @return {NodeListOf<any>}
+     * @param {null|Element} [e] Root element for search (null = whole document)
+     *
+     * @return {NodeListOf<Element>}
      *
      * @since 1.0.0
      */
@@ -230,7 +262,9 @@ export class FormView
      *
      * The add button is different from the submit button since sometimes you want to show data to the user before you submit it.
      *
-     * @return {NodeListOf<any>}
+     * @param {null|Element} [e] Root element for search (null = whole document)
+     *
+     * @return {NodeListOf<Element>}
      *
      * @since 1.0.0
      */
@@ -249,7 +283,7 @@ export class FormView
     /**
      * Get success callback
      *
-     * @return {callback}
+     * @return {function}
      *
      * @since 1.0.0
      */
@@ -261,7 +295,7 @@ export class FormView
     /**
      * Set success callback
      *
-     * @param {callback} callback Callback
+     * @param {function} callback Callback
      *
      * @return {void}
      *
@@ -275,7 +309,7 @@ export class FormView
     /**
      * Get finally callback
      *
-     * @return {callback}
+     * @return {function}
      *
      * @since 1.0.0
      */
@@ -287,20 +321,20 @@ export class FormView
     /**
      * Set finally callback
      *
-     * @param {callback} callback Callback
+     * @param {function} callback Callback
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    setFinally(callback) {
+    setFinally (callback) {
         this.finally = callback;
     };
 
     /**
      * Inject submit with post callback
      *
-     * @param {callback} callback Callback
+     * @param {function} callback Callback
      *
      * @return {void}
      *
@@ -314,31 +348,30 @@ export class FormView
     /**
      * Get form elements
      *
-     * @param {object} container Data container, null = entire form or element e.g. table row
+     * @param {null|Object} [container] Data container, null = entire form or element e.g. table row
      *
-     * @return {Array}
+     * @return {Element[]}
      *
      * @since 1.0.0
      */
     getFormElements (container = null)
     {
         const form = container === null ? this.getFormElement() : container;
-
         if (!form) {
             return [];
         }
 
-        const selects      = form.getElementsByTagName('select'),
-            textareas      = form.getElementsByTagName('textarea'),
-            inputs         = [].slice.call(form.getElementsByTagName('input')),
-            buttons        = form.getElementsByTagName('button'),
-            canvas         = form.getElementsByTagName('canvas'),
-            external       = [].slice.call(document.querySelectorAll(':not(#' + this.id + ') [form=' + this.id + ']')),
-            special        = form.querySelectorAll('[data-name]'),
-            specialExt     = document.querySelectorAll(':not(#' + this.id + ') [data-form=' + this.id + ']'),
-            inputLength    = inputs.length,
-            externalLength = external.length,
-            specialLength  = specialExt.length;
+        const selects        = form.getElementsByTagName('select');
+        const textareas      = form.getElementsByTagName('textarea');
+        const inputs         = [].slice.call(form.getElementsByTagName('input'));
+        const buttons        = form.getElementsByTagName('button');
+        const canvas         = form.getElementsByTagName('canvas');
+        const external       = [].slice.call(document.querySelectorAll(':not(#' + this.id + ') [form=' + this.id + ']'));
+        const special        = form.querySelectorAll('[data-name]');
+        const specialExt     = document.querySelectorAll(':not(#' + this.id + ') [data-form=' + this.id + ']');
+        const inputLength    = inputs.length;
+        const externalLength = external.length;
+        const specialLength  = specialExt.length;
 
         for (let i = 0; i < inputLength; ++i) {
             if (inputs[i] === undefined
@@ -359,7 +392,7 @@ export class FormView
                 continue;
             }
 
-            if ( external[i] === undefined
+            if (external[i] === undefined
                 || (typeof external[i] !== 'undefined'
                 && (external[i].type === 'checkbox' || external[i].type === 'radio')
                 && !external[i].checked)
@@ -386,9 +419,20 @@ export class FormView
             Array.prototype.slice.call(special),
             Array.prototype.slice.call(specialExt),
             Array.prototype.slice.call(canvas)
-        ).filter(function(val) { return val; });
+        ).filter(function (val) { return val; });
     };
 
+    /**
+     * Get first form element
+     *
+     * E.g. used to auto select first form element.
+     *
+     * @param {Element} e Root element for search (null = whole document)
+     *
+     * @return {Element}
+     *
+     * @since 1.0.0
+     */
     getFirstInputElement (e = null)
     {
         const parent = e === null ? document : e;
@@ -413,17 +457,17 @@ export class FormView
      */
     getUniqueFormElements (arr)
     {
-        let seen = {};
+        const seen = {};
 
-        return arr.filter(function(item) {
-            return seen.hasOwnProperty(item.name) ? false : (seen[item.name] = true);
+        return arr.filter(function (item) {
+            return Object.prototype.hasOwnProperty.call(seen, item.name) ? false : (seen[item.name] = true);
         });
     };
 
     /**
      * Get form data
      *
-     * @param {container} Data container. Null = entire form, container e.g. single row in a table
+     * @param {null|Element} Data container. Null = entire form, container e.g. single row in a table
      *
      * @return {FormData}
      *
@@ -431,10 +475,10 @@ export class FormView
      */
     getData (container = null)
     {
-        const data   = {},
-            formData = new FormData(),
-            elements = this.getFormElements(container),
-            length   = elements.length;
+        const data     = {};
+        const formData = new FormData();
+        const elements = this.getFormElements(container);
+        const length   = elements.length;
 
         let value = null;
 
@@ -459,14 +503,14 @@ export class FormView
                         Array.prototype.slice.call(
                             elements[i].contentWindow.document.querySelectorAll('[data-form=' + this.id + '] [data-name]')
                         )
-                    ).filter(function(val) { return val; });
+                    ).filter(function (val) { return val; });
 
                 const iframeLength = iframeElements.length;
                 for (let j = 0; j < iframeLength; ++j) {
                     value = iframeElements[j].value;
 
                     const iframeId = FormView.getElementId(iframeElements[j]);
-                    if (data.hasOwnProperty(iframeId)) {
+                    if (Object.prototype.hasOwnProperty.call(data, iframeId)) {
                         if (data[iframeId].constructor !== Array) {
                             data[iframeId] = [data[iframeId]];
                         }
@@ -487,7 +531,7 @@ export class FormView
             }
 
             // handle array data (e.g. table rows with same name)
-            if (data.hasOwnProperty(id)) {
+            if (Object.prototype.hasOwnProperty.call(data, id)) {
                 if (data[id].constructor !== Array) {
                     data[id] = [data[id]];
                 }
@@ -499,7 +543,7 @@ export class FormView
         }
 
         for (const key in data) {
-            if (data.hasOwnProperty(key)) {
+            if (Object.prototype.hasOwnProperty.call(data, key)) {
                 formData.append(key, data[key] !== null && data[key].constructor === Array ? JSON.stringify(data[key]) : data[key]);
             }
         }
@@ -507,10 +551,17 @@ export class FormView
         return formData;
     };
 
+    /**
+     * Reset the form values to the default values
+     *
+     * @return {void}
+     *
+     * @since 1.0.0
+     */
     resetValues ()
     {
-        const elements = this.getFormElements(),
-            length     = elements.length;
+        const elements = this.getFormElements();
+        const length   = elements.length;
 
         const form = this.getFormElement();
         form.reset();
@@ -529,7 +580,7 @@ export class FormView
                 elements[i].setAttribute('data-value', '');
             }
         }
-    }
+    };
 
     /**
      * Get form id
@@ -543,6 +594,13 @@ export class FormView
         return this.id;
     };
 
+    /**
+     * Get the form element
+     *
+     * @return {Element}
+     *
+     * @since 1.0.0
+     */
     getFormElement ()
     {
         return this.form === null ? (this.form = document.getElementById(this.id)) : this.form;
@@ -551,13 +609,15 @@ export class FormView
     /**
      * Validate form
      *
+     * @param {null|Element[]}
+     *
      * @return {boolean}
      *
      * @since 1.0.0
      */
-    isValid (data)
+    isValid (data = null)
     {
-        const elements = typeof data === 'undefined' ? this.getFormElements() : data;
+        const elements = data === null ? this.getFormElements() : data;
         const length   = elements.length;
 
         try {
@@ -575,15 +635,25 @@ export class FormView
                 }
             }
         } catch (e) {
+            /** global: jsOMS */
             jsOMS.Log.Logger.instance.error(e);
         }
 
         return true;
     };
 
-    getInvalid (data)
+    /**
+     * Get invalid data
+     *
+     * @param {null|Element[]}
+     *
+     * @return {Element[]}
+     *
+     * @since 1.0.0
+     */
+    getInvalid (data = null)
     {
-        const elements = typeof data === 'undefined' ? this.getFormElements() : data;
+        const elements = data === null ? this.getFormElements() : data;
         const length   = elements.length;
 
         const invalid = [];
@@ -603,16 +673,19 @@ export class FormView
                 }
             }
         } catch (e) {
+            /** global: jsOMS */
             jsOMS.Log.Logger.instance.error(e);
         }
 
         return invalid;
-    }
+    };
 
     /**
      * Get form element id
      *
-     * @return {string}
+     * @param {Element} e Element to get id from
+     *
+     * @return {null|string}
      *
      * @since 1.0.0
      */
@@ -654,30 +727,29 @@ export class FormView
     {
         this.clean();
 
-        const e = this.getFormElement();
-
-        if (!e) {
+        this.form = this.getFormElement();
+        if (this.form === null) {
             return;
         }
 
-        if (typeof e.attributes['method'] !== 'undefined') {
-            this.method = e.attributes['method'].value;
-        } else if (typeof e.attributes['data-method'] !== 'undefined') {
-            this.method = e.attributes['data-method'].value;
+        if (typeof this.form.attributes.method !== 'undefined') {
+            this.method = this.form.attributes.method.value;
+        } else if (typeof this.form.attributes['data-method'] !== 'undefined') {
+            this.method = this.form.attributes['data-method'].value;
         } else {
             this.method = 'EMPTY';
         }
 
-        if (typeof e.attributes['action'] !== 'undefined') {
-            this.action = e.attributes['action'].value;
-        } else if (typeof e.attributes['data-uri'] !== 'undefined') {
-            this.action = e.attributes['data-uri'].value;
+        if (typeof this.form.attributes.action !== 'undefined') {
+            this.action = this.form.attributes.action.value;
+        } else if (typeof this.form.attributes['data-uri'] !== 'undefined') {
+            this.action = this.form.attributes['data-uri'].value;
         } else {
             this.action = 'EMPTY';
         }
 
-        const elements = this.getFormElements(),
-            length     = elements.length;
+        const elements = this.getFormElements();
+        const length   = elements.length;
 
         for (let i = 0; i < length; ++i) {
             switch (elements[i].tagName.toLowerCase()) {
@@ -685,13 +757,13 @@ export class FormView
                     Input.bindElement(elements[i]);
                     break;
                 case 'select':
-                    //this.bindSelect(elements[i]);
+                    // this.bindSelect(elements[i]);
                     break;
                 case 'textarea':
-                    //this.bindTextarea(elements[i]);
+                    // this.bindTextarea(elements[i]);
                     break;
                 case 'button':
-                    //this.bindButton(elements[i]);
+                    // this.bindButton(elements[i]);
                     break;
                 default:
             }
@@ -707,8 +779,8 @@ export class FormView
      */
     unbind ()
     {
-        const elements = this.getFormElements(),
-            length     = elements.length;
+        const elements = this.getFormElements();
+        const length   = elements.length;
 
         for (let i = 0; i < length; ++i) {
             switch (elements[i].tagName) {

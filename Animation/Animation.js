@@ -8,7 +8,7 @@
  */
 (function (jsOMS)
 {
-    "use strict";
+    'use strict';
 
     /** @namespace jsOMS.Animation.Animation */
     jsOMS.Autoloader.defineNamespace('jsOMS.Animation.Animation');
@@ -24,12 +24,12 @@
      */
     jsOMS.Animation.Animation.requestAnimationFrame = (function ()
     {
-        return window.requestAnimationFrame ||
-            window.webkitRequestAnimationFrame ||
-            window.mozRequestAnimationFrame ||
-            window.oRequestAnimationFrame ||
-            window.msRequestAnimationFrame ||
-            function (callback)
+        return window.requestAnimationFrame
+            || window.webkitRequestAnimationFrame
+            || window.mozRequestAnimationFrame
+            || window.oRequestAnimationFrame
+            || window.msRequestAnimationFrame
+            || function (callback)
             {
                 window.setTimeout(callback, 1000 / 60);
             };

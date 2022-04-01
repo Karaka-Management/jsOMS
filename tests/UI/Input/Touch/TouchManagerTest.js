@@ -1,6 +1,6 @@
 describe('TouchManagerTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

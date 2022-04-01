@@ -8,7 +8,7 @@
  */
 export function focusAction (action, callback)
 {
-    "use strict";
+    'use strict';
 
     const focus = document.getElementById(action.id);
 

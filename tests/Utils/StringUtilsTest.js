@@ -1,6 +1,6 @@
 describe('StringUtilsTest', function ()
 {
-    "use strict";
+    'use strict';
 
     describe('testTrim', function ()
     {

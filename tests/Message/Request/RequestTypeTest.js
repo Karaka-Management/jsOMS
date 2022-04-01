@@ -2,7 +2,7 @@ import { RequestType } from '../Message/Request/RequestType.js';
 
 describe('RequestTypeTest', function ()
 {
-    "use strict";
+    'use strict';
 
     describe('testEnum', function ()
     {

@@ -1,6 +1,6 @@
 describe('AnimationTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

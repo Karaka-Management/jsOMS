@@ -8,10 +8,10 @@
  */
 export function validateKeypress (action, callback)
 {
-    "use strict";
+    'use strict';
 
-    const invertValidate = action.pressed.startsWith('!'),
-        keyPressCheck    = invertValidate ? action.pressed.split('!') : action.pressed.split('|');
+    const invertValidate = action.pressed.startsWith('!');
+    const keyPressCheck  = invertValidate ? action.pressed.split('!') : action.pressed.split('|');
 
     if (typeof action.data.keyCode !== 'undefined'
         && ((!invertValidate && keyPressCheck.indexOf(action.data.keyCode.toString()) !== -1)

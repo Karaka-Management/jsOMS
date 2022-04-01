@@ -1,6 +1,6 @@
 describe('GroupedColumnChartTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

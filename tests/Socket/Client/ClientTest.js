@@ -1,6 +1,6 @@
 describe('ClientTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

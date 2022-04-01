@@ -1,6 +1,6 @@
 describe('StackedColumnChartTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

@@ -1,6 +1,6 @@
 describe('GeneralUtilsTest', function ()
 {
-    "use strict";
+    'use strict';
 
     describe('testIsset', function ()
     {

@@ -18,45 +18,60 @@ export class Request
     /**
      * @constructor
      *
-     * @param {string} uri    Request uri
-     * @param {string} method Request method/verb
-     * @param {string} type   Request content type
+     * @param {null|string} [uri]    Request uri
+     * @param {null|string} [method] Request method/verb
+     * @param {null|string} [type]   Request content type
      *
      * @since 1.0.0
      */
-    constructor (uri = null, method, type)
+    constructor (uri = null, method = null, type = null)
     {
-        this.uri           = uri;
-        this.method        = typeof method !== 'undefined' ? method : RequestMethod.GET;
-        this.requestHeader = [];
-        this.result        = {};
-        this.type          = typeof type !== 'undefined' ? type : RequestType.JSON;
-        this.data          = {};
+        /** @type {null|string} uri */
+        this.uri = uri;
+
+        /** @type {string} method */
+        this.method = method !== null ? method : RequestMethod.GET;
+
+        /** @type {Object} requestHeader */
+        this.requestHeader = {};
+
+        /** @type {Object} result */
+        this.result = {};
+
+        /** @type {string} type */
+        this.type = type !== null ? type : RequestType.JSON;
+
+        /** @type {Object} data */
+        this.data = {};
 
         this.requestHeader['Content-Type'] = this.setContentTypeBasedOnType(this.type);
         if (this.type === RequestType.FORM_DATA) {
             delete this.requestHeader['Content-Type'];
         }
 
-        this.result[0] = function(xhr)
+        /** @type {XMLHttpRequest} xhr */
+        this.result[0] = function (xhr)
         {
             Logger.getInstance().info('Unhandled response from "' + xhr.responseURL + '" with response data "' + xhr.response + '"');
         };
 
-        /** global: XMLHttpRequest */
+        // global: XMLHttpRequest
+        /** @type {XMLHttpRequest} xhr */
         this.xhr = new XMLHttpRequest();
     };
 
     /**
      * Defines the request content type based on the type
      *
+     * @param {string} type Request type
+     *
      * @return {string}
      *
      * @since 1.0.0
      */
-    setContentTypeBasedOnType(type)
+    setContentTypeBasedOnType (type)
     {
-        switch(type) {
+        switch (type) {
             case RequestType.JSON:
                 return 'application/json';
             case RequestType.URL_ENCODE:
@@ -77,7 +92,7 @@ export class Request
      *
      * @since 1.0.0
      */
-    static getBrowser()
+    static getBrowser ()
     {
         /** global: InstallTrigger */
         /** global: navigator */
@@ -87,7 +102,7 @@ export class Request
             return BrowserType.FIREFOX;
         } else if (Object.toString.call(window.HTMLElement).indexOf('Constructor') > 0) {
             return BrowserType.SAFARI;
-        } else if (/*@cc_on!@*/false || !!document.documentMode) {
+        } else if ( /* @cc_on!@ */false || !!document.documentMode) {
             return BrowserType.IE;
         } else if (!!window.StyleMedia) {
             return BrowserType.EDGE;
@@ -110,10 +125,10 @@ export class Request
      *
      * @since 1.0.0
      */
-    static getOS()
+    static getOS ()
     {
         for (const os in OSType) {
-            if (OSType.hasOwnProperty(os)) {
+            if (Object.prototype.hasOwnProperty.call(OSType, os)) {
                 /** global: navigator */
                 if (navigator.appVersion.toLowerCase().indexOf(OSType[os]) !== -1) {
                     return OSType[os];
@@ -127,15 +142,13 @@ export class Request
     /**
      * Set request method.
      *
-     * EnumRequestMethod
-     *
      * @param {string} method Method type
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    setMethod(method)
+    setMethod (method)
     {
         this.method = method;
     };
@@ -149,7 +162,7 @@ export class Request
      *
      * @since 1.0.0
      */
-    getMethod()
+    getMethod ()
     {
         return this.method;
     };
@@ -157,15 +170,13 @@ export class Request
     /**
      * Set response type.
      *
-     * EnumResponseType
-     *
      * @param {string} type Method type
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    setResponseType(type)
+    setResponseType (type)
     {
         this.xhr.responseType = type;
     };
@@ -173,13 +184,11 @@ export class Request
     /**
      * Get response type.
      *
-     * EnumResponseType
-     *
      * @return {string}
      *
      * @since 1.0.0
      */
-    getResponseType()
+    getResponseType ()
     {
         return this.responseType;
     };
@@ -194,7 +203,7 @@ export class Request
      *
      * @since 1.0.0
      */
-    setRequestHeader(type, header)
+    setRequestHeader (type, header)
     {
         this.requestHeader[type] = header;
 
@@ -206,11 +215,11 @@ export class Request
     /**
      * Get request header.
      *
-     * @return {Array}
+     * @return {Object}
      *
      * @since 1.0.0
      */
-    getRequestHeader()
+    getRequestHeader ()
     {
         return this.requestHeader;
     };
@@ -224,7 +233,7 @@ export class Request
      *
      * @since 1.0.0
      */
-    setUri(uri)
+    setUri (uri)
     {
         this.uri = uri;
     };
@@ -232,11 +241,11 @@ export class Request
     /**
      * Get request uri.
      *
-     * @return {string}
+     * @return {null|string}
      *
      * @since 1.0.0
      */
-    getUri()
+    getUri ()
     {
         return this.uri;
     };
@@ -244,13 +253,13 @@ export class Request
     /**
      * Set success callback.
      *
-     * @param {requestCallback} callback - Success callback
+     * @param {function} callback - Success callback
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    setSuccess(callback)
+    setSuccess (callback)
     {
         this.result[200] = callback;
     };
@@ -258,14 +267,14 @@ export class Request
     /**
      * Set result callback.
      *
-     * @param {int}      status   Http response status
+     * @param {number}   status   Http response status
      * @param {function} callback Callback
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    setResultCallback(status, callback)
+    setResultCallback (status, callback)
     {
         this.result[status] = callback;
     };
@@ -273,13 +282,13 @@ export class Request
     /**
      * Set request data.
      *
-     * @param {Array} data Request data
+     * @param {Object} data Request data
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    setData(data)
+    setData (data)
     {
         this.data = data;
     };
@@ -287,11 +296,11 @@ export class Request
     /**
      * Get request data.
      *
-     * @return {Array}
+     * @return {Object}
      *
      * @since 1.0.0
      */
-    getData()
+    getData ()
     {
         return this.data;
     };
@@ -299,15 +308,13 @@ export class Request
     /**
      * Set request type.
      *
-     * EnumRequestType
-     *
      * @param {string} type Method type
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    setType(type)
+    setType (type)
     {
         this.type                          = type;
         this.requestHeader['Content-Type'] = this.setContentTypeBasedOnType(this.type);
@@ -320,13 +327,11 @@ export class Request
     /**
      * Get request type.
      *
-     * EnumRequestType
-     *
      * @return {string}
      *
      * @since 1.0.0
      */
-    getType()
+    getType ()
     {
         return this.type;
     };
@@ -334,30 +339,32 @@ export class Request
     /**
      * Create query from object.
      *
+     * @param {Object} obj Object to turn into uri query
+     *
      * @return {string}
      *
      * @since 1.0.0
      */
-    queryfy(obj)
+    queryfy (obj)
     {
         const str = [];
         for (const p in obj) {
-            if (obj.hasOwnProperty(p)) {
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            if (Object.prototype.hasOwnProperty.call(obj, p)) {
+                str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
             }
         }
 
-        return str.join("&");
+        return str.join('&');
     };
 
     /**
-     * Get request data.
+     * Send request.
      *
-     * @return {Array}
+     * @return {void}
      *
      * @since 1.0.0
      */
-    send()
+    send ()
     {
         if (this.uri === '') {
             return;
@@ -369,7 +376,7 @@ export class Request
             this.xhr.open(this.method, UriFactory.build(this.uri));
 
             for (const p in this.requestHeader) {
-                if (this.requestHeader.hasOwnProperty(p) && this.requestHeader[p] !== '') {
+                if (Object.prototype.hasOwnProperty.call(this.requestHeader, p) && this.requestHeader[p] !== '') {
                     this.xhr.setRequestHeader(p, this.requestHeader[p]);
                 }
             }
@@ -378,7 +385,7 @@ export class Request
         console.log(UriFactory.build(this.uri));
         console.log(this.xhr);
 
-        this.xhr.onreadystatechange = function()
+        this.xhr.onreadystatechange = function ()
         {
             switch (self.xhr.readyState) {
                 case 4:

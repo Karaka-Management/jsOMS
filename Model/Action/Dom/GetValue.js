@@ -9,22 +9,32 @@
  */
 export function domGetValue (action, callback, id)
 {
-    "use strict";
+    'use strict';
 
-    const e   = action.base === 'self' ? (action.selector === '' || typeof action.selector === 'undefined' ? [document.getElementById(id)] : document.getElementById(id).querySelectorAll(action.selector)) : document.querySelectorAll(action.selector);
+    const e = action.base === 'self'
+        ? (action.selector === '' || typeof action.selector === 'undefined'
+            ? [document.getElementById(id)]
+            : document.getElementById(id).querySelectorAll(action.selector))
+        : document.querySelectorAll(action.selector);
+
     let value = {};
 
     for (const i in e) {
         /** global: HTMLElement */
-        if (!e.hasOwnProperty(i) || !(e[i] instanceof HTMLElement)) {
+        if (!Object.prototype.hasOwnProperty.call(e, i) || !(e[i] instanceof HTMLElement)) {
             continue;
         }
 
-        let eId = (typeof e[i].getAttribute('name') !== 'undefined' && e[i].getAttribute('name') !== '' && e[i].getAttribute('name') !== null) ? e[i].getAttribute('name') : e[i].getAttribute('id');
+        const eId = (typeof e[i].getAttribute('name') !== 'undefined' && e[i].getAttribute('name') !== '' && e[i].getAttribute('name') !== null)
+            ? e[i].getAttribute('name')
+            : e[i].getAttribute('id');
 
-        if (e[i].tagName === 'INPUT' || e[i].tagName === 'SELECTS' || e[i].tagName === 'BUTTON') {
+        if (e[i].tagName.toLowerCase() === 'input'
+            || e[i].tagName.toLowerCase() === 'selects'
+            || e[i].tagName.toLowerCase() === 'button'
+        ) {
             value[eId] = e[i].getAttribute('value');
-        } else if (e[i].tagName === 'FORM') {
+        } else if (e[i].tagName.toLowerCase() === 'form') {
             value = window.omsApp.uiManager.getFormManager().get(eId).getData();
             break;
         } else {

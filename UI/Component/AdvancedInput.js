@@ -1,4 +1,5 @@
 import { Request } from '../../Message/Request/Request.js';
+import { EventManager } from '../../Event/EventManager.js';
 
 /**
  * Advanced input class.
@@ -13,14 +14,20 @@ export class AdvancedInput
     /**
      * @constructor
      *
-     * @param {Object} e Element to bind
+     * @param {Element}      e            Element to bind
+     * @param {EventManager} eventManager Event manager
+     * @param {Object}       observer     Observer
      *
      * @since 1.0.0
      */
     constructor (e, eventManager, observer)
     {
-        this.id              = e.id;
-        this.inputComponent  = e;
+        /** @type {string} id */
+        this.id = e.id;
+
+        /** @type {Element} e */
+        this.inputComponent = e;
+
         this.inputField      = this.inputComponent.getElementsByClassName('input')[0];
         this.dropdownElement = document.getElementById(this.id + '-popup');
         this.tagElement      = document.getElementById(this.id + '-tags');
@@ -31,23 +38,23 @@ export class AdvancedInput
         this.src             = this.inputField.getAttribute('data-src');
 
         const self = this;
-        this.inputField.addEventListener('focusout', function(e) {
+        this.inputField.addEventListener('focusout', function (e) {
             /**
              * @todo Karaka/Modules#63
              *  If you click anything outside of the input element the dropdown list closes.
              *  This is also true if you click something inside of the dropdown list e.g. sort/filter etc.
              *  This might be fixable by changing the focus from the input element to the dropdown element and keep the dropdown element visible if it has focus.
              */
-            if (e.relatedTarget === null ||
-                e.relatedTarget.parentElement === null ||
-                e.relatedTarget.parentElement.parentElement === null ||
-                !jsOMS.hasClass(e.relatedTarget.parentElement.parentElement.parentElement, 'popup')
+            if (e.relatedTarget === null
+                || e.relatedTarget.parentElement === null
+                || e.relatedTarget.parentElement.parentElement === null
+                || !jsOMS.hasClass(e.relatedTarget.parentElement.parentElement.parentElement, 'popup')
             ) {
                 jsOMS.removeClass(self.dropdownElement, 'active');
             }
         });
 
-        this.inputField.addEventListener('keydown', function(e) {
+        this.inputField.addEventListener('keydown', function (e) {
             if (e.keyCode === 13 || e.keyCode === 40) {
                 jsOMS.preventAll(e);
             }
@@ -58,15 +65,15 @@ export class AdvancedInput
                 jsOMS.preventAll(e);
             } else {
                 // handle change delay
-                self.inputTimeDelay({id: self.id, delay: 300}, self.changeCallback, self, e);
+                self.inputTimeDelay({ id: self.id, delay: 300 }, self.changeCallback, self, e);
             }
         });
 
-        this.inputField.addEventListener('focusin', function(e) {
+        this.inputField.addEventListener('focusin', function (e) {
             jsOMS.addClass(self.dropdownElement, 'active');
         });
 
-        this.dropdownElement.addEventListener('keydown', function(e) {
+        this.dropdownElement.addEventListener('keydown', function (e) {
             jsOMS.preventAll(e);
 
             /**
@@ -99,12 +106,12 @@ export class AdvancedInput
             }
         });
 
-        this.dropdownElement.addEventListener('focusout', function(e) {
+        this.dropdownElement.addEventListener('focusout', function (e) {
             self.clearDataListSelection(self);
             jsOMS.removeClass(self.dropdownElement, 'active');
         });
 
-        this.dropdownElement.addEventListener('click', function(e) {
+        this.dropdownElement.addEventListener('click', function (e) {
             if (document.activeElement.tagName.toLowerCase() !== 'tr') {
                 return;
             }
@@ -115,7 +122,7 @@ export class AdvancedInput
         });
 
         observer.observe(this.tagElement, { childList: true, attributes: false, subtree: false });
-        eventManager.attach(this.id + '-tags-childList', function(data) {
+        eventManager.attach(this.id + '-tags-childList', function (data) {
             const removes       = data.target.querySelectorAll('.fa-times');
             const removesLength = removes === null ? 0 : removes.length;
 
@@ -123,7 +130,7 @@ export class AdvancedInput
                 return;
             }
 
-            removes[removesLength - 1].addEventListener('click', function(e) {
+            removes[removesLength - 1].addEventListener('click', function (e) {
                 if (e.target.parentNode.parentNode === null) {
                     return;
                 }
@@ -131,7 +138,6 @@ export class AdvancedInput
                 e.target.parentNode.parentNode.removeChild(e.target.parentNode);
             });
         });
-
     };
 
     /**
@@ -139,14 +145,14 @@ export class AdvancedInput
      *
      * This method adds remote results to the dropdown list for selecting
      *
-     * @param {Object} self This reference
-     * @param {Object} data Response data
+     * @param {AdvancedInput} self This reference
+     * @param {Object}        data Response data
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    remoteCallback(self, data)
+    remoteCallback (self, data)
     {
         console.log(data);
         data             = JSON.parse(data.response)[0];
@@ -189,7 +195,7 @@ export class AdvancedInput
                 newRow.firstElementChild.setAttribute('data-data', JSON.stringify(data[i]));
 
                 self.dataListBody.appendChild(newRow);
-                self.dataListBody.lastElementChild.addEventListener('focusout', function(e) {
+                self.dataListBody.lastElementChild.addEventListener('focusout', function (e) {
                     if (e.relatedTarget === null) {
                         return;
                     }
@@ -209,13 +215,13 @@ export class AdvancedInput
     /**
      * Callback for input field content change
      *
-     * @param {Object} self This reference
+     * @param {AdvancedInput} self This reference
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    changeCallback(self)
+    changeCallback (self)
     {
         // if remote data
         if (typeof self.src !== 'undefined' && self.src !== '') {
@@ -228,13 +234,13 @@ export class AdvancedInput
     /**
      * Select element in dropdown (only mark it as selected)
      *
-     * @param {Object} e Element to select in dropdown
+     * @param {Element} e Element to select in dropdown
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    selectOption(e)
+    selectOption (e)
     {
         e.focus();
 
@@ -249,19 +255,18 @@ export class AdvancedInput
     /**
      * Clear all selected/marked options in dropdown
      *
-     * @param {Object} self This reference
+     * @param {AdvancedInput} self This reference
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    clearDataListSelection(self)
+    clearDataListSelection (self)
     {
-        const list = self.dataListBody.getElementsByTagName('tr'),
-            length = list.length;
+        const list   = self.dataListBody.getElementsByTagName('tr');
+        const length = list.length;
 
         for (let i = 0; i < length; ++i) {
-
             /**
              * @todo Karaka/jsOMS#70
              *  Implement external styles for selections instead of inline css
@@ -276,14 +281,14 @@ export class AdvancedInput
      *
      * This can add the selected dropdown elements to a table, badge list etc. depending on the template structure.
      *
-     * @param {Object}  self This reference
-     * @param {Element} e    Element
+     * @param {AdvancedInput}  self This reference
+     * @param {Element}        e    Element
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    addToResultList(self, e) {
+    addToResultList (self, e) {
         const data = JSON.parse(e.getAttribute('data-data'));
 
         if (self.inputField.getAttribute('data-autocomplete') === 'true') {
@@ -350,7 +355,7 @@ export class AdvancedInput
 
             // allow limit
             if (self.tagElement.childElementCount >= self.tagElement.getAttribute('data-limit')
-                && self.tagElement.getAttribute('data-limit') != 0
+                && self.tagElement.getAttribute('data-limit') !== '0'
             ) {
                 self.tagElement.removeChild(self.tagElement.firstElementChild);
             }
@@ -370,23 +375,23 @@ export class AdvancedInput
      *
      * After waiting for a delay a callback can be triggered.
      *
-     * @param {Object}   action   Action type
-     * @param {function} callback Callback to be triggered
-     * @param {Object}   self     This reference (passed to callback)
-     * @param {Object}   data     Data (passed to callback)
+     * @param {Object}        action   Action type
+     * @param {function}      callback Callback to be triggered
+     * @param {AdvancedInput} self     This reference (passed to callback)
+     * @param {Object}        data     Data (passed to callback)
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    inputTimeDelay(action, callback, self, data)
+    inputTimeDelay (action, callback, self, data)
     {
         if (AdvancedInput.timerDelay[action.id]) {
             clearTimeout(AdvancedInput.timerDelay[action.id]);
-            delete AdvancedInput.timerDelay[action.id]
+            delete AdvancedInput.timerDelay[action.id];
         }
 
-        AdvancedInput.timerDelay[action.id] = setTimeout(function() {
+        AdvancedInput.timerDelay[action.id] = setTimeout(function () {
             delete AdvancedInput.timerDelay[action.id];
             callback(self, data);
         }, action.delay);

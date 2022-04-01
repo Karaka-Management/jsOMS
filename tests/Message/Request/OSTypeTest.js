@@ -2,7 +2,7 @@ import { OSType } from '../Message/Request/OSType.js';
 
 describe('OSTypeTest', function ()
 {
-    "use strict";
+    'use strict';
 
     describe('testEnum', function ()
     {

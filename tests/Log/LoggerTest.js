@@ -2,7 +2,7 @@ import { Logger } from '../../Log/Logger.js';
 
 describe('LoggerTest', function ()
 {
-    "use strict";
+    'use strict';
 
     describe('testLocalLogging', function ()
     {

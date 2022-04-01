@@ -1,6 +1,6 @@
 describe('ResponseTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

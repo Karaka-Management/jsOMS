@@ -1,6 +1,6 @@
 describe('RouteTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

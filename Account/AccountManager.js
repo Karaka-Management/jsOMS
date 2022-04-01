@@ -1,3 +1,5 @@
+import { Account } from './Account.js';
+
 /**
  * Account Manager.
  *
@@ -15,13 +17,14 @@ export class AccountManager
      */
     constructor ()
     {
+        /** @type {Account[]} accounts Accounts */
         this.accounts = [];
     };
 
     /**
      * Add account.
      *
-     * @param {Object} account Account
+     * @param {Account} account Account
      *
      * @return {void}
      *
@@ -35,9 +38,9 @@ export class AccountManager
     /**
      * Remove account.
      *
-     * @param {int} id Account id
+     * @param {number} id Account id
      *
-     * @return {void}
+     * @return {boolean}
      *
      * @since 1.0.0
      */
@@ -55,9 +58,9 @@ export class AccountManager
     /**
      * Get account by id.
      *
-     * @param {int} id Account id
+     * @param {number} id Account id
      *
-     * @return {null|Object}
+     * @return {null|Account}
      *
      * @since 1.0.0
      */

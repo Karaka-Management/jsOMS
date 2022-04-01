@@ -190,7 +190,7 @@
             }
         }
         return ret;
-    }
+    };
 
     /**
      * Created by Tivie on 06-01-2015.
@@ -555,7 +555,7 @@
             }
         }
         return ret;
-    }
+    };
 
     /**
      * Validate extension
@@ -579,7 +579,7 @@
 
     if (!showdown.hasOwnProperty('helper')) {
         showdown.helper = {};
-    }
+    };
 
     /**
      * Check if var is string
@@ -644,7 +644,7 @@
             throw new Error('callback param is required');
         }
 
-        if (!showdown.helper.isFunction(callback)) {
+        if (!showdown.helper.isfunction (callback)) {
             throw new Error('callback param must be a function/closure');
         }
 
@@ -680,7 +680,7 @@
         'use strict';
         var charCodeToEscape = m1.charCodeAt(0);
         return '¨E' + charCodeToEscape + 'E';
-    }
+    };
 
     /**
      * Callback used to escape characters when passing through String.replace
@@ -826,7 +826,7 @@
     showdown.helper.replaceRecursiveRegExp = function (str, replacement, left, right, flags) {
         'use strict';
 
-        if (!showdown.helper.isFunction(replacement)) {
+        if (!showdown.helper.isfunction (replacement)) {
             var repStr = replacement;
             replacement = function () {
                 return repStr;
@@ -984,7 +984,7 @@
                 throw msg;
             }
         };
-    }
+    };
 
     /**
      * Common regexes.
@@ -2234,13 +2234,13 @@
                 format: ''
             };
 
-        _constructor();
+        _constructor ();
 
         /**
          * Converter constructor
          * @private
          */
-        function _constructor() {
+        function _constructor () {
             converterOptions = converterOptions || {};
 
             for (var gOpt in globalOptions) {

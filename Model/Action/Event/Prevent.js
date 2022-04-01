@@ -9,7 +9,7 @@
  */
 export function preventEvent (action, callback, id)
 {
-    "use strict";
+    'use strict';
 
     console.log('prevented');
 

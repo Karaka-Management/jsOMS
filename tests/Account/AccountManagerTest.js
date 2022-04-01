@@ -2,7 +2,7 @@ import { AccountManager } from '../Account/AccountManager.js';
 
 describe('AccountManagerTest', function ()
 {
-    "use strict";
+    'use strict';
 
     describe('testDefault', function ()
     {

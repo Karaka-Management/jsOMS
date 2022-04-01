@@ -9,14 +9,14 @@
 const timerActionDelay = {};
 export function timerAction (action, callback, data)
 {
-    "use strict";
+    'use strict';
 
     if (timerActionDelay[action.id]) {
         clearTimeout(timerActionDelay[action.id]);
-        delete timerActionDelay[action.id]
+        delete timerActionDelay[action.id];
     }
 
-    timerActionDelay[action.id] = setTimeout(function() {
+    timerActionDelay[action.id] = setTimeout(function () {
         delete timerActionDelay[action.id];
         callback(data);
     }, action.delay);

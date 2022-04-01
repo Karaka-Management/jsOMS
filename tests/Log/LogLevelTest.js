@@ -2,7 +2,7 @@ import { LogLevel } from '../../Log/LogLevel.js';
 
 describe('LogLevelTest', function ()
 {
-    "use strict";
+    'use strict';
 
     describe('testEnum', function ()
     {

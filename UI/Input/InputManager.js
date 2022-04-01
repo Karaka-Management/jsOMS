@@ -19,7 +19,7 @@ export class InputManager
      *
      * @since 1.0.0
      */
-    constructor(app)
+    constructor (app)
     {
         this.keyboardManager = new KeyboardManager();
         this.mouseManager    = new MouseManager();

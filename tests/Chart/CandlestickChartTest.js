@@ -1,6 +1,6 @@
 describe('CandlestickChartTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

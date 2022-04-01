@@ -1,6 +1,6 @@
 describe('InputTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

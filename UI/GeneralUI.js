@@ -21,23 +21,25 @@ export class GeneralUI
      */
     constructor (app)
     {
+        /** @type {null|IntersectionObserver} visObs */
         this.visObs = null;
-        this.app    = app;
+
+        this.app = app;
     };
 
     /**
      * Bind button.
      *
-     * @param {string} [id] Button id (optional)
+     * @param {null|string} [id] Button id (optional)
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    bind (id)
+    bind (id = null)
     {
         let e = null;
-        if (typeof id !== 'undefined' && id !== null) {
+        if (id !== null) {
             e = document.getElementById(id);
         }
 
@@ -50,15 +52,18 @@ export class GeneralUI
     /**
      * Bind & rebind UI element.
      *
-     * @param {Object} [e] Element
+     * @param {null|Element} [e] Element
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    bindHref (e)
+    bindHref (e = null)
     {
-        e            = e !== null ? e.querySelectorAll('[data-href], [href]') : document.querySelectorAll('[data-href], [href]');
+        e = e !== null
+            ? e.querySelectorAll('[data-href], [href]')
+            : document.querySelectorAll('[data-href], [href]');
+
         const length = e.length;
 
         for (let i = 0; i < length; ++i) {
@@ -67,7 +72,7 @@ export class GeneralUI
             }
 
             // @todo: implement middle mouse click
-            e[i].addEventListener('click', function(event) {
+            e[i].addEventListener('click', function (event) {
                 if ((event.target.parentElement !== this
                         && event.target.parentElement.getElementsByTagName('input').length > 0)
                     || (event.target.getElementsByTagName('input').length > 0)
@@ -99,15 +104,18 @@ export class GeneralUI
     /**
      * Bind & rebind UI element.
      *
-     * @param {Object} [e] Element id
+     * @param {null|Element} [e] Element id
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    bindIframe (e)
+    bindIframe (e = null)
     {
-        e            = e !== null ? e : document.getElementsByTagName('iframe');
+        e = e !== null
+            ? e
+            : document.getElementsByTagName('iframe');
+
         const length = e.length;
 
         for (let i = 0; i < length; ++i) {
@@ -115,29 +123,32 @@ export class GeneralUI
                 e[i].height = e[i].contentWindow.document.body.scrollHeight + 25;
             }
 
-            e[i].addEventListener('load', function() {
+            e[i].addEventListener('load', function () {
                 this.height = this.contentWindow.document.body.scrollHeight + 25;
             });
         }
-    }
+    };
 
     /**
      * Bind & rebind UI element.
      *
-     * @param {Object} [e] Element id
+     * @param {null|Element} [e] Element id
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    bindLazyLoad (e)
+    bindLazyLoad (e = null)
     {
-        e            = e !== null ? e.querySelectorAll('[data-lazyload]') : document.querySelectorAll('[data-lazyload]');
+        e = e !== null
+            ? e.querySelectorAll('[data-lazyload]')
+            : document.querySelectorAll('[data-lazyload]');
+
         const length = e.length;
 
         /** global: IntersectionObserver */
         if (!this.visObs && window.IntersectionObserver) {
-            this.visObs = new IntersectionObserver(function(eles, obs) {
+            this.visObs = new IntersectionObserver(function (eles, obs) {
                 eles.forEach(ele => {
                     if (ele.intersectionRatio > 0) {
                         obs.unobserve(ele.target);
@@ -161,15 +172,18 @@ export class GeneralUI
     /**
      * Bind & rebind UI element.
      *
-     * @param {Object} [e] Element id
+     * @param {null|Element} [e] Element id
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    bindInput (e)
+    bindInput (e = null)
     {
-        e            = e !== null ? [e] : document.getElementsByClassName('advancedInput');
+        e = e !== null
+            ? [e]
+            : document.getElementsByClassName('advancedInput');
+
         const length = e.length;
 
         for (let i = 0; i < length; ++i) {
@@ -177,7 +191,17 @@ export class GeneralUI
         }
     };
 
-    static setValueOfElement(src, value)
+    /**
+     * Set the value for an elment
+     *
+     * @param {Element} src   Element to change the value for
+     * @param {any}     value Value to set
+     *
+     * @return {void}
+     *
+     * @since 1.0.0
+     */
+    static setValueOfElement (src, value)
     {
         if (src.hasAttribute('data-value')) {
             src.setAttribute('data-value', value);
@@ -196,7 +220,7 @@ export class GeneralUI
 
                 src.innerHTML = jsOMS.htmlspecialchars_encode(value);
                 break;
-            case 'select':
+            case 'select': {
                 const optionLength = src.options.length;
                 for (let i = 0; i < optionLength; ++i) {
                     if (src.options[i].value === value) {
@@ -207,29 +231,38 @@ export class GeneralUI
                 }
 
                 break;
+            }
             case 'input':
                 if (src.type === 'radio') {
                     src.checked = false;
                     if (src.value === value) {
                         src.checked = true;
                     }
-
-                    break;
                 } else if (src.type === 'checkbox') {
                     src.checked  = false;
                     const values = value.split(',');
                     if (values.includes(src.value)) {
                         src.checked = true;
                     }
-
-                    break;
                 }
+
+                break;
             default:
                 src.value = jsOMS.htmlspecialchars_decode(value);
         }
     };
 
-    static setTextOfElement(src, value)
+    /**
+     * Set the text for an elment
+     *
+     * @param {Element} src   Element to change the text for
+     * @param {string}  value Text to set
+     *
+     * @return {void}
+     *
+     * @since 1.0.0
+     */
+    static setTextOfElement (src, value)
     {
         switch (src.tagName.toLowerCase()) {
             case 'select':
@@ -252,7 +285,16 @@ export class GeneralUI
         }
     };
 
-    static getValueFromDataSource(src)
+    /**
+     * Get value from element
+     *
+     * @param {Element} src Element to get the value from
+     *
+     * @return {any}
+     *
+     * @since 1.0.0
+     */
+    static getValueFromDataSource (src)
     {
         if (src.getAttribute('data-value') !== null) {
             return src.getAttribute('data-value');
@@ -268,11 +310,34 @@ export class GeneralUI
             case 'h1':
                 return src.innerText.trim(' ');
             default:
+                if (src.getAttribute('type') === 'radio') {
+                    const checked = document.querySelector('input[type=radio][name="' + src.name + '"]:checked');
+
+                    if (checked === null) {
+                        return '';
+                    }
+
+                    src = checked;
+                } else if (src.getAttribute('type') === 'checkbox') {
+                    if (!src.checked) {
+                        return '';
+                    }
+                }
+
                 return src.value;
         }
     };
 
-    static getTextFromDataSource(src)
+    /**
+     * Get text from element
+     *
+     * @param {Element} src Element to get the text from
+     *
+     * @return {string}
+     *
+     * @since 1.0.0
+     */
+    static getTextFromDataSource (src)
     {
         switch (src.tagName.toLowerCase()) {
             case 'td':
@@ -286,9 +351,23 @@ export class GeneralUI
             case 'select':
                 return src.options[src.selectedIndex].text;
             case 'input':
-                if (src.getAttribute('type') === 'checkbox' || src.getAttribute('type') === 'radio') {
+                if (src.getAttribute('type') === 'radio') {
+                    const checked = document.querySelector('input[type=radio][name="' + src.name + '"]:checked');
+
+                    if (checked === null) {
+                        return '';
+                    }
+
+                    return document.querySelector('label[for="' + checked.id + '"]').innerText.trim(' ');
+                } else if (src.getAttribute('type') === 'checkbox') {
+                    if (!src.checked) {
+                        return '';
+                    }
+
                     return document.querySelector('label[for="' + src.id + '"]').innerText.trim(' ');
                 }
+
+                return src.value;
             default:
                 return src.value;
         }

@@ -2,7 +2,7 @@ import { NotificationManager } from '../Message/Notification/NotificationManager
 
 describe('NotificationManagerTest', function ()
 {
-    "use strict";
+    'use strict';
 
     describe('testDefault', function ()
     {

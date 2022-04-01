@@ -2,7 +2,7 @@ import { NotificationLevel } from '../Message/Notification/NotificationLevel.js'
 
 describe('NotificationLevelTest', function ()
 {
-    "use strict";
+    'use strict';
 
     describe('testEnum', function ()
     {

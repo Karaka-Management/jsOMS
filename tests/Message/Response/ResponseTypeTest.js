@@ -2,7 +2,7 @@ import { ResponseType } from '../Message/Response/ResponseType.js';
 
 describe('ResponseTypeTest', function ()
 {
-    "use strict";
+    'use strict';
 
     describe('testEnum', function ()
     {

@@ -13,33 +13,34 @@ export class Response
     /**
      * @constructor
      *
-     * @param {mixed} data Response data
+     * @param {Object} data Response data
      *
      * @since 1.0.0
      */
     constructor (data)
     {
+        /** @type {Object} responses */
         this.responses = data;
     };
 
     /**
      * Get response by id.
      *
-     * @param {string} id Response id
+     * @param {null|string} [id] Response id
      *
-     * @return {mixed}
+     * @return {any}
      *
      * @since 1.0.0
      */
-    get (id)
+    get (id = null)
     {
-        return typeof id === 'undefined' ? this.responses : this.responses[id];
+        return id === null ? this.responses : this.responses[id];
     };
 
     /**
      * Count the amount of responses.
      *
-     * @return {int}
+     * @return {number}
      *
      * @since 1.0.0
      */

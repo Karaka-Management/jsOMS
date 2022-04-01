@@ -8,7 +8,7 @@
  */
 export function tableClear (action, callback)
 {
-    "use strict";
+    'use strict';
 
     const e = document.getElementById(action.id).getElementsByTagName('tbody')[0];
 

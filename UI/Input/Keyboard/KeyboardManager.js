@@ -22,9 +22,9 @@ export class KeyboardManager
     /**
      * Add input listener.
      *
-     * @param {string} element    Container id
-     * @param {Array} keys        Keyboard keys
-     * @param {callback} callback Callback
+     * @param {string}   element  Container id
+     * @param {Array}    keys     Keyboard keys
+     * @param {function} callback Callback
      *
      * @return {void}
      *
@@ -38,7 +38,7 @@ export class KeyboardManager
             this.bind(element);
         }
 
-        this.elements[element].push({keys: keys, callback: callback});
+        this.elements[element].push({ keys: keys, callback: callback });
     };
 
     /**
@@ -53,17 +53,17 @@ export class KeyboardManager
     bind (element)
     {
         const self     = this;
-        const elements = element === '' ? [document] : document.querySelectorAll(element),
-            length     = elements.length;
+        const elements = element === '' ? [document] : document.querySelectorAll(element);
+        const length   = elements.length;
 
         for (let i = 0; i < length; ++i) {
-            elements[i].addEventListener('keydown', function keyBind(event)
+            elements[i].addEventListener('keydown', function (event)
             {
                 self.down.push(event.keyCode);
                 self.run(element, event);
             });
 
-            elements[i].addEventListener('keyup', function keyBind(event)
+            elements[i].addEventListener('keyup', function (event)
             {
                 let index = self.down.indexOf(event.keyCode);
                 while (index > -1) {
@@ -78,7 +78,7 @@ export class KeyboardManager
      * Execute callback based on key presses.
      *
      * @param {string} element Container id
-     * @param {Object} event   Key event
+     * @param {Event}  event   Key event
      *
      * @return {void}
      *
@@ -89,12 +89,12 @@ export class KeyboardManager
     run (element, event)
     {
         if (typeof this.elements[element] === 'undefined') {
-            throw 'Unexpected elmenet!';
+            throw new Error('Unexpected elmenet!');
         }
 
-        const actions     = this.elements[element].concat(this.elements['']),
-            actionsLength = actions.length,
-            downKeyLength = this.down.length;
+        const actions       = this.elements[element].concat(this.elements['']);
+        const actionsLength = actions.length;
+        const downKeyLength = this.down.length;
 
         for (let i = 0; i < actionsLength; ++i) {
             const actionKeyLength = actions[i].keys.length;

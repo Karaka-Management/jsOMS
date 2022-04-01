@@ -1,6 +1,6 @@
 describe('ArrayUtilsTest', function ()
 {
-    "use strict";
+    'use strict';
 
     describe('testGetArray', function ()
     {

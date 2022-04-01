@@ -1,6 +1,6 @@
 describe('PositionEnumTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

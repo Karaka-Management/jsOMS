@@ -2,7 +2,7 @@ import { NotificationType } from '../Message/Notification/NotificationType.js';
 
 describe('NotificationTypeTest', function ()
 {
-    "use strict";
+    'use strict';
 
     describe('testEnum', function ()
     {

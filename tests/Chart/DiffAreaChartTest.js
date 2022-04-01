@@ -1,6 +1,6 @@
 describe('DiffAreaChartTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

@@ -1,6 +1,6 @@
 describe('AutoloaderTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

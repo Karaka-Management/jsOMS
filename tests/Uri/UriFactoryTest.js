@@ -2,7 +2,7 @@ import { UriFactory } from '../../Uri/UriFactory.js';
 
 describe('UriFactoryTest', function ()
 {
-    "use strict";
+    'use strict';
 
     describe('testDefault', function ()
     {

@@ -8,12 +8,12 @@
  */
 (function (jsOMS)
 {
-    "use strict";
+    'use strict';
 
     /** @namespace jsOMS.ThreeD.Loader.ObjLoader */
     jsOMS.Autoloader.defineNamespace('jsOMS.ThreeD.Loader.ObjLoader');
 
-    jsOMS.ThreeD.Loader.ObjLoader = function(manager) {
+    jsOMS.ThreeD.Loader.ObjLoader = function (manager) {
 		/** global: THREE */
         this.manager = (manager !== undefined) ? manager : THREE.DefaultLoadingManager;
         this.materials = null;
@@ -32,26 +32,26 @@
 	    };
     };
 
-    jsOMS.ThreeD.Loader.ObjLoader.prototype.setPath = function(path)
+    jsOMS.ThreeD.Loader.ObjLoader.prototype.setPath = function (path)
     {
         this.path = path;
     };
 
-    jsOMS.ThreeD.Loader.ObjLoader.prototype.setMaterials = function(materials)
+    jsOMS.ThreeD.Loader.ObjLoader.prototype.setMaterials = function (materials)
     {
         this.materials = materials;
     };
 
-    jsOMS.ThreeD.Loader.ObjLoader.prototype.load = function(uri, onLoad, onProgress, onError)
+    jsOMS.ThreeD.Loader.ObjLoader.prototype.load = function (uri, onLoad, onProgress, onError)
     {
         let self = this,
             loader = new THREE.FileLoader(this.manager);
 
         loader.setPath(this.path);
-        loader.load(uri, function(text) { onLoad(self.parse(text))}, onProgress, onError);
+        loader.load(uri, function (text) { onLoad(self.parse(text))}, onProgress, onError);
     };
 
-    jsOMS.ThreeD.Loader.ObjLoader.prototype.createParserState = function()
+    jsOMS.ThreeD.Loader.ObjLoader.prototype.createParserState = function ()
     {
         let state = {
             objects  : [],
@@ -84,7 +84,7 @@
 					},
 					materials : [],
 					smooth : true,
-					startMaterial : function(name, libraries) {
+					startMaterial : function (name, libraries) {
 						let previous = this._finalize(false);
 
 						if (previous && (previous.inherited || previous.groupCount <= 0)) {
@@ -101,7 +101,7 @@
 							groupCount : -1,
 							inherited  : false,
 
-							clone : function(index) {
+							clone : function (index) {
 								const cloned = {
 									index      : (typeof index === 'number' ? index : this.index),
 									name       : this.name,
@@ -122,7 +122,7 @@
 						return material;
 					},
 
-					currentMaterial : function() {
+					currentMaterial : function () {
 						if (this.materials.length > 0) {
 							return this.materials[this.materials.length - 1];
 						}
@@ -130,7 +130,7 @@
 						return undefined;
 					},
 
-					_finalize : function(end) {
+					_finalize : function (end) {
 						let lastMultiMaterial = this.currentMaterial();
 
 						if (lastMultiMaterial && lastMultiMaterial.groupEnd === -1) {
@@ -166,7 +166,7 @@
 
 				this.objects.push(this.object);
 			},
-			finalize : function() {
+			finalize : function () {
 				if (this.object && typeof this.object._finalize === 'function') {
 					this.object._finalize(true);
 				}
@@ -310,7 +310,7 @@
 		return state;
     };
 
-    jsOMS.ThreeD.Loader.ObjLoader.prototype.parse = function(text)
+    jsOMS.ThreeD.Loader.ObjLoader.prototype.parse = function (text)
     {
         let state = this.createParserState();
 

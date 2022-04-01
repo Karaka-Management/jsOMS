@@ -2,7 +2,7 @@ import { EventManager } from '../Event/EventManager.js';
 
 describe('EventManagerTest', function ()
 {
-    "use strict";
+    'use strict';
 
     describe('testDefault', function ()
     {
@@ -22,8 +22,8 @@ describe('EventManagerTest', function ()
         {
             let manager = new EventManager();
 
-            expect(manager.attach('group', function() { return true; }, false, false)).toBeTruthy();
-            expect(manager.attach('group', function() { return true; }, false, false)).toBeTruthy();
+            expect(manager.attach('group', function () { return true; }, false, false)).toBeTruthy();
+            expect(manager.attach('group', function () { return true; }, false, false)).toBeTruthy();
             expect(manager.count()).toBe(1);
         });
     });
@@ -34,7 +34,7 @@ describe('EventManagerTest', function ()
         {
             let manager = new EventManager();
 
-            expect(manager.attach('group', function() { return true; }, false, true)).toBeTruthy();
+            expect(manager.attach('group', function () { return true; }, false, true)).toBeTruthy();
             manager.addGroup('group', 'id1');
             manager.addGroup('group', 'id2');
 
@@ -51,7 +51,7 @@ describe('EventManagerTest', function ()
         {
             let manager = new EventManager();
 
-            expect(manager.attach('group', function() { return true; }, false, true)).toBeTruthy();
+            expect(manager.attach('group', function () { return true; }, false, true)).toBeTruthy();
             manager.addGroup('group', 'id1');
             manager.addGroup('group', 'id2');
 
@@ -68,8 +68,8 @@ describe('EventManagerTest', function ()
         {
             let manager = new EventManager();
 
-            expect(manager.attach('group1', function() { return true; }, true, false)).toBeTruthy();
-            expect(manager.attach('group2', function() { return true; }, true, false)).toBeTruthy();
+            expect(manager.attach('group1', function () { return true; }, true, false)).toBeTruthy();
+            expect(manager.attach('group2', function () { return true; }, true, false)).toBeTruthy();
             expect(manager.count()).toBe(2);
 
             manager.trigger('group1');

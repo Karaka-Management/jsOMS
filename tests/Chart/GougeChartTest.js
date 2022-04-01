@@ -1,6 +1,6 @@
 describe('GougeChartTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

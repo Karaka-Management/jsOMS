@@ -17,9 +17,12 @@ export class NotificationManager
      *
      * @since 1.0.0
      */
-    constructor()
+    constructor ()
     {
-        this.appNotifier     = new AppNotification();
+        /** @type {AppNotification} appNotifier */
+        this.appNotifier = new AppNotification();
+
+        /** @type {BrowserNotification} appNotifier */
         this.browserNotifier = new BrowserNotification();
     };
 
@@ -27,7 +30,7 @@ export class NotificationManager
      * Create notification.
      *
      * @param {Object} message Message object
-     * @param {int}    type    Notification type
+     * @param {number} type    Notification type
      *
      * @return {void}
      *
@@ -45,7 +48,7 @@ export class NotificationManager
     /**
      * Get the app notification manager.
      *
-     * @return {Object}
+     * @return {AppNotification}
      *
      * @since 1.0.0
      */
@@ -57,7 +60,7 @@ export class NotificationManager
     /**
      * Get the browser notification manager.
      *
-     * @return {Object}
+     * @return {BrowserNotification}
      *
      * @since 1.0.0
      */

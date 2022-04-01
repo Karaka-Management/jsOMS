@@ -1,6 +1,6 @@
 describe('Sha1Test', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

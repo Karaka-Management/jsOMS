@@ -14,6 +14,8 @@ export class Tab
     /**
      * @constructor
      *
+     * @param {Object} app Application
+     *
      * @since 1.0.0
      */
     constructor (app)
@@ -24,15 +26,15 @@ export class Tab
     /**
      * Bind & rebind UI elements.
      *
-     * @param {string} [id] Element id
+     * @param {null|string} [id] Element id
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    bind (id)
+    bind (id = null)
     {
-        if (typeof id !== 'undefined') {
+        if (id !== null) {
             const e = document.getElementById(id);
 
             if (e) {
@@ -51,7 +53,7 @@ export class Tab
     /**
      * Bind & rebind UI element.
      *
-     * @param {Object} e Element
+     * @param {Element} e Element
      *
      * @return {void}
      *
@@ -59,8 +61,8 @@ export class Tab
      */
     bindElement (e)
     {
-        const nodes = e.querySelectorAll('.tab-links li'),
-            length  = nodes.length;
+        const nodes  = e.querySelectorAll('.tab-links li');
+        const length = nodes.length;
 
         for (let i = 0; i < length; ++i) {
             nodes[i].addEventListener('click', function (evt)
@@ -71,8 +73,8 @@ export class Tab
                 /* Remove selected tab */
                 const oldActive = this.parentNode.getElementsByClassName('active');
                 if (oldActive.length > 0) {
-                    let fragments = fragmentString.split('&');
-                    const index   = fragments.indexOf(oldActive[0].getElementsByTagName('label')[0].getAttribute('for'));
+                    const fragments = fragmentString.split('&');
+                    const index     = fragments.indexOf(oldActive[0].getElementsByTagName('label')[0].getAttribute('for'));
 
                     if (index > -1) {
                         fragments.splice(index, 1);
@@ -84,13 +86,13 @@ export class Tab
                     jsOMS.removeClass(oldActive[0], 'active');
                 }
 
-                let fragments = fragmentString.split('&');
-                const index   = fragments.indexOf(this.getElementsByTagName('label')[0].getAttribute('for'));
+                const fragments = fragmentString.split('&');
+                const index     = fragments.indexOf(this.getElementsByTagName('label')[0].getAttribute('for'));
 
                 /**
                 if (index > -1) {
                     fragments.splice(index, 1);
-                }*/
+                } */
 
                 // find old active and remove it
                 fragmentString = fragments.join('&');
@@ -116,21 +118,21 @@ export class Tab
      *
      * This allows to link a specific open tab to a user or make it a bookmark
      *
-     * @param {Object} e Element
+     * @param {Element} e Element
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    activateTabUri(e)
+    activateTabUri (e)
     {
         const fragmentString = window.location.href.includes('#') ? HttpUri.parseUrl(window.location.href).fragment : '';
-        const fragments      = fragmentString.split('&'),
-            fragLength       = fragments.length;
+        const fragments      = fragmentString.split('&');
+        const fragLength     = fragments.length;
 
         if (fragLength > 0 && fragmentString !== '') {
             for (let i = 0; i < fragLength; ++i) {
-                let label = e.querySelectorAll('label[for="' + fragments[i] + '"]')[0];
+                const label = e.querySelectorAll('label[for="' + fragments[i] + '"]')[0];
                 if (typeof label !== 'undefined') {
                     label.click();
                 }

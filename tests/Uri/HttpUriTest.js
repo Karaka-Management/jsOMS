@@ -2,7 +2,7 @@ import { HttpUri } from '../../Uri/HttpUri.js';
 
 describe('HttpTest', function ()
 {
-    "use strict";
+    'use strict';
 
     describe('testParseUrl', function ()
     {

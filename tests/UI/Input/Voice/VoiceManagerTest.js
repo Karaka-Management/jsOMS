@@ -1,6 +1,6 @@
 describe('VoiceManagerTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

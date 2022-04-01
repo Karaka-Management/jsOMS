@@ -34,9 +34,11 @@ export class TableView
      * @since 1.0.0
      */
     constructor (id) {
+        /** @type {string} id */
         this.id = id;
 
-        this.bind();
+        /** @type {null|Element} table */
+        this.table = null;
     };
 
     /**
@@ -48,7 +50,7 @@ export class TableView
      */
     bind ()
     {
-        const e = document.getElementById(this.id);
+        this.table = document.getElementById(this.id);
     };
 
     /**
@@ -58,10 +60,10 @@ export class TableView
      *
      * @since 1.0.0
      */
-    serialize()
+    serialize ()
     {
         const table = document.getElementById(this.id);
-        let data    = {
+        const data  = {
             caption: null,
             header: [],
             rows: []
@@ -69,21 +71,21 @@ export class TableView
 
         data.caption = table.getElementsByTagName('caption')[0].innerText;
 
-        const header     = table.querySelectorAll('thead tr td, thead tr th'),
-            headerLength = header.length;
+        const header       = table.querySelectorAll('thead tr td, thead tr th');
+        const headerLength = header.length;
 
         for (let i = 0; i < headerLength; ++i) {
             data.header.push(header[i].innerText);
         }
 
-        const rows     = table.querySelectorAll('tbody tr'),
-            rowsLength = rows.length;
+        const rows       = table.querySelectorAll('tbody tr');
+        const rowsLength = rows.length;
 
         for (let i = 0; i < rowsLength; ++i) {
             data.rows[i] = [];
 
-            const columns    = rows[i].querySelectorAll('td, th'),
-                columnLength = columns.length;
+            const columns      = rows[i].querySelectorAll('td, th');
+            const columnLength = columns.length;
 
             for (let j = 0; j < columnLength; ++j) {
                 data.rows[i].push(columns[j].innerText);
@@ -91,7 +93,7 @@ export class TableView
         }
 
         return data;
-    }
+    };
 
     /**
      * Get table export button
@@ -100,7 +102,7 @@ export class TableView
      *
      * @since 1.0.0
      */
-    getExport()
+    getExport ()
     {
         return document.querySelectorAll('#' + this.id + ' .download')[0];
     };
@@ -112,7 +114,7 @@ export class TableView
      *
      * @since 1.0.0
      */
-    getSorting()
+    getSorting ()
     {
         return document.querySelectorAll(
             '#' + this.id + ' thead .sort-asc,'
@@ -127,7 +129,7 @@ export class TableView
      *
      * @since 1.0.0
      */
-    getFilter()
+    getFilter ()
     {
         return document.querySelectorAll(
             '#' + this.id + ' .filter'
@@ -141,7 +143,7 @@ export class TableView
      *
      * @since 1.0.0
      */
-    getHeader()
+    getHeader ()
     {
         return document.querySelector(
             '#' + this.id + ' thead'
@@ -155,7 +157,7 @@ export class TableView
      *
      * @since 1.0.0
      */
-    getCheckboxes()
+    getCheckboxes ()
     {
         return document.querySelectorAll(
             '#' + this.id + ' thead input[type=checkbox]'
@@ -169,7 +171,7 @@ export class TableView
      *
      * @since 1.0.0
      */
-    getSortableRows()
+    getSortableRows ()
     {
         return document.querySelectorAll(
             '#' + this.id + ' tbody .order-up,'

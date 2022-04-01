@@ -24,7 +24,7 @@ export class LocalStorage
      *
      * @since 1.0.0
      */
-    static available()
+    static available ()
     {
         try {
             return 'localStorage' in window && window.localStorage !== null;

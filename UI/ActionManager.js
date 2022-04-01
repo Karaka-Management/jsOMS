@@ -34,7 +34,7 @@ export class ActionManager
      *
      * @since 1.0.0
      */
-    constructor(app)
+    constructor (app)
     {
         this.logger  = Logger.getInstance();
         this.app     = app;
@@ -44,16 +44,16 @@ export class ActionManager
     /**
      * Bind element.
      *
-     * @param {string} [id] Element id (optional)
+     * @param {null|string} [id] Element id (optional)
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    bind(id)
+    bind (id = null)
     {
-        const uiElements = typeof id === 'undefined' ? document.querySelectorAll('[data-action]') : (typeof id.length !== 'undefined' ? id : [id]),
-            length       = uiElements.length;
+        const uiElements = id == null ? document.querySelectorAll('[data-action]') : (typeof id.length !== 'undefined' ? id : [id]);
+        const length     = uiElements.length;
 
         for (let i = 0; i < length; ++i) {
             if (uiElements[i] !== null && uiElements[i].hasAttribute('data-action')) {
@@ -79,21 +79,22 @@ export class ActionManager
             return;
         }
 
-        const listeners    = JSON.parse(e.getAttribute('data-action')),
-            listenerLength = listeners.length,
-            self           = this;
+        const listeners      = JSON.parse(e.getAttribute('data-action'));
+        const listenerLength = listeners.length;
+        const self           = this;
 
         // For every action an event is registered
         for (let i = 0; i < listenerLength; ++i) {
-            let c = [e], hasSelector = false;
+            let c           = [e];
+            let hasSelector = false;
 
             // the selector must be a child of e!!!
-            if (listeners[i].hasOwnProperty('selector')) {
+            if (Object.prototype.hasOwnProperty.call(listeners[i], 'selector')) {
                 c           = document.querySelectorAll(listeners[i].selector);
                 hasSelector = true;
             }
 
-            let childLength = c.length;
+            const childLength = c.length;
             for (let j = 0; j < childLength; ++j) {
                 this.bindListener(c[j].id, listeners[i]);
             }
@@ -108,7 +109,7 @@ export class ActionManager
             const observeConfig = { childList: false, attributes: true, subtree: false };
 
             if (hasSelector) {
-                this.app.eventManager.attach(e.id + '-childList', function(data) {
+                this.app.eventManager.attach(e.id + '-childList', function (data) {
                     const length = data.addedNodes.length;
 
                     for (let j = 0; j < length; ++j) {
@@ -124,7 +125,7 @@ export class ActionManager
                 observeConfig.subtree   = true;
             }
 
-            this.app.eventManager.attach(e.id + '-attributes', function(data) {});
+            this.app.eventManager.attach(e.id + '-attributes', function (data) {});
             this.app.uiManager.getDOMObserver().observe(e, observeConfig);
         }
     };
@@ -141,8 +142,8 @@ export class ActionManager
      */
     bindListener (id, listener, removable = false)
     {
-        const self       = this,
-            actionLength = listener.action.length;
+        const self         = this;
+        const actionLength = listener.action.length;
 
         for (let j = 1; j < actionLength; ++j) {
             if (typeof id === 'undefined' || typeof listener.key === 'undefined') {
@@ -187,7 +188,7 @@ export class ActionManager
     {
         const self = this;
 
-        if (!this.actions.hasOwnProperty(action.type)) {
+        if (!Object.prototype.hasOwnProperty.call(this.actions, action.type)) {
             this.logger.warning('Undefined action ' + action.type);
             return;
         }

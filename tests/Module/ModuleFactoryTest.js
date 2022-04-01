@@ -1,6 +1,6 @@
 describe('ModuleFactoryTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

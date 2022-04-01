@@ -15,8 +15,13 @@ import { AssetManager } from './Asset/AssetManager.js';
  */
 export const Autoloader = {};
 
-Autoloader.loaded      = [];
-Autoloader.namespaced  = [];
+/** @type {string[]} Autoloader.loaded */
+Autoloader.loaded = [];
+
+/** @type {string[]} Autoloader.namespaced */
+Autoloader.namespaced = [];
+
+/** @type {AssetManager} Autoloader.assetLoader */
 Autoloader.assetLoader = new AssetManager();
 
 /**
@@ -31,7 +36,7 @@ Autoloader.assetLoader = new AssetManager();
 Autoloader.defineNamespace = function (namespace)
 {
     if (Autoloader.namespaced.indexOf(namespace) === -1) {
-        let paths = namespace.split('.');
+        const paths = namespace.split('.');
         paths.splice(0, 1);
 
         const length = paths.length;
@@ -58,8 +63,8 @@ Autoloader.defineNamespace = function (namespace)
  */
 Autoloader.initPreloaded = function ()
 {
-    const scripts = document.getElementsByTagName('script'),
-        length    = !scripts ? 0 : scripts.length;
+    const scripts = document.getElementsByTagName('script');
+    const length  = !scripts ? 0 : scripts.length;
 
     for (let i = 0; i < length; ++i) {
         /** global: URL */

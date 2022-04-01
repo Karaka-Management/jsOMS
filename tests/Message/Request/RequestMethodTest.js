@@ -2,7 +2,7 @@ import { RequestMethod } from '../Message/Request/RequestMethod.js';
 
 describe('RequestMethodTest', function ()
 {
-    "use strict";
+    'use strict';
 
     describe('testEnum', function ()
     {

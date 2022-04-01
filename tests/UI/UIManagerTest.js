@@ -1,6 +1,6 @@
 describe('UIManagerTest', function ()
 {
-    "use strict";
+    'use strict';
 
     beforeEach(function ()
     {

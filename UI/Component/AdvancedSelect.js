@@ -24,7 +24,7 @@ export class AdvancedSelect
      *
      * @since 1.0.0
      */
-    constructor(e) {
+    constructor (e) {
         this.id              = e.id;
         this.selectComponent = e;
         this.selectField     = this.selectComponent.getElementsByClassName('input')[0];
@@ -44,10 +44,10 @@ export class AdvancedSelect
              *  This is also true if you click something inside of the dropdown list e.g. sort/filter etc.
              *  This might be fixable by changing the focus from the input element to the dropdown element and keep the dropdown element visible if it has focus.
              */
-            if (e.relatedTarget === null ||
-                e.relatedTarget.parentElement === null ||
-                e.relatedTarget.parentElement.parentElement === null ||
-                !jsOMS.hasClass(e.relatedTarget.parentElement.parentElement.parentElement, 'popup')
+            if (e.relatedTarget === null
+                || e.relatedTarget.parentElement === null
+                || e.relatedTarget.parentElement.parentElement === null
+                || !jsOMS.hasClass(e.relatedTarget.parentElement.parentElement.parentElement, 'popup')
             ) {
                 jsOMS.removeClass(self.dropdownElement, 'active');
             }
@@ -132,7 +132,7 @@ export class AdvancedSelect
      *
      * @since 1.0.0
      */
-    remoteCallback(self, data) {
+    remoteCallback (self, data) {
         console.log(data);
         data             = JSON.parse(data.response)[0];
         const dataLength = data.length;
@@ -197,7 +197,7 @@ export class AdvancedSelect
      *
      * @since 1.0.0
      */
-    changeCallback(self) {
+    changeCallback (self) {
         // if remote data
         if (typeof self.src !== 'undefined' && self.src !== '') {
             const request = new Request(self.src);
@@ -215,7 +215,7 @@ export class AdvancedSelect
      *
      * @since 1.0.0
      */
-    selectOption(e) {
+    selectOption (e) {
         e.focus();
         /**
              * @todo Karaka/jsOMS#70
@@ -234,9 +234,9 @@ export class AdvancedSelect
      *
      * @since 1.0.0
      */
-    clearDataListSelection(self) {
-        const list = self.dataListBody.getElementsByTagName('tr'),
-            length = list.length;
+    clearDataListSelection (self) {
+        const list   = self.dataListBody.getElementsByTagName('tr');
+        const length = list.length;
 
         for (let i = 0; i < length; ++i) {
             /**
@@ -259,7 +259,7 @@ export class AdvancedSelect
      *
      * @since 1.0.0
      */
-    addToResultList(self) {
+    addToResultList (self) {
         if (self.inputField.getAttribute('data-autocomplete') === 'true') {
             self.inputField.value = document.activeElement.querySelectorAll('[data-tpl-value="' + self.inputField.getAttribute('data-value') + '"]')[0].getAttribute('data-value');
         }
@@ -309,7 +309,7 @@ export class AdvancedSelect
 
             // allow limit
             if (self.tagElement.childElementCount >= self.tagElement.getAttribute('data-limit')
-                && self.tagElement.getAttribute('data-limit') != 0
+                && self.tagElement.getAttribute('data-limit') !== '0'
             ) {
                 self.tagElement.removeChild(self.tagElement.firstElementChild);
             }
@@ -338,10 +338,10 @@ export class AdvancedSelect
      *
      * @since 1.0.0
      */
-    inputTimeDelay(action, callback, self, data) {
+    inputTimeDelay (action, callback, self, data) {
         if (AdvancedSelect.timerDelay[action.id]) {
             clearTimeout(AdvancedSelect.timerDelay[action.id]);
-            delete AdvancedSelect.timerDelay[action.id]
+            delete AdvancedSelect.timerDelay[action.id];
         }
 
         AdvancedSelect.timerDelay[action.id] = setTimeout(function () {
