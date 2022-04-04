@@ -158,7 +158,9 @@ export class Form
                         || (container.tagName.toLowerCase() === 'form' && container.getAttribute('method') !== 'NONE'))
                 ) {
                     const deleteRequest = new Request(
-                        container.tagName.toLowerCase() !== 'form' ? container.getAttribute('data-method') : container.getAttribute('method'),
+                        container.tagName.toLowerCase() !== 'form'
+                            ? container.getAttribute('data-method')
+                            : container.getAttribute('method'),
                         RequestMethod.DELETE
                     );
                     deleteRequest.setSuccess(callback);
