@@ -109,14 +109,28 @@ export class ReadManager
  * @todo SpeechRecognition polyfill
  *  Remove the speech recognition wrapper once it is obsolete and supported by the major browsers.
  */
+/* eslint-disable */
 /** global: webkitSpeechRecognition */
 /** global: SpeechRecognition */
-var SpeechRecognition = typeof SpeechRecognition !== 'undefined' ? SpeechRecognition : typeof webkitSpeechRecognition !== 'undefined' ? webkitSpeechRecognition : null;
+var SpeechRecognition = typeof SpeechRecognition !== 'undefined'
+    ? SpeechRecognition
+    : typeof webkitSpeechRecognition !== 'undefined'
+        ? webkitSpeechRecognition
+        : null;
 
 /** global: webkitSpeechGrammarList */
 /** global: SpeechGrammarList */
-var SpeechGrammarList = typeof SpeechGrammarList !== 'undefined' ? SpeechGrammarList : typeof webkitSpeechGrammarList !== 'undefined' ? webkitSpeechGrammarList : null;
+var SpeechGrammarList = typeof SpeechGrammarList !== 'undefined'
+    ? SpeechGrammarList
+    : typeof webkitSpeechGrammarList !== 'undefined'
+        ? webkitSpeechGrammarList
+        : null;
 
 /** global: webkitSpeechRecognitionEvent */
 /** global: SpeechRecognitionEvent */
-var SpeechRecognitionEvent = typeof SpeechRecognitionEvent !== 'undefined' ? SpeechRecognitionEvent : typeof webkitSpeechRecognitionEvent !== 'undefined' ? webkitSpeechRecognitionEvent : null;
+var SpeechRecognitionEvent = typeof SpeechRecognitionEvent !== 'undefined'
+    ? SpeechRecognitionEvent
+    : typeof webkitSpeechRecognitionEvent !== 'undefined'
+        ? webkitSpeechRecognitionEvent
+        : null;
+/* eslint-enable */

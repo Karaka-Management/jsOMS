@@ -454,7 +454,7 @@ export class Form
                             if (text[i].getAttribute('data-tpl-text').startsWith('http')
                                 || text[i].getAttribute('data-tpl-text').startsWith('{')
                             ) {
-                                Form.populateRemoteUrls('text', text[i], path, remoteUrls)
+                                Form.populateRemoteUrls('text', text[i], path, remoteUrls);
                             } else {
                                 GeneralUI.setTextOfElement(matches[c], GeneralUI.getTextFromDataSource(text[i]));
                             }

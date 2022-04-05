@@ -31,7 +31,7 @@ export class NotificationMessage
         this.message = message;
 
         /** @type {boolean} vibrate */
-        this.vibrate  = vibrate;
+        this.vibrate = vibrate;
 
         /** @type {boolean} isSticky */
         this.isSticky = isSticky;
