@@ -17,18 +17,6 @@ import { UriFactory }          from '../../Uri/UriFactory.js';
  * @license   OMS License 1.0
  * @version   1.0.0
  * @since     1.0.0
- *
- * data-ui-content = what is the main parent
- * data-ui-element = what are the elements to replace
- *
- * @todo Karaka/jsOMS#60
- *  On change listener
- *  Allow to add a on change listener in a form. This should result in automatic submits after changing a form.
- *  Consider the following cases to submit the form:
- *      * on Enter (all except textarea)
- *      * on Change (by using a timer)
- *      * on Leave (all elements)
- *  The listener should be defined in the form definition once and in js be applied to all form elements.
  */
 export class Form
 {
@@ -145,22 +133,31 @@ export class Form
 
                 const remove   = self.forms[id].getRemove()[elementIndex];
                 const callback = function () {
-                    const parent = remove.closest(document.getElementById(id).getAttribute('data-ui-element'));
+                    /**
+                     * @var {Element} elementContainer Container which holds all the data for a specific element
+                     *                                 (e.g. table row (tr), div, ...)
+                     */
+                    const elementContainer = remove.closest(document.getElementById(id).getAttribute('data-ui-element'));
                     console.log(document.getElementById(id).getAttribute('data-ui-element'));
-                    parent.parentNode.removeChild(parent);
+                    elementContainer.parentNode.removeChild(elementContainer);
                 };
 
-                const container = document.getElementById(id);
+                /** @var {Element} formElement Form element */
+                const formElement = self.forms[id].getFormElement();
 
-                // container can be the table tr, form or just a div
-                if (container !== null
-                    && ((container.tagName.toLowerCase() !== 'form' && container.getAttribute('data-method') !== null)
-                        || (container.tagName.toLowerCase() === 'form' && container.getAttribute('method') !== 'NONE'))
+                // Perform the element deletion.
+                // If the form has a remote endpoint this is called in advance
+                if (formElement !== null
+                    && ((formElement.tagName.toLowerCase() !== 'form' && formElement.getAttribute('data-method') !== null)
+                        || (formElement.tagName.toLowerCase() === 'form' && formElement.getAttribute('method') !== 'NONE'))
                 ) {
                     const deleteRequest = new Request(
-                        container.tagName.toLowerCase() !== 'form'
-                            ? container.getAttribute('data-method')
-                            : container.getAttribute('method'),
+                        formElement.hasAttribute('data-method-delete')
+                            ? formElement.getAttribute('data-method-delete')
+                            : (formElement.tagName.toLowerCase() !== 'form'
+                                ? formElement.getAttribute('data-method')
+                                : formElement.getAttribute('method')
+                            ),
                         RequestMethod.DELETE
                     );
                     deleteRequest.setSuccess(callback);
@@ -171,130 +168,122 @@ export class Form
             } else if ((elementIndex = Array.from(self.forms[id].getAdd()).indexOf(event.target)) !== -1) {
                 // handle add
 
-                /* The form is the UI element the user can edit.
-                 * This will be added to the UI on click.
-                 * Since the add is inline no form exists which the user can use, hence it must be created
-                 */
+                if (!self.forms[id].isValid()) {
+                    return;
+                }
+
                 if (document.getElementById(id).getAttribute('data-add-form') !== null) {
-                    // handline inline add
+                    // handle inline add
+                    // Since the add is inline no form exists which the user can use, hence it must be created
 
+                    /** @var {HTMLElement} formElement */
                     const formElement = self.forms[id].getFormElement();
-                    const subMain     = formElement.getAttribute('data-add-content').charAt(0) === '#'
-                        ? document.querySelector(formElement.getAttribute('data-add-content'))
-                        : formElement.querySelector(formElement.getAttribute('data-add-content'));
 
-                    /**
-                     * @todo Karaka/jsOMS#76
-                     *  In the beginning there was a fixed amount of templates required (even if some were not used) for adding new dom elements to a lest, table etc.
-                     *  This no longer works especially for inline editing
-                     *  ```js
-                     *  const newEle = subMain.getElementsByTagName('template')[0].content.cloneNode(true);
-                     *  ```
-                     */
-                    const newEle = subMain.getElementsByTagName('template')[1].content.cloneNode(true);
-                    let eleId    = '';
+                    /** @var {string} uiContainerName Container which holds all elements (e.g. div, tbody) */
+                    const uiContainerName = formElement.getAttribute('data-add-content');
 
-                    do {
-                        eleId = 'f' + Math.random().toString(36).substring(7);
-                    } while (document.getElementById(eleId) !== null);
+                    /** @var {HTMLElement} uiContainer Container which holds all elements (e.g. div, tbody) */
+                    const uiContainer = uiContainerName.charAt(0) === '#'
+                        ? document.querySelector(uiContainerName)
+                        : formElement.querySelector(uiContainerName);
 
-                    newEle.firstElementChild.id                                 = eleId;
-                    newEle.firstElementChild.getElementsByTagName('form')[0].id = eleId + '-form';
+                    /** @var {HTMLElement} newElement New element to add  */
+                    const newElement = uiContainer.querySelector('.add-tpl').content.cloneNode(true);
 
-                    const fields = newEle.firstElementChild.querySelectorAll('[data-form="' + id + '"]');
-                    const length = fields.length;
+                    // set random id for element
+                    /** @var {string} eleId New element id */
+                    const eleId = Form.setRandomIdForTemplateElement(newElement);
 
-                    for (let i = 0; i < length; ++i) {
-                        fields[i].setAttribute('data-form', eleId + '-form');
+                    // If the new element has a form it should also receive a id
+                    if (newElement.firstElementChild.getElementsByTagName('form').length > 0) {
+                        newElement.firstElementChild.getElementsByTagName('form')[0].id = eleId + '-form';
                     }
 
-                    subMain.appendChild(newEle.firstElementChild);
+                    uiContainer.appendChild(newElement.firstElementChild);
 
                     /**
                      * @todo Karaka/jsOMS#82
                      *  The container element for inline adding isn't always tbody
                      */
                     self.app.uiManager.getFormManager().get(eleId + '-form').injectSubmit(function () {
-                        self.forms[id].getFormElement().getElementsByTagName('tbody')[0].removeChild(
+                        formElement.getElementsByTagName('tbody')[0].removeChild(
                             document.getElementById(eleId)
                         );
                     });
                 } else {
                     // handle external add
-                    if (!self.forms[id].isValid()) {
-                        return;
-                    }
 
-                    const formElement    = self.forms[id].getFormElement();
-                    const parents        = [];
-                    const selectors      = formElement.getAttribute('data-add-element').split(',');
-                    const selectorLength = selectors.length;
-                    const addTpl         = formElement.getAttribute('data-add-tpl').split(',');
+                    /** @var {HTMLElement} formElement External form */
+                    const formElement = self.forms[id].getFormElement();
 
-                    const subMain = formElement.getAttribute('data-add-content').charAt(0) === '#'
-                        ? document.querySelector(formElement.getAttribute('data-add-content'))
-                        : formElement.querySelector(formElement.getAttribute('data-add-content'));
+                    /** @var {string} uiContainerName Container which holds all elements (e.g. div, tbody) */
+                    const uiContainerName = formElement.getAttribute('data-add-content');
 
-                    let values   = [];
-                    let text     = [];
-                    const newEle = [];
+                    /** @var {HTMLElement} uiContainer Container which holds all elements (e.g. div, tbody) */
+                    const uiContainer = uiContainerName.charAt(0) === '#'
+                        ? document.querySelector(uiContainerName)
+                        : formElement.querySelector(uiContainerName);
 
-                    for (let i = 0; i < selectorLength; ++i) {
-                        // this handles selectors such as 'ancestor > child/or/sibling' and many more
-                        const selector = selectors[i].trim(' ').split(' ');
+                    /** @var {string[]} addTpl Templates to add to container (usually only one) */
+                    const addTpl       = formElement.getAttribute('data-add-tpl').split(',');
+                    const addTplLength = addTpl.length;
 
-                        let subSelector = '';
-                        if (selector.length !== 0) {
-                            selector.shift();
-                            subSelector = selector.join(' ').trim();
-                        }
+                    /** @var {string[]} values Values to add (values can be different from the displayed text) */
+                    let values = [];
 
-                        newEle.push(document.querySelector(addTpl[i]).content.cloneNode(true));
+                    /** @var {string[]} texts Text to add (values can be different from the displayed text) */
+                    let texts = [];
 
-                        const tplValue = newEle[i].querySelector('[data-tpl-value]').getAttribute('data-tpl-value');
-                        parents.push(
-                            tplValue.startsWith('http') || tplValue.startsWith('{')
-                                ? ( // data is only added from remote response after adding
-                                    selector.length === 0
-                                        ? newEle[i].firstElementChild
-                                        : newEle[i].firstElementChild.querySelector(subSelector)
-                                )
-                                : formElement // data comes from the form (even if the api returns something after adding). What if remote returns a DB id? how do we add it? is this a @todo ? probably yes, maybe first use local data and then if remote data available replace local data?
-                        );
+                    /**
+                     * @var {Element[]} newElements Array of added elements
+                     *                              (this is actually only one element/model/object but sometimes one
+                     *                              element might be split up into multiple templates)
+                     */
+                    const newElements = [];
+
+                    // iterate over all add templates and find the elements
+                    for (let i = 0; i < addTplLength; ++i) {
+                        // add template to elements which should be added to the DOM
+                        newElements.push(document.querySelector(addTpl[i]).content.cloneNode(true));
+
+                        /** @var {string} tplValue Where does the value come from for this template input element */
+                        const tplValue = newElements[i].querySelector('[data-tpl-value]').getAttribute('data-tpl-value');
+
+                        /** @var {Element} dataOriginElement Element where the value data comes from  */
+                        const dataOriginElement = tplValue.startsWith('http') || tplValue.startsWith('{')
+                            ? newElements[i].firstElementChild // data comes from remote source
+                            : formElement; // data comes from the form (even if the api returns something after adding). What if remote returns a DB id? how do we add it? is this a @todo ? probably yes, maybe first use local data and then if remote data available replace local data?
 
                         values = values.concat(
-                                parents[i].hasAttribute('data-tpl-value')
-                                    ? parents[i]
-                                    : Array.prototype.slice.call(parents[i].querySelectorAll('[data-tpl-value]'))
+                                dataOriginElement.hasAttribute('data-tpl-value')
+                                    ? dataOriginElement
+                                    : Array.prototype.slice.call(dataOriginElement.querySelectorAll('[data-tpl-value]'))
                             );
-                        text   = text.concat(
-                                parents[i].hasAttribute('data-tpl-text')
-                                    ? parents[i]
-                                    : Array.prototype.slice.call(parents[i].querySelectorAll('[data-tpl-text]'))
+                        texts  = texts.concat(
+                                dataOriginElement.hasAttribute('data-tpl-text')
+                                    ? dataOriginElement
+                                    : Array.prototype.slice.call(dataOriginElement.querySelectorAll('[data-tpl-text]'))
                             );
 
-                            Form.setRandomIdForTemplateElement(newEle[i]);
+                        // set random id for element
+                        Form.setRandomIdForTemplateElement(newElements[i]);
                     }
 
-                    // insert row values data into form
+                    /** @var {object} remoteUrls Texts and values which come from remote sources */
                     const remoteUrls = {};
-                    Form.insertDataIntoNewFormElement('value', newEle, values, remoteUrls);
 
-                    // insert row text data into form
-                    Form.insertDataIntoNewFormElement('text', newEle, text, remoteUrls);
+                    // insert values into form (populate values)
+                    Form.setDataInFormElement('value', newElements, values, remoteUrls);
 
-                    for (let i = 0; i < selectorLength; ++i) {
-                        // The data could be added to an external element which uses external forms for updates.
-                        // The buttons then belong to the external element and not the update form!
-                        const formId = document.querySelector('[data-update-form="' + id + '"]');
+                    // insert text data into form (populate text)
+                    Form.setDataInFormElement('text', newElements, texts, remoteUrls);
 
-                        // @todo: bind added element in general (e.g. self.app.uiManager.bind(newEle[i].firstElementChild));
-                        // Problem 1 is sometimes the bind functions expect an id, sometimes an element
-                        // Problem 2 is that sorting is handled in the Table.js which should be part of the form? because a new sorting should also get submitted to the backend!
-
-                        subMain.appendChild(newEle[i].firstElementChild);
+                    // add new elements to the DOM
+                    for (let i = 0; i < addTplLength; ++i) {
+                        uiContainer.appendChild(newElements[i].firstElementChild);
                     }
 
+                    // define remote response behavior
                     self.forms[id].setSuccess(function (response) {
                         if (response.get('status') !== 'undefined' && response.get('status') !== NotificationLevel.HIDDEN) {
                             self.app.notifyManager.send(
@@ -306,182 +295,125 @@ export class Form
 
                         UriFactory.setQuery('$id', response.get('response').id);
 
+                        // fill elements with remote data after submit (if the template expects data from a remote source)
+                        // this is usually the case for element ids, which can only be generated by the backend
                         Form.setDataFromRemoteUrls(remoteUrls);
                     });
 
+                    // reset the form after adding an element
                     self.forms[id].resetValues();
                 }
             } else if ((elementIndex = Array.from(self.forms[id].getSave()).indexOf(event.target)) !== -1) {
-                const mainForm = document.querySelector('[data-update-form="' + id  + '"');
-                if (mainForm !== null) {
-                    id = mainForm.getAttribute('id');
-                }
-
                 // handle save button
-                const formElement    = self.forms[id].getFormElement();
-                const parentsTpl     = {};
-                const parentsContent = {};
-                const selectors      = formElement.getAttribute('data-update-element').split(',');
-                const selectorLength = selectors.length;
 
-                let values = [];
-                let text   = [];
+                const mainForm = document.querySelector('[data-update-form="' + id  + '"');
+                if (mainForm === null) {
+                    // handle inline save
 
-                // find all values, texts and parents for every selector
-                for (let i = 0; i < selectorLength; ++i) {
-                    selectors[i] = selectors[i].trim();
-                    // this handles selectors such as 'ancestor > child/or/sibling' and many more
-                    let selector    = !selectors[i].startsWith('#') ? selectors[i].split(' ') : [selectors[i]];
-                    const selLength = selector.length;
-                    let closest     = selector[0].trim();
+                    if (!self.forms[id].isValid()) {
+                        return;
+                    }
+                } else {
+                    // handle external save
 
-                    // template elements (= elements which just got added due to the update/edit button, here the new data is stored)
-                    // @todo i don't really remember how this works and why this was needed. Try to understand it and write a comment afterwards
-                    let subSelector = '';
-                    if (selLength > 1) {
-                        selector.shift();
-                        subSelector = selector.join(' ').trim() + '[data-marker=tpl]';
-                    } else {
-                        closest += '[data-marker=tpl]';
+                    const externalFormId = id;
+                    id                   = mainForm.getAttribute('id');
+
+                    if (!self.forms[id].isValid()) {
+                        return;
                     }
 
-                    let parentTplName;
-                    if (selLength === 1 && selector[0].startsWith('#')) {
-                        parentTplName = selector[0] + '[data-marker=tpl]';
-                    } else {
-                        parentTplName = selLength === 1 ? closest : closest + subSelector;
+                    /** @var {HTMLElement} formElement */
+                    const formElement = self.forms[id].getFormElement();
+
+                    /** @var {HTMLElement} formElement External form element */
+                    const externalFormElement = self.forms[externalFormId].getFormElement();
+
+                    /**
+                     * @var {string[]} updateElementNames Names/selectors of the containers which hold the data of a single element
+                     *                                    (this is not the container which holds all elements. Most of the time this is just a single element (e.g. tr))
+                     */
+                    const updateElementNames  = formElement.getAttribute('data-update-element').split(',');
+                    const updateElementLength = updateElementNames.length;
+
+                    /**
+                     * @var {Element[]} updateElements Array of update elements
+                     *                                 (this is actually only one element/model/object but sometimes one
+                     *                                 element might be split up into multiple containers)
+                     */
+                    const updateElements = [];
+
+                    /** @var {string[]} values New values */
+                    let values = [];
+
+                    /** @var {string[]} texts New texts */
+                    let texts = [];
+
+                    // iterate all element containers (very often only one element container) and find the elements
+                    for (let i = 0; i < updateElementLength; ++i) {
+                        updateElementNames[i] = updateElementNames[i].trim();
+
+                        // get the elment to update
+                        updateElements.push(
+                            formElement.querySelector(updateElementNames[i] + '[data-id="' + externalFormElement.getAttribute('data-id') + '"]')
+                        );
+
+                        /** @var {string} updateValue Where does the value come from for this template input element */
+                        const updateValue = updateElements[i].querySelector('[data-tpl-value]').getAttribute('data-tpl-value');
+
+                        /** @var {Element} dataOriginElement Element where the value data comes from  */
+                        const dataOriginElement = updateValue.startsWith('http') || updateValue.startsWith('{')
+                            ? updateElements[i].firstElementChild // data comes from remote source
+                            : externalFormElement; // data comes from the form (even if the api returns something after adding). What if remote returns a DB id? how do we add it? is this a @todo ? probably yes, maybe first use local data and then if remote data available replace local data?
+
+                        values = values.concat(
+                            dataOriginElement.hasAttribute('data-tpl-value')
+                                ? dataOriginElement
+                                : Array.prototype.slice.call(dataOriginElement.querySelectorAll('[data-tpl-value]'))
+                            );
+                        texts  = texts.concat(
+                                dataOriginElement.hasAttribute('data-tpl-text')
+                                    ? dataOriginElement
+                                    : Array.prototype.slice.call(dataOriginElement.querySelectorAll('[data-tpl-text]'))
+                            );
                     }
 
-                    if (!Object.prototype.hasOwnProperty.call(parentsTpl, parentTplName)) {
-                        if (selLength === 1 && selector[0].startsWith('#')) {
-                            parentsTpl[parentTplName] = document.querySelector(selector[0]).parentNode;
-                        } else {
-                            parentsTpl[parentTplName] = selLength === 1
-                            ? this.closest(closest)
-                            : this.closest(closest).querySelector(subSelector);
-                            /* @todo: parentNode because of media edit. maybe I need a data-ui-parent element? */
-                        }
-                    }
+                    /** @var {object} remoteUrls Texts and values which come from remote sources */
+                    const remoteUrls = {};
 
-                    // content elements
-                    selector    = !selectors[i].startsWith('#') ? selectors[i].split(' ') : [selectors[i]];
-                    closest     = selector[0].trim();
-                    subSelector = '';
-                    if (selLength > 1) {
-                        selector.shift();
-                        subSelector = selector.join(' ').trim() + ':not([data-marker=tpl])';
-                    } else {
-                        closest += ':not([data-marker=tpl])';
-                    }
+                    // update values in form (overwrite values)
+                    Form.setDataInFormElement('value', updateElements, values, remoteUrls);
 
-                    let parentContentName;
-                    if (selLength === 1 && selector[0].startsWith('#')) {
-                        parentContentName = selector[0] + ':not([data-marker=tpl])';
-                    } else {
-                        parentContentName = selLength === 1 ? closest : closest + subSelector;
-                    }
+                    // update text data in form (overwrite text)
+                    Form.setDataInFormElement('text', updateElements, texts, remoteUrls);
 
-                    if (!Object.prototype.hasOwnProperty.call(parentsContent, parentContentName)) {
-                        if (selLength === 1 && selector[0].startsWith('#')) {
-                            parentsContent[parentContentName] = document.querySelector(selector[0]).parentNode;
-                        } else {
-                            parentsContent[parentContentName] = selLength === 1
-                            ? this.closest(closest)
-                            : this.closest(closest).querySelector(subSelector).parentNode;
-                            /* @todo: parentNode because of media edit. maybe I need a data-ui-parent element? */
-                        }
-                    }
+                    // todo bind failure here, if failure do cancel, if success to remove edit template
+                    self.forms[externalFormId].setSuccess(function () {
+                        // overwrite old values from remote response
+                        Form.setDataFromRemoteUrls(remoteUrls);
+                    });
 
-                    values = values.concat(
-                        parentsTpl[parentTplName].hasAttribute('data-tpl-value')
-                            ? parentsTpl[parentTplName]
-                            : Array.prototype.slice.call(parentsTpl[parentTplName].querySelectorAll('[data-tpl-value]'))
-                    );
-                    text   = text.concat(
-                        parentsContent[parentContentName].hasAttribute('data-tpl-text')
-                            ? parentsContent[parentContentName]
-                            : Array.prototype.slice.call(parentsContent[parentContentName].querySelectorAll('[data-tpl-text]'))
-                    );
+                    // clear element id after saving
+                    externalFormElement.setAttribute('data-id', '');
+
+                    // reset form values to default values after performing the update
+                    self.forms[externalFormId].resetValues();
                 }
-
-                values = values.filter(function (value, index, self) { return self.indexOf(value) === index; });
-                text   = text.filter(function (value, index, self) { return self.indexOf(value) === index; });
-
-                // overwrite old values data in ui
-                const remoteUrls        = {};
-                const changedValueNodes = []; // prevent same node touching
-                length                  = values.length;
-                for (const parent in parentsTpl) { // loop every selector which has elements to change
-                    for (let i = 0; i < length; ++i) { // loop every value
-                        const matches = parentsTpl[parent].querySelectorAll('[data-tpl-value="' + values[i].getAttribute('data-tpl-value') + '"');
-
-                        const matchLength = matches.length;
-                        for (let c = 0; c < matchLength; ++c) { // loop every found element in the selector to change
-                            if (changedValueNodes.includes(matches[c])) {
-                                continue;
-                            }
-
-                            changedValueNodes.push(matches[c]);
-                            const path = matches[c].hasAttribute('data-tpl-value-path') ? matches[c].getAttribute('data-tpl-value-path') : null;
-
-                            if (values[i].getAttribute('data-tpl-value').startsWith('http')
-                                || values[i].getAttribute('data-tpl-value').startsWith('{')
-                            ) {
-                                Form.populateRemoteUrls('value', values[i], path, remoteUrls);
-                            } else {
-                                GeneralUI.setValueOfElement(matches[c], GeneralUI.getValueFromDataSource(values[i]));
-                            }
-                        }
-                    }
-                }
-
-                // overwrite old text data in ui
-                const changedTextNodes = [];
-                length                 = text.length;
-                for (const parent in parentsContent) {
-                    for (let i = 0; i < length; ++i) {
-                        const matches = parentsContent[parent].querySelectorAll('[data-tpl-text="' + text[i].getAttribute('data-tpl-text') + '"');
-
-                        const matchLength = matches.length;
-                        for (let c = 0; c < matchLength; ++c) {
-                            if (changedTextNodes.includes(matches[c])) {
-                                continue;
-                            }
-
-                            changedTextNodes.push(matches[c]);
-
-                            const path = matches[c].hasAttribute('data-tpl-text-path') ? matches[c].getAttribute('data-tpl-text-path') : null;
-                            if (text[i].getAttribute('data-tpl-text').startsWith('http')
-                                || text[i].getAttribute('data-tpl-text').startsWith('{')
-                            ) {
-                                Form.populateRemoteUrls('text', text[i], path, remoteUrls);
-                            } else {
-                                GeneralUI.setTextOfElement(matches[c], GeneralUI.getTextFromDataSource(text[i]));
-                            }
-                        }
-                    }
-                }
-
-                // todo bind failure here, if failure do cancel, if success to remove edit template
-                self.forms[id].setSuccess(function () {
-                    // overwrite old values from remote response
-                    Form.setDataFromRemoteUrls(remoteUrls);
-                });
-
-                // @todo: does this submit and the previous submit in updatable mean I'm sending the data twice???? That would be bad!
-                self.submit(self.forms[id]);
-                self.removeEditTemplate(this, id);
             } else if ((elementIndex = Array.from(self.forms[id].getCancel()).indexOf(event.target)) !== -1) {
                 // handle cancel
                 const ele = document.getElementById(id);
                 if (ele.getAttribute('data-update-form') === null && ele.tagName.toLowerCase() !== 'form') {
                     self.removeEditTemplate(this, id);
                 } else {
+                    // reset form values to default values
                     self.forms[id].resetValues();
+
+                    // reset element id
+                    self.forms[id].getFormElement().setAttribute('data-id', '');
 
                     let length = 0;
 
-                    // show add button + hide update + hide cancel
+                    // show add button + hide update button + hide cancel button
                     const addButtons = self.forms[id].getAdd();
                     length           = addButtons.length;
                     for (let i = 0; i < length; ++i) {
@@ -503,8 +435,12 @@ export class Form
                     jsOMS.preventAll(event);
                 }
             } else if ((elementIndex = Array.from(self.forms[id].getUpdate()).indexOf(event.target)) !== -1) {
-                // handle update button which populates the update form
+                // handle update
+                // this doesn't handle setting new values but populating the update form
+
                 if (document.getElementById(id).getAttribute('data-update-form') === null) {
+                    // handle inline update
+
                     const formElement    = self.forms[id].getFormElement();
                     const parents        = [];
                     const selectors      = formElement.getAttribute('data-update-element').split(',');
@@ -515,9 +451,9 @@ export class Form
                         UriFactory.setQuery('$id', formElement.getAttribute('data-id'));
                     }
 
-                    let values   = [];
-                    let text     = [];
-                    const newEle = [];
+                    let values       = [];
+                    let texts        = [];
+                    const newElement = [];
 
                     for (let i = 0; i < selectorLength; ++i) {
                         selectors[i] = selectors[i].trim();
@@ -546,7 +482,7 @@ export class Form
                                     ? parents[i]
                                     : Array.prototype.slice.call(parents[i].querySelectorAll('[data-tpl-value]'))
                             );
-                        text   = text.concat(
+                        texts  = texts.concat(
                                 parents[i].hasAttribute('data-tpl-text')
                                     ? parents[i]
                                     : Array.prototype.slice.call(parents[i].querySelectorAll('[data-tpl-text]'))
@@ -554,17 +490,17 @@ export class Form
 
                         jsOMS.addClass(parents[i], 'hidden');
 
-                        newEle.push(document.querySelector(updatableTpl[i]).content.cloneNode(true));
+                        newElement.push(document.querySelector(updatableTpl[i]).content.cloneNode(true));
 
-                        Form.setRandomIdForTemplateElement(newEle[i]);
+                        Form.setRandomIdForTemplateElement(newElement[i]);
                     }
 
                     const fields = [];
                     for (let i = 0; i < selectorLength; ++i) {
                         fields.concat(
-                                newEle[i].firstElementChild.hasAttribute('data-form')
-                                    ? newEle[i].firstElementChild
-                                    : newEle[i].firstElementChild.querySelectorAll('[data-form="' + id + '"]')
+                                newElement[i].firstElementChild.hasAttribute('data-form')
+                                    ? newElement[i].firstElementChild
+                                    : newElement[i].firstElementChild.querySelectorAll('[data-form="' + id + '"]')
                             );
                     }
 
@@ -575,16 +511,16 @@ export class Form
 
                     // insert row values data into form
                     const remoteUrls = {};
-                    Form.insertDataIntoNewFormElement('value', newEle, values, remoteUrls);
+                    Form.setDataInFormElement('value', newElement, values, remoteUrls);
 
                     // insert row text data into form
-                    Form.insertDataIntoNewFormElement('text', newEle, text, remoteUrls);
+                    Form.setDataInFormElement('text', newElement, texts, remoteUrls);
 
                     Form.setDataFromRemoteUrls(remoteUrls);
 
                     for (let i = 0; i < selectorLength; ++i) {
-                        newEle[i].firstElementChild.setAttribute('data-marker', 'tpl');
-                        parents[i].parentNode.insertBefore(newEle[i].firstElementChild, parents[i]);
+                        newElement[i].firstElementChild.setAttribute('data-marker', 'tpl');
+                        parents[i].parentNode.insertBefore(newElement[i].firstElementChild, parents[i]);
                     }
 
                     // self.bindCreateForm(eleId, id); // @todo: why this bind???
@@ -611,51 +547,61 @@ export class Form
                         jsOMS.removeClass(cancelButtons[i], 'hidden');
                     }
                 } else {
-                    const formElement = self.forms[id].getFormElement();
-                    const parent      = event.target.closest(formElement.getAttribute('data-update-element'));
-                    const formId      = formElement.getAttribute('data-update-form');
-                    const values      = parent.querySelectorAll('[data-tpl-value]');
-                    const text        = parent.querySelectorAll('[data-tpl-text]');
+                    // handle external update
 
-                    const fields = self.forms[formId].getFormElement().querySelectorAll('[data-form="' + id + '"]');
-                    let length   = 0;
+                    /** @var {HTMLElement} formElement */
+                    const formElement = self.forms[id].getFormElement();
+
+                    /** @var {Element} elementContainer Element container that holds the data that should get updated */
+                    const elementContainer = event.target.closest(formElement.getAttribute('data-update-element'));
+
+                    /** @var {string} externalFormId Id of the form where the data should get populated to (= external form) */
+                    const externalFormId = formElement.getAttribute('data-update-form');
+
+                    /** @var {NodeListOf<Element>} values Value elements of the element to update */
+                    const values = elementContainer.querySelectorAll('[data-tpl-value]');
+
+                    /** @var {NodeListOf<Element>} texts Text elements of the element to update */
+                    const texts = elementContainer.querySelectorAll('[data-tpl-text]');
+
+                    let length = 0;
 
                     // clear form values to prevent old values getting mixed with update values
-                    self.forms[formId].resetValues();
+                    self.forms[externalFormId].resetValues();
 
-                    // hide add button + show update + show cancel
-                    const addButtons = self.forms[formId].getAdd();
+                    // set the element id in the update form so we know which element is getting updated
+                    self.forms[externalFormId].getFormElement().setAttribute('data-id', elementContainer.getAttribute('data-id'));
+
+                    // hide add button + show update button + show cancel button
+                    const addButtons = self.forms[externalFormId].getAdd();
                     length           = addButtons.length;
                     for (let i = 0; i < length; ++i) {
                         jsOMS.addClass(addButtons[i], 'hidden');
                     }
 
-                    const saveButtons = self.forms[formId].getSave();
+                    const saveButtons = self.forms[externalFormId].getSave();
                     length            = saveButtons.length;
                     for (let i = 0; i < length; ++i) {
                         jsOMS.removeClass(saveButtons[i], 'hidden');
                     }
 
-                    const cancelButtons = self.forms[formId].getCancel();
+                    const cancelButtons = self.forms[externalFormId].getCancel();
                     length              = cancelButtons.length;
                     for (let i = 0; i < length; ++i) {
                         jsOMS.removeClass(cancelButtons[i], 'hidden');
                     }
 
-                    // set form id to fields for easier identification
-                    length = fields.length;
-                    for (let i = 0; i < length; ++i) {
-                        fields[i].setAttribute('data-form', eleId);
-                    }
-
-                    // insert row values data into form
+                    /** @var {object} remoteUrls Texts and values which come from remote sources */
                     const remoteUrls = {};
-                    Form.insertDataIntoForm(self, 'value', formId, values, remoteUrls);
 
-                    // insert row text data into form
-                    Form.insertDataIntoForm(self, 'text', formId, text, remoteUrls);
+                    // insert values into form (populate values)
+                    Form.insertDataIntoForm(self, 'value', externalFormId, values, remoteUrls);
 
-                    self.forms[formId].setSuccess(function (response) {
+                    // insert text data into form (populate text)
+                    Form.insertDataIntoForm(self, 'text', externalFormId, texts, remoteUrls);
+
+                    // define remote response behavior
+                    self.forms[externalFormId].setSuccess(function (response) {
                         if (response.get('status') !== 'undefined' && response.get('status') !== NotificationLevel.HIDDEN) {
                             self.app.notifyManager.send(
                                 new NotificationMessage(response.get('status'), response.get('title'), response.get('message')), NotificationType.APP_NOTIFICATION
@@ -666,6 +612,7 @@ export class Form
 
                         UriFactory.setQuery('$id', response.get('response').id);
 
+                        // fill elements with remote data after submit (if the template expects data from a remote source)
                         Form.setDataFromRemoteUrls(remoteUrls);
                     });
                 }
@@ -955,35 +902,51 @@ export class Form
         }
     };
 
+    /**
+     * Set random id of a template element
+     *
+     * @param {HTMLElement} templateElement Element to set the id for
+     *
+     * @return {string}
+     *
+     * @since 1.0.0
+     */
     static setRandomIdForTemplateElement (templateElement)
     {
-        if (templateElement.firstElementChild.id !== null) {
+        if (templateElement.firstElementChild.getAttribute('data-id') !== null) {
             return;
         }
 
         let eleId = '';
 
         do {
-            eleId = 'f' + Math.random().toString(36).substring(7);
-        } while (document.getElementById(eleId) !== null);
+            eleId = 'r-' + Math.random().toString(36).substring(7);
+        } while (document.querySelector('[data-id="' + eleId + '"]') !== null);
 
-        templateElement.firstElementChild.id = eleId;
+        templateElement.firstElementChild.setAttribute('data-id', eleId);
+
+        return eleId;
     };
 
-    static insertDataIntoNewFormElement (type, templateElements, data, remoteUrls = {})
+    static setDataInFormElement (type, elements, data, remoteUrls = {})
     {
         const changedNodes   = []; // prevent same node touching
         const length         = data.length;
-        const templateLength = templateElements.length;
+        const templateLength = elements.length;
         for (let i = 0; i < length; ++i) {
             const path = data[i].hasAttribute('data-tpl-' + type + '-path') ? data[i].getAttribute('data-tpl-' + type + '-path') : null;
 
             for (let j = 0; j < templateLength; ++j) {
+                // sometimes elements contains templates, they need to get handled differently
+                const element = elements[j] instanceof DocumentFragment
+                    ? elements[j].firstElementChild
+                    : elements[j];
+
                 // BUG: matches contains the same elment for radio/checkbox
-                const matches = templateElements[j].firstElementChild.hasAttribute('data-tpl-' + type)
-                    && templateElements[j].firstElementChild.getAttribute('data-tpl-' + type) === data[i].getAttribute('data-tpl-' + type)
-                    ? [templateElements[j].firstElementChild]
-                    : templateElements[j].firstElementChild.querySelectorAll(
+                const matches = element.hasAttribute('data-tpl-' + type)
+                    && element.getAttribute('data-tpl-' + type) === data[i].getAttribute('data-tpl-' + type)
+                    ? [element]
+                    : element.querySelectorAll(
                         '[data-tpl-' + type + '="' + data[i].getAttribute('data-tpl-' + type) + '"'
                     );
 
