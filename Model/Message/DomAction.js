@@ -1,7 +1,7 @@
 /**
  * Perform DOM action.
  *
- * @param {{delay:int},{type:int}} data DOM action data
+ * @param {{delay:number},{type:number}} data DOM action data
  *
  * @since 1.0.0
  */

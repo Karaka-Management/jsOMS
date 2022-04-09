@@ -3,7 +3,7 @@ import { UriFactory } from '../../Uri/UriFactory.js';
 /**
  * Redirect.
  *
- * @param {{delay:int},{uri:string}} data Message data
+ * @param {{delay:number},{uri:string}} data Message data
  *
  * @since 1.0.0
  */

@@ -1,7 +1,7 @@
 /**
  * Notification message.
  *
- * @param {{title:string},{content:string},{level:int},{delay:int},{stay:int}} data Message data
+ * @param {{title:string},{content:string},{level:number},{delay:number},{stay:number}} data Message data
  *
  * @since 1.0.0
  */

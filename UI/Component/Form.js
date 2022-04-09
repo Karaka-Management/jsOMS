@@ -876,7 +876,7 @@ export class Form
                     if ((successInject = form.getSuccess()) !== null) {
                         successInject(response);
                     } else if (typeof response.get('type') !== 'undefined') {
-                        self.app.responseManager.run(response.get('type'), response.get(), request);
+                        self.app.responseManager.run(response.get('type'), response.get(), null);
                     } else if (typeof o.status !== 'undefined' && o.status !== NotificationLevel.HIDDEN) {
                         self.app.notifyManager.send(
                             new NotificationMessage(o.status, o.title, o.message), NotificationType.APP_NOTIFICATION

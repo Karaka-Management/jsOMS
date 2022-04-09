@@ -1,12 +1,12 @@
 /**
  * Reload page.
  *
- * @param {{delay:int}} data Message data
+ * @param {{delay:number}} data Message data
  *
  * @since 1.0.0
  */
 export function reloadMessage (data) {
     setTimeout(function () {
-        document.location.reload(true);
+        document.location.reload();
     }, parseInt(data.delay));
 };

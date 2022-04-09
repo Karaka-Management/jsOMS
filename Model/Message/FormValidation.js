@@ -1,7 +1,7 @@
 /**
  * Form validation.
  *
- * @param {{delay:int},{errors:string},{form:string}} data Message data
+ * @param {{delay:number},{errors:string},{form:string}} data Message data
  *
  * @since 1.0.0
  */
