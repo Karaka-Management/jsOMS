@@ -40,13 +40,15 @@ export class Tab
             if (e) {
                 this.bindElement(e);
             }
-        } else {
-            const tabs   = document.getElementsByClassName('tabview');
-            const length = !tabs ? 0 : tabs.length;
 
-            for (let i = 0; i < length; ++i) {
-                this.bindElement(tabs[i]);
-            }
+            return;
+        }
+
+        const tabs   = document.getElementsByClassName('tabview');
+        const length = !tabs ? 0 : tabs.length;
+
+        for (let i = 0; i < length; ++i) {
+            this.bindElement(tabs[i]);
         }
     };
 

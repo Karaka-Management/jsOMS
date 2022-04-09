@@ -83,18 +83,20 @@ export class Form
     {
         if (id !== null && typeof this.ignore[id] === 'undefined') {
             this.bindForm(id);
-        } else {
-            const forms  = document.querySelectorAll('form, [data-tag=form]');
-            const length = !forms ? 0 : forms.length;
 
-            for (let i = 0; i < length; ++i) {
-                const formId = forms[i].getAttribute('id');
+            return;
+        }
 
-                if (typeof formId !== 'undefined' && formId !== null && typeof this.ignore[formId] === 'undefined') {
-                    this.bindForm(formId);
-                } else {
-                    Logger.instance.info('A form doesn\'t have an ID.');
-                }
+        const forms  = document.querySelectorAll('form, [data-tag=form]');
+        const length = !forms ? 0 : forms.length;
+
+        for (let i = 0; i < length; ++i) {
+            const formId = forms[i].getAttribute('id');
+
+            if (typeof formId !== 'undefined' && formId !== null && typeof this.ignore[formId] === 'undefined') {
+                this.bindForm(formId);
+            } else {
+                Logger.instance.info('A form doesn\'t have an ID.');
             }
         }
     };
@@ -188,11 +190,11 @@ export class Form
                         : formElement.querySelector(uiContainerName);
 
                     /** @var {HTMLElement} newElement New element to add  */
-                    const newElement = uiContainer.querySelector('.add-tpl').content.cloneNode(true);
+                    const newElement = uiContainer.querySelector('.oms-add-tpl').content.cloneNode(true);
 
                     // set random id for element
                     /** @var {string} eleId New element id */
-                    const eleId = Form.setRandomIdForTemplateElement(newElement);
+                    const eleId = Form.setRandomIdForElement(newElement.firstElementChild);
 
                     // If the new element has a form it should also receive a id
                     if (newElement.firstElementChild.getElementsByTagName('form').length > 0) {
@@ -266,7 +268,7 @@ export class Form
                             );
 
                         // set random id for element
-                        Form.setRandomIdForTemplateElement(newElements[i]);
+                        Form.setRandomIdForElement(newElements[i].firstElementChild);
                     }
 
                     /** @var {object} remoteUrls Texts and values which come from remote sources */
@@ -492,7 +494,7 @@ export class Form
 
                         newElement.push(document.querySelector(updatableTpl[i]).content.cloneNode(true));
 
-                        Form.setRandomIdForTemplateElement(newElement[i]);
+                        Form.setRandomIdForElement(newElement[i].firstElementChild);
                     }
 
                     const fields = [];
@@ -903,17 +905,17 @@ export class Form
     };
 
     /**
-     * Set random id of a template element
+     * Set random data-id of a element
      *
-     * @param {HTMLElement} templateElement Element to set the id for
+     * @param {HTMLElement} element Element to set the data-id for
      *
      * @return {string}
      *
      * @since 1.0.0
      */
-    static setRandomIdForTemplateElement (templateElement)
+    static setRandomIdForElement (element)
     {
-        if (templateElement.firstElementChild.getAttribute('data-id') !== null) {
+        if (element.getAttribute('data-id') !== null && element.getAttribute('data-id') !== '') {
             return;
         }
 
@@ -923,7 +925,7 @@ export class Form
             eleId = 'r-' + Math.random().toString(36).substring(7);
         } while (document.querySelector('[data-id="' + eleId + '"]') !== null);
 
-        templateElement.firstElementChild.setAttribute('data-id', eleId);
+        element.setAttribute('data-id', eleId);
 
         return eleId;
     };
@@ -934,7 +936,9 @@ export class Form
         const length         = data.length;
         const templateLength = elements.length;
         for (let i = 0; i < length; ++i) {
-            const path = data[i].hasAttribute('data-tpl-' + type + '-path') ? data[i].getAttribute('data-tpl-' + type + '-path') : null;
+            const path = data[i].hasAttribute('data-tpl-' + type + '-path')
+                ? data[i].getAttribute('data-tpl-' + type + '-path')
+                : null;
 
             for (let j = 0; j < templateLength; ++j) {
                 // sometimes elements contains templates, they need to get handled differently
@@ -981,7 +985,9 @@ export class Form
         const length = data.length;
         for (let i = 0; i < length; ++i) {
             const matches = self.forms[formId].getFormElement().querySelectorAll('[data-tpl-' + type + '="' + data[i].getAttribute('data-tpl-' + type) + '"');
-            const path    = data[i].hasAttribute('data-tpl-' + type + '-path') ? data[i].getAttribute('data-tpl-' + type + '-path') : null;
+            const path    = data[i].hasAttribute('data-tpl-' + type + '-path')
+                ? data[i].getAttribute('data-tpl-' + type + '-path')
+                : null;
 
             const matchLength = matches.length;
             for (let c = 0; c < matchLength; ++c) {

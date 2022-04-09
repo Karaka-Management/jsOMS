@@ -36,7 +36,7 @@ export class DragNDrop
         if (element !== null) {
             this.bindElement(element);
         } else {
-            const elements = document.querySelectorAll('.dragcontainer');
+            const elements = document.querySelectorAll('.oms-dragcontainer');
             const length   = !elements ? 0 : elements.length;
 
             for (let i = 0; i < length; ++i) {
@@ -71,12 +71,12 @@ export class DragNDrop
         }, false);
 
         element.addEventListener('dragenter', function (e) {
-            const thisElement = e.target.closest('.dragcontainer ' + this.children[this.children.length - 1].tagName);
+            const thisElement = e.target.closest('.oms-dragcontainer ' + this.children[this.children.length - 1].tagName);
 
             const rowIndex  = Array.from(this.children).indexOf(thisElement);
             const dragIndex = Array.from(self.dragging.children).indexOf(self.dragging);
 
-            const oldPlaceholder = this.querySelector('.drag-placeholder');
+            const oldPlaceholder = this.querySelector('.oms-drag-placeholder');
             if (oldPlaceholder !== null) {
                 this.removeChild(oldPlaceholder);
             }
@@ -91,7 +91,7 @@ export class DragNDrop
 
             placeholder.setAttribute('draggable', 'true');
 
-            jsOMS.addClass(placeholder, 'drag-placeholder');
+            jsOMS.addClass(placeholder, 'oms-drag-placeholder');
 
             if (dragIndex < rowIndex) {
                 this.insertBefore(placeholder, thisElement.nextSibling);
@@ -113,7 +113,7 @@ export class DragNDrop
         element.addEventListener('dragend', function (e) {
             e.preventDefault();
 
-            const oldPlaceholder = this.querySelector('.drag-placeholder');
+            const oldPlaceholder = this.querySelector('.oms-drag-placeholder');
             if (oldPlaceholder === null) {
                 return;
             }

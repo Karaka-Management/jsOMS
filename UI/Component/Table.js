@@ -63,52 +63,39 @@ export class Table
     {
         if (id !== null && typeof this.ignore[id] === 'undefined') {
             this.bindTable(id);
-        } else {
-            const tables = document.getElementsByTagName('table');
-            const length = !tables ? 0 : tables.length;
 
-            for (let i = 0; i < length; ++i) {
-                const tableId = tables[i].getAttribute('id');
-                if (typeof tableId !== 'undefined' && tableId !== null && typeof this.ignore[tableId] === 'undefined') {
-                    this.bindTable(tableId);
-                }
+            return;
+        }
+
+        const tables = document.getElementsByTagName('table');
+        const length = !tables ? 0 : tables.length;
+
+        for (let i = 0; i < length; ++i) {
+            const tableId = tables[i].getAttribute('id');
+            if (typeof tableId !== 'undefined' && tableId !== null && typeof this.ignore[tableId] === 'undefined') {
+                this.bindTable(tableId);
             }
         }
     };
 
     /**
-     * Unbind table
-     *
-     * @param {string} id Table Id
-     *
-     * @return {void}
-     *
-     * @since 1.0.0
-     */
-    unbind (id)
-    {
-
-    };
-
-    /**
      * Bind & rebind UI element.
      *
-     * @param {Object} [id] Element id
+     * @param {Object} id Element id
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    bindTable (id)
+    bindTable (id = null)
     {
-        if (typeof id === 'undefined' || !id) {
+        if (id === null) {
             jsOMS.Log.Logger.instance.info('A table doesn\'t have an ID.');
             return;
         }
 
         this.tables[id] = new TableView(id);
 
-        this.unbind(id);
         this.bindExport(this.tables[id]);
 
         /**

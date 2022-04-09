@@ -1,10 +1,12 @@
-import { Form }          from '../UI/Component/Form.js';
-import { Tab }           from '../UI/Component/Tab.js';
-import { Table }         from '../UI/Component/Table.js';
-import { ActionManager } from '../UI/ActionManager.js';
-import { DragNDrop }     from '../UI/DragNDrop.js';
-import { Order }         from '../UI/Order.js';
-import { GeneralUI }     from '../UI/GeneralUI.js';
+import { Form }           from './Component/Form.js';
+import { Tab }            from './Component/Tab.js';
+import { Table }          from './Component/Table.js';
+import { ActionManager }  from './ActionManager.js';
+import { DragNDrop }      from './DragNDrop.js';
+import { Order }          from './Order.js';
+import { RemoteData }     from './RemoteData.js';
+import { GeneralUI }      from './GeneralUI.js';
+import { UIStateManager } from './UIStateManager.js';
 
 /**
  * UI manager for handling basic ui elements.
@@ -25,14 +27,16 @@ export class UIManager
      */
     constructor (app)
     {
-        this.app           = app;
-        this.formManager   = new Form(this.app);
-        this.tabManager    = new Tab(this.app);
-        this.tableManager  = new Table(this.app);
-        this.actionManager = new ActionManager(this.app);
-        this.dragNDrop     = new DragNDrop(this.app);
-        this.order         = new Order(this.app);
-        this.generalUI     = new GeneralUI(this.app);
+        this.app            = app;
+        this.formManager    = new Form(this.app);
+        this.tabManager     = new Tab(this.app);
+        this.tableManager   = new Table(this.app);
+        this.actionManager  = new ActionManager(this.app);
+        this.dragNDrop      = new DragNDrop(this.app);
+        this.order          = new Order(this.app);
+        this.generalUI      = new GeneralUI(this.app);
+        this.remoteData     = new RemoteData(this.app);
+        this.uiStateManager = new UIStateManager(this.app);
 
         const self = this;
         /** global: MutationObserver */
@@ -54,9 +58,9 @@ export class UIManager
      *
      * @since 1.0.0
      */
-    bind (id)
+    bind (id = null)
     {
-        if (typeof id === 'undefined') {
+        if (id === null) {
             this.formManager.bind();
             this.tabManager.bind();
             this.tableManager.bind();
@@ -64,24 +68,28 @@ export class UIManager
             this.dragNDrop.bind();
             this.order.bind();
             this.generalUI.bind();
-        } else {
-            const tag = document.getElementById(id);
-            this.generalUI.bind(tag);
+            this.remoteData.bind();
+            this.uiStateManager.bind();
 
-            if (!tag) {
-                return;
-            }
+            return;
+        }
 
-            switch (tag.tagName) {
-                case 'form':
-                    this.formManager.bind(id);
-                    break;
-                case 'table':
-                    this.tableManager.bind(id);
-                    break;
-                default:
-                    this.actionManager.bind(tag);
-            }
+        const tag = document.getElementById(id);
+        this.generalUI.bind(tag);
+
+        if (!tag) {
+            return;
+        }
+
+        switch (tag.tagName) {
+            case 'form':
+                this.formManager.bind(id);
+                break;
+            case 'table':
+                this.tableManager.bind(id);
+                break;
+            default:
+                this.actionManager.bind(tag);
         }
     };
 
@@ -131,6 +139,30 @@ export class UIManager
     getOrder ()
     {
         return this.order;
+    };
+
+    /**
+     * Get remote data manager.
+     *
+     * @return {Object}
+     *
+     * @since 1.0.0
+     */
+    getRemoteData ()
+    {
+        return this.remoteData;
+    };
+
+    /**
+     * Get remote data manager.
+     *
+     * @return {Object}
+     *
+     * @since 1.0.0
+     */
+    getUIStatemanager ()
+    {
+        return this.uiStateManager;
     };
 
     /**

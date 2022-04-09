@@ -1,12 +1,12 @@
 /**
- * Manual order class.
+ * Remote data class.
  *
  * @copyright Dennis Eichhorn
  * @license   OMS License 1.0
  * @version   1.0.0
  * @since     1.0.0
  */
-export class Order
+export class RemoteData
 {
     /**
      * @constructor
@@ -37,7 +37,7 @@ export class Order
             return;
         }
 
-        const elements = document.querySelectorAll('.oms-ordercontainer');
+        const elements = document.querySelectorAll('.oms-remotecontainer');
         const length   = !elements ? 0 : elements.length;
 
         for (let i = 0; i < length; ++i) {
@@ -48,7 +48,7 @@ export class Order
     /**
      * Bind DOM element
      *
-     * @param {string} id DOM element
+     * @param {Element} element DOM element
      *
      * @return {void}
      *
@@ -70,7 +70,7 @@ export class Order
             jsOMS.preventAll(event);
 
             const rowLength   = element.children.length;
-            const thisElement = event.target.closest('.oms-ordercontainer ' + this.children[rowLength - 1].tagName);
+            const thisElement = event.target.closest('.ordercontainer ' + this.children[rowLength - 1].tagName);
 
             const rowId     = Array.from(element.children).indexOf(thisElement);
             const orderType = jsOMS.hasClass(event.target, 'order-up') ? 1 : -1;
