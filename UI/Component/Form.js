@@ -182,7 +182,7 @@ export class Form
                     const formElement = self.forms[id].getFormElement();
 
                     /** @var {string} uiContainerName Container which holds all elements (e.g. div, tbody) */
-                    const uiContainerName = formElement.getAttribute('data-add-content');
+                    const uiContainerName = formElement.getAttribute('data-ui-container');
 
                     /** @var {HTMLElement} uiContainer Container which holds all elements (e.g. div, tbody) */
                     const uiContainer = uiContainerName.charAt(0) === '#'
@@ -219,7 +219,7 @@ export class Form
                     const formElement = self.forms[id].getFormElement();
 
                     /** @var {string} uiContainerName Container which holds all elements (e.g. div, tbody) */
-                    const uiContainerName = formElement.getAttribute('data-add-content');
+                    const uiContainerName = formElement.getAttribute('data-ui-container');
 
                     /** @var {HTMLElement} uiContainer Container which holds all elements (e.g. div, tbody) */
                     const uiContainer = uiContainerName.charAt(0) === '#'
@@ -275,10 +275,10 @@ export class Form
                     const remoteUrls = {};
 
                     // insert values into form (populate values)
-                    Form.setDataInFormElement('value', newElements, values, remoteUrls);
+                    Form.setDataInElement('value', newElements, values, remoteUrls);
 
                     // insert text data into form (populate text)
-                    Form.setDataInFormElement('text', newElements, texts, remoteUrls);
+                    Form.setDataInElement('text', newElements, texts, remoteUrls);
 
                     // add new elements to the DOM
                     for (let i = 0; i < addTplLength; ++i) {
@@ -335,7 +335,7 @@ export class Form
                      * @var {string[]} updateElementNames Names/selectors of the containers which hold the data of a single element
                      *                                    (this is not the container which holds all elements. Most of the time this is just a single element (e.g. tr))
                      */
-                    const updateElementNames  = formElement.getAttribute('data-update-element').split(',');
+                    const updateElementNames  = formElement.getAttribute('data-ui-element').split(',');
                     const updateElementLength = updateElementNames.length;
 
                     /**
@@ -384,10 +384,10 @@ export class Form
                     const remoteUrls = {};
 
                     // update values in form (overwrite values)
-                    Form.setDataInFormElement('value', updateElements, values, remoteUrls);
+                    Form.setDataInElement('value', updateElements, values, remoteUrls);
 
                     // update text data in form (overwrite text)
-                    Form.setDataInFormElement('text', updateElements, texts, remoteUrls);
+                    Form.setDataInElement('text', updateElements, texts, remoteUrls);
 
                     // todo bind failure here, if failure do cancel, if success to remove edit template
                     self.forms[externalFormId].setSuccess(function () {
@@ -445,7 +445,7 @@ export class Form
 
                     const formElement    = self.forms[id].getFormElement();
                     const parents        = [];
-                    const selectors      = formElement.getAttribute('data-update-element').split(',');
+                    const selectors      = formElement.getAttribute('data-ui-element').split(',');
                     const selectorLength = selectors.length;
                     const updatableTpl   = formElement.getAttribute('data-update-tpl').split(',');
 
@@ -513,10 +513,10 @@ export class Form
 
                     // insert row values data into form
                     const remoteUrls = {};
-                    Form.setDataInFormElement('value', newElement, values, remoteUrls);
+                    Form.setDataInElement('value', newElement, values, remoteUrls);
 
                     // insert row text data into form
-                    Form.setDataInFormElement('text', newElement, texts, remoteUrls);
+                    Form.setDataInElement('text', newElement, texts, remoteUrls);
 
                     Form.setDataFromRemoteUrls(remoteUrls);
 
@@ -555,7 +555,7 @@ export class Form
                     const formElement = self.forms[id].getFormElement();
 
                     /** @var {Element} elementContainer Element container that holds the data that should get updated */
-                    const elementContainer = event.target.closest(formElement.getAttribute('data-update-element'));
+                    const elementContainer = event.target.closest(formElement.getAttribute('data-ui-element'));
 
                     /** @var {string} externalFormId Id of the form where the data should get populated to (= external form) */
                     const externalFormId = formElement.getAttribute('data-update-form');
@@ -642,7 +642,7 @@ export class Form
 
         // if true submit form on change
         if (this.forms[id].isOnChange()) {
-            const hasUiContainer    = this.forms[id].getFormElement().getAttribute('data-ui-content');
+            const hasUiContainer    = this.forms[id].getFormElement().getAttribute('data-ui-container');
             const onChangeContainer = hasUiContainer !== null
                 ? this.forms[id].getFormElement().querySelector(hasUiContainer)
                 : this.forms[id].getFormElement();
@@ -930,25 +930,26 @@ export class Form
         return eleId;
     };
 
-    static setDataInFormElement (type, elements, data, remoteUrls = {})
+    static setDataInElement (type, elements, data, remoteUrls = {})
     {
         const changedNodes   = []; // prevent same node touching
         const length         = data.length;
-        const templateLength = elements.length;
+        const elementsLength = elements.length;
+
         for (let i = 0; i < length; ++i) {
+            // data path if data comes from remote object
             const path = data[i].hasAttribute('data-tpl-' + type + '-path')
                 ? data[i].getAttribute('data-tpl-' + type + '-path')
                 : null;
 
-            for (let j = 0; j < templateLength; ++j) {
+            for (let j = 0; j < elementsLength; ++j) {
                 // sometimes elements contains templates, they need to get handled differently
                 const element = elements[j] instanceof DocumentFragment
-                    ? elements[j].firstElementChild
-                    : elements[j];
+                    ? elements[j].firstElementChild // is template -> need first element
+                    : elements[j]; // is element
 
-                // BUG: matches contains the same elment for radio/checkbox
                 const matches = element.hasAttribute('data-tpl-' + type)
-                    && element.getAttribute('data-tpl-' + type) === data[i].getAttribute('data-tpl-' + type)
+                        && element.getAttribute('data-tpl-' + type) === data[i].getAttribute('data-tpl-' + type)
                     ? [element]
                     : element.querySelectorAll(
                         '[data-tpl-' + type + '="' + data[i].getAttribute('data-tpl-' + type) + '"'
@@ -956,8 +957,10 @@ export class Form
 
                 const matchLength = matches.length;
                 for (let c = 0; c < matchLength; ++c) {
+                    // ensure correct element.
+                    // if this doesn't exist the matches from above contains alle elements with the same uri/path but eventually different tpl-paths
                     if (changedNodes.includes(matches[c])
-                        || (path !== null && path !== matches[c].getAttribute('data-tpl-' + type + '-path')) // ensure correct element. if this doesn't exist the matches from above contains alle elements with the same uri/path but eventually different tpl-paths
+                        || (path !== null && path !== matches[c].getAttribute('data-tpl-' + type + '-path'))
                     ) {
                         continue;
                     }
@@ -1036,7 +1039,7 @@ export class Form
     removeEditTemplate (ele, id)
     {
         const formElement    = document.getElementById(id);
-        const selectors      = formElement.getAttribute('data-update-element').split(',');
+        const selectors      = formElement.getAttribute('data-ui-element').split(',');
         const selectorLength = selectors.length;
 
         const saveButtons = this.forms[id].getSave();
