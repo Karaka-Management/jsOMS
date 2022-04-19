@@ -61,7 +61,7 @@ export class UIStateManager
         }
 
         let state = JSON.parse(window.localStorage.getItem('ui-state-' + element.id));
-        state = state !== null ? state : {};
+        state     = state !== null ? state : {};
 
         switch (element.tagName.toLowerCase()) {
             case 'input':
@@ -86,7 +86,7 @@ export class UIStateManager
                 element.scrollTop  = state.y;
 
                 element.addEventListener('scroll', function () {
-                    window.localStorage.setItem('ui-state-' + this.id, JSON.stringify({x: this.scrollLeft, y: this.scrollTop}));
+                    window.localStorage.setItem('ui-state-' + this.id, JSON.stringify({ x: this.scrollLeft, y: this.scrollTop }));
                 });
 
                 break;

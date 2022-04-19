@@ -2,6 +2,7 @@ import { Request }             from '../Message/Request/Request.js';
 import { RequestMethod }       from '../Message/Request/RequestMethod.js';
 import { RequestType }         from '../Message/Request/RequestType.js';
 import { Response }            from '../Message/Response/Response.js';
+import { GeneralUI }           from './GeneralUI.js';
 
 /**
  * Remote data class.
@@ -39,12 +40,12 @@ export class RemoteData
         const elements = document.querySelectorAll('.oms-remotecontainer');
         const length   = !elements ? 0 : elements.length;
 
-        setInterval(function() {
+        setInterval(function () {
             for (let i = 0; i < length; ++i) {
                 const uri = elements[i].getAttribute('data-remote-uri');
 
                 /** @var {HTMLElement} uiContainer Container which holds all elements (e.g. div, tbody) */
-                const uiContainer   = elements[i];
+                const uiContainer = elements[i];
 
                 const request = new Request();
 
@@ -55,8 +56,8 @@ export class RemoteData
                 request.setSuccess(function (xhr) {
                     const data = JSON.parse(xhr.response);
 
-                    let responseLength = data.length;
-                    let currentElement = null;
+                    const responseLength = data.length;
+                    let currentElement   = null;
 
                     for (let i = 0; i < responseLength; ++i) {
                         /** @var {HTMLElement} childElements Child elements in the container which contain the data elements */
@@ -116,7 +117,7 @@ export class RemoteData
                                 if (currentElement === null) {
                                     uiContainer.appendChild(newElements[j].firstElementChild);
                                 } else {
-                                    uiContainer.insertBefore(newElements[j].firstElementChild, currentElement)
+                                    uiContainer.insertBefore(newElements[j].firstElementChild, currentElement);
                                 }
                             }
 

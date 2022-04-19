@@ -96,13 +96,14 @@ export class Request
     {
         /** global: InstallTrigger */
         /** global: navigator */
+        /** global: window */
         if ((!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0) {
             return BrowserType.OPERA;
         } else if (typeof InstallTrigger !== 'undefined') {
             return BrowserType.FIREFOX;
         } else if (Object.toString.call(window.HTMLElement).indexOf('Constructor') > 0) {
             return BrowserType.SAFARI;
-        } else if ( /* @cc_on!@ */false || !!document.documentMode) {
+        } else if (/* @cc_on!@ */false || !!document.documentMode) {
             return BrowserType.IE;
         } else if (!!window.StyleMedia) {
             return BrowserType.EDGE;
