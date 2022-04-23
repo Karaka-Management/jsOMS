@@ -383,8 +383,8 @@ export class Request
             }
         }
 
-        console.log(UriFactory.build(this.uri));
-        console.log(this.xhr);
+        window.omsApp.logger.log(UriFactory.build(this.uri));
+        window.omsApp.logger.log(this.xhr);
 
         this.xhr.onreadystatechange = function ()
         {

@@ -140,7 +140,7 @@ export class Form
                      *                                 (e.g. table row (tr), div, ...)
                      */
                     const elementContainer = remove.closest(document.getElementById(id).getAttribute('data-ui-element'));
-                    console.log(document.getElementById(id).getAttribute('data-ui-element'));
+                    window.omsApp.logger.log(document.getElementById(id).getAttribute('data-ui-element'));
                     elementContainer.parentNode.removeChild(elementContainer);
                 };
 
@@ -293,7 +293,7 @@ export class Form
                             );
                         }
 
-                        console.log(remoteUrls);
+                        window.omsApp.logger.log(remoteUrls);
 
                         UriFactory.setQuery('$id', response.get('response').id);
 
@@ -610,7 +610,7 @@ export class Form
                             );
                         }
 
-                        console.log(remoteUrls);
+                        window.omsApp.logger.log(remoteUrls);
 
                         UriFactory.setQuery('$id', response.get('response').id);
 
@@ -790,7 +790,7 @@ export class Form
         request.setMethod(form.getMethod());
         request.setSuccess(function (xhr)
         {
-            console.log(xhr.response);
+            window.omsApp.logger.log(xhr.response);
 
             if (xhr.getResponseHeader('content-type') === 'application/octet-stream') {
                 const blob = new Blob([xhr.response], { type: 'application/octet-stream' });
@@ -832,7 +832,7 @@ export class Form
                         );
                     }
                 } catch (e) {
-                    console.log(e);
+                    window.omsApp.logger.log(e);
 
                     Logger.instance.error('Invalid form response. \n'
                         + 'URL: ' + form.getAction() + '\n'

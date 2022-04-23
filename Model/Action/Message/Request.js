@@ -16,7 +16,7 @@ export function requestAction (action, callback)
     const request = new Request(action.uri, action.method, action.request_type);
 
     request.setSuccess(function (xhr) {
-        console.log(xhr.responseText);
+        window.omsApp.logger.log(xhr.responseText);
         callback(JSON.parse(xhr.responseText));
     });
 

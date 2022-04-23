@@ -154,11 +154,9 @@ export class AdvancedInput
      */
     remoteCallback (self, data)
     {
-        console.log(data);
+        window.omsApp.logger.log(data);
         data             = JSON.parse(data.response)[0];
         const dataLength = data.length;
-
-        console.table(data);
 
         // if dropdown == true
         if (self.dropdownElement.getAttribute('data-active') === 'true') {

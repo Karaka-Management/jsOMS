@@ -160,7 +160,7 @@ export class Table
 
         button.addEventListener('click', function (event)
         {
-            console.log(exports.serialize());
+            window.omsApp.logger.log(exports.serialize());
             /**
              * @todo Karaka/jsOMS#90
              *  Implement export

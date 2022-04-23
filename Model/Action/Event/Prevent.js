@@ -11,7 +11,7 @@ export function preventEvent (action, callback, id)
 {
     'use strict';
 
-    console.log('prevented');
+    window.omsApp.logger.log('prevented');
 
     jsOMS.preventAll(action.data);
 
