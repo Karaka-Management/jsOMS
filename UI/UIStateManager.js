@@ -65,7 +65,9 @@ export class UIStateManager
 
         switch (element.tagName.toLowerCase()) {
             case 'input':
-                if (state === '1') {
+                if ((state === '1' && !element.checked)
+                    || (state === '0' && element.checked)
+                ) {
                     element.click();
                 }
 
@@ -73,7 +75,7 @@ export class UIStateManager
                     if (this.getAttribute('type') === 'checkbox'
                         || this.getAttribute('type') === 'radio'
                     ) {
-                        window.localStorage.setItem('ui-state-' + this.id, JSON.stringify('1'));
+                        window.localStorage.setItem('ui-state-' + this.id, JSON.stringify(this.checked ? '1' : '0'));
                     } else {
                         window.localStorage.setItem('ui-state-' + this.id, JSON.stringify(this.value));
                     }
@@ -84,6 +86,10 @@ export class UIStateManager
                 // @todo: this is not working, WHY? state is correct, but element.scrollTop is just ignored?!
                 element.scrollLeft = state.x;
                 element.scrollTop  = state.y;
+
+                console.log(state.y);
+
+                element.scrollTo({ top: state.y, left: state.x })
 
                 element.addEventListener('scroll', function () {
                     window.localStorage.setItem('ui-state-' + this.id, JSON.stringify({ x: this.scrollLeft, y: this.scrollTop }));

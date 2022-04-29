@@ -189,7 +189,8 @@ export class FormView
         return parent.querySelectorAll(
             'button[form=' + this.id + '].update-form, '
             + '.update-form[data-form=' + this.id + '], '
-            + '#' + this.id + ' .update-form'
+            + '#' + this.id + ' .update-form, '
+            + '[form="' + this.id + '"].update-form'
             + (e !== null ? ', .update-form' : '')
         );
     };
@@ -210,7 +211,8 @@ export class FormView
         return parent.querySelectorAll(
             'button[form=' + this.id + '].save-form, '
             + '.save-form[data-form=' + this.id + '], '
-            + '#' + this.id + ' .save-form'
+            + '#' + this.id + ' .save-form, '
+            + '[form="' + this.id + '"].save-form'
             + (e !== null ? ', .save-form' : '')
         );
     };
@@ -231,7 +233,8 @@ export class FormView
         return parent.querySelectorAll(
             'button[form=' + this.id + '].cancel-form, '
             + '.cancel-form[data-form=' + this.id + '], '
-            + '#' + this.id + ' .cancel-form'
+            + '#' + this.id + ' .cancel-form, '
+            + '[form="' + this.id + '"].cancel-form'
             + (e !== null ? ', .cancel-form' : '')
         );
     };
@@ -252,7 +255,8 @@ export class FormView
         return parent.querySelectorAll(
             'button[form=' + this.id + '].remove-form, '
             + '.remove-form[data-form=' + this.id + '], '
-            + '#' + this.id + ' .remove-form'
+            + '#' + this.id + ' .remove-form, '
+            + '[form="' + this.id + '"].remove-form'
             + (e !== null ? ', .remove-form' : '')
         );
     };
@@ -275,7 +279,8 @@ export class FormView
         return parent.querySelectorAll(
             'button[form=' + this.id + '].add-form, '
             + '.add-form[data-form=' + this.id + '], '
-            + '#' + this.id + ' .add-form'
+            + '#' + this.id + ' .add-form, '
+            + '[form="' + this.id + '"].add-form'
             + (e !== null ? ', .add-form' : '')
         );
     };
@@ -770,35 +775,15 @@ export class FormView
         }
     };
 
-    /**
-     * Unbind form
-     *
-     * @return {void}
-     *
-     * @since 1.0.0
-     */
-    unbind ()
+    getElementsToBind(e = null)
     {
-        const elements = this.getFormElements();
-        const length   = elements.length;
+        const parent = e === null ? document : e;
 
-        for (let i = 0; i < length; ++i) {
-            switch (elements[i].tagName) {
-                case 'input':
-                    Input.unbind(elements[i]);
-                    break;
-                case 'select':
-                    this.bindSelect(elements[i]);
-                    break;
-                case 'textarea':
-                    this.bindTextarea(elements[i]);
-                    break;
-                case 'button':
-                    this.bindButton(elements[i]);
-                    break;
-                default:
-            }
-        }
+        const externalElements = parent.querySelectorAll('[form=' + this.id + ']');
+
+        return Array.prototype.slice.call(externalElements).concat(
+            Array.prototype.slice.call([this.form])
+        ).filter(function (val) { return val; });
     };
 
     /**
@@ -810,7 +795,6 @@ export class FormView
      */
     clean ()
     {
-        this.unbind();
         this.initializeMembers();
     };
 };
