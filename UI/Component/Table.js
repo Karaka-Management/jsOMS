@@ -98,27 +98,6 @@ export class Table
 
         this.bindExport(this.tables[id]);
 
-        /**
-         * @todo Karaka/jsOMS#89
-         *  Implement local and remote filtering
-         *  Options:
-         *      * alphanumeric
-         *      * greater
-         *      * greater equals
-         *      * lesser
-         *      * lesser equals
-         *      * contains
-         *      * doesnt contain
-         *      * in between
-         *      * regex
-         *      * pre-defined values
-         * The cell values should be defined in data-value and the name should be data-name and the content should be data-content.
-         * Note content and value can be different.
-         *      * If no value is defined then the cell content is the value.
-         *      * If no name is defined the cell content is the name.
-         *      * If no content is defined the cell content is the name.
-         */
-
         const sorting = this.tables[id].getSorting();
         let length    = sorting.length;
         for (let i = 0; i < length; ++i) {
@@ -182,6 +161,39 @@ export class Table
      */
     bindColumnVisibility (header)
     {
+        const self    = this;
+        const columns = header.querySelectorAll('td');
+        const length  = columns.length;
+
+        for (let i = 0; i < length; ++i) {
+            const state = JSON.parse(window.localStorage.getItem('ui-state-' + this.id + '-header-' + i));
+
+            const rows      = header.parentElement.getElementsByTagName('tr');
+            const rowLength = rows.length;
+
+            if (state === '1' && !jsOMS.hasClass(columns[i], 'hidden')) {
+                for (let j = 0; j < rowLength; ++j) {
+                    const cols = rows[j].getElementsByTagName('td');
+
+                    if (cols.length < length) {
+                        continue;
+                    }
+
+                    jsOMS.addClass(cols[i], 'hidden');
+                }
+            } else if ((state === '0' || state === null) && jsOMS.hasClass(columns[i], 'hidden')) {
+                for (let j = 0; j < rowLength; ++j) {
+                    const cols = rows[j].getElementsByTagName('td');
+
+                    if (cols.length < length) {
+                        continue;
+                    }
+
+                    jsOMS.removeClass(cols[i], 'hidden');
+                }
+            }
+        }
+
         header.addEventListener('contextmenu', function (event) {
             jsOMS.preventAll(event);
 
@@ -204,11 +216,9 @@ export class Table
 
             const baseMenuLine = menu.getElementsByClassName('context-line')[0].cloneNode(true);
 
+            // @todo: simplify by doing it for the whole header? event bubbling
             for (let i = 0; i < length; ++i) {
-                if (typeof columns[i].firstChild === 'undefined'
-                    || typeof columns[i].firstChild.data === 'undefined'
-                    || columns[i].firstChild.data.trim() === ''
-                ) {
+                if (columns[i].firstElementChild.innerText.trim() === '') {
                     continue;
                 }
 
@@ -217,19 +227,33 @@ export class Table
 
                 menuLine.firstElementChild.setAttribute('for', lineId);
                 menuLine.firstElementChild.firstElementChild.setAttribute('id', lineId);
-                menuLine.firstElementChild.appendChild(document.createTextNode(columns[i].firstChild.data.trim()));
+                menuLine.firstElementChild.appendChild(document.createTextNode(columns[i].firstElementChild.innerText.trim()));
+
+                const isHidden = jsOMS.hasClass(columns[i], 'hidden');
 
                 menu.getElementsByTagName('ul')[0].appendChild(menuLine);
-                menu.querySelector('ul').lastElementChild.querySelector('input[type="checkbox"]').checked = columns[i].style.display !== 'none';
+                menu.querySelector('ul').lastElementChild.querySelector('input[type="checkbox"]').checked = !isHidden;
 
                 menu.querySelector('ul').lastElementChild.querySelector('input[type="checkbox"]').addEventListener('change', function () {
                     const rows      = header.parentElement.getElementsByTagName('tr');
                     const rowLength = rows.length;
 
+                    const isHidden = jsOMS.hasClass(columns[i], 'hidden');
+
+                    if (isHidden) {
+                        window.localStorage.setItem('ui-state-' + self.id + '-header-' + i, JSON.stringify('0'));
+                    } else {
+                        window.localStorage.setItem('ui-state-' + self.id + '-header-' + i, JSON.stringify('1'));
+                    }
+
                     for (let j = 0; j < rowLength; ++j) {
                         const cols = rows[j].getElementsByTagName('td');
 
-                        cols[i].style.display = cols[i].style.display === 'none' ? '' : 'none';
+                        if (isHidden) {
+                            jsOMS.removeClass(cols[i], 'hidden');
+                        } else {
+                            jsOMS.addClass(cols[i], 'hidden');
+                        }
                     }
                 });
             }
@@ -269,6 +293,11 @@ export class Table
     {
         sorting.addEventListener('click', function (event)
         {
+            if (this.firstElementChild.tagName.toLowerCase() === 'a') {
+                // page is getting reloaded
+                return;
+            }
+
             const table     = document.getElementById(id);
             const rows      = table.getElementsByTagName('tbody')[0].rows;
             const rowLength = rows.length;
