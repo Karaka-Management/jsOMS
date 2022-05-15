@@ -320,9 +320,12 @@ export class Request
         this.type                          = type;
         this.requestHeader['Content-Type'] = this.setContentTypeBasedOnType(this.type);
 
+        /*
+        @todo: why was i doing this?
         if (this.type === RequestType.FORM_DATA) {
             delete this.requestHeader['Content-Type'];
         }
+        */
     };
 
     /**
@@ -374,7 +377,16 @@ export class Request
         const self = this;
 
         if (this.xhr.readyState !== 1) {
-            this.xhr.open(this.method, UriFactory.build(this.uri));
+            if (this.type === RequestType.FORM_DATA) {
+                let url = this.uri;
+                for (let pair of this.data.entries()) {
+                    url += '&' + pair[0] + '=' + pair[1];
+                }
+
+                this.xhr.open(this.method, UriFactory.build(url));
+            } else {
+                this.xhr.open(this.method, UriFactory.build(this.uri));
+            }
 
             for (const p in this.requestHeader) {
                 if (Object.prototype.hasOwnProperty.call(this.requestHeader, p) && this.requestHeader[p] !== '') {
@@ -409,7 +421,11 @@ export class Request
         } else if (this.type === RequestType.URL_ENCODE) {
             this.xhr.send(this.queryfy(this.data));
         } else if (this.type === RequestType.FORM_DATA) {
-            this.xhr.send(this.data);
+            if (this.method === RequestMethod.GET) {
+                this.xhr.send();
+            } else {
+                this.xhr.send(this.data);
+            }
         }
     };
 };

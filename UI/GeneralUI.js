@@ -81,9 +81,8 @@ export class GeneralUI
 
                     if (input !== null) {
                         input.click();
+                        return;
                     }
-
-                    return;
                 }
 
                 jsOMS.preventAll(event);
@@ -92,7 +91,10 @@ export class GeneralUI
                 let uri = this.getAttribute('data-href');
                 uri     = uri === null ? this.getAttribute('href') : uri;
 
-                if (this.getAttribute('target') === '_blank' || this.getAttribute(['data-target']) === '_blank' || event.button === 1) {
+                if (this.getAttribute('target') === '_blank'
+                    || this.getAttribute(['data-target']) === '_blank'
+                    || event.button === 1
+                ) {
                     window.open(UriFactory.build(uri), '_blank');
                 } else {
                     window.location = UriFactory.build(uri);

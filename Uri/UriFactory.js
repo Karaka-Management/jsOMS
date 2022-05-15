@@ -203,7 +203,7 @@ export class UriFactory
             }
         }
 
-        let parsed = uri.replace(new RegExp('\{[\/#\?%@\.\$\!][a-zA-Z0-9\-\#\.]*\}', 'g'), function (match) {
+        let parsed = uri.replace(new RegExp('\{[\/#\?%@\.\$\!][a-zA-Z0-9_\\-#\.]*\}', 'g'), function (match) {
             match = match.substr(1, match.length - 2);
 
             if (toMatch !== null && Object.prototype.hasOwnProperty.call(toMatch, match)) {

@@ -293,7 +293,7 @@ export class Table
     {
         sorting.addEventListener('click', function (event)
         {
-            if (this.firstElementChild.tagName.toLowerCase() === 'a') {
+            if (this.firstElementChild === null || this.firstElementChild.tagName.toLowerCase() === 'a') {
                 // page is getting reloaded
                 return;
             }

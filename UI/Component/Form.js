@@ -796,7 +796,9 @@ export class Form
 
                 // define remote response behavior
                 self.forms[externalFormId].setSuccess(function (response) {
-                    if (response.get('status') !== 'undefined' && response.get('status') !== NotificationLevel.HIDDEN) {
+                    if (response.get('status') !== 'undefined'
+                        && response.get('status') !== NotificationLevel.HIDDEN
+                    ) {
                         self.app.notifyManager.send(
                             new NotificationMessage(response.get('status'), response.get('title'), response.get('message')), NotificationType.APP_NOTIFICATION
                         );
@@ -810,7 +812,9 @@ export class Form
                     Form.setDataFromRemoteUrls(remoteUrls);
                 });
             }
-        } else if ((elementIndex = Array.from(self.forms[id].getSubmit()).indexOf(event.target)) !== -1) {
+        } else if ((elementIndex = Array.from(self.forms[id].getSubmit()).indexOf(event.target)) !== -1
+            || (elementIndex = Array.from(self.forms[id].getSubmit()).indexOf(event.target.parentNode)) !== -1
+        ) {
             jsOMS.preventAll(event);
             self.submit(self.forms[id], self.forms[id].getSubmit()[elementIndex]);
         }
