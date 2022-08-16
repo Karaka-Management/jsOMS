@@ -67,6 +67,17 @@ export class GeneralUI
         const length = e.length;
 
         for (let i = 0; i < length; ++i) {
+            /*
+            @todo: bad solution, probably needs to be more navigation specific
+            const link = UriFactory.buildAbsolute(
+                e[i].getAttribute('href') !== null ? e[i].getAttribute('href') : e[i].getAttribute('data-href')
+            );
+
+            if (jsOMS.rtrim(link, '/') !== window.location.origin && window.location.href.startsWith(link)) {
+                jsOMS.addClass(e[i], 'active');
+            }
+            */
+
             if (e[i].getAttribute('data-action') !== null) {
                 continue;
             }
@@ -86,10 +97,10 @@ export class GeneralUI
                 }
 
                 jsOMS.preventAll(event);
-                history.pushState(null, null, window.location);
 
                 let uri = this.getAttribute('data-href');
                 uri     = uri === null ? this.getAttribute('href') : uri;
+                history.pushState({}, null, UriFactory.build(uri));
 
                 if (this.getAttribute('target') === '_blank'
                     || this.getAttribute(['data-target']) === '_blank'
@@ -97,7 +108,23 @@ export class GeneralUI
                 ) {
                     window.open(UriFactory.build(uri), '_blank');
                 } else {
-                    window.location = UriFactory.build(uri);
+                    // window.location = UriFactory.build(uri);
+
+                    fetch(UriFactory.build(uri))
+                    .then((response) => response.text())
+                    .then((html) => {
+                        document.documentElement.innerHTML = html;
+                        /* This is not working as it reloads the page ?!
+                        document.open();
+                        document.write(html);
+                        document.close();
+                        */
+
+                       window.omsApp.reInit(); // @todo: fix memory leak which most likely exists because of continous binding without removing binds
+                    })
+                    .catch((error) => {
+                        console.warn(error);
+                    });
                 }
             });
         }

@@ -174,6 +174,17 @@ export class UriFactory
         return url;
     };
 
+    static buildAbsolute (uri, toMatch = null)
+    {
+        if (uri.startsWith('/')) {
+            return UriFactory.build(window.location.origin + uri, toMatch);
+        } else if (uri.indexOf('://') === -1) {
+            return UriFactory.build(window.location.origin + '/' + uri, toMatch);
+        }
+
+        return uri;
+    };
+
     /**
      * Build uri
      *

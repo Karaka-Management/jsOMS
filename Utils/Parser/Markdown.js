@@ -644,7 +644,7 @@
             throw new Error('callback param is required');
         }
 
-        if (!showdown.helper.isfunction (callback)) {
+        if (!showdown.helper.isFunction (callback)) {
             throw new Error('callback param must be a function/closure');
         }
 
@@ -826,7 +826,7 @@
     showdown.helper.replaceRecursiveRegExp = function (str, replacement, left, right, flags) {
         'use strict';
 
-        if (!showdown.helper.isfunction (replacement)) {
+        if (!showdown.helper.isFunction (replacement)) {
             var repStr = replacement;
             replacement = function () {
                 return repStr;

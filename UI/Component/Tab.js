@@ -134,15 +134,15 @@ export class Tab
 
         if (fragLength > 0 && fragmentString !== '') {
             for (let i = 0; i < fragLength; ++i) {
-                const label = e.querySelectorAll('label[for="' + fragments[i] + '"]')[0];
-                if (typeof label !== 'undefined') {
+                const label = e.querySelector('label[for="' + fragments[i] + '"]');
+                if (typeof label !== 'undefined' && label !== null) {
                     label.click();
                 }
             }
         }
 
-        if (e.getElementsByClassName('active').length < 1) {
-            e.querySelector('label').click();
+        if (e.querySelector('.tab-links').querySelector('.active') === null) {
+            e.querySelector('.tab-links').querySelector('label').click();
         }
     };
 };

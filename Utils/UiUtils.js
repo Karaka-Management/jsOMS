@@ -135,6 +135,7 @@
     {
         event.preventDefault();
         event.stopImmediatePropagation();
+        event.stopPropagation();
         event.cancelBubble = true;
     };
 

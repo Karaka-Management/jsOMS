@@ -1,5 +1,6 @@
 import { LogLevel } from './LogLevel.js';
 import { Request } from '../Message/Request/Request.js';
+import { SystemUtils } from '../System/SystemUtils.js';
 
 /**
  * Logger class.
@@ -63,7 +64,7 @@ export class Logger
      *
      * @since 1.0.0
      */
-    interpolate (message, context, level)
+    interpolate (message, context)
     {
         message = typeof message === 'undefined' ? Logger.MSG_FULL : message;
 
@@ -89,13 +90,15 @@ export class Logger
      */
     createContext (message, context, level)
     {
-        context.datetime = (new Date()).toISOString();
-        context.version  = '1.0.0';
-        context.os       = Request.getOS();
-        context.browser  = Request.getBrowser();
-        context.path     = window.location.href;
-        context.level    = level;
-        context.message  = message;
+        context.backtrace = console.trace();
+        context.datetime  = (new Date()).toISOString();
+        context.version   = '1.0.0';
+        context.os        = SystemUtils.getOS();
+        context.browser   = SystemUtils.getBrowser();
+        context.path      = window.location.href;
+        context.datetime  = (new Date()).toString();
+        context.level     = level;
+        context.message   = message;
 
         return context;
     };
@@ -120,11 +123,11 @@ export class Logger
         }
 
         if (this.ui) {
-            this.writeUi(message, context, level);
+            this.writeUi(message, context);
         }
 
         if (this.remote) {
-            this.writeRemote(message, context, level);
+            this.writeRemote(context);
         }
     };
 
@@ -133,20 +136,19 @@ export class Logger
      *
      * @param {string} message   Message to display
      * @param {Object} [context] Context to put into message
-     * @param {string} level     Log level
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    writeUi (message, context, level)
+    writeUi (message, context)
     {
         /** global: Notification */
         if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
             Notification.requestPermission().then(function (permission) { });
         }
 
-        const notification = new Notification('Logger', { body: this.interpolate(message, context, level) });
+        const notification = new Notification('Logger', { body: this.interpolate(message, context) });
         setTimeout(notification.close.bind(notification), 4000);
     };
 
@@ -192,15 +194,13 @@ export class Logger
     /**
      * Create remote log message
      *
-     * @param {string} message   Message to display
      * @param {Object} [context] Context to put into message
-     * @param {string} level     Log level
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    writeRemote (message, context, level)
+    writeRemote (context)
     {
         const request = new Request();
         request.setData(context);

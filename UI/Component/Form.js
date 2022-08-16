@@ -118,9 +118,11 @@ export class Form
         }
 
         // don't overwrite existing bind
+        /*
+        @todo: removed because sometimes it is already bound but bound in a wrong way (e.g. no success is defined)
         if (Object.prototype.hasOwnProperty.call(this.forms, id)) {
             return;
-        }
+        }*/
 
         this.forms[id] = new FormView(id);
         const self     = this;
@@ -817,6 +819,12 @@ export class Form
         ) {
             jsOMS.preventAll(event);
             self.submit(self.forms[id], self.forms[id].getSubmit()[elementIndex]);
+        } else if ((elementIndex = '')) {
+            // @todo: if table head input field in popups changes -> check if input empty -> deactivate -> checkbox : else activate checkbox
+            // careful: the same checkbox is used for showing the filter popup. maybe create a separate checkbox, which only handles the highlighting if filter is defined.
+            // this means popup active highlights filter icon AND different content checkbox also highlights filter
+            // -> two hiddin checkboxes are necessary (one is already implemented)
+            // Consider: It might make sense to do this in the Table.js??? Kinda depends on additional functionality together with the form probably.
         }
 
         // remote actions (maybe solvable with callbacks?):
@@ -905,7 +913,10 @@ export class Form
 
         // select first input element (this allows fast consecutive data input)
         const firstFormInputElement = form.getFirstInputElement();
-        firstFormInputElement.focus();
+
+        if (firstFormInputElement !== null) {
+            firstFormInputElement.focus();
+        }
     };
 
     /**
@@ -950,14 +961,14 @@ export class Form
         const self    = this;
 
         request.setData(data);
-        request.setType(RequestType.FORM_DATA);
+        request.setType(RequestType.FORM_DATA); // @todo: consider to allow different request type
         request.setUri(action ? action : form.getAction());
         request.setMethod(form.getMethod());
         request.setSuccess(function (xhr)
         {
             window.omsApp.logger.log(xhr.response);
 
-            if (xhr.getResponseHeader('content-type') === 'application/octet-stream') {
+            if (xhr.getResponseHeader('content-type').includes('application/octet-stream')) {
                 const blob = new Blob([xhr.response], { type: 'application/octet-stream' });
                 const doc  = document.createElement('a');
                 doc.style  = 'display: none';
@@ -981,6 +992,17 @@ export class Form
                 doc.click();
                 window.URL.revokeObjectURL(url);
                 document.body.removeChild(doc);
+            } else if (xhr.getResponseHeader('content-type').includes('text/html')) {
+                // window.location = UriFactory.build(uri);
+
+                document.documentElement.innerHTML = xhr.response;
+                /* This is not working as it reloads the page ?!
+                document.open();
+                document.write(html);
+                document.close();
+                */
+
+                window.omsApp.reInit(); // @todo: fix memory leak which most likely exists because of continous binding without removing binds
             } else {
                 try {
                     const o           = JSON.parse(xhr.response)[0];

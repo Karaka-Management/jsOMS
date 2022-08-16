@@ -1,7 +1,5 @@
 import { Logger }        from '../../Log/Logger.js';
 import { UriFactory }    from '../../Uri/UriFactory.js';
-import { BrowserType }   from './BrowserType.js';
-import { OSType }        from './OSType.js';
 import { RequestMethod } from './RequestMethod.js';
 import { RequestType }   from './RequestType.js';
 
@@ -83,61 +81,6 @@ export class Request
             default:
                 return 'text/plain';
         }
-    };
-
-    /**
-     * Get browser.
-     *
-     * @return {string}
-     *
-     * @since 1.0.0
-     */
-    static getBrowser ()
-    {
-        /** global: InstallTrigger */
-        /** global: navigator */
-        /** global: window */
-        if ((!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0) {
-            return BrowserType.OPERA;
-        } else if (typeof InstallTrigger !== 'undefined') {
-            return BrowserType.FIREFOX;
-        } else if (Object.toString.call(window.HTMLElement).indexOf('Constructor') > 0) {
-            return BrowserType.SAFARI;
-        } else if (/* @cc_on!@ */false || !!document.documentMode) {
-            return BrowserType.IE;
-        } else if (!!window.StyleMedia) {
-            return BrowserType.EDGE;
-        } else if (!!window.chrome && !!window.chrome.webstore) {
-            return BrowserType.CHROME;
-        } else if (((typeof isChrome !== 'undefined' && isChrome)
-                || (typeof isOpera !== 'undefined' && isOpera))
-            && !!window.CSS
-        ) {
-            return BrowserType.BLINK;
-        }
-
-        return BrowserType.UNKNOWN;
-    };
-
-    /**
-     * Get os.
-     *
-     * @return {string}
-     *
-     * @since 1.0.0
-     */
-    static getOS ()
-    {
-        for (const os in OSType) {
-            if (Object.prototype.hasOwnProperty.call(OSType, os)) {
-                /** global: navigator */
-                if (navigator.appVersion.toLowerCase().indexOf(OSType[os]) !== -1) {
-                    return OSType[os];
-                }
-            }
-        }
-
-        return OSType.UNKNOWN;
     };
 
     /**
@@ -378,13 +321,20 @@ export class Request
 
         if (this.xhr.readyState !== 1) {
             if (this.type === RequestType.FORM_DATA) {
-                let url = this.uri;
-                for (let pair of this.data.entries()) {
-                    url += '&' + pair[0] + '=' + pair[1];
-                }
+                // GET request doesn't allow body/payload. Therefor we have to put the data into the uri
+                if (this.method === RequestMethod.GET) {
+                    let url = this.uri;
+                    for (let pair of this.data.entries()) {
+                        url += '&' + pair[0] + '=' + pair[1];
+                    }
 
-                this.xhr.open(this.method, UriFactory.build(url));
+                    this.xhr.open(this.method, UriFactory.build(url));
+                } else {
+                    this.xhr.open(this.method, UriFactory.build(this.uri));
+                }
             } else {
+                console.log(UriFactory.build(this.uri));
+
                 this.xhr.open(this.method, UriFactory.build(this.uri));
             }
 
@@ -421,11 +371,7 @@ export class Request
         } else if (this.type === RequestType.URL_ENCODE) {
             this.xhr.send(this.queryfy(this.data));
         } else if (this.type === RequestType.FORM_DATA) {
-            if (this.method === RequestMethod.GET) {
-                this.xhr.send();
-            } else {
-                this.xhr.send(this.data);
-            }
+            this.xhr.send(this.data);
         }
     };
 };
