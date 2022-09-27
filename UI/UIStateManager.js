@@ -87,7 +87,7 @@ export class UIStateManager
                 element.scrollLeft = state.x;
                 element.scrollTop  = state.y;
 
-                element.scrollTo({ top: state.y, left: state.x })
+                element.scrollTo({ top: state.y, left: state.x });
 
                 element.addEventListener('scroll', function () {
                     window.localStorage.setItem('ui-state-' + this.id, JSON.stringify({ x: this.scrollLeft, y: this.scrollTop }));

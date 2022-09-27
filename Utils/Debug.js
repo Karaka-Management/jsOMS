@@ -60,6 +60,7 @@ const validatePage = function (url)
             const aHref              = document.querySelectorAll('a:not([alt]), a[href=""], a[href=" "], a[href="#"]');
             findings[url].href_empty = aHref.length;
 
+            /* eslint-disable max-len */
             // analyze inline on* function
             const onFunction    = document.querySelectorAll('[onafterprint], [onbeforeprint], [onbeforeunload], [onerror], [onhaschange], [onload], [onmessage], [onoffline], [ononline], [onpagehide], [onpageshow], [onpopstate], [onredo], [onresize], [onstorage], [onundo], [onunload], [onblur], [onchage], [oncontextmenu], [onfocus], [onformchange], [onforminput], [oninput], [oninvalid], [onreset], [onselect], [onsubmit], [onkeydown], [onkeypress], [onkeyup], [onclick], [ondblclick], [ondrag], [ondragend], [ondragenter], [ondragleave], [ondragover], [ondragstart], [ondrop], [onmousedown], [onmousemove], [onmouseout], [onmouseover], [onmouseup], [onmousewheel], [onscroll], [onabort], [oncanplay], [oncanplaythrough], [ondurationchange], [onemptied], [onended], [onerror], [onloadeddata], [onloadedmetadata], [onloadstart], [onpause], [onplay], [onplaying], [onprogress], [onratechange], [onreadystatechange], [onseeked], [onseeking], [onstalled], [onsuspend], [ontimeupdate], [onvolumechange], [onwaiting]');
             findings[url].js_on = onFunction.length;
@@ -71,6 +72,7 @@ const validatePage = function (url)
             // analyze invalid container-children relationship (e.g. empty containers, invalid children)
             const invalidContainerChildren           = document.querySelectorAll(':not(tr) > td, :not(tr) > th, colgroup *:not(col), :not(colgroup) > col, tr > :not(td):not(th), optgroup > :not(option), :not(select) > option, :not(fieldset) > legend, select > :not(option):not(optgroup), :not(select):not(optgroup) > option, table > *:not(thead):not(tfoot):not(tbody):not(tr):not(colgroup):not(caption)');
             findings[url].invalid_container_children = invalidContainerChildren.length;
+            /* eslint-enable max-len */
 
             // has inline styles
             const hasInlineStyles       = document.querySelectorAll('*[style]');

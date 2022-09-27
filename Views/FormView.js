@@ -775,7 +775,7 @@ export class FormView
         }
     };
 
-    getElementsToBind(e = null)
+    getElementsToBind (e = null)
     {
         const parent = e === null ? document : e;
 

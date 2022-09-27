@@ -95,7 +95,6 @@ export class Input
                 const response       = new Response(o);
                 const responseLength = response.count();
                 let tempResponse     = null;
-                let success          = null;
 
                 for (let k = 0; k < responseLength; ++k) {
                     tempResponse = response.getByIndex(k);

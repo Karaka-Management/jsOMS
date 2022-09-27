@@ -11,7 +11,13 @@ export function formSubmitAction (action, callback, id)
 {
     'use strict';
 
-    const submit = action.base === 'self' ? (action.selector === '' ? [document.getElementById(id)] : document.getElementById(id).querySelectorAll(action.selector)) : document.querySelectorAll(action.selector);
+    const submit = action.base === 'self'
+        ? (
+            action.selector === ''
+                ? [document.getElementById(id)]
+                : document.getElementById(id).querySelectorAll(action.selector)
+            )
+        : document.querySelectorAll(action.selector);
 
     if (!submit) {
         return;

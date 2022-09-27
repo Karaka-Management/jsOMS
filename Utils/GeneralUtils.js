@@ -23,7 +23,7 @@
      */
     jsOMS.watcher = (function ()
     {
-        var timer = 0;
+        var timer = 0; // eslint-disable-line no-var
         return function (callback, ms)
         {
             clearTimeout(timer);

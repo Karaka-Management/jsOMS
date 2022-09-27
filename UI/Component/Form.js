@@ -122,7 +122,7 @@ export class Form
         @todo: removed because sometimes it is already bound but bound in a wrong way (e.g. no success is defined)
         if (Object.prototype.hasOwnProperty.call(this.forms, id)) {
             return;
-        }*/
+        } */
 
         this.forms[id] = new FormView(id);
         const self     = this;
@@ -277,7 +277,10 @@ export class Form
                     /** @var {Element} dataOriginElement Element where the value data comes from  */
                     const dataOriginElement = tplValue.startsWith('http') || tplValue.startsWith('{')
                         ? newElements[i].firstElementChild // data comes from remote source
-                        : formElement; // data comes from the form (even if the api returns something after adding). What if remote returns a DB id? how do we add it? is this a @todo ? probably yes, maybe first use local data and then if remote data available replace local data?
+                        : formElement; // data comes from the form (even if the api returns something after adding).
+                                        // What if remote returns a DB id? how do we add it?
+                                        // is this a @todo ? probably yes.
+                                        // maybe first use local data and then if remote data available replace local data?
 
                     values = values.concat(
                             dataOriginElement.hasAttribute('data-tpl-value')
@@ -400,7 +403,10 @@ export class Form
                         /** @var {Element} dataOriginElement Element where the value data comes from  */
                         const dataOriginElement = tplValue.startsWith('http') || tplValue.startsWith('{')
                             ? newElements[i].firstElementChild // data comes from remote source
-                            : elementContainer; // data comes from the form (even if the api returns something after adding). What if remote returns a DB id? how do we add it? is this a @todo ? probably yes, maybe first use local data and then if remote data available replace local data?
+                            : elementContainer; // data comes from the form (even if the api returns something after adding).
+                                                // What if remote returns a DB id? how do we add it?
+                                                // is this a @todo ? probably yes.
+                                                // maybe first use local data and then if remote data available replace local data?
 
                         values = values.concat(
                                 dataOriginElement.hasAttribute('data-tpl-value')
@@ -468,7 +474,10 @@ export class Form
                         /** @var {Element} dataOriginElement Element where the value data comes from  */
                         const dataOriginElement = updateValue.startsWith('http') || updateValue.startsWith('{')
                             ? updateElements[i].firstElementChild // data comes from remote source
-                            : elementContainer; // data comes from the form (even if the api returns something after adding). What if remote returns a DB id? how do we add it? is this a @todo ? probably yes, maybe first use local data and then if remote data available replace local data?
+                            : elementContainer; // data comes from the form (even if the api returns something after adding).
+                                                // What if remote returns a DB id? how do we add it?
+                                                // is this a @todo ? probably yes.
+                                                // maybe first use local data and then if remote data available replace local data?
 
                         values = values.concat(
                             dataOriginElement.hasAttribute('data-tpl-value')
@@ -554,7 +563,10 @@ export class Form
                     /** @var {Element} dataOriginElement Element where the value data comes from  */
                     const dataOriginElement = updateValue.startsWith('http') || updateValue.startsWith('{')
                         ? updateElements[i].firstElementChild // data comes from remote source
-                        : externalFormElement; // data comes from the form (even if the api returns something after adding). What if remote returns a DB id? how do we add it? is this a @todo ? probably yes, maybe first use local data and then if remote data available replace local data?
+                        : externalFormElement; // data comes from the form (even if the api returns something after adding).
+                                                // What if remote returns a DB id? how do we add it?
+                                                // is this a @todo ? probably yes.
+                                                // maybe first use local data and then if remote data available replace local data?
 
                     values = values.concat(
                         dataOriginElement.hasAttribute('data-tpl-value')
@@ -591,21 +603,21 @@ export class Form
 
                 // show add button + hide update button + hide cancel button
                 const addButtons = self.forms[externalFormId].getAdd();
-                length           = addButtons.length;
+                let buttonLength = addButtons.length;
 
-                for (let i = 0; i < length; ++i) {
+                for (let i = 0; i < buttonLength; ++i) {
                     jsOMS.removeClass(addButtons[i], 'hidden');
                 }
 
                 const saveButtons = self.forms[externalFormId].getSave();
-                length            = saveButtons.length;
-                for (let i = 0; i < length; ++i) {
+                buttonLength      = saveButtons.length;
+                for (let i = 0; i < buttonLength; ++i) {
                     jsOMS.addClass(saveButtons[i], 'hidden');
                 }
 
                 const cancelButtons = self.forms[externalFormId].getCancel();
-                length              = cancelButtons.length;
-                for (let i = 0; i < length; ++i) {
+                buttonLength        = cancelButtons.length;
+                for (let i = 0; i < buttonLength; ++i) {
                     jsOMS.addClass(cancelButtons[i], 'hidden');
                 }
             }
@@ -636,7 +648,7 @@ export class Form
 
                 jsOMS.removeClass(element, 'hidden');
 
-                 elementContainer.parentNode.removeChild(elementContainer)
+                elementContainer.parentNode.removeChild(elementContainer);
             } else {
                 // handle external cancel
 
@@ -732,14 +744,14 @@ export class Form
                 }
 
                 const saveButtons = self.forms[id].getSave();
-                length            = saveButtons.length;
-                for (let i = 0; i < length; ++i) {
+                let buttonLength  = saveButtons.length;
+                for (let i = 0; i < buttonLength; ++i) {
                     jsOMS.removeClass(saveButtons[i], 'hidden');
                 }
 
                 const cancelButtons = self.forms[id].getCancel();
-                length              = cancelButtons.length;
-                for (let i = 0; i < length; ++i) {
+                buttonLength        = cancelButtons.length;
+                for (let i = 0; i < buttonLength; ++i) {
                     jsOMS.removeClass(cancelButtons[i], 'hidden');
                 }
             } else {
@@ -819,7 +831,7 @@ export class Form
         ) {
             jsOMS.preventAll(event);
             self.submit(self.forms[id], self.forms[id].getSubmit()[elementIndex]);
-        } else if ((elementIndex = '')) {
+        } else if (false) { // eslint-disable-line no-constant-condition
             // @todo: if table head input field in popups changes -> check if input empty -> deactivate -> checkbox : else activate checkbox
             // careful: the same checkbox is used for showing the filter popup. maybe create a separate checkbox, which only handles the highlighting if filter is defined.
             // this means popup active highlights filter icon AND different content checkbox also highlights filter
@@ -962,7 +974,7 @@ export class Form
 
         request.setData(data);
         request.setType(RequestType.FORM_DATA); // @todo: consider to allow different request type
-        request.setUri(action ? action : form.getAction());
+        request.setUri(action !== null ? action : form.getAction());
         request.setMethod(form.getMethod());
         request.setSuccess(function (xhr)
         {
@@ -1157,7 +1169,7 @@ export class Form
                     if (data[i].getAttribute('data-tpl-' + type).startsWith('http')
                         || data[i].getAttribute('data-tpl-' + type).startsWith('{')
                     ) {
-                        Form.populateRemoteUrls(type, data[i], path, remoteUrls);
+                        Form.populateRemoteUrls(matches[c], type, data[i], path, remoteUrls);
                     } else {
                         if (type === 'value') {
                             GeneralUI.setValueOfElement(matches[c], GeneralUI.getValueFromDataSource(data[i]));
@@ -1184,7 +1196,7 @@ export class Form
                 if (data[i].getAttribute('data-tpl-' + type).startsWith('http')
                     || data[i].getAttribute('data-tpl-' + type).startsWith('{')
                 ) {
-                    Form.populateRemoteUrls(type, data[i], path, remoteUrls);
+                    Form.populateRemoteUrls(matches[c], type, data[i], path, remoteUrls);
                 } else {
                     if (type === 'value') {
                         GeneralUI.setValueOfElement(matches[c], GeneralUI.getValueFromDataSource(data[i]));
@@ -1196,7 +1208,7 @@ export class Form
         }
     };
 
-    static populateRemoteUrls (type, data, path, remoteUrls)
+    static populateRemoteUrls (ele, type, data, path, remoteUrls)
     {
         const uri = data.getAttribute('data-tpl-' + type).startsWith('/')
             ? document.getElementsByTagName('base')[0].href
@@ -1208,7 +1220,7 @@ export class Form
 
         remoteUrls[uri + data.getAttribute('data-tpl-' + type)].push({
             path: path,
-            element: matches[c],
+            element: ele,
             type: type
         });
     };

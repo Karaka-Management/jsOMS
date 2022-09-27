@@ -324,7 +324,7 @@ export class Request
                 // GET request doesn't allow body/payload. Therefor we have to put the data into the uri
                 if (this.method === RequestMethod.GET) {
                     let url = this.uri;
-                    for (let pair of this.data.entries()) {
+                    for (const pair of this.data.entries()) {
                         url += '&' + pair[0] + '=' + pair[1];
                     }
 

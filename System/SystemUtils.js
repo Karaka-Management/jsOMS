@@ -29,15 +29,15 @@ export class SystemUtils
             return BrowserType.FIREFOX;
         } else if (Object.toString.call(window.HTMLElement).indexOf('Constructor') > 0) {
             return BrowserType.SAFARI;
-        } else if (/* @cc_on!@ */false || !!document.documentMode) {
+        } else if (/* @cc_on!@ */false || !!document.documentMode) { // eslint-disable-line no-extra-boolean-cast
             return BrowserType.IE;
-        } else if (!!window.StyleMedia) {
+        } else if (!!window.StyleMedia) { // eslint-disable-line no-extra-boolean-cast
             return BrowserType.EDGE;
-        } else if (!!window.chrome && !!window.chrome.webstore) {
+        } else if (!!window.chrome && !!window.chrome.webstore) { // eslint-disable-line no-extra-boolean-cast
             return BrowserType.CHROME;
         } else if (((typeof isChrome !== 'undefined' && isChrome)
                 || (typeof isOpera !== 'undefined' && isOpera))
-            && !!window.CSS
+            && !!window.CSS // eslint-disable-line no-extra-boolean-cast
         ) {
             return BrowserType.BLINK;
         }

@@ -67,7 +67,7 @@ export class ResponseManager
         ) {
             this.messages[key][request](data);
         } else if (typeof this.messages[key] !== 'undefined') {
-            this.messages[key][null](data);
+            this.messages[key].null(data);
         } else {
             jsOMS.Log.Logger.instance.warning('Undefined type: ' + key);
         }

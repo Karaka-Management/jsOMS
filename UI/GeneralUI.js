@@ -216,7 +216,7 @@ export class GeneralUI
         const length = e.length;
 
         for (let i = 0; i < length; ++i) {
-            new AdvancedInput(e[i], this.app.eventManager, this.app.uiManager.getDOMObserver());
+            new AdvancedInput(e[i], this.app.eventManager, this.app.uiManager.getDOMObserver()); // eslint-disable-line no-new
         }
     };
 
