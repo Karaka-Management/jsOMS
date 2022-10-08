@@ -129,7 +129,7 @@ export class Form
         let length     = 0;
 
         // bind form clicks
-        const toBind = this.forms[id].getElementsToBind();
+        const toBind       = this.forms[id].getElementsToBind();
         const toBindLength = toBind.length;
 
         for (let i = 0; i < toBindLength; ++i) {

@@ -119,8 +119,8 @@ export class GeneralUI
                         document.write(html);
                         document.close();
                         */
-
-                       window.omsApp.reInit(); // @todo: fix memory leak which most likely exists because of continous binding without removing binds
+                        // @todo: fix memory leak which most likely exists because of continous binding without removing binds
+                        window.omsApp.reInit();
                     })
                     .catch((error) => {
                         console.warn(error);
