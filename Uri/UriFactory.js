@@ -166,7 +166,7 @@ export class UriFactory
             + (typeof parsed.username !== 'undefined' ? parsed.username + ':' : '')
             + (typeof parsed.password !== 'undefined' ? parsed.password + '@' : '')
             + (typeof parsed.host !== 'undefined' ? parsed.host : '')
-            + (typeof parsed.port !== 'undefined' ? parsed.port : '')
+            + (typeof parsed.port !== 'undefined' ? ':' + parsed.port : '')
             + (typeof parsed.path !== 'undefined' ? parsed.path : '')
             + (typeof parsed.query !== 'undefined' ? '?' + pars.join('&') : '')
             + (typeof parsed.fragment !== 'undefined' ? '#' + fragments[fragments.length - 1] : '');
