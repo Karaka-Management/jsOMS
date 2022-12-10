@@ -406,6 +406,10 @@ export class Table
             const status    = checkbox.checked;
 
             for (let i = 0; i < rowLength; ++i) {
+                if (typeof rows[i].cells[columnId] === 'undefined') {
+                    break;
+                }
+
                 const box = rows[i].cells[columnId].querySelector('input[type=checkbox]');
 
                 if (box !== null) {
