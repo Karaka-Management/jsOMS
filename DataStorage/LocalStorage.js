@@ -9,15 +9,6 @@
 export class LocalStorage
 {
     /**
-     * @constructor
-     *
-     * @since 1.0.0
-     */
-    constructor ()
-    {
-    };
-
-    /**
      * Is local storage available?
      *
      * @return {boolean}

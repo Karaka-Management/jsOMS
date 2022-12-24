@@ -1,4 +1,6 @@
-import { NotificationMessage } from '../NotificationMessage.js';
+/**
+ * @typedef {import('../NotificationMessage.js').NotificationMessage} NotificationMessage
+ */
 
 /**
  * Browser notification.

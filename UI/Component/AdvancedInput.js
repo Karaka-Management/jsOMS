@@ -1,5 +1,8 @@
 import { Request } from '../../Message/Request/Request.js';
-import { EventManager } from '../../Event/EventManager.js';
+
+/**
+ * @typedef {import('../../Event/EventManager.js').EventManager} EventManager
+ */
 
 /**
  * Advanced input class.

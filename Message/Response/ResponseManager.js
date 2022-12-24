@@ -1,4 +1,6 @@
-import { Request } from '../Request/Request.js';
+/**
+ * @typedef {import('../Request/Request.js').Request} Request
+ */
 
 /**
  * Response manager class.

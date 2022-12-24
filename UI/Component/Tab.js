@@ -89,9 +89,9 @@ export class Tab
                 }
 
                 const fragments = fragmentString.split('&');
-                const index     = fragments.indexOf(this.getElementsByTagName('label')[0].getAttribute('for'));
 
                 /**
+                const index = fragments.indexOf(this.getElementsByTagName('label')[0].getAttribute('for'));
                 if (index > -1) {
                     fragments.splice(index, 1);
                 } */

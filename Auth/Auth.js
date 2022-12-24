@@ -1,7 +1,10 @@
-import { Account }       from '../Account/Account.js';
 import { Request }       from '../Message/Request/Request.js';
 import { RequestMethod } from '../Message/Request/RequestMethod.js';
 import { RequestType }   from '../Message/Request/RequestType.js';
+
+/**
+ * @typedef {import('../Account/Account.js').Account} Account
+ */
 
 /**
  * Auth class.

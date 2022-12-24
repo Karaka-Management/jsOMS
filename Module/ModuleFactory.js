@@ -9,15 +9,6 @@
 export class ModuleFactory
 {
     /**
-     * @constructor
-     *
-     * @since 1.0.0
-     */
-    constructor ()
-    {
-    };
-
-    /**
      * Get module instance.
      *
      * @param {string} module Module name

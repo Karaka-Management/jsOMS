@@ -306,11 +306,11 @@
      */
     jsOMS.watcher = (function ()
     {
-        var timer = 0;
+        let watcherTimer = 0;
         return function (callback, ms)
         {
-            clearTimeout(timer);
-            timer = setTimeout(callback, ms);
+            clearTimeout(watcherTimer);
+            watcherTimer = setTimeout(callback, ms);
         };
     })();
 

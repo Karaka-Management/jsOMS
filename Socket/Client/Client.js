@@ -26,11 +26,11 @@
     };
 
     jsOMS.Client.prototype.connect = function () {
-        var self        = this;
+        const self      = this;
         this.connection = new WebSocket(this.ip, this.protocol);
 
         this.connection.onmessage = function (event) {
-            var msg = JSON.parse(event.data);
+            const msg = JSON.parse(event.data);
 
             self.messages[msg.type](msg);
         };

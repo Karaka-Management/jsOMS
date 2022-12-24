@@ -1,7 +1,6 @@
 import { Request }             from '../Message/Request/Request.js';
 import { RequestMethod }       from '../Message/Request/RequestMethod.js';
 import { RequestType }         from '../Message/Request/RequestType.js';
-import { Response }            from '../Message/Response/Response.js';
 import { GeneralUI }           from './GeneralUI.js';
 
 /**

@@ -1,4 +1,6 @@
-import { Account } from './Account.js';
+/**
+ * @typedef {import('./Account.js').Account} Account
+ */
 
 /**
  * Account Manager.
