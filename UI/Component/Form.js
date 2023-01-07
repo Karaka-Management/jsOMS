@@ -56,6 +56,19 @@ export class Form
         return this.forms[id];
     };
 
+    hasChanges()
+    {
+        const length = this.forms.length;
+
+        for (let i = 0; i < length; ++i) {
+            if (this.forms[i].hasChange()) {
+                return true;
+            }
+        }
+
+        return false;
+    };
+
     /**
      * Is form ignored?
      *
@@ -136,6 +149,12 @@ export class Form
             toBind[i].addEventListener('click', function (event) {
                 self.formActions(self, event, id);
             });
+
+            if (!this.forms[id].isOnChange()) {
+                toBind[i].addEventListener('change', function (evnt) {
+                    window.omsApp.state.hasChanges = true;
+                });
+            }
         }
 
         const imgPreviews = this.forms[id].getImagePreviews();
@@ -154,6 +173,7 @@ export class Form
             onChangeContainer.addEventListener('change', function (event)
             {
                 jsOMS.preventAll(event);
+                window.omsApp.state.hasChanges = true;
 
                 const target = event.target.tagName.toLowerCase();
 
@@ -1053,6 +1073,7 @@ export class Form
             );
         });
 
+        window.omsApp.state.hasChanges = false;
         request.send();
 
         if (form.getFinally() !== null) {

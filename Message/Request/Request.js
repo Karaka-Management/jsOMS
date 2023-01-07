@@ -340,7 +340,10 @@ export class Request
 
             for (const p in this.requestHeader) {
                 if (Object.prototype.hasOwnProperty.call(this.requestHeader, p) && this.requestHeader[p] !== '') {
-                    this.xhr.setRequestHeader(p, this.requestHeader[p]);
+                    if (this.requestHeader[p] !== 'multipart/form-data') {
+                        // note: If not excluded for multipart/form-data you need to set the boundary= manually for php which is not wanted
+                        this.xhr.setRequestHeader(p, this.requestHeader[p]);
+                    }
                 }
             }
         }

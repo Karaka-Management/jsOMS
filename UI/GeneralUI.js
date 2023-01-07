@@ -1,6 +1,10 @@
 
 import { UriFactory }    from '../Uri/UriFactory.js';
 import { AdvancedInput } from './Component/AdvancedInput.js';
+import { NotificationLevel }   from '../Message/Notification/NotificationLevel.js';
+import { NotificationMessage } from '../Message/Notification/NotificationMessage.js';
+import { NotificationType }    from '../Message/Notification/NotificationType.js';
+
 
 /**
  * UI manager for handling basic ui elements.
@@ -100,7 +104,6 @@ export class GeneralUI
 
                 let uri = this.getAttribute('data-href');
                 uri     = uri === null ? this.getAttribute('href') : uri;
-                history.pushState({}, null, UriFactory.build(uri));
 
                 if (this.getAttribute('target') === '_blank'
                     || this.getAttribute(['data-target']) === '_blank'
@@ -109,18 +112,50 @@ export class GeneralUI
                     window.open(UriFactory.build(uri), '_blank');
                 } else {
                     // window.location = UriFactory.build(uri);
-
                     fetch(UriFactory.build(uri))
                     .then((response) => response.text())
                     .then((html) => {
-                        document.documentElement.innerHTML = html;
-                        /* This is not working as it reloads the page ?!
-                        document.open();
-                        document.write(html);
-                        document.close();
-                        */
-                        // @todo: fix memory leak which most likely exists because of continous binding without removing binds
-                        window.omsApp.reInit();
+                        if (window.omsApp.state.hasChanges) {
+                            let message = new NotificationMessage(NotificationLevel.WARNING, 'Unsaved changes', 'Do you want to continue?', true, true);
+                            message.primaryButton = {
+                                text: 'Yes',
+                                style: 'ok',
+                                callback: function () {
+                                    document.documentElement.innerHTML = html;
+                                    window.omsApp.state.hasChanges = false;
+                                    this.parentNode.remove();
+                                    history.pushState({}, null, UriFactory.build(uri));
+                                    /* This is not working as it reloads the page ?!
+                                    document.open();
+                                    document.write(html);
+                                    document.close();
+                                    */
+                                    // @todo: fix memory leak which most likely exists because of continous binding without removing binds
+                                    window.omsApp.reInit();
+                                },
+                            };
+                            message.secondaryButton = {
+                                text: 'No',
+                                style: 'error',
+                                callback: function () {
+                                    this.parentNode.remove();
+                                },
+                            };
+
+                            window.omsApp.notifyManager.send(message, NotificationType.APP_NOTIFICATION);
+                        } else {
+                            document.documentElement.innerHTML = html;
+                            window.omsApp.state.hasChanges = false;
+                            this.parentNode.remove();
+                            history.pushState({}, null, UriFactory.build(uri));
+                            /* This is not working as it reloads the page ?!
+                            document.open();
+                            document.write(html);
+                            document.close();
+                            */
+                            // @todo: fix memory leak which most likely exists because of continous binding without removing binds
+                            window.omsApp.reInit();
+                        }
                     })
                     .catch((error) => {
                         console.warn(error);

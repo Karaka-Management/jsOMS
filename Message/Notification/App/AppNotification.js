@@ -67,6 +67,20 @@ export class AppNotification
             output.querySelector('.log-msg-title').remove();
         }
 
+        if (!msg.primaryButton) {
+            output.querySelector('.primary-button').remove();
+        } else {
+            output.querySelector('.primary-button').innerHTML = msg.primaryButton.text;
+            output.querySelector('.primary-button').addEventListener('click', msg.primaryButton.callback);
+        }
+
+        if (!msg.secondaryButton) {
+            output.querySelector('.secondary-button').remove();
+        } else {
+            output.querySelector('.secondary-button').innerHTML = msg.secondaryButton.text;
+            output.querySelector('.secondary-button').addEventListener('click', msg.secondaryButton.callback);
+        }
+
         tpl.parentNode.appendChild(output);
 
         const logs             = document.getElementsByClassName('log-msg');

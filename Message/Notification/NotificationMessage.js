@@ -35,5 +35,8 @@ export class NotificationMessage
 
         /** @type {boolean} isSticky */
         this.isSticky = isSticky;
+
+        this.primaryButton = null;
+        this.secondaryButton = null;
     };
 };

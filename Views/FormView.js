@@ -56,6 +56,9 @@ export class FormView
         /** @type {string} action */
         this.action = '';
 
+        /** @type {bool} hasChanges */
+        this.hasChanges = false;
+
         this.bind();
     };
 
