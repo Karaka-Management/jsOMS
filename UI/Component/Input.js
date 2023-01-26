@@ -56,7 +56,7 @@ export class Input
 
         const type = input.type;
 
-        const removeContentButton = input.parentNode.querySelector('.fa-times');
+        const removeContentButton = input.parentNode.querySelector('.close');
         if (removeContentButton !== null
             && type !== 'submit' && type !== 'button') {
             removeContentButton.addEventListener('click', function () {

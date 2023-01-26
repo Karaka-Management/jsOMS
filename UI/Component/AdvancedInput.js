@@ -126,7 +126,7 @@ export class AdvancedInput
 
         observer.observe(this.tagElement, { childList: true, attributes: false, subtree: false });
         eventManager.attach(this.id + '-tags-childList', function (data) {
-            const removes       = data.target.querySelectorAll('.fa-times');
+            const removes       = data.target.querySelectorAll('.close');
             const removesLength = removes === null ? 0 : removes.length;
 
             if (removesLength < 1) {

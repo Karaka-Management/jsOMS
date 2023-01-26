@@ -108,6 +108,7 @@ export class GeneralUI
                 if (this.getAttribute('target') === '_blank'
                     || this.getAttribute(['data-target']) === '_blank'
                     || event.button === 1
+                    || uri.startsWith('https://')
                 ) {
                     window.open(UriFactory.build(uri), '_blank');
                 } else {
@@ -115,7 +116,7 @@ export class GeneralUI
                     fetch(UriFactory.build(uri))
                     .then((response) => response.text())
                     .then((html) => {
-                        if (window.omsApp.state.hasChanges) {
+                        if (window.omsApp.state && window.omsApp.state.hasChanges) {
                             let message = new NotificationMessage(NotificationLevel.WARNING, 'Unsaved changes', 'Do you want to continue?', true, true);
                             message.primaryButton = {
                                 text: 'Yes',
@@ -145,7 +146,11 @@ export class GeneralUI
                             window.omsApp.notifyManager.send(message, NotificationType.APP_NOTIFICATION);
                         } else {
                             document.documentElement.innerHTML = html;
-                            window.omsApp.state.hasChanges = false;
+
+                            if (window.omsApp.state) {
+                                window.omsApp.state.hasChanges = false;
+                            }
+
                             this.parentNode.remove();
                             history.pushState({}, null, UriFactory.build(uri));
                             /* This is not working as it reloads the page ?!

@@ -152,7 +152,9 @@ export class Form
 
             if (!this.forms[id].isOnChange()) {
                 toBind[i].addEventListener('change', function (evnt) {
-                    window.omsApp.state.hasChanges = true;
+                    if (window.omsApp.state) {
+                        window.omsApp.state.hasChanges = true;
+                    }
                 });
             }
         }
@@ -173,7 +175,9 @@ export class Form
             onChangeContainer.addEventListener('change', function (event)
             {
                 jsOMS.preventAll(event);
-                window.omsApp.state.hasChanges = true;
+                if (window.omsApp.state) {
+                    window.omsApp.state.hasChanges = true;
+                }
 
                 const target = event.target.tagName.toLowerCase();
 
@@ -1073,7 +1077,10 @@ export class Form
             );
         });
 
-        window.omsApp.state.hasChanges = false;
+        if (window.omsApp.state) {
+            window.omsApp.state.hasChanges = false;
+        }
+
         request.send();
 
         if (form.getFinally() !== null) {
