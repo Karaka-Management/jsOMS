@@ -68,17 +68,33 @@ export class AppNotification
         }
 
         if (!msg.primaryButton) {
-            output.querySelector('.primary-button').remove();
+            const primary = output.querySelector('.primary-button');
+
+            if (primary) {
+                primary.remove();
+            }
         } else {
-            output.querySelector('.primary-button').innerHTML = msg.primaryButton.text;
-            output.querySelector('.primary-button').addEventListener('click', msg.primaryButton.callback);
+            const primary = output.querySelector('.primary-button');
+
+            if (primary) {
+                primary.innerHTML = msg.primaryButton.text;
+                primary.addEventListener('click', msg.primaryButton.callback);
+            }
         }
 
         if (!msg.secondaryButton) {
-            output.querySelector('.secondary-button').remove();
+            const secondary = output.querySelector('.secondary-button');
+
+            if (secondary) {
+                secondary.remove();
+            }
         } else {
-            output.querySelector('.secondary-button').innerHTML = msg.secondaryButton.text;
-            output.querySelector('.secondary-button').addEventListener('click', msg.secondaryButton.callback);
+            const secondary = output.querySelector('.secondary-button');
+
+            if (secondary) {
+                secondary.innerHTML = msg.secondaryButton.text;
+                secondary.addEventListener('click', msg.secondaryButton.callback);
+            }
         }
 
         tpl.parentNode.appendChild(output);
