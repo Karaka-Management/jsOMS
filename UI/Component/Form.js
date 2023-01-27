@@ -56,7 +56,7 @@ export class Form
         return this.forms[id];
     };
 
-    hasChanges()
+    hasChanges ()
     {
         const length = this.forms.length;
 

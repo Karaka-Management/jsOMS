@@ -5,7 +5,6 @@ import { NotificationLevel }   from '../Message/Notification/NotificationLevel.j
 import { NotificationMessage } from '../Message/Notification/NotificationMessage.js';
 import { NotificationType }    from '../Message/Notification/NotificationType.js';
 
-
 /**
  * UI manager for handling basic ui elements.
  *
@@ -117,13 +116,21 @@ export class GeneralUI
                     .then((response) => response.text())
                     .then((html) => {
                         if (window.omsApp.state && window.omsApp.state.hasChanges) {
-                            let message = new NotificationMessage(NotificationLevel.WARNING, 'Unsaved changes', 'Do you want to continue?', true, true);
+                            const message = new NotificationMessage(
+                                NotificationLevel.WARNING,
+                                'Unsaved changes',
+                                'Do you want to continue?',
+                                true,
+                                true
+                            );
+
                             message.primaryButton = {
                                 text: 'Yes',
                                 style: 'ok',
                                 callback: function () {
                                     document.documentElement.innerHTML = html;
-                                    window.omsApp.state.hasChanges = false;
+                                    window.omsApp.state.hasChanges     = false;
+
                                     this.parentNode.remove();
                                     history.pushState({}, null, UriFactory.build(uri));
                                     /* This is not working as it reloads the page ?!
@@ -133,14 +140,15 @@ export class GeneralUI
                                     */
                                     // @todo: fix memory leak which most likely exists because of continous binding without removing binds
                                     window.omsApp.reInit();
-                                },
+                                }
                             };
+
                             message.secondaryButton = {
                                 text: 'No',
                                 style: 'error',
                                 callback: function () {
                                     this.parentNode.remove();
-                                },
+                                }
                             };
 
                             window.omsApp.notifyManager.send(message, NotificationType.APP_NOTIFICATION);
