@@ -20,7 +20,7 @@ export function requestAction (action, callback)
         callback(JSON.parse(xhr.responseText));
     });
 
-    if (typeof action.data !== 'undefined') {
+    if (typeof action.data !== 'undefined' && action.data !== null) {
         request.setData(action.data);
     }
 

@@ -630,14 +630,18 @@ export class FormView
 
         try {
             for (let i = 0; i < length; ++i) {
+                if (!elements[i].required && elements[i].value === '') {
+                    continue;
+                }
+
                 if ((elements[i].required && elements[i].value === '')
                     || (typeof elements[i].pattern !== 'undefined'
                         && elements[i].pattern !== ''
                         && !(new RegExp(elements[i].pattern)).test(elements[i].value))
-                        || (typeof elements[i].maxlength !== 'undefined' && elements[i].maxlength !== '' && elements[i].value.length > elements[i].maxlength)
-                        || (typeof elements[i].minlength !== 'undefined' && elements[i].minlength !== '' && elements[i].value.length < elements[i].minlength)
-                        || (typeof elements[i].max !== 'undefined' && elements[i].max !== '' && elements[i].value > elements[i].max)
-                        || (typeof elements[i].min !== 'undefined' && elements[i].min !== '' && elements[i].value < elements[i].min)
+                    || (typeof elements[i].maxlength !== 'undefined' && elements[i].maxlength !== '' && elements[i].value.length > elements[i].maxlength)
+                    || (typeof elements[i].minlength !== 'undefined' && elements[i].minlength !== '' && elements[i].value.length < elements[i].minlength)
+                    || (typeof elements[i].max !== 'undefined' && elements[i].max !== '' && elements[i].value > elements[i].max)
+                    || (typeof elements[i].min !== 'undefined' && elements[i].min !== '' && elements[i].value < elements[i].min)
                 ) {
                     return false;
                 }

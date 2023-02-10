@@ -1,3 +1,6 @@
+import { NotificationMessage } from '../../Message/Notification/NotificationMessage.js';
+import { NotificationType }    from '../../Message/Notification/NotificationType.js';
+
 /**
  * Notification message.
  *
@@ -7,31 +10,10 @@
  */
 export function notifyMessage (data)
 {
-    setTimeout(function ()
-    {
-        const notify  = document.createElement('div');
-        const h       = document.createElement('h1');
-        const inner   = document.createElement('div');
-        const title   = document.createTextNode(data.title);
-        const content = document.createTextNode(data.msg);
+    const msg = new NotificationMessage(data.level, data.title, data.msg);
+    msg.duration = 5000;
 
-        notify.id    = 'notify';
-        notify.class = data.level;
-        h.appendChild(title);
-        inner.appendChild(content);
-        notify.appendChild(h);
-        notify.appendChild(inner);
-        document.body.appendChild(notify);
-
-        if (data.stay <= 0) {
-            data.stay = 5000;
-        }
-
-        if (data.stay > 0) {
-            setTimeout(function ()
-            {
-                notify.parentElement.removeChild(notify);
-            }, data.stay);
-        }
-    }, parseInt(data.delay));
+    window.omsApp.notifyManager.send(
+        msg, NotificationType.APP_NOTIFICATION
+    );
 };

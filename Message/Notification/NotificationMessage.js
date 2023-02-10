@@ -38,5 +38,7 @@ export class NotificationMessage
 
         this.primaryButton   = null;
         this.secondaryButton = null;
+
+        this.duration = 3000;
     };
 };

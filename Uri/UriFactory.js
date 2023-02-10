@@ -215,14 +215,14 @@ export class UriFactory
         }
 
         let parsed = uri.replace(new RegExp('\{[\/#\?%@\.\$\!][a-zA-Z0-9_\\-#\.]*\}', 'g'), function (match) {
-            match = match.substr(1, match.length - 2);
+            match = match.substring(1, match.length - 1);
 
             if (toMatch !== null && Object.prototype.hasOwnProperty.call(toMatch, match)) {
                 return toMatch[match];
             } else if (typeof UriFactory.uri[match] !== 'undefined') {
                 return UriFactory.uri[match];
             } else if (match.indexOf('!') === 0) {
-                const e = document.querySelector(match.substr(1));
+                const e = document.querySelector(match.substring(1));
 
                 if (!e) {
                     return '';
@@ -241,11 +241,12 @@ export class UriFactory
 
                 return value;
             } else if (match.indexOf('?') === 0) {
-                return HttpUri.getUriQueryParameter(current.query, match.substr(1));
+                return HttpUri.getUriQueryParameter(current.query, match.substring(1));
             } else if (match === '#') {
                 return current.fragment;
             } else if (match.indexOf('#') === 0) {
-                const e = document.getElementById(match.substr(1));
+                const e = document.getElementById(match.substring(1));
+
                 if (e) {
                     if (e.tagName.toLowerCase() !== 'form') {
                         return e.value;

@@ -255,10 +255,15 @@ export class Form
                     ? document.querySelector(uiContainerName)
                     : formElement.querySelector(uiContainerName);
 
-                /** @var {HTMLElement} newElement New element to add  */
-                const newElement = uiContainer.querySelector(formElement.getAttribute('data-update-tpl')).content.cloneNode(true);
-
-                uiContainer.appendChild(newElement.firstElementChild);
+                if (formElement.getAttribute('data-update-tpl')) {
+                    /** @var {HTMLElement} newElement New element to add  */
+                    const newElement = uiContainer.querySelector(formElement.getAttribute('data-update-tpl')).content.cloneNode(true);
+                    uiContainer.appendChild(newElement.firstElementChild);
+                } else {
+                    /** @var {HTMLElement} newElement New element to add  */
+                    const newElement = uiContainer.querySelector(formElement.getAttribute('data-add-tpl')).content.cloneNode(true);
+                    uiContainer.appendChild(newElement.firstElementChild);
+                }
             } else {
                 // handle external add
 
@@ -1055,7 +1060,7 @@ export class Form
                         );
                     }
                 } catch (e) {
-                    window.omsApp.logger.log(e);
+                    Logger.instance.log(e);
 
                     Logger.instance.error('Invalid form response. \n'
                         + 'URL: ' + form.getAction() + '\n'

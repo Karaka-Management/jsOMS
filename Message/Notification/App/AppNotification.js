@@ -54,6 +54,12 @@ export class AppNotification
             return;
         }
 
+        switch (msg.status) {
+            case 0:
+                msg.status = NotificationLevel.OK;
+                break;
+        };
+
         const output = document.importNode(tpl.content, true);
         output.querySelector('.log-msg').classList.add('log-msg-status-' + msg.status);
         output.querySelector('.log-msg-content').innerHTML = msg.message;
@@ -112,6 +118,6 @@ export class AppNotification
             if (lastElementAdded !== null && lastElementAdded.parentNode !== null) {
                 lastElementAdded.parentNode.removeChild(lastElementAdded);
             }
-        }, 3000);
+        }, msg.duration);
     };
 };

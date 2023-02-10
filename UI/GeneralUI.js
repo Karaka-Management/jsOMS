@@ -196,12 +196,14 @@ export class GeneralUI
         const length = e.length;
 
         for (let i = 0; i < length; ++i) {
-            if (e[i].contentWindow.document.body !== null) {
-                e[i].height = e[i].contentWindow.document.body.scrollHeight + 25;
-            }
+            e[i].src = UriFactory.build(e[i].src);
 
             e[i].addEventListener('load', function () {
-                this.height = this.contentWindow.document.body.scrollHeight + 25;
+                const spinner = this.parentElement.getElementsByClassName('ispinner');
+
+                if (spinner.length > 0) {
+                    spinner[0].style.display = 'none';
+                }
             });
         }
     };

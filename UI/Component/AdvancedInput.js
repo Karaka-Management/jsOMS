@@ -87,23 +87,23 @@ export class AdvancedInput
              * @todo Karaka/jsOMS#62
              *  If the data for the input element is only locally defined the filter or sort should be done by the best match.
              */
-            if (e.keyCode === 27 || e.keyCode === 46 || e.keyCode === 8) {
+            if (e.code === 'Escape' || e.code === 'Delete' || e.code === 'Backspace') {
                 // handle esc, del to go back to input field
                 self.inputField.focus();
                 self.clearDataListSelection(self);
-            } else if (e.keyCode === 38) {
+            } else if (e.code === 'ArrowUp') {
                 // handle up-click
                 if (document.activeElement.previousElementSibling !== null) {
                     self.clearDataListSelection(self);
                     self.selectOption(document.activeElement.previousElementSibling);
                 }
-            } else if (e.keyCode === 40) {
+            } else if (e.code === 'ArrowDown') {
                 // handle down-click
                 if (document.activeElement.nextElementSibling !== null) {
                     self.clearDataListSelection(self);
                     self.selectOption(document.activeElement.nextElementSibling);
                 }
-            } else if (e.keyCode === 13 || e.keyCode === 9) {
+            } else if (e.code === 'Enter' || e.code === 'Tab') {
                 self.clearDataListSelection(self);
                 self.addToResultList(self, document.activeElement);
             }
