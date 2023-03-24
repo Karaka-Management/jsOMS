@@ -14,7 +14,7 @@ import { UriFactory }          from '../../Uri/UriFactory.js';
  * Form manager class.
  *
  * @copyright Dennis Eichhorn
- * @license   OMS License 1.0
+ * @license   OMS License 2.0
  * @version   1.0.0
  * @since     1.0.0
  */
@@ -1001,6 +1001,8 @@ export class Form
         const request = new Request();
         const self    = this;
 
+        const redirect = form.getFormElement().getAttribute('data-redirect');
+
         request.setData(data);
         request.setType(RequestType.FORM_DATA); // @todo: consider to allow different request type
         request.setUri(action !== null ? action : form.getAction());
@@ -1050,8 +1052,32 @@ export class Form
                     const response    = new Response(o);
                     let successInject = null;
 
+
+
                     if ((successInject = form.getSuccess()) !== null) {
                         successInject(response);
+                    } else if (redirect !== null) {
+                        fetch(UriFactory.build(redirect))
+                        .then((response) => response.text())
+                        .then((html) => {
+                            document.documentElement.innerHTML = html;
+
+                            if (window.omsApp.state) {
+                                window.omsApp.state.hasChanges = false;
+                            }
+
+                            history.pushState({}, null, UriFactory.build(redirect));
+                            /* This is not working as it reloads the page ?!
+                            document.open();
+                            document.write(html);
+                            document.close();
+                            */
+                            // @todo: fix memory leak which most likely exists because of continous binding without removing binds
+                            window.omsApp.reInit();
+                        })
+                        .catch((error) => {
+                            console.warn(error);
+                        });
                     } else if (typeof response.get('type') !== 'undefined') {
                         self.app.responseManager.run(response.get('type'), response.get(), null);
                     } else if (typeof o.status !== 'undefined' && o.status !== NotificationLevel.HIDDEN) {

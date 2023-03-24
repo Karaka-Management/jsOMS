@@ -6,7 +6,7 @@ import { ResponseType } from '../../Message/Response/ResponseType.js';
  * Table manager class.
  *
  * @copyright Dennis Eichhorn
- * @license   OMS License 1.0
+ * @license   OMS License 2.0
  * @version   1.0.0
  * @since     1.0.0
  *

@@ -10,7 +10,7 @@ import { NotificationType }    from '../../Message/Notification/NotificationType
  */
 export function notifyMessage (data)
 {
-    const msg = new NotificationMessage(data.level, data.title, data.msg);
+    const msg    = new NotificationMessage(data.level, data.title, data.msg);
     msg.duration = 5000;
 
     window.omsApp.notifyManager.send(
