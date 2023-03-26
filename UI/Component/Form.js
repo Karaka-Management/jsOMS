@@ -1052,8 +1052,6 @@ export class Form
                     const response    = new Response(o);
                     let successInject = null;
 
-
-
                     if ((successInject = form.getSuccess()) !== null) {
                         successInject(response);
                     } else if (redirect !== null) {
@@ -1099,13 +1097,25 @@ export class Form
 
         request.setResultCallback(0, function (xhr)
         {
-            self.app.notifyManager.send(
-                new NotificationMessage(
-                    NotificationLevel.ERROR,
-                    'Failure',
-                    'Some failure happened'
-                ), NotificationType.APP_NOTIFICATION
-            );
+            try {
+                const o           = JSON.parse(xhr.response)[0];
+                const response    = new Response(o);
+
+                if (typeof response.get('type') !== 'undefined') {
+                } else if (typeof o.status !== 'undefined' && o.status !== NotificationLevel.HIDDEN) {
+                    self.app.notifyManager.send(
+                        new NotificationMessage(o.status, o.title, o.message), NotificationType.APP_NOTIFICATION
+                    );
+                }
+            } catch (e) {
+                self.app.notifyManager.send(
+                    new NotificationMessage(
+                        NotificationLevel.ERROR,
+                        'Failure',
+                        'Some failure happened'
+                    ), NotificationType.APP_NOTIFICATION
+                );
+            }
         });
 
         if (window.omsApp.state) {
