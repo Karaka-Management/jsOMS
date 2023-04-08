@@ -34,7 +34,7 @@ export class Response
      */
     get (id = null)
     {
-        return id === null ? this.responses : this.responses[id];
+        return id === null ? this.responses : (typeof this.responses[id] === 'undefined' ? null : this.responses[id]);
     };
 
     /**

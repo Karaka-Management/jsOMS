@@ -215,6 +215,11 @@ export class HttpUri
         this.set(this.uri);
     };
 
+    getRootPath ()
+    {
+        return this.root;
+    }
+
     /**
      * Get Uri base
      *

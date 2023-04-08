@@ -105,15 +105,21 @@ export class GeneralUI
                 uri     = uri === null ? this.getAttribute('href') : uri;
 
                 if (this.getAttribute('target') === '_blank'
-                    || this.getAttribute(['data-target']) === '_blank'
+                    || this.getAttribute('data-target') === '_blank'
                     || event.button === 1
                     || uri.startsWith('https://')
                 ) {
                     window.open(UriFactory.build(uri), '_blank');
+                } else if (this.getAttribute('data-redirect') !== null) {
+                    uri = window.omsApp.request.getRootPath() + uri;
+                    window.location.assign(uri);
                 } else {
                     // window.location = UriFactory.build(uri);
+                    // @todo : consider to implement the line above again. why was it removed?
+                    uri = window.omsApp.request.getRootPath() + uri;
+
                     fetch(UriFactory.build(uri))
-                    .then((response) => response.text())
+                    .then (response => response.text())
                     .then((html) => {
                         if (window.omsApp.state && window.omsApp.state.hasChanges) {
                             const message = new NotificationMessage(
@@ -167,6 +173,9 @@ export class GeneralUI
                             */
                             // @todo: fix memory leak which most likely exists because of continous binding without removing binds
                             window.omsApp.reInit();
+
+                            const event = new Event('DOMContentLoaded');
+                            window.dispatchEvent(event);
                         }
                     })
                     .catch((error) => {

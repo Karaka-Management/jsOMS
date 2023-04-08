@@ -1076,7 +1076,7 @@ export class Form
                         .catch((error) => {
                             console.warn(error);
                         });
-                    } else if (typeof response.get('type') !== 'undefined') {
+                    } else if (response.get('type') !== null) {
                         self.app.responseManager.run(response.get('type'), response.get(), null);
                     } else if (typeof o.status !== 'undefined' && o.status !== NotificationLevel.HIDDEN) {
                         self.app.notifyManager.send(
@@ -1098,10 +1098,11 @@ export class Form
         request.setResultCallback(0, function (xhr)
         {
             try {
-                const o           = JSON.parse(xhr.response)[0];
-                const response    = new Response(o);
+                const o        = JSON.parse(xhr.response)[0];
+                const response = new Response(o);
 
-                if (typeof response.get('type') !== 'undefined') {
+                if (response.get('type') !== null) {
+                    console.log(response.get('type'));
                 } else if (typeof o.status !== 'undefined' && o.status !== NotificationLevel.HIDDEN) {
                     self.app.notifyManager.send(
                         new NotificationMessage(o.status, o.title, o.message), NotificationType.APP_NOTIFICATION
