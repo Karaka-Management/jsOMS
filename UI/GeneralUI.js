@@ -119,7 +119,7 @@ export class GeneralUI
                     uri = window.omsApp.request.getRootPath() + uri;
 
                     fetch(UriFactory.build(uri))
-                    .then (response => response.text())
+                    .then(response => response.text())
                     .then((html) => {
                         if (window.omsApp.state && window.omsApp.state.hasChanges) {
                             const message = new NotificationMessage(
