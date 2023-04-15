@@ -118,6 +118,11 @@ export class GeneralUI
                     // @todo : consider to implement the line above again. why was it removed?
                     uri = window.omsApp.request.getRootPath() + uri;
 
+                    window.location.assign(uri);
+                    console.log('test');
+
+                    /*
+                    @todo: Commented out until ObserverMutation is implemented
                     fetch(UriFactory.build(uri))
                     .then(response => response.text())
                     .then((html) => {
@@ -139,11 +144,10 @@ export class GeneralUI
 
                                     this.parentNode.remove();
                                     history.pushState({}, null, UriFactory.build(uri));
-                                    /* This is not working as it reloads the page ?!
-                                    document.open();
-                                    document.write(html);
-                                    document.close();
-                                    */
+                                    // This is not working as it reloads the page ?!
+                                    // document.open();
+                                    // document.write(html);
+                                    // document.close();
                                     // @todo: fix memory leak which most likely exists because of continous binding without removing binds
                                     window.omsApp.reInit();
                                 }
@@ -166,11 +170,10 @@ export class GeneralUI
                             }
 
                             history.pushState({}, null, UriFactory.build(uri));
-                            /* This is not working as it reloads the page ?!
-                            document.open();
-                            document.write(html);
-                            document.close();
-                            */
+                            // This is not working as it reloads the page ?!
+                            // document.open();
+                            // document.write(html);
+                            // document.close();
                             // @todo: fix memory leak which most likely exists because of continous binding without removing binds
                             window.omsApp.reInit();
 
@@ -181,6 +184,7 @@ export class GeneralUI
                     .catch((error) => {
                         console.warn(error);
                     });
+                    */
                 }
             });
         }
