@@ -111,15 +111,13 @@ export class GeneralUI
                 ) {
                     window.open(UriFactory.build(uri), '_blank');
                 } else if (this.getAttribute('data-redirect') !== null) {
-                    uri = window.omsApp.request.getRootPath() + uri;
-                    window.location.assign(uri);
+                    uri = jsOMS.rtrim(window.omsApp.request.getRootPath(), '/') + '/' + jsOMS.ltrim(uri, '/');
+                    window.location.href = uri;
                 } else {
                     // window.location = UriFactory.build(uri);
                     // @todo : consider to implement the line above again. why was it removed?
-                    uri = window.omsApp.request.getRootPath() + uri;
-
-                    window.location.assign(uri);
-                    console.log('test');
+                    uri = jsOMS.rtrim(window.omsApp.request.getRootPath(), '/') + '/' + jsOMS.ltrim(uri, '/');
+                    window.location.href = uri;
 
                     /*
                     @todo: Commented out until ObserverMutation is implemented

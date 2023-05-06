@@ -199,6 +199,8 @@ export class Form
         if ((elementIndex = Array.from(self.forms[id].getRemove()).indexOf(event.target)) !== -1) {
             // handle remove
 
+            jsOMS.preventAll(event);
+
             const remove   = self.forms[id].getRemove()[elementIndex];
             const callback = function () {
                 /**
@@ -235,6 +237,8 @@ export class Form
             }
         } else if ((elementIndex = Array.from(self.forms[id].getAdd()).indexOf(event.target)) !== -1) {
             // handle add
+
+            jsOMS.preventAll(event);
 
             if (!self.forms[id].isValid()) {
                 return;
@@ -357,11 +361,16 @@ export class Form
                     Form.setDataFromRemoteUrls(remoteUrls);
                 });
 
+                // submit to api
+                self.submit(self.forms[id], self.forms[id].getAdd()[elementIndex]);
+
                 // reset the form after adding an element
                 self.forms[id].resetValues();
             }
         } else if ((elementIndex = Array.from(self.forms[id].getSave()).indexOf(event.target)) !== -1) {
             // handle save button
+
+            jsOMS.preventAll(event);
 
             const mainForm = document.querySelector('[data-update-form="' + id  + '"');
             if (mainForm === null) {
@@ -618,7 +627,7 @@ export class Form
                 // update text data in form (overwrite text)
                 Form.setDataInElement('text', updateElements, texts, remoteUrls);
 
-                // todo bind failure here, if failure do cancel, if success to remove edit template
+                // @todo: bind failure here, if failure do cancel, if success to remove edit template
                 self.forms[externalFormId].setSuccess(function () {
                     // overwrite old values from remote response
                     Form.setDataFromRemoteUrls(remoteUrls);
@@ -626,6 +635,9 @@ export class Form
 
                 // clear element id after saving
                 externalFormElement.setAttribute('data-id', '');
+
+                // submit to api
+                self.submit(self.forms[externalFormId], self.forms[externalFormId].getSave()[elementIndex]);
 
                 // reset form values to default values after performing the update
                 self.forms[externalFormId].resetValues();
@@ -653,6 +665,8 @@ export class Form
         } else if ((elementIndex = Array.from(self.forms[id].getCancel()).indexOf(event.target)) !== -1) {
             // handle cancel
             // @todo currently only handling update cancel, what about add cancel?
+
+            jsOMS.preventAll(event);
 
             const ele = document.getElementById(id);
             if (ele.getAttribute('data-update-form') === null && ele.tagName.toLowerCase() !== 'form') {
@@ -713,6 +727,7 @@ export class Form
         } else if ((elementIndex = Array.from(self.forms[id].getUpdate()).indexOf(event.target)) !== -1) {
             // handle update
             // this doesn't handle setting new values but populating the update form
+            jsOMS.preventAll(event);
 
             if (document.getElementById(id).getAttribute('data-update-form') === null) {
                 // handle inline update
@@ -920,16 +935,20 @@ export class Form
         let counter   = 0;
 
         let action = null;
-
         if (button !== null) {
             action = button.getAttribute('formaction');
+        }
+
+        let method = null;
+        if (button !== null) {
+            method = button.getAttribute('formmethod');
         }
 
         // Register normal form behavior
         if (!this.app.eventManager.isAttached(form.getId())) {
             this.app.eventManager.attach(form.getId(), function ()
             {
-                self.submitForm(form, action, container);
+                self.submitForm(form, action, method, container);
             }, true);
         }
 
@@ -972,7 +991,7 @@ export class Form
      *
      * @since 1.0.0
      */
-    submitForm (form, action = null, container = null)
+    submitForm (form, action = null, method = null, container = null)
     {
         const data = form.getData(container);
 
@@ -989,6 +1008,7 @@ export class Form
             return;
         }
 
+        // Avoid multiple submits
         if (form.getMethod() !== RequestMethod.GET
             && Math.abs(Date.now() - form.getLastSubmit()) < 500
         ) {
@@ -1006,7 +1026,7 @@ export class Form
         request.setData(data);
         request.setType(RequestType.FORM_DATA); // @todo: consider to allow different request type
         request.setUri(action !== null ? action : form.getAction());
-        request.setMethod(form.getMethod());
+        request.setMethod(method !== null ? method : form.getMethod());
         request.setSuccess(function (xhr)
         {
             window.omsApp.logger.log(xhr.response);
