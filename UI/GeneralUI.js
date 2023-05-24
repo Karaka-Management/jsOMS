@@ -107,7 +107,7 @@ export class GeneralUI
                 if (this.getAttribute('target') === '_blank'
                     || this.getAttribute('data-target') === '_blank'
                     || event.button === 1
-                    || uri.startsWith('https://')
+                    || uri.indexOf('://') > 0
                 ) {
                     window.open(UriFactory.build(uri), '_blank');
                 } else if (this.getAttribute('data-redirect') !== null) {
@@ -294,50 +294,39 @@ export class GeneralUI
     {
         if (src.hasAttribute('data-value')) {
             src.setAttribute('data-value', value);
+
+            return;
         }
 
-        switch (src.tagName.toLowerCase()) {
-            case 'div':
-            case 'span':
-            case 'pre':
-            case 'article':
-            case 'section':
-            case 'h1':
-                if (src.hasAttribute('data-tpl-text')) {
-                    break; // prevent overwriting setTextOfElement
+        const tagName = src.tagName.toLowerCase();
+        if (tagName === 'input') {
+            if (src.type === 'radio') {
+                src.checked = false;
+                if (src.value === value) {
+                    src.checked = true;
                 }
-
-                src.innerHTML = jsOMS.htmlspecialchars_encode(value);
-                break;
-            case 'select': {
-                const optionLength = src.options.length;
-                for (let i = 0; i < optionLength; ++i) {
-                    if (src.options[i].value === value) {
-                        src.options[i].selected = true;
-
-                        break;
-                    }
+            } else if (src.type === 'checkbox') {
+                src.checked  = false;
+                const values = value.split(',');
+                if (values.includes(src.value)) {
+                    src.checked = true;
                 }
-
-                break;
+            } else {
+                src.value = value;
             }
-            case 'input':
-                if (src.type === 'radio') {
-                    src.checked = false;
-                    if (src.value === value) {
-                        src.checked = true;
-                    }
-                } else if (src.type === 'checkbox') {
-                    src.checked  = false;
-                    const values = value.split(',');
-                    if (values.includes(src.value)) {
-                        src.checked = true;
-                    }
-                }
+        } else if (tagName === 'select') {
+            const optionLength = src.options.length;
+            for (let i = 0; i < optionLength; ++i) {
+                if (src.options[i].value === value) {
+                    src.options[i].selected = true;
 
-                break;
-            default:
-                src.value = jsOMS.htmlspecialchars_decode(value);
+                    break;
+                }
+            }
+        } else if (src.getAttribute('value') !== null) {
+            src.value = jsOMS.htmlspecialchars_decode(value);
+        } else {
+            src.innerHTML = value;
         }
     };
 
@@ -353,24 +342,17 @@ export class GeneralUI
      */
     static setTextOfElement (src, value)
     {
-        switch (src.tagName.toLowerCase()) {
-            case 'select':
-                break;
-            case 'div':
-            case 'td':
-            case 'span':
-            case 'pre':
-            case 'article':
-            case 'section':
-                src.innerHTML = value;
-                break;
-            case 'h1':
-                src.innerHTML = jsOMS.htmlspecialchars_encode(value);
-                break;
-            default:
-                if (src.value === '') {
-                    src.value = jsOMS.htmlspecialchars_decode(value);
-                }
+        const tagName = src.tagName.toLowerCase();
+        if (tagName === 'h1') {
+            src.innerHTML = jsOMS.htmlspecialchars_encode(value);
+        } else if (tagName === 'select') {
+            return;
+        } else if (src.getAttribute('value') !== null) {
+            if (src.value === '') {
+                src.value = jsOMS.htmlspecialchars_decode(value);
+            }
+        } else {
+            src.innerHTML = value;
         }
     };
 
@@ -389,31 +371,27 @@ export class GeneralUI
             return src.getAttribute('data-value');
         }
 
-        switch (src.tagName.toLowerCase()) {
-            case 'td':
-            case 'div':
-            case 'span':
-            case 'pre':
-            case 'article':
-            case 'section':
-            case 'h1':
-                return src.innerText.trim(' ');
-            default:
-                if (src.getAttribute('type') === 'radio') {
-                    const checked = document.querySelector('input[type=radio][name="' + src.name + '"]:checked');
+        const tagName = src.tagName.toLowerCase();
+        if (tagName === 'input' || src.getAttribute('value') !== null) {
+            if (src.getAttribute('type') === 'radio') {
+                const checked = document.querySelector('input[type=radio][name="' + src.name + '"]:checked');
 
-                    if (checked === null) {
-                        return '';
-                    }
-
-                    src = checked;
-                } else if (src.getAttribute('type') === 'checkbox') {
-                    if (!src.checked) {
-                        return '';
-                    }
+                if (checked === null) {
+                    return '';
                 }
 
-                return src.value;
+                src = checked;
+            } else if (src.getAttribute('type') === 'checkbox') {
+                if (!src.checked) {
+                    return '';
+                }
+            }
+
+            return src.value;
+        } else if (tagName === 'select') {
+            return src.options[src.selectedIndex].value;
+        } else {
+            return src.innerText.trim(' ');
         }
     };
 
@@ -428,37 +406,31 @@ export class GeneralUI
      */
     static getTextFromDataSource (src)
     {
-        switch (src.tagName.toLowerCase()) {
-            case 'td':
-            case 'div':
-            case 'span':
-            case 'pre':
-            case 'article':
-            case 'section':
-            case 'h1':
-                return src.innerHTML.trim(' ');
-            case 'select':
-                return src.options[src.selectedIndex].text;
-            case 'input':
-                if (src.getAttribute('type') === 'radio') {
-                    const checked = document.querySelector('input[type=radio][name="' + src.name + '"]:checked');
+        const tagName = src.tagName.toLowerCase();
+        if (tagName === 'input') {
+            if (src.getAttribute('type') === 'radio') {
+                const checked = document.querySelector('input[type=radio][name="' + src.name + '"]:checked');
 
-                    if (checked === null) {
-                        return '';
-                    }
-
-                    return document.querySelector('label[for="' + checked.id + '"]').innerText.trim(' ');
-                } else if (src.getAttribute('type') === 'checkbox') {
-                    if (!src.checked) {
-                        return '';
-                    }
-
-                    return document.querySelector('label[for="' + src.id + '"]').innerText.trim(' ');
+                if (checked === null) {
+                    return '';
                 }
 
-                return src.value;
-            default:
-                return src.value;
+                return document.querySelector('label[for="' + checked.id + '"]').innerText.trim(' ');
+            } else if (src.getAttribute('type') === 'checkbox') {
+                if (!src.checked) {
+                    return '';
+                }
+
+                return document.querySelector('label[for="' + src.id + '"]').innerText.trim(' ');
+            }
+
+            return src.value;
+        } else if (tagName === 'select') {
+            return src.options[src.selectedIndex].text;
+        } else if (src.getAttribute('value') !== null) {
+            return src.value;
+        } else {
+            return src.innerHTML.trim(' ');
         }
     };
 };

@@ -533,8 +533,10 @@ export class FormView
             } else {
                 if (typeof elements[i].value !== 'undefined') {
                     value = elements[i].value;
-                } else if (typeof elements[i].getAttribute('data-value') !== 'undefined') {
+                } else if (elements[i].getAttribute('data-value') !== null) {
                     value = elements[i].getAttribute('data-value');
+                } else {
+                    value = elements[i].innerHTML;
                 }
             }
 
@@ -587,6 +589,10 @@ export class FormView
             if (elements[i].getAttribute('data-value') !== null) {
                 elements[i].setAttribute('data-value', '');
             }
+
+            if (elements[i].getAttribute('data-name') !== null) {
+                elements[i].innerHTML = '';
+            }
         }
     };
 
@@ -632,9 +638,7 @@ export class FormView
             for (let i = 0; i < length; ++i) {
                 if (!elements[i].required && elements[i].value === '') {
                     continue;
-                }
-
-                if ((elements[i].required && elements[i].value === '')
+                }else if ((elements[i].required && elements[i].value === '')
                     || (typeof elements[i].pattern !== 'undefined'
                         && elements[i].pattern !== ''
                         && !(new RegExp(elements[i].pattern)).test(elements[i].value))
@@ -705,10 +709,10 @@ export class FormView
     {
         if (e.getAttribute('name') !== null) {
             return e.getAttribute('name');
-        } else if (e.getAttribute('id') !== null) {
-            return e.getAttribute('id');
         } else if (e.getAttribute('data-name') !== null) {
             return e.getAttribute('data-name');
+        } else if (e.getAttribute('id') !== null) {
+            return e.getAttribute('id');
         } else if (e.getAttribute('type') !== null) {
             return e.getAttribute('type');
         }
