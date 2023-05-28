@@ -1,5 +1,6 @@
 tests/jasmin*
 vendor
+Build
 .vscode
 *.cache
 .directory
