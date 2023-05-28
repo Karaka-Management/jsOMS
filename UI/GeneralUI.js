@@ -111,12 +111,12 @@ export class GeneralUI
                 ) {
                     window.open(UriFactory.build(uri), '_blank');
                 } else if (this.getAttribute('data-redirect') !== null) {
-                    uri = jsOMS.rtrim(window.omsApp.request.getRootPath(), '/') + '/' + jsOMS.ltrim(uri, '/');
+                    uri                  = jsOMS.rtrim(window.omsApp.request.getRootPath(), '/') + '/' + jsOMS.ltrim(uri, '/');
                     window.location.href = uri;
                 } else {
                     // window.location = UriFactory.build(uri);
                     // @todo : consider to implement the line above again. why was it removed?
-                    uri = jsOMS.rtrim(window.omsApp.request.getRootPath(), '/') + '/' + jsOMS.ltrim(uri, '/');
+                    uri                  = jsOMS.rtrim(window.omsApp.request.getRootPath(), '/') + '/' + jsOMS.ltrim(uri, '/');
                     window.location.href = uri;
 
                     /*

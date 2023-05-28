@@ -567,7 +567,7 @@ export class Form
 
     formActionSaveExternal(self, event, id, elementIndex)
     {
-        const mainForm = document.querySelector('[data-update-form="' + id  + '"');
+        const mainForm       = document.querySelector('[data-update-form="' + id  + '"');
         const externalFormId = id;
         id                   = mainForm.getAttribute('id');
 
@@ -705,7 +705,7 @@ export class Form
         const uiContainerName = formElement.getAttribute('data-ui-container');
 
         /** @var {HTMLElement} uiContainer Container which holds all elements (e.g. div, tbody) */
-       const uiContainer = uiContainerName.charAt(0) === '#'
+        const uiContainer = uiContainerName.charAt(0) === '#'
            ? document.querySelector(uiContainerName)
            : formElement.querySelector(uiContainerName);
 
@@ -713,11 +713,11 @@ export class Form
         const elementContainer = event.target.closest(formElement.getAttribute('data-ui-element'));
 
         /** @var {Element} elementContainer Original element */
-       const element = uiContainer.querySelector('.hidden[data-id="' + elementContainer.getAttribute('data-id') + '"]');
+        const element = uiContainer.querySelector('.hidden[data-id="' + elementContainer.getAttribute('data-id') + '"]');
 
-       jsOMS.removeClass(element, 'hidden');
+        jsOMS.removeClass(element, 'hidden');
 
-       elementContainer.parentNode.removeChild(elementContainer);
+        elementContainer.parentNode.removeChild(elementContainer);
     }
 
     formActionCancelExternal(self, event, id, elementIndex)
