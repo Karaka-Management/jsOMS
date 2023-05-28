@@ -206,7 +206,10 @@ export class GeneralUI
         const length = e.length;
 
         for (let i = 0; i < length; ++i) {
-            e[i].src = UriFactory.build(e[i].src);
+            if (e[i].getAttribute('data-src') !== null) {
+                // prevent double loading
+                e[i].src = UriFactory.build(e[i].getAttribute('data-src'));
+            }
 
             e[i].addEventListener('load', function () {
                 const spinner = this.parentElement.getElementsByClassName('ispinner');
