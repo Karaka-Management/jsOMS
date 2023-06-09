@@ -107,17 +107,18 @@ export class GeneralUI
                 if (this.getAttribute('target') === '_blank'
                     || this.getAttribute('data-target') === '_blank'
                     || event.button === 1
-                    || uri.indexOf('://') > 0
                 ) {
                     window.open(UriFactory.build(uri), '_blank');
                 } else if (this.getAttribute('data-redirect') !== null) {
-                    uri                  = jsOMS.rtrim(window.omsApp.request.getRootPath(), '/') + '/' + jsOMS.ltrim(uri, '/');
-                    window.location.href = uri;
+                    window.location.href = uri.indexOf('://') > 0
+                        ? uri
+                        : jsOMS.rtrim(window.omsApp.request.getRootPath(), '/') + '/' + jsOMS.ltrim(uri, '/');
                 } else {
                     // window.location = UriFactory.build(uri);
                     // @todo : consider to implement the line above again. why was it removed?
-                    uri                  = jsOMS.rtrim(window.omsApp.request.getRootPath(), '/') + '/' + jsOMS.ltrim(uri, '/');
-                    window.location.href = uri;
+                    window.location.href = uri.indexOf('://') > 0
+                        ? uri
+                        : jsOMS.rtrim(window.omsApp.request.getRootPath(), '/') + '/' + jsOMS.ltrim(uri, '/');
 
                     /*
                     @todo: Commented out until ObserverMutation is implemented
