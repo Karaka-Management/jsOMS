@@ -193,7 +193,7 @@ export class Form
         }
     };
 
-    formActionRemove(self, event, id, elementIndex)
+    formActionRemove (self, event, id, elementIndex)
     {
         jsOMS.preventAll(event);
 
@@ -237,7 +237,7 @@ export class Form
         }
     }
 
-    formActionAdd(self, event, id, elementIndex)
+    formActionAdd (self, event, id, elementIndex)
     {
         jsOMS.preventAll(event);
 
@@ -252,7 +252,7 @@ export class Form
         }
     }
 
-    formActionAddInline(self, event, id, elementIndex)
+    formActionAddInline (self, event, id, elementIndex)
     {
         // Since the add is inline no form exists which the user can use, hence it must be created
         /** @var {HTMLElement} formElement */
@@ -277,7 +277,7 @@ export class Form
         }
     }
 
-    formActionAddExternal(self, event, id, elementIndex)
+    formActionAddExternal (self, event, id, elementIndex)
     {
         /** @var {HTMLElement} formElement External form */
         const formElement = self.forms[id].getFormElement();
@@ -374,18 +374,18 @@ export class Form
         self.forms[id].resetValues();
     }
 
-    formActionSave(self, event, id, elementIndex)
+    formActionSave (self, event, id, elementIndex)
     {
         jsOMS.preventAll(event);
 
         if (document.querySelector('[data-update-form="' + id  + '"') === null) {
-            this.formActionSaveInline(self, event, id, elementIndex)
+            this.formActionSaveInline(self, event, id, elementIndex);
         } else {
-            this.formActionSaveExternal(self, event, id, elementIndex)
+            this.formActionSaveExternal(self, event, id, elementIndex);
         }
     }
 
-    formActionSaveInline(self, event, id, elementIndex)
+    formActionSaveInline (self, event, id, elementIndex)
     {
         if (!self.forms[id].isValid()) {
             return;
@@ -565,7 +565,7 @@ export class Form
         }
     }
 
-    formActionSaveExternal(self, event, id, elementIndex)
+    formActionSaveExternal (self, event, id, elementIndex)
     {
         const mainForm       = document.querySelector('[data-update-form="' + id  + '"');
         const externalFormId = id;
@@ -684,7 +684,7 @@ export class Form
         }
     }
 
-    formActionCancel(self, event, id, elementIndex)
+    formActionCancel (self, event, id, elementIndex)
     {
         jsOMS.preventAll(event);
 
@@ -696,7 +696,7 @@ export class Form
         }
     }
 
-    formActionCancelInline(self, event, id, elementIndex)
+    formActionCancelInline (self, event, id, elementIndex)
     {
         /** @var {HTMLElement} formElement Form */
         const formElement = self.forms[id].getFormElement();
@@ -720,7 +720,7 @@ export class Form
         elementContainer.parentNode.removeChild(elementContainer);
     }
 
-    formActionCancelExternal(self, event, id, elementIndex)
+    formActionCancelExternal (self, event, id, elementIndex)
     {
         // reset form values to default values
         self.forms[id].resetValues();
@@ -750,7 +750,7 @@ export class Form
         }
     }
 
-    formActionUpdate(self, event, id, elementIndex)
+    formActionUpdate (self, event, id, elementIndex)
     {
         // this doesn't handle setting new values but populating the update form
         jsOMS.preventAll(event);
@@ -762,7 +762,7 @@ export class Form
         }
     }
 
-    formActionUpdateInline(self, event, id, elementIndex)
+    formActionUpdateInline (self, event, id, elementIndex)
     {
         /** @var {HTMLElement} formElement Form */
         const formElement = self.forms[id].getFormElement();
@@ -832,7 +832,7 @@ export class Form
         }
     }
 
-    formActionUpdateExternal(self, event, id, elementIndex)
+    formActionUpdateExternal (self, event, id, elementIndex)
     {
         /** @var {HTMLElement} formElement */
         const formElement = self.forms[id].getFormElement();
@@ -933,6 +933,8 @@ export class Form
             // -> two hiddin checkboxes are necessary (one is already implemented)
             // Consider: It might make sense to do this in the Table.js??? Kinda depends on additional functionality together with the form probably.
         }
+
+        // @todo: if input change check if iframe needs to be reloaded (if there is a iframe that is attached/part of the form e.g. media renderer based on currently selected element)
 
         // remote actions (maybe solvable with callbacks?):
         // filter

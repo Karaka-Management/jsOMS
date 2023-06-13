@@ -192,9 +192,10 @@ export class UriFactory
      * . = DOM class
      * / = Current path
      * ? = Current query
-     * @ =
-     * $ = Other data
+     * @ = Name attribute
+     * $ =
      * % = Current url
+     * ! = Query selector
      *
      * @param {string}      uri       Raw uri
      * @param {null|Object} [toMatch] Key/value pair to replace in raw
@@ -214,7 +215,7 @@ export class UriFactory
             }
         }
 
-        let parsed = uri.replace(new RegExp('\{[\/#\?%@\.\$\!][a-zA-Z0-9_\\-#\.]*\}', 'g'), function (match) {
+        let parsed = uri.replace(new RegExp('\{[\/#\?%@\.\$\!].*?\}', 'g'), function (match) {
             match = match.substring(1, match.length - 1);
 
             if (toMatch !== null && Object.prototype.hasOwnProperty.call(toMatch, match)) {

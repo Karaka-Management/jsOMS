@@ -638,7 +638,7 @@ export class FormView
             for (let i = 0; i < length; ++i) {
                 if (!elements[i].required && elements[i].value === '') {
                     continue;
-                }else if ((elements[i].required && elements[i].value === '')
+                } else if ((elements[i].required && elements[i].value === '')
                     || (typeof elements[i].pattern !== 'undefined'
                         && elements[i].pattern !== ''
                         && !(new RegExp(elements[i].pattern)).test(elements[i].value))
