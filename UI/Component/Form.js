@@ -1083,6 +1083,11 @@ export class Form
         request.setResultCallback(0, function (xhr)
         {
             window.omsApp.logger.log(xhr.response);
+            const headerLocation = xhr.getResponseHeader('location')
+
+            if (headerLocation !== null) {
+                window.location = headerLocation;
+            }
 
             if (xhr.getResponseHeader('content-type').includes('application/octet-stream')) {
                 const blob = new Blob([xhr.response], { type: 'application/octet-stream' });
