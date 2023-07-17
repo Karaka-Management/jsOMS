@@ -1130,30 +1130,34 @@ export class Form
                     const response    = new Response(o);
                     let successInject = null;
 
-                    if ((successInject = form.getSuccess()) !== null) {
-                        successInject(response, xhr);
-                    } else if (redirect !== null) {
-                        fetch(UriFactory.build(redirect))
-                        .then((response) => response.text())
-                        .then((html) => {
-                            document.documentElement.innerHTML = html;
+                    const statusCode = xhr.getResponseHeader('status');
 
-                            if (window.omsApp.state) {
-                                window.omsApp.state.hasChanges = false;
-                            }
+                    if (statusCode === 200 || statusCode === null) {
+                        if ((successInject = form.getSuccess()) !== null) {
+                            successInject(response, xhr);
+                        } else if (redirect !== null) {
+                            fetch(UriFactory.build(redirect))
+                            .then((response) => response.text())
+                            .then((html) => {
+                                document.documentElement.innerHTML = html;
 
-                            history.pushState({}, null, UriFactory.build(redirect));
-                            /* This is not working as it reloads the page ?!
-                            document.open();
-                            document.write(html);
-                            document.close();
-                            */
-                            // @todo: fix memory leak which most likely exists because of continous binding without removing binds
-                            window.omsApp.reInit();
-                        })
-                        .catch((error) => {
-                            console.warn(error);
-                        });
+                                if (window.omsApp.state) {
+                                    window.omsApp.state.hasChanges = false;
+                                }
+
+                                history.pushState({}, null, UriFactory.build(redirect));
+                                /* This is not working as it reloads the page ?!
+                                document.open();
+                                document.write(html);
+                                document.close();
+                                */
+                                // @todo: fix memory leak which most likely exists because of continous binding without removing binds
+                                window.omsApp.reInit();
+                            })
+                            .catch((error) => {
+                                console.warn(error);
+                            });
+                        }
                     }
 
                     if (response.get('type') !== null) {
@@ -1165,7 +1169,6 @@ export class Form
                     }
                 } catch (e) {
                     Logger.instance.log(e);
-
                     Logger.instance.error('Invalid form response. \n'
                         + 'URL: ' + form.getAction() + '\n'
                         + 'Request: ' + JSON.stringify(form.getData()) + '\n'
