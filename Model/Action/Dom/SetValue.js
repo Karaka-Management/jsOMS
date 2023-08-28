@@ -1,3 +1,5 @@
+import { UriFactory } from '../../../Uri/UriFactory.js';
+
 /**
  * Set value of input.
  *
@@ -18,7 +20,7 @@ export function domSetValue (action, callback, id)
     let start         = 0;
     let end           = 0;
 
-    while ((start = dataPath.indexOf('{', start)) !== -1) {
+    while (dataPath.indexOf('http') !== 0 && (start = dataPath.indexOf('{', start)) !== -1) {
         end = dataPath.indexOf('}', start);
         start++;
 
@@ -52,6 +54,8 @@ export function domSetValue (action, callback, id)
                     fill[i].innerHTML += dataPath;
                 }
             }
+        } else if (fill[i].tagName.toLowerCase() === 'iframe') {
+            fill[i].src = UriFactory.build(dataPath);
         } else {
             if (fill[i].value !== dataPath
                 && !fill[i].value.includes(', ' + dataPath + ',')

@@ -169,7 +169,7 @@ export class ActionManager
             }
 
             self.runAction(this.id, listener, listener.action[0], event);
-        });
+        }, false);
     };
 
     /**
