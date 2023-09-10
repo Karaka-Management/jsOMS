@@ -113,7 +113,7 @@ export class GeneralUI
                     window.location.href = uri.indexOf('://') > 0
                         ? uri
                         : jsOMS.rtrim(window.omsApp.request.getRootPath(), '/') + '/' + jsOMS.ltrim(uri, '/');
-                } else {
+                } else if (uri !== null) {
                     // window.location = UriFactory.build(uri);
                     // @todo : consider to implement the line above again. why was it removed?
                     window.location.href = uri.indexOf('://') > 0
