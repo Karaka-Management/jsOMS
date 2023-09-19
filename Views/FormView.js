@@ -156,6 +156,7 @@ export class FormView
         return parent.querySelectorAll(
             '#' + this.id + ' input[type=submit], '
             + 'button[form=' + this.id + '][type=submit], '
+            + 'input[form=' + this.id + '][type=submit], '
             + '#' + this.id + ' button[type=submit], '
             + '.submit[data-form=' + this.id + '], '
             + '#' + this.id + ' .submit'
