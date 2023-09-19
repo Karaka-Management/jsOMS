@@ -129,6 +129,11 @@ export class Tab
     activateTabUri (e)
     {
         const fragmentString = window.location.href.includes('#') ? HttpUri.parseUrl(window.location.href).fragment : '';
+
+        if (fragmentString === null || typeof fragmentString === 'undefined') {
+            return;
+        }
+
         const fragments      = fragmentString.split('&');
         const fragLength     = fragments.length;
 

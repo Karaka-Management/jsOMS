@@ -198,8 +198,16 @@ export class Form
         jsOMS.preventAll(event);
 
         const remove   = self.forms[id].getRemove()[elementIndex];
-        const callback = function (response, xhr) {
+        const callback = function (xhr) {
             if (xhr.status !== 200) {
+                self.app.notifyManager.send(
+                    new NotificationMessage(
+                        NotificationLevel.ERROR,
+                        'Failure',
+                        'Some failure happened'
+                    ), NotificationType.APP_NOTIFICATION
+                );
+
                 return;
             }
 
@@ -213,24 +221,31 @@ export class Form
         };
 
         /** @var {Element} formElement Form element */
-        const formElement = self.forms[id].getFormElement();
+        const formElement = document.getElementById(id).getAttribute('action') !== null || document.getElementById(id).getAttribute('data-action') !== null
+            ? self.forms[id].getFormElement()
+            : (
+                document.getElementById(id).getAttribute('data-update-form') !== null
+                    ? self.forms[document.getElementById(id).getAttribute('data-update-form')].getFormElement()
+                    : (
+                        document.getElementById(id).getAttribute('data-delete-form') !== null
+                            ?  self.forms[document.getElementById(id).getAttribute('data-delete-form')].getFormElement()
+                            : null
+                    )
+            );
 
         // Perform the element deletion.
         // If the form has a remote endpoint this is called in advance
-        if (formElement !== null
-            && ((formElement.tagName.toLowerCase() !== 'form' && formElement.getAttribute('data-method') !== null)
-                || (formElement.tagName.toLowerCase() === 'form' && formElement.getAttribute('method') !== 'NONE'))
-        ) {
+        if (formElement !== null) {
             const deleteRequest = new Request(
-                formElement.hasAttribute('data-method-delete')
-                    ? formElement.getAttribute('data-method-delete')
+                formElement.hasAttribute('data-action-delete')
+                    ? formElement.getAttribute('data-action-delete')
                     : (formElement.tagName.toLowerCase() !== 'form'
-                        ? formElement.getAttribute('data-method')
-                        : formElement.getAttribute('method')
+                        ? formElement.getAttribute('data-action')
+                        : formElement.getAttribute('action')
                     ),
                 RequestMethod.DELETE
             );
-            deleteRequest.setSuccess(callback);
+            deleteRequest.setResultCallback(0, callback);
             deleteRequest.send();
         } else {
             callback();
