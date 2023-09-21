@@ -1,9 +1,9 @@
 
 import { UriFactory }    from '../Uri/UriFactory.js';
 import { AdvancedInput } from './Component/AdvancedInput.js';
-import { NotificationLevel }   from '../Message/Notification/NotificationLevel.js';
-import { NotificationMessage } from '../Message/Notification/NotificationMessage.js';
-import { NotificationType }    from '../Message/Notification/NotificationType.js';
+//import { NotificationLevel }   from '../Message/Notification/NotificationLevel.js';
+//import { NotificationMessage } from '../Message/Notification/NotificationMessage.js';
+//import { NotificationType }    from '../Message/Notification/NotificationType.js';
 
 /**
  * UI manager for handling basic ui elements.
@@ -160,7 +160,7 @@ export class GeneralUI
                                 }
                             };
 
-                            window.omsApp.notifyManager.send(message, NotificationType.APP_NOTIFICATION);
+                            //window.omsApp.notifyManager.send(message, NotificationType.APP_NOTIFICATION);
                         } else {
                             document.documentElement.innerHTML = html;
 
@@ -349,8 +349,8 @@ export class GeneralUI
         const tagName = src.tagName.toLowerCase();
         if (tagName === 'h1') {
             src.innerHTML = jsOMS.htmlspecialchars_encode(value);
-        } else if (tagName === 'select') {
-            return;
+        /*} else if (tagName === 'select') {
+            return;*/
         } else if (src.getAttribute('value') !== null) {
             if (src.value === '') {
                 src.value = jsOMS.htmlspecialchars_decode(value);

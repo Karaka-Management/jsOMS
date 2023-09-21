@@ -949,7 +949,8 @@ export class Form
             // Consider: It might make sense to do this in the Table.js??? Kinda depends on additional functionality together with the form probably.
         }
 
-        // @todo: if input change check if iframe needs to be reloaded (if there is a iframe that is attached/part of the form e.g. media renderer based on currently selected element)
+        // @todo: if input change check if iframe needs to be reloaded (if there is a iframe that is attached/part of the form
+        // e.g. media renderer based on currently selected element)
 
         // remote actions (maybe solvable with callbacks?):
         // filter
@@ -1098,7 +1099,7 @@ export class Form
         request.setResultCallback(0, function (xhr)
         {
             window.omsApp.logger.log(xhr.response);
-            const headerLocation = xhr.getResponseHeader('location')
+            const headerLocation = xhr.getResponseHeader('location');
 
             if (headerLocation !== null) {
                 window.location = headerLocation;
