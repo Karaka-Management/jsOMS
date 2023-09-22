@@ -134,8 +134,8 @@ export class Tab
             return;
         }
 
-        const fragments      = fragmentString.split('&');
-        const fragLength     = fragments.length;
+        const fragments  = fragmentString.split('&');
+        const fragLength = fragments.length;
 
         if (fragLength > 0 && fragmentString !== '') {
             for (let i = 0; i < fragLength; ++i) {
