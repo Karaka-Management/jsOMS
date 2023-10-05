@@ -8,10 +8,8 @@
  * @version   1.0.0
  * @since     1.0.0
  */
-(function (jsOMS)
+export class jsOMS
 {
-    'use strict';
-
     /**
      * Trigger an event
      *
@@ -24,7 +22,7 @@
      *
      * @since 1.0.0
      */
-    jsOMS.triggerEvent = function (element, eventName)
+    static triggerEvent = function (element, eventName)
     {
         if (document.createEvent) {
             const event = document.createEvent('HTMLEvents');
@@ -52,7 +50,7 @@
      *
      * @since 1.0.0
      */
-    jsOMS.getArray = function (path, data, delim = '/')
+    static getArray = function (path, data, delim = '/')
     {
         const pathParts = jsOMS.ltrim(path, delim).split(delim);
         let current     = data;
@@ -84,7 +82,7 @@
      *
      * @since 1.0.0
      */
-    jsOMS.trim = function (str, char = ' ')
+    static trim = function (str, char = ' ')
     {
         return jsOMS.ltrim(jsOMS.rtrim(str, char), char);
     };
@@ -101,7 +99,7 @@
      *
      * @since 1.0.0
      */
-    jsOMS.rtrim = function (str, char = ' ')
+    static rtrim = function (str, char = ' ')
     {
         return str.replace(new RegExp('[' + char + ']*$'), '');
     };
@@ -118,12 +116,12 @@
      *
      * @since 1.0.0
      */
-    jsOMS.ltrim = function (str, char = ' ')
+    static ltrim = function (str, char = ' ')
     {
         return str.replace(new RegExp('^[' + char + ']*'), '');
     };
 
-    jsOMS.htmlspecialchars = [
+    static htmlspecialchars = [
         ['&', '&amp;'],
         ['<', '&lt;'],
         ['>', '&gt;'],
@@ -139,10 +137,10 @@
      *
      * @since 1.0.0
      */
-    jsOMS.htmlspecialchars_encode = function (str)
+    static htmlspecialchars_encode = function (str)
     {
         let escaped  = str;
-        const length = jsOMS.htmlspecialchars.length;
+        const length = htmlspecialchars.length;
 
         for (let i = 0; i < length; ++i) {
             escaped = escaped.replace(
@@ -163,7 +161,7 @@
      *
      * @since 1.0.0
      */
-    jsOMS.htmlspecialchars_decode = function (str)
+    static htmlspecialchars_decode = function (str)
     {
         let decoded  = str;
         const length = jsOMS.htmlspecialchars.length;
@@ -190,7 +188,7 @@
      *
      * @since 1.0.0
      */
-    jsOMS.substr_count = function (str, substr)
+    static substr_count = function (str, substr)
     {
         str    += '';
         substr += '';
@@ -231,7 +229,7 @@
      *
      * @since 1.0.0
      */
-    jsOMS.hasClass = function (ele, cls)
+    static hasClass = function (ele, cls)
     {
         return typeof ele !== 'undefined'
             && ele !== null
@@ -255,7 +253,7 @@
      *
      * @since 1.0.0
      */
-    jsOMS.addClass = function (ele, cls)
+    static addClass = function (ele, cls)
     {
         if (!jsOMS.hasClass(ele, cls)) {
             if (typeof ele.className === 'string') {
@@ -280,7 +278,7 @@
      *
      * @since 1.0.0
      */
-    jsOMS.removeClass = function (ele, cls)
+    static removeClass = function (ele, cls)
     {
         if (jsOMS.hasClass(ele, cls)) {
             const reg = new RegExp('(\\s|^)' + cls);
@@ -304,7 +302,7 @@
      *
      * @since 1.0.0
      */
-    jsOMS.watcher = (function ()
+    static watcher = (function ()
     {
         let watcherTimer = 0;
         return function (callback, ms)
@@ -327,7 +325,7 @@
      *
      * @since 1.0.0
      */
-    jsOMS.preventAll = function (event)
+    static preventAll = function (event)
     {
         event.preventDefault();
         event.stopImmediatePropagation();
@@ -350,7 +348,7 @@
      *
      * @since 1.0.0
      */
-    jsOMS.ready = function (func)
+    static ready = function (func)
     {
         if (document.readyState === 'complete' || document.readyState === 'loaded' || document.readyState === 'interactive') {
             func();
@@ -371,7 +369,7 @@
      *
      * @since 1.0.0
      */
-    jsOMS.getValue = function (ele)
+    static getValue = function (ele)
     {
         switch (ele.tagName.toLowerCase()) {
             case 'div':
@@ -397,7 +395,7 @@
      *
      * @since 1.0.0
      */
-    jsOMS.empty = function (ele)
+    static empty = function (ele)
     {
         while (ele.firstChild) {
             ele.removeChild(ele.firstChild);
@@ -415,7 +413,7 @@
      *
      * @since 1.0.0
      */
-    jsOMS.hash = function (str)
+    static hash = function (str)
     {
         let res   = 0;
         const len = str.length;
@@ -440,7 +438,7 @@
      *
      * @since 1.0.0
      */
-    jsOMS.isNode = function (ele)
+    static isNode = function (ele)
     {
         /** global: Node */
         return (
@@ -461,7 +459,7 @@
      *
      * @since 1.0.0
      */
-    jsOMS.isElement = function (o)
+    static isElement = function (o)
     {
         /** global: HTMLElement */
         return (
@@ -483,7 +481,7 @@
      *
      * @since 1.0.0
      */
-    jsOMS.getByClass = function (ele, cls)
+    static getByClass = function (ele, cls)
     {
         const length = ele.childNodes.length;
 
@@ -509,7 +507,7 @@
      *
      * @since 1.0.0
      */
-    jsOMS.addEventListenerToAll = function (e, event, callback)
+    static addEventListenerToAll = function (e, event, callback)
     {
         const length = e.length;
 
@@ -529,7 +527,7 @@
      *
      * @since 1.0.0
      */
-    jsOMS.isValidJson = function (jsonString)
+    static isValidJson = function (jsonString)
     {
         try {
             JSON.parse(jsonString);
@@ -551,7 +549,7 @@
      *
      * @since 1.0.0
      */
-    jsOMS.merge = function (target, source)
+    static merge = function (target, source)
     {
         const out = jsOMS.clone(target);
 
@@ -580,7 +578,7 @@
      *
      * @since 1.0.0
      */
-    jsOMS.clone = function (obj)
+    static clone = function (obj)
     {
         return { ...obj };
     };
@@ -594,7 +592,7 @@
      *
      * @since 1.0.0
      */
-    jsOMS.isset = function (variable)
+    static isset = function (variable)
     {
         return typeof variable !== 'undefined' && variable !== null;
     };
@@ -609,7 +607,7 @@
      *
      * @since 1.0.0
      */
-    jsOMS.strpbrk = function (haystack, chars)
+    static strpbrk = function (haystack, chars)
     {
         const length = chars.length;
         let found    = haystack.length;
@@ -623,4 +621,4 @@
 
         return haystack.slice(min);
     };
-}(window.jsOMS = window.jsOMS || {}));
+}

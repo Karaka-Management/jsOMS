@@ -1,3 +1,4 @@
+import { jsOMS }      from '../../Utils/oLib.js';
 import { HttpUri }    from '../../Uri/HttpUri.js';
 import { UriFactory } from '../../Uri/UriFactory.js';
 

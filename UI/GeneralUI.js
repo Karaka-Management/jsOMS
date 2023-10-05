@@ -1,4 +1,5 @@
 
+import { jsOMS } from '../Utils/oLib.js';
 import { UriFactory }    from '../Uri/UriFactory.js';
 import { AdvancedInput } from './Component/AdvancedInput.js';
 // import { NotificationLevel }   from '../Message/Notification/NotificationLevel.js';
@@ -352,6 +353,15 @@ export class GeneralUI
         } else if (src.getAttribute('value') !== null) {
             if (src.value === '') {
                 src.value = jsOMS.htmlspecialchars_decode(value);
+            }
+        } else if (tagName === 'select') {
+            const optionLength = src.options.length;
+            for (let i = 0; i < optionLength; ++i) {
+                if (src.options[i].text === value) {
+                    src.options[i].selected = true;
+
+                    break;
+                }
             }
         } else {
             src.innerHTML = value;

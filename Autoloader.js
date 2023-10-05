@@ -40,7 +40,7 @@ Autoloader.defineNamespace = function (namespace)
         paths.splice(0, 1);
 
         const length = paths.length;
-        let current  = jsOMS;
+        let current  = omsApp;
 
         for (let i = 0; i < length; ++i) {
             if (typeof current[paths[i]] === 'undefined') {

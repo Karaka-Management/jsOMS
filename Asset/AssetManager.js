@@ -1,3 +1,5 @@
+import { jsOMS } from '../Utils/oLib.js';
+
 /**
  * Asset manager.
  *

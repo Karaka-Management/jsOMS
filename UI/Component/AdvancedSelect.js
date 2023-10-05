@@ -5,7 +5,7 @@
 
 // isn't this very similar to the advanced input? just a little different?
 // maybe not...
-
+import { jsOMS } from '../../Utils/oLib.js';
 import { Request } from '../../Message/Request/Request.js';
 /**
  * Advanced input class.

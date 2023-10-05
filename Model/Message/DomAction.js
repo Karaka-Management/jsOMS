@@ -1,3 +1,4 @@
+import { jsOMS } from '../../Utils/oLib.js';
 /**
  * Perform DOM action.
  *

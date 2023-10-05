@@ -1,3 +1,4 @@
+import { jsOMS } from '../../../Utils/oLib.js';
 import { EventType } from '../../../../jsOMS/UI/Input/Mouse/EventType.js';
 
 /**
