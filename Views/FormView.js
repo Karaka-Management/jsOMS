@@ -236,11 +236,16 @@ export class FormView
         const parent = e === null ? document : e;
 
         return parent.querySelectorAll(
-            'button[form=' + this.id + '].cancel-form, '
+            '#' + this.id + ' input[type=reset], '
+            + 'button[form=' + this.id + '][type=reset], '
+            + 'input[form=' + this.id + '][type=reset], '
+            + '#' + this.id + ' button[type=reset], '
+            + 'button[form=' + this.id + '].cancel-form, '
             + '.cancel-form[data-form=' + this.id + '], '
             + '#' + this.id + ' .cancel-form, '
             + '[form="' + this.id + '"].cancel-form'
             + (e !== null ? ', .cancel-form' : '')
+
         );
     };
 

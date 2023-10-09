@@ -729,8 +729,6 @@ export class Form
 
     formActionCancel (self, event, id, elementIndex)
     {
-        jsOMS.preventAll(event);
-
         const ele = document.getElementById(id);
         if (ele.getAttribute('data-update-form') === null && ele.tagName.toLowerCase() !== 'form') {
             this.formActionCancelInline(self, event, id, elementIndex);
@@ -974,6 +972,7 @@ export class Form
         } else if ((elementIndex = Array.from(self.forms[id].getSave()).indexOf(event.target)) !== -1) {
             this.formActionSave(self, event, id, elementIndex);
         } else if ((elementIndex = Array.from(self.forms[id].getCancel()).indexOf(event.target)) !== -1) {
+            jsOMS.preventAll(event);
             // @todo currently only handling update cancel, what about add cancel?
             this.formActionCancel(self, event, id, elementIndex);
         } else if ((elementIndex = Array.from(self.forms[id].getUpdate()).indexOf(event.target)) !== -1) {
