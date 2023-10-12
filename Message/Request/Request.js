@@ -79,7 +79,7 @@ export class Request
             case RequestType.FORM_DATA:
                 return 'multipart/form-data';
             default:
-                return 'text/plain';
+                return '*/*';
         }
     };
 
@@ -262,13 +262,6 @@ export class Request
     {
         this.type                          = type;
         this.requestHeader['Content-Type'] = this.setContentTypeBasedOnType(this.type);
-
-        /*
-        @todo: why was i doing this?
-        if (this.type === RequestType.FORM_DATA) {
-            delete this.requestHeader['Content-Type'];
-        }
-        */
     };
 
     /**
