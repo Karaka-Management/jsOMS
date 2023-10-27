@@ -646,6 +646,7 @@ export class FormView
                 if (!elements[i].required && elements[i].value === '') {
                     continue;
                 } else if ((elements[i].required && elements[i].value === '')
+                    || (elements[i].required && elements[i].getAttribute('type') === 'checkbox' && !elements[i].checked)
                     || (typeof elements[i].pattern !== 'undefined'
                         && elements[i].pattern !== ''
                         && !(new RegExp(elements[i].pattern)).test(elements[i].value))
