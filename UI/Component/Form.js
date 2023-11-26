@@ -151,6 +151,11 @@ export class Form
                 self.formActions(self, event, id);
             });
 
+            // If !isOnChange(): update window state on change
+            //      -> unhandled state changes
+            //      -> will be handled later
+            // If isOnChange(): every change results in action
+            //      -> perform action on change
             if (!this.forms[id].isOnChange()) {
                 toBind[i].addEventListener('change', function (evnt) {
                     if (window.omsApp.state) {
@@ -184,11 +189,12 @@ export class Form
 
                 if (target === 'input' || target === 'textarea') {
                     let dataParent = null;
+
                     if (self.forms[id].getFormElement().tagName.toLowerCase() === 'table') {
                         dataParent = event.srcElement.closest(self.forms[id].getFormElement().getAttribute('data-ui-element'));
                     }
 
-                    self.submit(self.forms[id], null, dataParent);
+                    self.submit(self.forms[id], null, dataParent, 'post');
                 }
             });
         }
@@ -871,6 +877,24 @@ export class Form
         for (let i = 0; i < buttonLength; ++i) {
             jsOMS.removeClass(cancelButtons[i], 'hidden');
         }
+
+        // define remote response behavior
+        self.forms[externalFormId].setSuccess(function (response) {
+            if (response.get('status') !== 'undefined'
+                && response.get('status') !== NotificationLevel.HIDDEN
+            ) {
+                self.app.notifyManager.send(
+                    new NotificationMessage(response.get('status'), response.get('title'), response.get('message')), NotificationType.APP_NOTIFICATION
+                );
+            }
+
+            window.omsApp.logger.log(remoteUrls);
+
+            UriFactory.setQuery('$id', response.get('response').id);
+
+            // fill elements with remote data after submit (if the template expects data from a remote source)
+            Form.setDataFromRemoteUrls(remoteUrls);
+        });
     }
 
     formActionUpdateExternal (self, event, id, elementIndex)
@@ -1034,24 +1058,24 @@ export class Form
      *
      * @param {FormView} form   Form object
      * @param {Element}  button Action different from the form action (e.g. formaction=*)
+     * @param {string}   method Form method
+     * @param {string}   action Form action
      *
      * @return {void}
      *
      * @since 1.0.0
      */
-    submit (form, button = null, container = null)
+    submit (form, button = null, container = null, method = null, action = null)
     {
         /* Handle injects */
         const self    = this;
         const injects = form.getSubmitInjects();
         let counter   = 0;
 
-        let action = null;
         if (button !== null) {
             action = button.getAttribute('formaction');
         }
 
-        let method = null;
         if (button !== null) {
             method = button.getAttribute('formmethod');
         }
