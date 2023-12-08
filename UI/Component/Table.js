@@ -217,7 +217,7 @@ export class Table
 
             const baseMenuLine = menu.getElementsByClassName('context-line')[0].cloneNode(true);
 
-            // @todo: simplify by doing it for the whole header? event bubbling
+            // @todo simplify by doing it for the whole header? event bubbling
             for (let i = 0; i < length; ++i) {
                 if (columns[i].firstElementChild.innerText.trim() === '') {
                     continue;
@@ -486,7 +486,7 @@ export class Table
 
             table.appendChild(newRow);
 
-            // @todo: bind buttons if required (e.g. remove, edit button)
+            // @todo bind buttons if required (e.g. remove, edit button)
         }
     };
 };

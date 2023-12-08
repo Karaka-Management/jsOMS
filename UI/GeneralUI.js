@@ -72,7 +72,7 @@ export class GeneralUI
 
         for (let i = 0; i < length; ++i) {
             /*
-            @todo: bad solution, probably needs to be more navigation specific
+            @todo bad solution, probably needs to be more navigation specific
             const link = UriFactory.buildAbsolute(
                 e[i].getAttribute('href') !== null ? e[i].getAttribute('href') : e[i].getAttribute('data-href')
             );
@@ -86,7 +86,7 @@ export class GeneralUI
                 continue;
             }
 
-            // @todo: implement middle mouse click
+            // @todo implement middle mouse click
             e[i].addEventListener('click', function (event) {
                 if ((event.target.parentElement !== this
                         && event.target.parentElement.getElementsByTagName('input').length > 0)
@@ -122,7 +122,7 @@ export class GeneralUI
                         : jsOMS.rtrim(window.omsApp.request.getRootPath(), '/') + '/' + jsOMS.ltrim(uri, '/');
 
                     /*
-                    @todo: Commented out until ObserverMutation is implemented
+                    @todo Commented out until ObserverMutation is implemented
                     fetch(UriFactory.build(uri))
                     .then(response => response.text())
                     .then((html) => {
@@ -148,7 +148,7 @@ export class GeneralUI
                                     // document.open();
                                     // document.write(html);
                                     // document.close();
-                                    // @todo: fix memory leak which most likely exists because of continous binding without removing binds
+                                    // @todo fix memory leak which most likely exists because of continous binding without removing binds
                                     window.omsApp.reInit();
                                 }
                             };
@@ -174,7 +174,7 @@ export class GeneralUI
                             // document.open();
                             // document.write(html);
                             // document.close();
-                            // @todo: fix memory leak which most likely exists because of continous binding without removing binds
+                            // @todo fix memory leak which most likely exists because of continous binding without removing binds
                             window.omsApp.reInit();
 
                             const event = new Event('DOMContentLoaded');

@@ -83,7 +83,7 @@ export class UIStateManager
 
                 break;
             case 'div':
-                // @todo: this is not working, WHY? state is correct, but element.scrollTop is just ignored?!
+                // @todo this is not working, WHY? state is correct, but element.scrollTop is just ignored?!
                 element.scrollLeft = state.x;
                 element.scrollTop  = state.y;
 

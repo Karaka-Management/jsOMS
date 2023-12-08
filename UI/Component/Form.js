@@ -133,7 +133,7 @@ export class Form
 
         // don't overwrite existing bind
         /*
-        @todo: removed because sometimes it is already bound but bound in a wrong way (e.g. no success is defined)
+        @todo removed because sometimes it is already bound but bound in a wrong way (e.g. no success is defined)
         if (Object.prototype.hasOwnProperty.call(this.forms, id)) {
             return;
         } */
@@ -532,7 +532,7 @@ export class Form
                 updateElementNames[i] = updateElementNames[i].trim();
 
                 // get the elment to update
-                // @todo: maybe stupid, because same as elementContainer. however this is more general? anyway, one can be replaced
+                // @todo maybe stupid, because same as elementContainer. however this is more general? anyway, one can be replaced
                 updateElements.push(
                     formElement.querySelector(updateElementNames[i] + '[data-id="' + elementContainer.getAttribute('data-id') + '"]')
                 );
@@ -1009,14 +1009,14 @@ export class Form
             jsOMS.preventAll(event);
             self.submit(self.forms[id], self.forms[id].getSubmit()[elementIndex]);
         } else if (false) { // eslint-disable-line no-constant-condition
-            // @todo: if table head input field in popups changes -> check if input empty -> deactivate -> checkbox : else activate checkbox
+            // @todo if table head input field in popups changes -> check if input empty -> deactivate -> checkbox : else activate checkbox
             // careful: the same checkbox is used for showing the filter popup. maybe create a separate checkbox, which only handles the highlighting if filter is defined.
             // this means popup active highlights filter icon AND different content checkbox also highlights filter
             // -> two hiddin checkboxes are necessary (one is already implemented)
             // Consider: It might make sense to do this in the Table.js??? Kinda depends on additional functionality together with the form probably.
         }
 
-        // @todo: if input change check if iframe needs to be reloaded (if there is a iframe that is attached/part of the form
+        // @todo if input change check if iframe needs to be reloaded (if there is a iframe that is attached/part of the form
         // e.g. media renderer based on currently selected element)
 
         // remote actions (maybe solvable with callbacks?):
@@ -1160,7 +1160,7 @@ export class Form
         const redirect = form.getFormElement().getAttribute('data-redirect');
 
         request.setData(data);
-        request.setType(RequestType.FORM_DATA); // @todo: consider to allow different request type
+        request.setType(RequestType.FORM_DATA); // @todo consider to allow different request type
         request.setUri(action !== null ? action : form.getAction());
         request.setMethod(method !== null ? method : form.getMethod());
         request.setResultCallback(0, function (xhr)
@@ -1206,7 +1206,7 @@ export class Form
                 document.close();
                 */
 
-                window.omsApp.reInit(); // @todo: fix memory leak which most likely exists because of continous binding without removing binds
+                window.omsApp.reInit(); // @todo fix memory leak which most likely exists because of continous binding without removing binds
             } else {
                 try {
                     const o           = JSON.parse(xhr.response)[0];
@@ -1234,7 +1234,7 @@ export class Form
                                 document.write(html);
                                 document.close();
                                 */
-                                // @todo: fix memory leak which most likely exists because of continous binding without removing binds
+                                // @todo fix memory leak which most likely exists because of continous binding without removing binds
                                 window.omsApp.reInit();
                             })
                             .catch((error) => {
