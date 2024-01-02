@@ -111,15 +111,15 @@ export class GeneralUI
                 ) {
                     window.open(UriFactory.build(uri), '_blank');
                 } else if (this.getAttribute('data-redirect') !== null) {
-                    window.location.href = uri.indexOf('://') > 0
+                    window.location.href = UriFactory.build(uri.indexOf('://') > 0
                         ? uri
-                        : jsOMS.rtrim(window.omsApp.request.getRootPath(), '/') + '/' + jsOMS.ltrim(uri, '/');
+                        : jsOMS.rtrim(window.omsApp.request.getRootPath(), '/') + '/' + jsOMS.ltrim(uri, '/'));
                 } else if (uri !== null) {
                     // window.location = UriFactory.build(uri);
                     // @todo : consider to implement the line above again. why was it removed?
-                    window.location.href = uri.indexOf('://') > 0
+                    window.location.href = UriFactory.build(uri.indexOf('://') > 0
                         ? uri
-                        : jsOMS.rtrim(window.omsApp.request.getRootPath(), '/') + '/' + jsOMS.ltrim(uri, '/');
+                        : jsOMS.rtrim(window.omsApp.request.getRootPath(), '/') + '/' + jsOMS.ltrim(uri, '/'));
 
                     /*
                     @todo Commented out until ObserverMutation is implemented
@@ -148,7 +148,7 @@ export class GeneralUI
                                     // document.open();
                                     // document.write(html);
                                     // document.close();
-                                    // @todo fix memory leak which most likely exists because of continous binding without removing binds
+                                    // @todo fix memory leak which most likely exists because of continuous binding without removing binds
                                     window.omsApp.reInit();
                                 }
                             };
@@ -174,7 +174,7 @@ export class GeneralUI
                             // document.open();
                             // document.write(html);
                             // document.close();
-                            // @todo fix memory leak which most likely exists because of continous binding without removing binds
+                            // @todo fix memory leak which most likely exists because of continuous binding without removing binds
                             window.omsApp.reInit();
 
                             const event = new Event('DOMContentLoaded');

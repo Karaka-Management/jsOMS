@@ -350,7 +350,8 @@ export class Form
                         ? dataOriginElement
                         : Array.prototype.slice.call(dataOriginElement.querySelectorAll('[data-tpl-value]'))
                 );
-            texts  = texts.concat(
+
+            texts = texts.concat(
                     dataOriginElement.hasAttribute('data-tpl-text')
                         ? dataOriginElement
                         : Array.prototype.slice.call(dataOriginElement.querySelectorAll('[data-tpl-text]'))
@@ -484,7 +485,8 @@ export class Form
                             ? dataOriginElement
                             : Array.prototype.slice.call(dataOriginElement.querySelectorAll('[data-tpl-value]'))
                     );
-                texts  = texts.concat(
+
+                texts = texts.concat(
                         dataOriginElement.hasAttribute('data-tpl-text')
                             ? dataOriginElement
                             : Array.prototype.slice.call(dataOriginElement.querySelectorAll('[data-tpl-text]'))
@@ -553,7 +555,8 @@ export class Form
                         ? dataOriginElement
                         : Array.prototype.slice.call(dataOriginElement.querySelectorAll('[data-tpl-value]'))
                     );
-                texts  = texts.concat(
+
+                texts = texts.concat(
                         dataOriginElement.hasAttribute('data-tpl-text')
                             ? dataOriginElement
                             : Array.prototype.slice.call(dataOriginElement.querySelectorAll('[data-tpl-text]'))
@@ -648,7 +651,8 @@ export class Form
                     ? dataOriginElement
                     : Array.prototype.slice.call(dataOriginElement.querySelectorAll('[data-tpl-value]'))
                 );
-            texts  = texts.concat(
+
+            texts = texts.concat(
                     dataOriginElement.hasAttribute('data-tpl-text')
                         ? dataOriginElement
                         : Array.prototype.slice.call(dataOriginElement.querySelectorAll('[data-tpl-text]'))
@@ -948,8 +952,9 @@ export class Form
         Form.insertDataIntoForm(self, 'value', externalFormId, values, remoteUrls);
 
         // This prevents overwriting results from setting data by value in the next step
-        length = texts.length;
+        length        = texts.length;
         const length2 = values.length;
+
         for (let i = 0; i < length; ++i) {
             const tagName = texts[i].tagName.toLowerCase();
             if (tagName === 'select') {
