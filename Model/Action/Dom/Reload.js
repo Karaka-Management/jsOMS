@@ -1,3 +1,5 @@
+import { UriFactory } from '../../../Uri/UriFactory.js';
+
 /**
  * Reload page.
  *
@@ -12,7 +14,16 @@ export function reloadButtonAction (action, callback, id)
     'use strict';
 
     setTimeout(function () {
-        document.location.reload(true);
+        if (action.src) {
+            console.log(document.getElementById(action.src).hasAttribute('data-src'));
+            console.log(UriFactory.build(document.getElementById(action.src).getAttribute('data-src')));
+
+            document.getElementById(action.src).src = document.getElementById(action.src).hasAttribute('data-src')
+                ? UriFactory.build(document.getElementById(action.src).getAttribute('data-src'))
+                : document.getElementById(action.src).src;
+        } else {
+            document.location.reload();
+        }
     }, parseInt(action.delay));
 
     callback();
