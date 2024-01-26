@@ -13,10 +13,10 @@ export function redirectMessage (action, callback, id)
 {
     setTimeout(function ()
     {
-        if (data.src) {
-            document.getElementById(data.src).src = UriFactory.build(data.uri);
+        if (action.src) {
+            document.getElementById(action.src).src = UriFactory.build(action.uri);
         } else {
-            window.location = UriFactory.build(data.uri);
+            window.location = UriFactory.build(action.uri);
         }
-    }, parseInt(data.delay));
+    }, parseInt(action.delay));
 };
