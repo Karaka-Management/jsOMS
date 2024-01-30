@@ -106,7 +106,7 @@ export class MouseManager
     run (element, event)
     {
         if (typeof this.elements[element] === 'undefined') {
-            throw new Error('Unexpected elmenet!');
+            throw new Error('Unexpected element!');
         }
 
         const actions = this.elements[element];

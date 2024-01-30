@@ -664,13 +664,13 @@ export class Form
 
         for (let i = 0; i < updateElementLength; ++i) {
             jsOMS.removeClass(updateElements[i], 'animated');
-            jsOMS.removeClass(updateElements[i], 'greenCricleFade');
+            jsOMS.removeClass(updateElements[i], 'greenCircleFade');
 
             requestAnimationFrame((time) => {
                 requestAnimationFrame((time) => {
                     jsOMS.addClass(updateElements[i], 'animated');
                     jsOMS.addClass(updateElements[i], 'medium-duration');
-                    jsOMS.addClass(updateElements[i], 'greenCricleFade');
+                    jsOMS.addClass(updateElements[i], 'greenCircleFade');
                 });
             });
         }
@@ -1017,7 +1017,7 @@ export class Form
             // @todo if table head input field in popups changes -> check if input empty -> deactivate -> checkbox : else activate checkbox
             // careful: the same checkbox is used for showing the filter popup. maybe create a separate checkbox, which only handles the highlighting if filter is defined.
             // this means popup active highlights filter icon AND different content checkbox also highlights filter
-            // -> two hiddin checkboxes are necessary (one is already implemented)
+            // -> two hidden checkboxes are necessary (one is already implemented)
             // Consider: It might make sense to do this in the Table.js??? Kinda depends on additional functionality together with the form probably.
         }
 
@@ -1211,7 +1211,7 @@ export class Form
                 document.close();
                 */
 
-                window.omsApp.reInit(); // @todo fix memory leak which most likely exists because of continous binding without removing binds
+                window.omsApp.reInit(); // @todo fix memory leak which most likely exists because of continuous binding without removing binds
             } else {
                 try {
                     const o           = JSON.parse(xhr.response)[0];
@@ -1239,7 +1239,7 @@ export class Form
                                 document.write(html);
                                 document.close();
                                 */
-                                // @todo fix memory leak which most likely exists because of continous binding without removing binds
+                                // @todo fix memory leak which most likely exists because of continuous binding without removing binds
                                 window.omsApp.reInit();
                             })
                             .catch((error) => {

@@ -4998,24 +4998,24 @@
             i, ii;
         for (i = 0; i < headings.length; ++i) {
             var headContent = showdown.subParser('makeMarkdown.tableCell')(headings[i], globals),
-                allign = '---';
+                align = '---';
 
             if (headings[i].hasAttribute('style')) {
                 var style = headings[i].getAttribute('style').toLowerCase().replace(/\s/g, '');
                 switch (style) {
                     case 'text-align:left;':
-                        allign = ':---';
+                        align = ':---';
                         break;
                     case 'text-align:right;':
-                        allign = '---:';
+                        align = '---:';
                         break;
                     case 'text-align:center;':
-                        allign = ':---:';
+                        align = ':---:';
                         break;
                 }
             }
             tableArray[0][i] = headContent.trim();
-            tableArray[1][i] = allign;
+            tableArray[1][i] = align;
         }
 
         for (i = 0; i < rows.length; ++i) {

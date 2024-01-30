@@ -285,7 +285,7 @@ export class AdvancedSelect
             /**
              * @todo Karaka/jsOMS#72
              *  Allow duplication
-             *  Create a `data-duplicat=true` attribute to allow duplication and then have a count as part of the uuid (maybe row id).
+             *  Create a `data-duplicate=true` attribute to allow duplication and then have a count as part of the uuid (maybe row id).
              */
             if (self.tagElement.querySelectorAll('[data-tpl-uuid="' + uuid + '"').length !== 0) {
                 return;

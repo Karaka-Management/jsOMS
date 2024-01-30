@@ -13,7 +13,7 @@ describe('FormViewTest', function ()
                 <input type="hidden" id="testHiddenInputText" name="testHiddenInputTextName" value="hidden input text">
                 <textarea id="testTextarea" name="testTextareaName" value="textarea text"></textarea>
                 <input type="submit" id="defaultSubmit">
-                <button type="submit" id="buttenSubmit">
+                <button type="submit" id="buttonSubmit">
             </form>
 
             <input form="${testId}" id="externalInputText" name="externalInputTextName" value="external text">

@@ -278,7 +278,7 @@ export class EventManager
     };
 
     /**
-     * Is a certain group allready attached
+     * Is a certain group already attached
      *
      * @param {string|number} group Group id
      *
