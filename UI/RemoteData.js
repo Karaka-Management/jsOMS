@@ -145,8 +145,6 @@ export class RemoteData
                                         : Array.prototype.slice.call(dataOriginElement.querySelectorAll('[data-tpl-text]'))
                                 );
 
-                            // @todo don't just overwrite data, check if data is different
-
                             // insert values into element (populate values)
                             RemoteData.setRemoteData('text', texts, data[i]);
 

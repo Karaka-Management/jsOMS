@@ -71,22 +71,10 @@ export class GeneralUI
         const length = e.length;
 
         for (let i = 0; i < length; ++i) {
-            /*
-            @todo bad solution, probably needs to be more navigation specific
-            const link = UriFactory.buildAbsolute(
-                e[i].getAttribute('href') !== null ? e[i].getAttribute('href') : e[i].getAttribute('data-href')
-            );
-
-            if (jsOMS.rtrim(link, '/') !== window.location.origin && window.location.href.startsWith(link)) {
-                jsOMS.addClass(e[i], 'active');
-            }
-            */
-
             if (e[i].getAttribute('data-action') !== null) {
                 continue;
             }
 
-            // @todo implement middle mouse click
             e[i].addEventListener('click', function (event) {
                 if ((event.target.parentElement !== this
                         && event.target.parentElement.getElementsByTagName('input').length > 0)
@@ -111,15 +99,9 @@ export class GeneralUI
                 ) {
                     window.open(UriFactory.build(uri), '_blank');
                 } else if (this.getAttribute('data-redirect') !== null) {
-                    window.location.href = UriFactory.build(uri.indexOf('://') > 0
-                        ? uri
-                        : jsOMS.rtrim(window.omsApp.request.getRootPath(), '/') + '/' + jsOMS.ltrim(uri, '/'));
+                    window.location.href = UriFactory.build(uri);
                 } else if (uri !== null) {
-                    // window.location = UriFactory.build(uri);
-                    // @todo : consider to implement the line above again. why was it removed?
-                    window.location.href = UriFactory.build(uri.indexOf('://') > 0
-                        ? uri
-                        : jsOMS.rtrim(window.omsApp.request.getRootPath(), '/') + '/' + jsOMS.ltrim(uri, '/'));
+                    window.location = UriFactory.build(uri);
 
                     /*
                     @todo Commented out until ObserverMutation is implemented

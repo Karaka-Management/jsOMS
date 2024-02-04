@@ -9,12 +9,6 @@ import { FormView } from './../Views/FormView.js';
  * @license   OMS License 2.0
  * @version   1.0.0
  * @since     1.0.0
- *
- * @todo Karaka/phpOMS#239
- *  Optional parameters
- *  Sometimes we need to define a list of optional parameters that will be filled if they exist and only if they exist.
- *  E.g. `u=` for unit `filter=` for filtering etc.
- *  Otherwise the url on some pages keeps getting longer and longer because parameters get appended.
  */
 export class UriFactory
 {

@@ -107,7 +107,8 @@ export class ReadManager
 
 /**
  * @todo SpeechRecognition polyfill
- *  Remove the speech recognition wrapper once it is obsolete and supported by the major browsers.
+ *      Remove the speech recognition wrapper once it is obsolete and supported by the major browsers.
+ *      https://github.com/Karaka-Management/jsOMS/issues/108
  */
 /* eslint-disable */
 /** global: webkitSpeechRecognition */

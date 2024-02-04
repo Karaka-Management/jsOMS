@@ -1302,12 +1302,6 @@ export class Form
         for (const e in remoteUrls) {
             const request = new Request(e);
             request.setResultCallback(200, function (xhr) {
-                /**
-                 * @todo Karaka/jsOMS#84
-                 *  Remote data responses need to be parsed
-                 *  The data coming from the backend/api usually is not directly usable in the frontend.
-                 *  For that purpose some kind of value path should be defined to handle json responses in order to get only the data that is needed.
-                 */
                 const remoteUrlsLength = remoteUrls[e].length;
                 for (let k = 0; k < remoteUrlsLength; ++k) {
                     const path = remoteUrls[e][k].path;
