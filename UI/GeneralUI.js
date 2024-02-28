@@ -258,7 +258,7 @@ export class GeneralUI
     {
         e = e !== null
             ? [e]
-            : document.getElementsByClassName('advancedInput');
+            : document.getElementsByClassName('advIpt');
 
         const length = e.length;
 

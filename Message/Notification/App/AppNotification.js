@@ -62,7 +62,7 @@ export class AppNotification
         };
 
         const output = document.importNode(tpl.content, true);
-        output.querySelector('.log-msg').classList.add('log-msg-status-' + msg.status);
+        output.querySelector('.log-msg').classList.add('log-lvl-' + msg.status);
         output.querySelector('.log-msg-content').innerHTML = msg.message;
         output.querySelector('.close').addEventListener('click', function () {
             this.parentNode.remove();

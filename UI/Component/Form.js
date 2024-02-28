@@ -18,6 +18,13 @@ import { UriFactory }          from '../../Uri/UriFactory.js';
  * @license   OMS License 2.0
  * @version   1.0.0
  * @since     1.0.0
+ *
+ * @todo Adding a template to the DOM should modify its id/generate a custom/random id for the added element
+ *      for future handling as very often ids are required to identify and manage UI elements.
+ *      https://github.com/Karaka-Management/jsOMS/issues/102
+ *
+ * @feature Auto update data changes in the backend (e.g. pull every x seconds, or use websockets for push)
+ *      https://github.com/Karaka-Management/Karaka/issues/151
  */
 export class Form
 {
@@ -1220,32 +1227,10 @@ export class Form
 
                     const statusCode = parseInt(xhr.getResponseHeader('status'));
 
-                    if (statusCode === 200 || statusCode === null) {
-                        if ((successInject = form.getSuccess()) !== null) {
-                            successInject(response, xhr);
-                        } else if (redirect !== null) {
-                            fetch(UriFactory.build(redirect))
-                            .then((response) => response.text())
-                            .then((html) => {
-                                document.documentElement.innerHTML = html;
-
-                                if (window.omsApp.state) {
-                                    window.omsApp.state.hasChanges = false;
-                                }
-
-                                history.pushState({}, null, UriFactory.build(redirect));
-                                /* This is not working as it reloads the page ?!
-                                document.open();
-                                document.write(html);
-                                document.close();
-                                */
-                                // @todo fix memory leak which most likely exists because of continuous binding without removing binds
-                                window.omsApp.reInit();
-                            })
-                            .catch((error) => {
-                                console.warn(error);
-                            });
-                        }
+                    if ((successInject = form.getSuccess()) !== null
+                        && (statusCode === 200 || statusCode === null)
+                    ) {
+                        successInject(response, xhr);
                     }
 
                     if (response.get('type') !== null) {
@@ -1271,6 +1256,32 @@ export class Form
                         ), NotificationType.APP_NOTIFICATION
                     );
                 }
+            }
+
+            if (redirect !== null
+                && (statusCode === 200 || statusCode === null)
+            ) {
+                fetch(UriFactory.build(redirect))
+                .then((response) => response.text())
+                .then((html) => {
+                    document.documentElement.innerHTML = html;
+
+                    if (window.omsApp.state) {
+                        window.omsApp.state.hasChanges = false;
+                    }
+
+                    history.pushState({}, null, UriFactory.build(redirect));
+                    /* This is not working as it reloads the page ?!
+                    document.open();
+                    document.write(html);
+                    document.close();
+                    */
+                    // @todo fix memory leak which most likely exists because of continuous binding without removing binds
+                    window.omsApp.reInit();
+                })
+                .catch((error) => {
+                    console.warn(error);
+                });
             }
         });
 

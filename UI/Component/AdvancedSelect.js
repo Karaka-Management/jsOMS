@@ -1,3 +1,6 @@
+import { jsOMS } from '../../Utils/oLib.js';
+import { Request } from '../../Message/Request/Request.js';
+
 // remote data
 // select data could be template layout per element
 // multi select
@@ -5,8 +8,7 @@
 
 // isn't this very similar to the advanced input? just a little different?
 // maybe not...
-import { jsOMS } from '../../Utils/oLib.js';
-import { Request } from '../../Message/Request/Request.js';
+
 /**
  * Advanced input class.
  *
@@ -14,6 +16,10 @@ import { Request } from '../../Message/Request/Request.js';
  * @license    OMS License 2.0
  * @version    1.0.0
  * @since      1.0.0
+ *
+ * @todo Bind data to select options such as visible elements and data pre-fills.
+ *      When an option is selected certain ui elements become visible and get filled out with default values.
+ *      https://github.com/Karaka-Management/jsOMS/issues/104
  */
 export class AdvancedSelect
 {

@@ -537,17 +537,15 @@ export class FormView
                 }
 
                 continue;
+            } else if (typeof elements[i].value !== 'undefined') {
+                value = elements[i].value;
+            } else if (elements[i].getAttribute('data-value') !== null) {
+                value = elements[i].getAttribute('data-value');
             } else {
-                if (typeof elements[i].value !== 'undefined') {
-                    value = elements[i].value;
-                } else if (elements[i].getAttribute('data-value') !== null) {
-                    value = elements[i].getAttribute('data-value');
-                } else {
-                    value = elements[i].innerHTML;
-                }
+                value = elements[i].innerHTML;
             }
 
-            // handle array data (e.g. table rows with same name)
+            // handle array data (e.g. table rows with same name or name="myname[]")
             if (Object.prototype.hasOwnProperty.call(data, id)) {
                 if (data[id].constructor !== Array) {
                     data[id] = [data[id]];
@@ -561,7 +559,12 @@ export class FormView
 
         for (const key in data) {
             if (Object.prototype.hasOwnProperty.call(data, key)) {
-                formData.append(key, data[key] !== null && data[key].constructor === Array ? JSON.stringify(data[key]) : data[key]);
+                formData.append(
+                    key,
+                    data[key] !== null && data[key].constructor === Array
+                        ? JSON.stringify(data[key])
+                        : data[key]
+                );
             }
         }
 

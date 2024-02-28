@@ -11,27 +11,37 @@ import { ResponseType } from '../../Message/Response/ResponseType.js';
  * @version   1.0.0
  * @since     1.0.0
  *
- * @todo Karaka/jsOMS#50
- *  Add basic table handling (no db and pagination)
+ * @feature Karaka/jsOMS#55
+ *      Implement filtering and sorting based on backend
  *
- * @todo Karaka/jsOMS#55
- *  Implement filtering and sorting based on backend
+ * @feature Karaka/jsOMS#57
+ *      Advanced filtering
+ *      The current filtering implementation is only column by column connected with &&.
+ *      Consider to implement a much more advanced filtering where different combinations are possible such as || &&, different ordering with parenthesis etc.
+ *      This can be extremely powerful but will be complex for standard users.
+ *      This advanced filtering should probably be a little bit hidden?
  *
- * @todo Karaka/jsOMS#57
- *  Advanced filtering
- *  The current filtering implementation is only column by column connected with &&.
- *  Consider to implement a much more advanced filtering where different combinations are possible such as || &&, different ordering with parenthesis etc.
- *  This can be extremely powerful but will be complex for standard users.
- *  This advanced filtering should probably be a little bit hidden?
+ * @feature Karaka/jsOMS#59
+ *      Data download
+ *      There is a small icon in the top right corner of tables which allows (not yet to be honest) to download the data in the table.
+ *      Whether the backend should be queried for this or only the frontend data should be collected (current situation) should depend on if the table has an api endpoint defined.
  *
- * @todo Karaka/jsOMS#59
- *  Data download
- *  There is a small icon in the top right corner of tables which allows (not yet to be honest) to download the data in the table.
- *  Whether the backend should be queried for this or only the frontend data should be collected (current situation) should depend on if the table has an api endpoint defined.
+ * @feature Allow column drag/drop ordering which is also saved in the front end
  *
- * @todo Allow column drag/drop ordering which is also saved in the front end
+ * @feature Implement a filter highlight function.
+ *      Either in forms or in tables, where the filter icon is highlighted, if a filter is defined.
+ *      One solution could be to put an additional hidden filter checkbox in front of the filter icon and check for filter changes
+ *      (bubble up) and then activate this hidden checkbox if a filter is defined.
+ *      In CSS just define the filter icon as active/highlighted, if the hidden check box is active.
+ *      This means we have two hidden checkboxes in front of the filter icon (one in case the filter menu is open = popup
+ *      is visible and another one for highlighting the filter icon if a filter is defined).
+ *      https://github.com/Karaka-Management/Karaka/issues/148
  *
- * @todo Save column visibility filter and apply that filter on page load
+ * @todo How to preserve form filter data to the next page?
+ *      Not an issue, in the future we don't want to reload the whole page,
+ *      but only exchange the table/list content with the backend response -> the header/filter will not get changed and
+ *      remains as defined. This means for tables (maybe even forms?) to setup content replacement earlier than for other pages?!
+ *      https://github.com/Karaka-Management/Karaka/issues/149
  */
 export class Table
 {
@@ -198,11 +208,11 @@ export class Table
         header.addEventListener('contextmenu', function (event) {
             jsOMS.preventAll(event);
 
-            if (document.getElementById('table-context-menu') !== null) {
+            if (document.getElementById('table-ctx-menu') !== null) {
                 return;
             }
 
-            const tpl = document.getElementById('table-context-menu-tpl');
+            const tpl = document.getElementById('table-ctx-menu-tpl');
 
             if (tpl === null) {
                 return;
@@ -210,7 +220,7 @@ export class Table
 
             const output = document.importNode(tpl.content, true);
             tpl.parentNode.appendChild(output);
-            const menu = document.getElementById('table-context-menu');
+            const menu = document.getElementById('table-ctx-menu');
 
             const columns = header.querySelectorAll('td');
             const length  = columns.length;
@@ -271,7 +281,7 @@ export class Table
 
     static hideMenuClickHandler (event)
     {
-        const menu             = document.getElementById('table-context-menu');
+        const menu             = document.getElementById('table-ctx-menu');
         const isClickedOutside = !menu.contains(event.target);
 
         if (isClickedOutside) {

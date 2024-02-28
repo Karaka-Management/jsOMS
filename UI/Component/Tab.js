@@ -138,6 +138,10 @@ export class Tab
         const fragments  = fragmentString.split('&');
         const fragLength = fragments.length;
 
+        // @bug The frontend loads the correct tab based on the provided fragment,
+        //      but it is slow. Doing this in the backend can already fix this but the frontend implementation should be fixed,
+        //      because this should be the job of the frontend.
+        //      https://github.com/Karaka-Management/Karaka/issues/164
         if (fragLength > 0 && fragmentString !== '') {
             for (let i = 0; i < fragLength; ++i) {
                 const label = e.querySelector('label[for="' + fragments[i] + '"]');
