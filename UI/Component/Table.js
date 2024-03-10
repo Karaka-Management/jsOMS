@@ -182,7 +182,7 @@ export class Table
             const rows      = header.parentElement.getElementsByTagName('tr');
             const rowLength = rows.length;
 
-            if (state === '1' && !jsOMS.hasClass(columns[i], 'hidden')) {
+            if (state === '1' && !jsOMS.hasClass(columns[i], 'vh')) {
                 for (let j = 0; j < rowLength; ++j) {
                     const cols = rows[j].getElementsByTagName('td');
 
@@ -190,9 +190,9 @@ export class Table
                         continue;
                     }
 
-                    jsOMS.addClass(cols[i], 'hidden');
+                    jsOMS.addClass(cols[i], 'vh');
                 }
-            } else if ((state === '0' || state === null) && jsOMS.hasClass(columns[i], 'hidden')) {
+            } else if ((state === '0' || state === null) && jsOMS.hasClass(columns[i], 'vh')) {
                 for (let j = 0; j < rowLength; ++j) {
                     const cols = rows[j].getElementsByTagName('td');
 
@@ -200,7 +200,7 @@ export class Table
                         continue;
                     }
 
-                    jsOMS.removeClass(cols[i], 'hidden');
+                    jsOMS.removeClass(cols[i], 'vh');
                 }
             }
         }
@@ -240,7 +240,7 @@ export class Table
                 menuLine.firstElementChild.firstElementChild.setAttribute('id', lineId);
                 menuLine.firstElementChild.appendChild(document.createTextNode(columns[i].firstElementChild.innerText.trim()));
 
-                const isHidden = jsOMS.hasClass(columns[i], 'hidden');
+                const isHidden = jsOMS.hasClass(columns[i], 'vh');
 
                 menu.getElementsByTagName('ul')[0].appendChild(menuLine);
                 menu.querySelector('ul').lastElementChild.querySelector('input[type="checkbox"]').checked = !isHidden;
@@ -249,7 +249,7 @@ export class Table
                     const rows      = header.parentElement.getElementsByTagName('tr');
                     const rowLength = rows.length;
 
-                    const isHidden = jsOMS.hasClass(columns[i], 'hidden');
+                    const isHidden = jsOMS.hasClass(columns[i], 'vh');
 
                     if (isHidden) {
                         window.localStorage.setItem('ui-state-' + self.id + '-header-' + i, JSON.stringify('0'));
@@ -261,9 +261,9 @@ export class Table
                         const cols = rows[j].getElementsByTagName('td');
 
                         if (isHidden) {
-                            jsOMS.removeClass(cols[i], 'hidden');
+                            jsOMS.removeClass(cols[i], 'vh');
                         } else {
-                            jsOMS.addClass(cols[i], 'hidden');
+                            jsOMS.addClass(cols[i], 'vh');
                         }
                     }
                 });

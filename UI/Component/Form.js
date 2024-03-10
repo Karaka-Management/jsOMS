@@ -575,7 +575,7 @@ export class Form
             /** @var {object} remoteUrls Texts and values which come from remote sources */
             const remoteUrls = {};
 
-            jsOMS.removeClass(element, 'hidden');
+            jsOMS.removeClass(element, 'vh');
 
             // todo bind failure here, if failure do cancel, if success to remove edit template
             self.forms[id].setSuccess(function (response, xhr) {
@@ -728,19 +728,19 @@ export class Form
         let buttonLength = addButtons.length;
 
         for (let i = 0; i < buttonLength; ++i) {
-            jsOMS.removeClass(addButtons[i], 'hidden');
+            jsOMS.removeClass(addButtons[i], 'vh');
         }
 
         const saveButtons = self.forms[externalFormId].getSave();
         buttonLength      = saveButtons.length;
         for (let i = 0; i < buttonLength; ++i) {
-            jsOMS.addClass(saveButtons[i], 'hidden');
+            jsOMS.addClass(saveButtons[i], 'vh');
         }
 
         const cancelButtons = self.forms[externalFormId].getCancel();
         buttonLength        = cancelButtons.length;
         for (let i = 0; i < buttonLength; ++i) {
-            jsOMS.addClass(cancelButtons[i], 'hidden');
+            jsOMS.addClass(cancelButtons[i], 'vh');
         }
     }
 
@@ -773,7 +773,7 @@ export class Form
         /** @var {Element} elementContainer Original element */
         const element = uiContainer.querySelector('.hidden[data-id="' + elementContainer.getAttribute('data-id') + '"]');
 
-        jsOMS.removeClass(element, 'hidden');
+        jsOMS.removeClass(element, 'vh');
 
         elementContainer.parentNode.removeChild(elementContainer);
     }
@@ -792,19 +792,19 @@ export class Form
         const addButtons = self.forms[id].getAdd();
         length           = addButtons.length;
         for (let i = 0; i < length; ++i) {
-            jsOMS.removeClass(addButtons[i], 'hidden');
+            jsOMS.removeClass(addButtons[i], 'vh');
         }
 
         const saveButtons = self.forms[id].getSave();
         length            = saveButtons.length;
         for (let i = 0; i < length; ++i) {
-            jsOMS.addClass(saveButtons[i], 'hidden');
+            jsOMS.addClass(saveButtons[i], 'vh');
         }
 
         const cancelButtons = self.forms[id].getCancel();
         length              = cancelButtons.length;
         for (let i = 0; i < length; ++i) {
-            jsOMS.addClass(cancelButtons[i], 'hidden');
+            jsOMS.addClass(cancelButtons[i], 'vh');
         }
     }
 
@@ -830,7 +830,7 @@ export class Form
 
         /** @var {Element} elementContainer Element container that holds the data that should get updated */
         const elementContainer = event.target.closest(formElement.getAttribute('data-ui-element'));
-        jsOMS.addClass(elementContainer, 'hidden');
+        jsOMS.addClass(elementContainer, 'vh');
 
         /** @var {NodeListOf<Element>} values Value elements of the element to update */
         const values = elementContainer.querySelectorAll('[data-tpl-value]');
@@ -880,13 +880,13 @@ export class Form
         const saveButtons = self.forms[id].getSave();
         let buttonLength  = saveButtons.length;
         for (let i = 0; i < buttonLength; ++i) {
-            jsOMS.removeClass(saveButtons[i], 'hidden');
+            jsOMS.removeClass(saveButtons[i], 'vh');
         }
 
         const cancelButtons = self.forms[id].getCancel();
         buttonLength        = cancelButtons.length;
         for (let i = 0; i < buttonLength; ++i) {
-            jsOMS.removeClass(cancelButtons[i], 'hidden');
+            jsOMS.removeClass(cancelButtons[i], 'vh');
         }
 
         // define remote response behavior
@@ -937,19 +937,19 @@ export class Form
         const addButtons = self.forms[externalFormId].getAdd();
         length           = addButtons.length;
         for (let i = 0; i < length; ++i) {
-            jsOMS.addClass(addButtons[i], 'hidden');
+            jsOMS.addClass(addButtons[i], 'vh');
         }
 
         const saveButtons = self.forms[externalFormId].getSave();
         length            = saveButtons.length;
         for (let i = 0; i < length; ++i) {
-            jsOMS.removeClass(saveButtons[i], 'hidden');
+            jsOMS.removeClass(saveButtons[i], 'vh');
         }
 
         const cancelButtons = self.forms[externalFormId].getCancel();
         length              = cancelButtons.length;
         for (let i = 0; i < length; ++i) {
-            jsOMS.removeClass(cancelButtons[i], 'hidden');
+            jsOMS.removeClass(cancelButtons[i], 'vh');
         }
 
         /** @var {object} remoteUrls Texts and values which come from remote sources */

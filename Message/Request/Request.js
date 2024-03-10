@@ -10,6 +10,8 @@ import { RequestType }   from './RequestType.js';
  * @license   OMS License 2.0
  * @version   1.0.0
  * @since     1.0.0
+ *
+ * @question Consider to completely remove and replace with fetch
  */
 export class Request
 {
@@ -312,6 +314,7 @@ export class Request
 
         const self = this;
 
+        // @question Consider to change to fetch
         if (this.xhr.readyState !== 1) {
             if (this.type === RequestType.FORM_DATA) {
                 // GET request doesn't allow body/payload. Therefor we have to put the data into the uri
