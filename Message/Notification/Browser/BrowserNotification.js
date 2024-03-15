@@ -64,13 +64,17 @@ export class BrowserNotification
     send (msg)
     {
         /** global: Notification */
-        if (Notification.permission === 'granted') {
+        if (Notification.permission !== 'granted') {
+            return;
+        }
+
+        navigator.serviceWorker.ready.then((registration) => {
             registration.showNotification(msg.title, {
                 body: msg.message,
-                icon: "../images/touch/chrome-touch-icon-192x192.png",
+                icon: '../images/touch/chrome-touch-icon-192x192.png',
                 vibrate: [msg.vibrate ? 200 : 0],
-                tag: "notification",
+                tag: 'notification'
             });
-        }
+        });
     };
 };

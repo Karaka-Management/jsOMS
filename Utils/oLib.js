@@ -140,7 +140,7 @@ export class jsOMS
     static htmlspecialchars_encode = function (str)
     {
         let escaped  = str;
-        const length = htmlspecialchars.length;
+        const length = jsOMS.htmlspecialchars.length;
 
         for (let i = 0; i < length; ++i) {
             escaped = escaped.replace(

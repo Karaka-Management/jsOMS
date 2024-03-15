@@ -20,6 +20,6 @@ export class ModuleFactory
      */
     static getInstance (module, app)
     {
-        return new omsApp.Modules[module](app);
+        return new window.omsApp.Modules[module](app);
     };
 };

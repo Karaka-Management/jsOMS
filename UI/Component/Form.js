@@ -673,8 +673,8 @@ export class Form
             jsOMS.removeClass(updateElements[i], 'animated');
             jsOMS.removeClass(updateElements[i], 'greenCircleFade');
 
-            requestAnimationFrame((time) => {
-                requestAnimationFrame((time) => {
+            window.requestAnimationFrame((_) => {
+                window.requestAnimationFrame((_) => {
                     jsOMS.addClass(updateElements[i], 'animated');
                     jsOMS.addClass(updateElements[i], 'medium-duration');
                     jsOMS.addClass(updateElements[i], 'greenCircleFade');
@@ -705,8 +705,8 @@ export class Form
                 jsOMS.removeClass(updateElements[i], 'greenCircleFade');
                 jsOMS.removeClass(updateElements[i], 'medium-duration');
 
-                requestAnimationFrame((_) => {
-                    requestAnimationFrame((_) => {
+                window.requestAnimationFrame((_) => {
+                    window.requestAnimationFrame((_) => {
                         // Important: all classes need to be done in one go otherwise it doesn't work (timing issue?)
                         jsOMS.addClass(updateElements[i], 'animated medium-duration greenCircleFade');
                     });
@@ -890,7 +890,7 @@ export class Form
         }
 
         // define remote response behavior
-        self.forms[externalFormId].setSuccess(function (response) {
+        self.forms[id].setSuccess(function (response) {
             if (response.get('status') !== 'undefined'
                 && response.get('status') !== NotificationLevel.HIDDEN
             ) {
@@ -1184,6 +1184,8 @@ export class Form
                 window.location = headerLocation;
             }
 
+            let statusCode = null;
+
             if (xhr.getResponseHeader('content-type').includes('application/octet-stream')) {
                 const blob = new Blob([xhr.response], { type: 'application/octet-stream' });
                 const doc  = document.createElement('a');
@@ -1225,7 +1227,7 @@ export class Form
                     const response    = new Response(o);
                     let successInject = null;
 
-                    const statusCode = parseInt(xhr.getResponseHeader('status'));
+                    statusCode = parseInt(xhr.getResponseHeader('status'));
 
                     if ((successInject = form.getSuccess()) !== null
                         && (statusCode === 200 || statusCode === null)
