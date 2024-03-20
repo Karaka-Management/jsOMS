@@ -4,26 +4,26 @@
     "hash": "",
     "description": "<p align=\"center\"><img src=\"https://raw.githubusercontent.com/Jingga-Management/Assets/master/art/logo.png\" width=\"256\" alt=\"Logo\"></p>",
     "directories": {
-      "test": "tests"
+        "test": "tests"
     },
     "dependencies": {
-      "chromedriver": "^91.0.1",
-      "eslint": "^8.12.0",
-      "geckodriver": "^3.0.2",
-      "selenium-webdriver": "^4.0.0-beta.4"
+        "chromedriver": "^122.0.6",
+        "eslint": "^8.12.0",
+        "geckodriver": "^3.0.2",
+        "selenium-webdriver": "^4.0.0-beta.4"
     },
     "author": "Dennis Eichhorn",
     "main": "index.js",
     "repository": {
-      "type": "git",
-      "url": "git+https://github.com/karaka-management/jsOMS.git"
+        "type": "git",
+        "url": "git+https://github.com/karaka-management/jsOMS.git"
     },
     "license": "OMS",
     "bugs": {
-      "url": "https://github.com/karaka-management/jsOMS/issues"
+        "url": "https://github.com/karaka-management/jsOMS/issues"
     },
     "homepage": "https://github.com/karaka-management/jsOMS#readme",
     "devDependencies": {
-      "eslint-plugin-import": "^2.25.4"
+        "eslint-plugin-import": "^2.25.4"
     }
-  }
+}
