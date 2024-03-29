@@ -47,7 +47,7 @@ export class BrowserNotification
     requestPermission ()
     {
         /** global: Notification */
-        if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
+        if (Notification.permission !== 'granted' && Notification.permission !== 'denied' && window.isSecureContext) {
             Notification.requestPermission();
         }
     };
