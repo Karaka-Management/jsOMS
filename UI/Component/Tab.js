@@ -151,7 +151,7 @@ export class Tab
             }
         }
 
-        if (e.querySelector('.tab-links').querySelector('.active') === null) {
+        if (e.querySelector('.tab-links')?.querySelector('.active') === null) {
             e.querySelector('.tab-links').querySelector('label').click();
         }
     };
