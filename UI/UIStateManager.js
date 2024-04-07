@@ -41,7 +41,43 @@ export class UIStateManager
         const length   = !elements ? 0 : elements.length;
 
         for (let i = 0; i < length; ++i) {
+            this.loadState(elements[i]);
             this.bindElement(elements[i]);
+        }
+
+        // @performance This is a stupid fix to fix view changes during the first loadState
+        //      E.g. scroll position depends on other UI elements
+        for (let i = 0; i < length; ++i) {
+            this.loadState(elements[i]);
+        }
+    };
+
+    loadState (element)
+    {
+        if (!element) {
+            return;
+        }
+
+        let state = JSON.parse(window.localStorage.getItem('ui-state-' + element.id));
+        state     = state !== null ? state : {};
+
+        switch (element.tagName.toLowerCase()) {
+            case 'input':
+                if ((state === '1' && !element.checked)
+                    || (state === '0' && element.checked)
+                ) {
+                    element.click();
+                }
+
+                break;
+            case 'div':
+                element.scrollLeft = state.x;
+                element.scrollTop  = state.y;
+
+                element.scrollTo({ top: state.y, left: state.x });
+                break;
+            default:
+                break;
         }
     };
 
@@ -60,37 +96,31 @@ export class UIStateManager
             return;
         }
 
-        let state = JSON.parse(window.localStorage.getItem('ui-state-' + element.id));
-        state     = state !== null ? state : {};
-
         switch (element.tagName.toLowerCase()) {
             case 'input':
-                if ((state === '1' && !element.checked)
-                    || (state === '0' && element.checked)
-                ) {
-                    element.click();
-                }
-
                 element.addEventListener('change', function (event) {
                     if (this.getAttribute('type') === 'checkbox'
                         || this.getAttribute('type') === 'radio'
                     ) {
-                        window.localStorage.setItem('ui-state-' + this.id, JSON.stringify(this.checked ? '1' : '0'));
+                        window.localStorage.setItem(
+                            'ui-state-' + this.id,
+                            JSON.stringify(this.checked ? '1' : '0')
+                        );
                     } else {
-                        window.localStorage.setItem('ui-state-' + this.id, JSON.stringify(this.value));
+                        window.localStorage.setItem(
+                            'ui-state-' + this.id,
+                            JSON.stringify(this.value)
+                        );
                     }
                 });
 
                 break;
             case 'div':
-                // @todo this is not working, WHY? state is correct, but element.scrollTop is just ignored?!
-                element.scrollLeft = state.x;
-                element.scrollTop  = state.y;
-
-                element.scrollTo({ top: state.y, left: state.x });
-
                 element.addEventListener('scroll', function () {
-                    window.localStorage.setItem('ui-state-' + this.id, JSON.stringify({ x: this.scrollLeft, y: this.scrollTop }));
+                    window.localStorage.setItem(
+                        'ui-state-' + this.id,
+                        JSON.stringify({ x: this.scrollLeft, y: this.scrollTop })
+                    );
                 });
 
                 break;

@@ -25,12 +25,12 @@ export function domChangeAttribute (action, callback, id)
             continue;
         }
 
-        switch (action.type) {
+        switch (action.subtype) {
             case 'remove':
                 const old = fill[i].getAttribute(action.attr);
 
-                if (old.match(new RegExp('(\\s|^)' + action.value + '(\\s|$)')) !== null) {
-                    const reg = new RegExp('(\\s|^)' + cls);
+                if (old !== null && old.match(new RegExp('(\\s|^)' + action.value + '(\\s|$)')) !== null) {
+                    const reg = new RegExp('(\\s|^)' + action.value);
 
                     fill[i].setAttribute(action.attr, old.replace(reg, '').trim());
                 }

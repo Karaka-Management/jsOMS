@@ -1,3 +1,5 @@
+import { GeneralUI } from "../../../UI/GeneralUI";
+
 /**
  * Get value from dom.
  *
@@ -29,16 +31,11 @@ export function domGetValue (action, callback, id)
             ? e[i].getAttribute('name')
             : e[i].getAttribute('id');
 
-        if (e[i].tagName.toLowerCase() === 'input'
-            || e[i].tagName.toLowerCase() === 'selects'
-            || e[i].tagName.toLowerCase() === 'button'
-        ) {
-            value[eId] = e[i].getAttribute('value');
-        } else if (e[i].tagName.toLowerCase() === 'form') {
+        if (e[i].tagName.toLowerCase() === 'form') {
             value = window.omsApp.uiManager.getFormManager().get(eId).getData();
             break;
         } else {
-            value[eId] = e[i].getAttribute('data-id');
+            value[eId] = GeneralUI.getValueFromDataSource(e[i]);
         }
     }
 
