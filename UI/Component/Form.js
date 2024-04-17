@@ -164,7 +164,7 @@ export class Form
             // If isOnChange(): every change results in action
             //      -> perform action on change
             if (!this.forms[id].isOnChange()) {
-                toBind[i].addEventListener('change', function (evnt) {
+                toBind[i].addEventListener('change', function () {
                     if (window.omsApp.state) {
                         window.omsApp.state.hasChanges = true;
                     }
@@ -212,8 +212,8 @@ export class Form
         jsOMS.preventAll(event);
 
         const remove   = self.forms[id].getRemove()[elementIndex];
-        const callback = function (xhr) {
-            if (xhr.status !== 200) {
+        const callback = function (xhr = null) {
+            if (xhr !== null && xhr.status !== 200) {
                 self.app.notifyManager.send(
                     new NotificationMessage(
                         NotificationLevel.ERROR,
@@ -540,7 +540,7 @@ export class Form
             for (let i = 0; i < updateElementLength; ++i) {
                 updateElementNames[i] = updateElementNames[i].trim();
 
-                // get the elment to update
+                // get the element to update
                 // @todo maybe stupid, because same as elementContainer. however this is more general? anyway, one can be replaced
                 updateElements.push(
                     formElement.querySelector(updateElementNames[i] + '[data-id="' + elementContainer.getAttribute('data-id') + '"]')
@@ -569,8 +569,9 @@ export class Form
                             : Array.prototype.slice.call(dataOriginElement.querySelectorAll('[data-tpl-text]'))
                     );
             }
+
             /** @var {Element} elementContainer Original element */
-            const element = uiContainer.querySelector('.hidden[data-id="' + elementContainer.getAttribute('data-id') + '"]');
+            const element = uiContainer.querySelector('.vh[data-id="' + elementContainer.getAttribute('data-id') + '"]');
 
             /** @var {object} remoteUrls Texts and values which come from remote sources */
             const remoteUrls = {};
@@ -637,7 +638,7 @@ export class Form
         for (let i = 0; i < updateElementLength; ++i) {
             updateElementNames[i] = updateElementNames[i].trim();
 
-            // get the elment to update
+            // get the element to update
             updateElements.push(
                 formElement.querySelector(updateElementNames[i] + '[data-id="' + externalFormElement.getAttribute('data-id') + '"]')
             );
@@ -747,7 +748,10 @@ export class Form
     formActionCancel (self, event, id, elementIndex)
     {
         const ele = document.getElementById(id);
-        if (ele.getAttribute('data-update-form') === null && ele.tagName.toLowerCase() !== 'form') {
+        if (ele.getAttribute('data-update-form') === null
+            && ele.getAttribute('data-ui-container') !== null
+            && ele.getAttribute('data-ui-element') !== null
+        ) {
             this.formActionCancelInline(self, event, id, elementIndex);
         } else {
             this.formActionCancelExternal(self, event, id, elementIndex);
@@ -771,7 +775,7 @@ export class Form
         const elementContainer = event.target.closest(formElement.getAttribute('data-ui-element'));
 
         /** @var {Element} elementContainer Original element */
-        const element = uiContainer.querySelector('.hidden[data-id="' + elementContainer.getAttribute('data-id') + '"]');
+        const element = uiContainer.querySelector('.vh[data-id="' + elementContainer.getAttribute('data-id') + '"]');
 
         jsOMS.removeClass(element, 'vh');
 
@@ -829,7 +833,11 @@ export class Form
         const uiContainerName = formElement.getAttribute('data-ui-container');
 
         /** @var {Element} elementContainer Element container that holds the data that should get updated */
-        const elementContainer = event.target.closest(formElement.getAttribute('data-ui-element'));
+        let elementContainer = event.target.closest(formElement.getAttribute('data-ui-element'));
+        if (elementContainer === null) {
+            elementContainer = formElement.querySelector(formElement.getAttribute('data-ui-element'));
+        }
+
         jsOMS.addClass(elementContainer, 'vh');
 
         /** @var {NodeListOf<Element>} values Value elements of the element to update */
@@ -1007,6 +1015,7 @@ export class Form
             this.formActionAdd(self, event, id, elementIndex);
         } else if ((elementIndex = Array.from(self.forms[id].getSave()).indexOf(event.target)) !== -1) {
             this.formActionSave(self, event, id, elementIndex);
+            //self.submit(self.forms[id], self.forms[id].getSubmit()[elementIndex]);
         } else if ((elementIndex = Array.from(self.forms[id].getCancel()).indexOf(event.target)) !== -1) {
             jsOMS.preventAll(event);
             // @todo currently only handling update cancel, what about add cancel?
@@ -1039,7 +1048,7 @@ export class Form
         // add
         // save
         // update
-        // dragndrop
+        // drag'n drop
     }
 
     /**
@@ -1233,6 +1242,7 @@ export class Form
                         && (statusCode === 200 || statusCode === null)
                     ) {
                         successInject(response, xhr);
+                        form.setSuccess(null); // unload success
                     }
 
                     if (response.get('type') !== null) {
