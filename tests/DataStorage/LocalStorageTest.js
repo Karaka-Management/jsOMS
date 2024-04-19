@@ -1,4 +1,4 @@
-import { LocalStorage } from '../DataStorage/LocalStorage.js';
+import { LocalStorage } from '../../DataStorage/LocalStorage.js';
 
 describe('LocalStorageTest', function ()
 {

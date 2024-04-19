@@ -1,6 +1,6 @@
 import { HttpUri } from '../../Uri/HttpUri.js';
 
-describe('HttpTest', function ()
+describe('HttpUriTest', function ()
 {
     'use strict';
 

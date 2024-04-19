@@ -1,4 +1,4 @@
-import { BrowserType } from '../Message/Request/BrowserType.js';
+import { BrowserType } from '../../System/BrowserType.js';
 
 describe('BrowserTypeTest', function ()
 {

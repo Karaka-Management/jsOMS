@@ -1,4 +1,4 @@
-import { NotificationLevel } from '../Message/Notification/NotificationLevel.js';
+import { NotificationLevel } from '../../../Message/Notification/NotificationLevel.js';
 
 describe('NotificationLevelTest', function ()
 {

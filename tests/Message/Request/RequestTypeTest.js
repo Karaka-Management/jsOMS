@@ -1,4 +1,4 @@
-import { RequestType } from '../Message/Request/RequestType.js';
+import { RequestType } from '../../../Message/Request/RequestType.js';
 
 describe('RequestTypeTest', function ()
 {

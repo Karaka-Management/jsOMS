@@ -9,4 +9,4 @@ describe('AutocompleteTest', function ()
     afterEach(function ()
     {
     });
-}
+});

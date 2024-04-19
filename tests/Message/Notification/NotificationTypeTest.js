@@ -1,4 +1,4 @@
-import { NotificationType } from '../Message/Notification/NotificationType.js';
+import { NotificationType } from '../../../Message/Notification/NotificationType.js';
 
 describe('NotificationTypeTest', function ()
 {

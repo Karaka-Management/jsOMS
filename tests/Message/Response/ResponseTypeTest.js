@@ -1,4 +1,4 @@
-import { ResponseType } from '../Message/Response/ResponseType.js';
+import { ResponseType } from '../../../Message/Response/ResponseType.js';
 
 describe('ResponseTypeTest', function ()
 {

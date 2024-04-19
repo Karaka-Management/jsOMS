@@ -1,4 +1,4 @@
-import { NotificationManager } from '../Message/Notification/NotificationManager.js';
+import { NotificationManager } from '../../../Message/Notification/NotificationManager.js';
 
 describe('NotificationManagerTest', function ()
 {

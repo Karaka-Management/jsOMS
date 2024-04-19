@@ -24,6 +24,10 @@
     },
     "homepage": "https://github.com/karaka-management/jsOMS#readme",
     "devDependencies": {
-        "eslint-plugin-import": "^2.25.4"
+        "eslint-plugin-import": "^2.25.4",
+        "jasmine": "^5.1.0",
+        "jasmine-node": "^3.0.0",
+        "karma-jasmine": "^5.1.0",
+        "karma-jasmine-html-reporter": "^2.1.0"
     }
 }

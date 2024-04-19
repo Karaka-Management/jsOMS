@@ -1,4 +1,4 @@
-import { AssetManager } from '../Asset/AssetManager.js';
+import { AssetManager } from '../../Asset/AssetManager.js';
 
 describe('AssetManagerTest', function ()
 {

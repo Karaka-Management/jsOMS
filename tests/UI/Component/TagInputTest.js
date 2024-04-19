@@ -9,4 +9,4 @@ describe('TagInputTest', function ()
     afterEach(function ()
     {
     });
-}
+});

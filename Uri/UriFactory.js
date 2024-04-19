@@ -259,16 +259,16 @@ export class UriFactory
                 }
 
                 return '';
-            } else if (match.indexOf('?') === 0) {
+            } else if (match.indexOf('?') === 0 && match.length === 1) {
                 return current.query();
-            } else if (match.indexOf('/') === 0) {
+            } else if (match.indexOf('/') === 0 && match.length === 1) {
                 return current.path;
             } else if (match.indexOf(':user') === 0) {
                 return current.user;
             } else if (match.indexOf(':pass') === 0) {
                 return current.pass;
             } else if (match.indexOf('/') === 0) {
-                return 'ERROR PATH';
+                return 'ERROR%20PATH';
             } else if (match === '%') {
                 return window.location.href;
             } else {

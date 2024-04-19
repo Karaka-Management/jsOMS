@@ -1,4 +1,4 @@
-import { RequestMethod } from '../Message/Request/RequestMethod.js';
+import { RequestMethod } from '../../../Message/Request/RequestMethod.js';
 
 describe('RequestMethodTest', function ()
 {

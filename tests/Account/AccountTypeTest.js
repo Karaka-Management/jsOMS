@@ -1,4 +1,4 @@
-import { AccountType } from '../Account/AccountType.js';
+import { AccountType } from '../../Account/AccountType.js';
 
 describe('AccountTypeTest', function ()
 {

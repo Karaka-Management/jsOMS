@@ -9,4 +9,4 @@ describe('GeneralUITest', function ()
     afterEach(function ()
     {
     });
-}
+});

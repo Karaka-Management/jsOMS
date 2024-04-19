@@ -9,4 +9,4 @@ describe('EvaluatorTest', function ()
     afterEach(function ()
     {
     });
-}
+});

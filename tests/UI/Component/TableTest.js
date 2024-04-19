@@ -9,4 +9,4 @@ describe('TableTest', function ()
     afterEach(function ()
     {
     });
-}
+});

@@ -9,4 +9,4 @@ describe('TagListTest', function ()
     afterEach(function ()
     {
     });
-}
+});

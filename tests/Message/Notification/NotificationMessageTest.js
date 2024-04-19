@@ -1,4 +1,4 @@
-import { NotificationMessage } from '../Message/Notification/NotificationMessage.js';
+import { NotificationMessage } from '../../../Message/Notification/NotificationMessage.js';
 
 describe('NotificationMessageTest', function ()
 {

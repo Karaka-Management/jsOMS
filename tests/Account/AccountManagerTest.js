@@ -1,4 +1,4 @@
-import { AccountManager } from '../Account/AccountManager.js';
+import { AccountManager } from '../../Account/AccountManager.js';
 
 describe('AccountManagerTest', function ()
 {
