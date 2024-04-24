@@ -1,4 +1,4 @@
-import { GeneralUI } from "../../../UI/GeneralUI.js";
+import { GeneralUI } from '../../../UI/GeneralUI.js';
 
 /**
  * Get value from dom.

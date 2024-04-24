@@ -26,7 +26,7 @@ export function domChangeAttribute (action, callback, id)
         }
 
         switch (action.subtype) {
-            case 'remove':
+            case 'remove': {
                 const old = fill[i].getAttribute(action.attr);
 
                 if (old !== null && old.match(new RegExp('(\\s|^)' + action.value + '(\\s|$)')) !== null) {
@@ -35,11 +35,12 @@ export function domChangeAttribute (action, callback, id)
                     fill[i].setAttribute(action.attr, old.replace(reg, '').trim());
                 }
                 break;
+            }
             case 'add':
-                fill[i].setAttribute(action.attr, jsOMS.trim(fill[i].getAttribute(action.attr) + ' ' + action.value))
+                fill[i].setAttribute(action.attr, jsOMS.trim(fill[i].getAttribute(action.attr) + ' ' + action.value));
                 break;
             case 'set':
-                fill[i].setAttribute(action.attr, action.value)
+                fill[i].setAttribute(action.attr, action.value);
                 break;
             default:
         }

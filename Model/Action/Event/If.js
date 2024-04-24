@@ -1,4 +1,3 @@
-import { jsOMS } from '../../../Utils/oLib.js';
 /**
  * Prevent UI action.
  *
@@ -22,7 +21,7 @@ export function ifAction (action, callback, id)
         } else if (conditions[i].comp === '!=' && data !== conditions[i].value) {
             action.key = conditions[i].jump - 1;
             break;
-        } else if(conditions[i].comp === '>' && data > conditions[i].value) {
+        } else if (conditions[i].comp === '>' && data > conditions[i].value) {
             action.key = conditions[i].jump - 1;
             break;
         } else if (conditions[i].comp === '<' && data < conditions[i].value) {

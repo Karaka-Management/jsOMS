@@ -1015,7 +1015,7 @@ export class Form
             this.formActionAdd(self, event, id, elementIndex);
         } else if ((elementIndex = Array.from(self.forms[id].getSave()).indexOf(event.target)) !== -1) {
             this.formActionSave(self, event, id, elementIndex);
-            //self.submit(self.forms[id], self.forms[id].getSubmit()[elementIndex]);
+            // self.submit(self.forms[id], self.forms[id].getSubmit()[elementIndex]);
         } else if ((elementIndex = Array.from(self.forms[id].getCancel()).indexOf(event.target)) !== -1) {
             jsOMS.preventAll(event);
             // @todo currently only handling update cancel, what about add cancel?
