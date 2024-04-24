@@ -4,6 +4,10 @@ describe('UriFactoryTest', function ()
 {
     'use strict';
 
+    if (typeof window === 'undefined') {
+        var window = { location: {} };
+    }
+
     describe('testDefault', function ()
     {
         it('Testing default functionality', function ()

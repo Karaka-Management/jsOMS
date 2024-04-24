@@ -1,14 +1,13 @@
 /**
- * Math formula evaluator
+ * Math processor.
  *
  * @copyright Dennis Eichhorn
  * @license   OMS License 2.0
  * @version   1.0.0
  * @since     1.0.0
  */
-(function (jsOMS) {
-    'use strict';
-
+export class MathProcessor
+{
     /**
      * Evaluate math formula
      *
@@ -18,18 +17,18 @@
      *
      * @since 1.0.0
      */
-    jsOMS.mathEvaluate = function (equation)
+    static mathEvaluate (equation)
     {
         const stack   = [];
-        const postfix = jsOMS.shuntingYard(equation);
+        const postfix = MathProcessor.shuntingYard(equation);
         const length  = postfix.length;
 
         for (let i = 0; i < length; ++i) {
             if (!isNaN(parseFloat(postfix[i])) && isFinite(postfix[i])) {
                 stack.push(postfix[i]);
             } else {
-                const a = jsOMS.parseValue(stack.pop());
-                const b = jsOMS.parseValue(stack.pop());
+                const a = MathProcessor.parseValue(stack.pop());
+                const b = MathProcessor.parseValue(stack.pop());
 
                 if (postfix[i] === '+') {
                     stack.push(a + b);
@@ -59,7 +58,7 @@
      *
      * @since 1.0.0
      */
-    jsOMS.parseValue = function (value)
+    static parseValue (value)
     {
         return typeof value === 'string' ? (value.indexOf('.') === -1 ? parseInt(value) : parseFloat(value)) : value;
     };
@@ -73,7 +72,7 @@
      *
      * @since 1.0.0
      */
-    jsOMS.shuntingYard = function (equation)
+    static shuntingYard (equation)
     {
         const stack     = [];
         const operators = {
@@ -126,4 +125,5 @@
 
         return output;
     };
-}(window.jsOMS = window.jsOMS || {}));
+};
+

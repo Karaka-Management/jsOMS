@@ -6,6 +6,7 @@
     "directories": {
         "test": "tests"
     },
+    "type": "module",
     "dependencies": {
         "chromedriver": "^122.0.6",
         "eslint": "^8.12.0",
@@ -24,9 +25,11 @@
     },
     "homepage": "https://github.com/karaka-management/jsOMS#readme",
     "devDependencies": {
+        "esbuild": "0.19.5",
+        "eslint": "^8.12.0",
         "eslint-plugin-import": "^2.25.4",
         "jasmine": "^5.1.0",
-        "jasmine-node": "^3.0.0",
+        "jasmine-core": "^5.1.2",
         "karma-jasmine": "^5.1.0",
         "karma-jasmine-html-reporter": "^2.1.0"
     }

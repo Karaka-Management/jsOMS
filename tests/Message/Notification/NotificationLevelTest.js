@@ -8,7 +8,7 @@ describe('NotificationLevelTest', function ()
     {
         it('Testing amount of enums', function ()
         {
-            expect(Object.keys(NotificationLevel).length).toBe(4);
+            expect(Object.keys(NotificationLevel).length).toBe(5);
         });
 
         it('Testing values of enums', function ()

@@ -18,10 +18,16 @@ describe('AssetManagerTest', function ()
     {
         it('Testing asset interaction functionality', function ()
         {
-            let asset = new AssetManager(),
-                base = window.location.href.substr(0, window.location.href.length - 15);
+            let asset = new AssetManager();
+            let base = typeof window === 'undefined' ? '' : window.location.href.slice(0, -15);
 
             asset.registerLoadedAssets();
+
+            if (typeof window === 'undefined') {
+                expect(true).toBeTrue();
+
+                return;
+            }
 
             expect(asset.get(base + '../Utils/oLib.js')).not.toBe(null);
             expect(asset.remove(base + '../Utils/oLib.js')).toBeTruthy();

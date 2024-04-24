@@ -90,12 +90,19 @@ export class Logger
      */
     createContext (message, context, level)
     {
-        context.backtrace = console.trace();
+        let stack;
+        try {
+            throw new Error('');
+        } catch (e) {
+            stack = e.stack || '';
+        }
+
+        context.backtrace = stack;
         context.datetime  = (new Date()).toISOString();
         context.version   = '1.0.0';
         context.os        = SystemUtils.getOS();
         context.browser   = SystemUtils.getBrowser();
-        context.path      = window.location.href;
+        context.path      = typeof window === 'undefined' ? '' : window.location.href;
         context.datetime  = (new Date()).toString();
         context.level     = level;
         context.message   = message;

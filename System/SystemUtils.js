@@ -20,9 +20,13 @@ export class SystemUtils
      */
     static getBrowser ()
     {
-        /** global: InstallTrigger */
-        /** global: navigator */
-        /** global: window */
+        if (typeof window === 'undefined') {
+            return BrowserType.UNKNOWN;
+        }
+
+        /* global InstallTrigger */
+        /* global navigator */
+        /* global window */
         if ((!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0) {
             return BrowserType.OPERA;
         } else if (typeof InstallTrigger !== 'undefined') {
@@ -54,10 +58,14 @@ export class SystemUtils
      */
     static getOS ()
     {
+        if (typeof navigator === 'undefined') {
+            return OSType.UNKNOWN;
+        }
+
         for (const os in OSType) {
             if (Object.prototype.hasOwnProperty.call(OSType, os)) {
-                /** global: navigator */
-                if (navigator.appVersion.toLowerCase().indexOf(OSType[os]) !== -1) {
+                /* global navigator */
+                if (navigator.userAgent.toLowerCase().indexOf(OSType[os]) !== -1) {
                     return OSType[os];
                 }
             }
