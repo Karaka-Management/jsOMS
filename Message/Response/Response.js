@@ -17,7 +17,7 @@ export class Response
      *
      * @since 1.0.0
      */
-    constructor (data)
+    constructor (data = {})
     {
         /** @type {Object} responses */
         this.responses = data;
@@ -34,7 +34,9 @@ export class Response
      */
     get (id = null)
     {
-        return id === null ? this.responses : (typeof this.responses[id] === 'undefined' ? null : this.responses[id]);
+        return id === null
+            ? this.responses
+            : (typeof this.responses[id] === 'undefined' ? null : this.responses[id]);
     };
 
     /**

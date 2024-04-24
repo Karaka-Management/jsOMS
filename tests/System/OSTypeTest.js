@@ -1,4 +1,4 @@
-import { OSType } from '../Message/Request/OSType.js';
+import { OSType } from '../../System/OSType.js';
 
 describe('OSTypeTest', function ()
 {

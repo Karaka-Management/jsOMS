@@ -4,113 +4,104 @@ describe('LoggerTest', function ()
 {
     'use strict';
 
+    const isVerbose = typeof window !== 'undefined';
+
     describe('testLocalLogging', function ()
     {
         it('Testing emergency functionality', function ()
         {
-            spyOn(console, 'log');
-
-            let log = new Logger(true, false, false);
+            let log = new Logger(isVerbose, false, false);
+            spyOn(log, 'write');
 
             log.emergency();
-            expect(console.log).toHaveBeenCalled();
+            expect(log.write).toHaveBeenCalled();
         });
 
         it('Testing alert functionality', function ()
         {
-            spyOn(console, 'log');
-
-            let log = new Logger(true, false, false);
+            let log = new Logger(isVerbose, false, false);
+            spyOn(log, 'write');
 
             log.alert();
-            expect(console.log).toHaveBeenCalled();
+            expect(log.write).toHaveBeenCalled();
         });
 
         it('Testing critical functionality', function ()
         {
-            spyOn(console, 'log');
-
-            let log = new Logger(true, false, false);
+            let log = new Logger(isVerbose, false, false);
+            spyOn(log, 'write');
 
             log.critical();
-            expect(console.log).toHaveBeenCalled();
+            expect(log.write).toHaveBeenCalled();
         });
 
         it('Testing error functionality', function ()
         {
-            spyOn(console, 'log');
-
-            let log = new Logger(true, false, false);
+            let log = new Logger(isVerbose, false, false);
+            spyOn(log, 'write');
 
             log.error();
-            expect(console.log).toHaveBeenCalled();
+            expect(log.write).toHaveBeenCalled();
         });
 
         it('Testing warning functionality', function ()
         {
-            spyOn(console, 'log');
-
-            let log = new Logger(true, false, false);
+            let log = new Logger(isVerbose, false, false);
+            spyOn(log, 'write');
 
             log.warning();
-            expect(console.log).toHaveBeenCalled();
+            expect(log.write).toHaveBeenCalled();
         });
 
         it('Testing notice functionality', function ()
         {
-            spyOn(console, 'log');
-
-            let log = new Logger(true, false, false);
+            let log = new Logger(isVerbose, false, false);
+            spyOn(log, 'write');
 
             log.notice();
-            expect(console.log).toHaveBeenCalled();
+            expect(log.write).toHaveBeenCalled();
         });
 
         it('Testing info functionality', function ()
         {
-            spyOn(console, 'log');
-
-            let log = new Logger(true, false, false);
+            let log = new Logger(isVerbose, false, false);
+            spyOn(log, 'write');
 
             log.info();
-            expect(console.log).toHaveBeenCalled();
+            expect(log.write).toHaveBeenCalled();
         });
 
         it('Testing debug functionality', function ()
         {
-            spyOn(console, 'log');
-
-            let log = new Logger(true, false, false);
+            let log = new Logger(isVerbose, false, false);
+            spyOn(log, 'write');
 
             log.debug();
-            expect(console.log).toHaveBeenCalled();
+            expect(log.write).toHaveBeenCalled();
         });
 
         it('Testing log functionality', function ()
         {
-            spyOn(console, 'log');
-
-            let log = new Logger(true, false, false);
+            let log = new Logger(isVerbose, false, false);
+            spyOn(log, 'write');
 
             log.log();
-            expect(console.log).toHaveBeenCalled();
+            expect(log.write).toHaveBeenCalled();
         });
 
         it('Testing log functionality', function ()
         {
-            spyOn(console, 'log');
-
-            let log = new Logger(true, false, false);
+            let log = new Logger(isVerbose, false, false);
+            spyOn(log, 'write');
 
             log.log();
-            expect(console.log).toHaveBeenCalled();
+            expect(log.write).toHaveBeenCalled();
         });
 
         it('Testing console functionality', function ()
         {
+            let log = new Logger(isVerbose, false, false);
             spyOn(console, 'log');
-
-            let log = new Logger(true, false, false);
 
             log.console();
             expect(console.log).toHaveBeenCalled();
@@ -121,109 +112,98 @@ describe('LoggerTest', function ()
     {
         it('Testing emergency functionality', function ()
         {
-            spyOn(console, 'log');
-
             let log = new Logger(false, false, false);
+            spyOn(log, 'writeVerbose');
 
             log.emergency();
-            expect(console.log).not.toHaveBeenCalled();
+            expect(log.writeVerbose).not.toHaveBeenCalled();
         });
 
         it('Testing alert functionality', function ()
         {
-            spyOn(console, 'log');
-
             let log = new Logger(false, false, false);
+            spyOn(log, 'writeVerbose');
 
             log.alert();
-            expect(console.log).not.toHaveBeenCalled();
+            expect(log.writeVerbose).not.toHaveBeenCalled();
         });
 
         it('Testing critical functionality', function ()
         {
-            spyOn(console, 'log');
-
             let log = new Logger(false, false, false);
+            spyOn(log, 'writeVerbose');
 
             log.critical();
-            expect(console.log).not.toHaveBeenCalled();
+            expect(log.writeVerbose).not.toHaveBeenCalled();
         });
 
         it('Testing error functionality', function ()
         {
-            spyOn(console, 'log');
-
             let log = new Logger(false, false, false);
+            spyOn(log, 'writeVerbose');
 
             log.error();
-            expect(console.log).not.toHaveBeenCalled();
+            expect(log.writeVerbose).not.toHaveBeenCalled();
         });
 
         it('Testing warning functionality', function ()
         {
-            spyOn(console, 'log');
-
             let log = new Logger(false, false, false);
+            spyOn(log, 'writeVerbose');
 
             log.warning();
-            expect(console.log).not.toHaveBeenCalled();
+            expect(log.writeVerbose).not.toHaveBeenCalled();
         });
 
         it('Testing notice functionality', function ()
         {
-            spyOn(console, 'log');
-
             let log = new Logger(false, false, false);
+            spyOn(log, 'writeVerbose');
 
             log.notice();
-            expect(console.log).not.toHaveBeenCalled();
+            expect(log.writeVerbose).not.toHaveBeenCalled();
         });
 
         it('Testing info functionality', function ()
         {
-            spyOn(console, 'log');
-
             let log = new Logger(false, false, false);
+            spyOn(log, 'writeVerbose');
 
             log.info();
-            expect(console.log).not.toHaveBeenCalled();
+            expect(log.writeVerbose).not.toHaveBeenCalled();
         });
 
         it('Testing debug functionality', function ()
         {
-            spyOn(console, 'log');
-
             let log = new Logger(false, false, false);
+            spyOn(log, 'writeVerbose');
 
             log.debug();
-            expect(console.log).not.toHaveBeenCalled();
+            expect(log.writeVerbose).not.toHaveBeenCalled();
         });
 
         it('Testing log functionality', function ()
         {
-            spyOn(console, 'log');
-
             let log = new Logger(false, false, false);
+            spyOn(log, 'writeVerbose');
 
             log.log();
-            expect(console.log).not.toHaveBeenCalled();
+            expect(log.writeVerbose).not.toHaveBeenCalled();
         });
 
         it('Testing log functionality', function ()
         {
-            spyOn(console, 'log');
-
             let log = new Logger(false, false, false);
+            spyOn(log, 'writeVerbose');
 
             log.log();
-            expect(console.log).not.toHaveBeenCalled();
+            expect(log.writeVerbose).not.toHaveBeenCalled();
         });
 
         it('Testing console functionality', function ()
         {
-            spyOn(console, 'log');
-
             let log = new Logger(false, false, false);
+            spyOn(console, 'log');
 
             log.console();
             expect(console.log).toHaveBeenCalled();

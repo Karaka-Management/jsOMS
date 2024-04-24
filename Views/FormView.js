@@ -594,6 +594,8 @@ export class FormView
 
             if (elements[i].tagName.toLowerCase() === 'canvas') {
                 elements[i].clearRect(0, 0, elements[i].width, elements[i].height);
+            } else if (elements[i].tagName.toLowerCase() === 'textarea') {
+                elements[i].innerHTML = '';
             }
 
             if (elements[i].getAttribute('data-value') !== null) {

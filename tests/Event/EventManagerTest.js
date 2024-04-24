@@ -1,4 +1,4 @@
-import { EventManager } from '../Event/EventManager.js';
+import { EventManager } from '../../Event/EventManager.js';
 
 describe('EventManagerTest', function ()
 {

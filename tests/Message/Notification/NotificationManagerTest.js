@@ -1,4 +1,6 @@
-import { NotificationManager } from '../Message/Notification/NotificationManager.js';
+import { NotificationManager } from '../../../Message/Notification/NotificationManager.js';
+import { AppNotification } from '../../../Message/Notification/App/AppNotification.js';
+import { BrowserNotification } from '../../../Message/Notification/Browser/BrowserNotification.js';
 
 describe('NotificationManagerTest', function ()
 {
@@ -10,8 +12,8 @@ describe('NotificationManagerTest', function ()
         {
             let manager = new NotificationManager();
 
-            expect(manager.getAppNotifier()).toEqual(jasmine.any(App.AppNotification));
-            expect(manager.getBrowserNotifier()).toEqual(jasmine.any(Browser.BrowserNotification));
+            expect(manager.getAppNotifier()).toEqual(jasmine.any(AppNotification));
+            expect(manager.getBrowserNotifier()).toEqual(jasmine.any(BrowserNotification));
         });
     });
 });

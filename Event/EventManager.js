@@ -269,6 +269,7 @@ export class EventManager
     attach (group, callback, remove = false, reset = false)
     {
         if (!Object.prototype.hasOwnProperty.call(this.callbacks, group)) {
+            // @question Consider to make this a struct?
             this.callbacks[group] = { remove: remove, reset: reset, callbacks: [], lastRun: 0 };
         }
 

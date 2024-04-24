@@ -4,26 +4,40 @@
     "hash": "",
     "description": "<p align=\"center\"><img src=\"https://raw.githubusercontent.com/Jingga-Management/Assets/master/art/logo.png\" width=\"256\" alt=\"Logo\"></p>",
     "directories": {
-      "test": "tests"
+        "test": "tests"
     },
+    "type": "module",
     "dependencies": {
+<<<<<<< HEAD
       "chromedriver": "^119.0.1",
       "eslint": "^8.12.0",
       "geckodriver": "^4.3.3",
       "selenium-webdriver": "^4.0.0-beta.4"
+=======
+        "chromedriver": "^122.0.6",
+        "eslint": "^8.12.0",
+        "geckodriver": "^4.3.3",
+        "selenium-webdriver": "^4.18.1"
+>>>>>>> develop
     },
     "author": "Dennis Eichhorn",
     "main": "index.js",
     "repository": {
-      "type": "git",
-      "url": "git+https://github.com/karaka-management/jsOMS.git"
+        "type": "git",
+        "url": "git+https://github.com/karaka-management/jsOMS.git"
     },
     "license": "OMS",
     "bugs": {
-      "url": "https://github.com/karaka-management/jsOMS/issues"
+        "url": "https://github.com/karaka-management/jsOMS/issues"
     },
     "homepage": "https://github.com/karaka-management/jsOMS#readme",
     "devDependencies": {
-      "eslint-plugin-import": "^2.25.4"
+        "esbuild": "0.19.5",
+        "eslint": "^8.12.0",
+        "eslint-plugin-import": "^2.25.4",
+        "jasmine": "^5.1.0",
+        "jasmine-core": "^5.1.2",
+        "karma-jasmine": "^5.1.0",
+        "karma-jasmine-html-reporter": "^2.1.0"
     }
-  }
+}

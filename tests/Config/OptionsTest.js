@@ -1,4 +1,4 @@
-import { Options } from '../Config/Options.js';
+import { Options } from '../../Config/Options.js';
 
 describe('OptionsTest', function ()
 {

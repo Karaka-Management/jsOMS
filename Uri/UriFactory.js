@@ -201,7 +201,9 @@ export class UriFactory
      */
     static build (uri, toMatch = null)
     {
-        const current = HttpUri.parseUrl(window.location.href);
+        const current = typeof window === 'undefined'
+            ? ''
+            : HttpUri.parseUrl(window.location.href);
 
         const query = HttpUri.getAllUriQueryParameters(typeof current.query === 'undefined' ? {} : current.query);
         for (const key in query) {
@@ -259,18 +261,18 @@ export class UriFactory
                 }
 
                 return '';
-            } else if (match.indexOf('?') === 0) {
+            } else if (match.indexOf('?') === 0 && match.length === 1) {
                 return current.query();
-            } else if (match.indexOf('/') === 0) {
+            } else if (match.indexOf('/') === 0 && match.length === 1) {
                 return current.path;
             } else if (match.indexOf(':user') === 0) {
                 return current.user;
             } else if (match.indexOf(':pass') === 0) {
                 return current.pass;
             } else if (match.indexOf('/') === 0) {
-                return 'ERROR PATH';
+                return 'ERROR%20PATH';
             } else if (match === '%') {
-                return window.location.href;
+                return typeof window === 'undefined' ? '' : window.location.href;
             } else {
                 return match;
             }

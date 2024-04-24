@@ -32,10 +32,14 @@ export class AssetManager
      */
     registerLoadedAssets ()
     {
+        this.assets = {};
+
+        if (typeof document === 'undefined') {
+            return;
+        }
+
         const scripts = document.getElementsByTagName('script');
         const length  = !scripts ? 0 : scripts.length;
-
-        this.assets = {};
 
         for (let i = 0; i < length; ++i) {
             this.assets[jsOMS.hash(scripts[i].src)] = scripts[i].src;

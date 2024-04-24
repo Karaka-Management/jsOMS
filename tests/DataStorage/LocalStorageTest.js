@@ -1,4 +1,4 @@
-import { LocalStorage } from '../DataStorage/LocalStorage.js';
+import { LocalStorage } from '../../DataStorage/LocalStorage.js';
 
 describe('LocalStorageTest', function ()
 {
@@ -8,7 +8,11 @@ describe('LocalStorageTest', function ()
     {
         it('Testing default functionality', function ()
         {
-            expect(LocalStorage.available()).toBeTruthy();
+            if (typeof window === 'undefined') {
+                expect(LocalStorage.available()).toBeFalse();
+            } else {
+                expect(LocalStorage.available()).toBeTruthy();
+            }
         });
     });
 });

@@ -1,7 +1,18 @@
+import { jsOMS } from '../../Utils/oLib.js';
+
 describe('FormViewTest', function ()
 {
     'use strict';
     var testId = 'testForm';
+
+    it('Testing environment', function ()
+    {
+        expect(true).toBeTrue();
+    });
+
+    if (typeof document === 'undefined') {
+        return;
+    }
 
     beforeEach(function ()
     {

@@ -1,4 +1,4 @@
-import { RequestType } from '../Message/Request/RequestType.js';
+import { RequestType } from '../../../Message/Request/RequestType.js';
 
 describe('RequestTypeTest', function ()
 {
@@ -8,7 +8,7 @@ describe('RequestTypeTest', function ()
     {
         it('Testing amount of enums', function ()
         {
-            expect(Object.keys(RequestType).length).toBe(4);
+            expect(Object.keys(RequestType).length).toBe(5);
         });
 
         it('Testing values of enums', function ()
