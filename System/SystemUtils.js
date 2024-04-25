@@ -9,6 +9,7 @@ import { OSType }        from './OSType.js';
  * @version   1.0.0
  * @since     1.0.0
  */
+/* global navigator */
 export class SystemUtils
 {
     /**
@@ -25,7 +26,6 @@ export class SystemUtils
         }
 
         /* global InstallTrigger */
-        /* global navigator */
         /* global window */
         if ((!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0) {
             return BrowserType.OPERA;
@@ -64,7 +64,6 @@ export class SystemUtils
 
         for (const os in OSType) {
             if (Object.prototype.hasOwnProperty.call(OSType, os)) {
-                /* global navigator */
                 if (navigator.userAgent.toLowerCase().indexOf(OSType[os]) !== -1) {
                     return OSType[os];
                 }
