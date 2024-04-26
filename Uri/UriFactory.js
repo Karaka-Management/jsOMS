@@ -215,8 +215,11 @@ export class UriFactory
         let parsed = uri.replace(new RegExp('\{[\/#\?%@\.\$\!].*?\}', 'g'), function (match) {
             match = match.substring(1, match.length - 1);
 
-            if (toMatch !== null && Object.prototype.hasOwnProperty.call(toMatch, match)) {
-                return toMatch[match];
+            if (toMatch !== null
+                    && (Object.prototype.hasOwnProperty.call(toMatch, match)
+                        || match.includes('/'))
+            ) {
+                return match.includes('/') ? jsOMS.getArray(match, toMatch) : toMatch[match];
             } else if (typeof UriFactory.uri[match] !== 'undefined') {
                 return UriFactory.uri[match];
             } else if (match.indexOf('!') === 0) {

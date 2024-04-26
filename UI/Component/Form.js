@@ -1194,14 +1194,15 @@ export class Form
             }
 
             let statusCode = null;
+            let responseData = null;
 
             if (xhr.getResponseHeader('content-type').includes('application/octet-stream')) {
-                const blob = new Blob([xhr.response], { type: 'application/octet-stream' });
+                responseData = new Blob([xhr.response], { type: 'application/octet-stream' });
                 const doc  = document.createElement('a');
                 doc.style  = 'display: none';
                 document.body.appendChild(doc);
 
-                const url = window.URL.createObjectURL(blob);
+                const url = window.URL.createObjectURL(responseData);
                 doc.href  = url;
 
                 const disposition = xhr.getResponseHeader('content-disposition');
@@ -1222,6 +1223,7 @@ export class Form
             } else if (xhr.getResponseHeader('content-type').includes('text/html')) {
                 // window.location = UriFactory.build(uri);
 
+                responseData = xhr.response;
                 document.documentElement.innerHTML = xhr.response;
                 /* This is not working as it reloads the page ?!
                 document.open();
@@ -1232,8 +1234,8 @@ export class Form
                 window.omsApp.reInit(); // @todo fix memory leak which most likely exists because of continuous binding without removing binds
             } else {
                 try {
-                    const o           = JSON.parse(xhr.response)[0];
-                    const response    = new Response(o);
+                    responseData      = JSON.parse(xhr.response);
+                    const response    = new Response(responseData[0]);
                     let successInject = null;
 
                     statusCode = parseInt(xhr.getResponseHeader('status'));
@@ -1247,9 +1249,16 @@ export class Form
 
                     if (response.get('type') !== null) {
                         self.app.responseManager.run(response.get('type'), response.get(), null);
-                    } else if (typeof o.status !== 'undefined' && o.status !== NotificationLevel.HIDDEN) {
+                    } else if (typeof responseData[0].status !== 'undefined'
+                        && responseData[0].status !== NotificationLevel.HIDDEN
+                    ) {
                         self.app.notifyManager.send(
-                            new NotificationMessage(o.status, o.title, o.message), NotificationType.APP_NOTIFICATION
+                            new NotificationMessage(
+                                responseData[0].status,
+                                responseData[0].title,
+                                responseData[0].message
+                            ),
+                            NotificationType.APP_NOTIFICATION
                         );
                     }
                 } catch (e) {
@@ -1267,33 +1276,36 @@ export class Form
                             'Some failure happened'
                         ), NotificationType.APP_NOTIFICATION
                     );
+
+                    statusCode = 400;
                 }
             }
 
             if (redirect !== null
                 && (statusCode === 200 || statusCode === null)
             ) {
-                fetch(UriFactory.build(redirect))
-                .then((response) => response.text())
-                .then((html) => {
-                    document.documentElement.innerHTML = html;
+                const redirectUrl = UriFactory.build(redirect, responseData)
+                fetch(redirectUrl)
+                    .then((response) => response.text())
+                    .then((html) => {
+                        document.documentElement.innerHTML = html;
 
-                    if (window.omsApp.state) {
-                        window.omsApp.state.hasChanges = false;
-                    }
+                        if (window.omsApp.state) {
+                            window.omsApp.state.hasChanges = false;
+                        }
 
-                    history.pushState({}, null, UriFactory.build(redirect));
-                    /* This is not working as it reloads the page ?!
-                    document.open();
-                    document.write(html);
-                    document.close();
-                    */
-                    // @todo fix memory leak which most likely exists because of continuous binding without removing binds
-                    window.omsApp.reInit();
-                })
-                .catch((error) => {
-                    console.warn(error);
-                });
+                        history.pushState({}, null, redirectUrl);
+                        /* This is not working as it reloads the page ?!
+                        document.open();
+                        document.write(html);
+                        document.close();
+                        */
+                        // @todo fix memory leak which most likely exists because of continuous binding without removing binds
+                        window.omsApp.reInit();
+                    })
+                    .catch((error) => {
+                        console.warn(error);
+                    });
             }
         });
 
