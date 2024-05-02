@@ -16,5 +16,7 @@ export function tableClear (action, callback)
         e.removeChild(e.firstChild);
     }
 
-    callback();
+    if (typeof callback === 'function') {
+        callback();
+    }
 };

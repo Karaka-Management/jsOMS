@@ -22,5 +22,7 @@ export function datalistAppend (action, callback)
         datalist.appendChild(option);
     }
 
-    callback();
+    if (typeof callback === 'function') {
+        callback();
+    }
 };

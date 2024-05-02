@@ -43,5 +43,7 @@ export function tableAppend (action, callback)
         }
     }
 
-    callback();
+    if (typeof callback === 'function') {
+        callback();
+    }
 };

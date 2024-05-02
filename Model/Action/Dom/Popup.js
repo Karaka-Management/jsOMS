@@ -81,5 +81,7 @@ export function popupButtonAction (action, callback, id)
         }
     }
 
-    callback();
+    if (typeof callback === 'function') {
+        callback();
+    }
 };

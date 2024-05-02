@@ -26,5 +26,7 @@ export function domRemoveElement (action, callback, id)
         e.parentElement.removeChild(e);
     }
 
-    callback();
+    if (typeof callback === 'function') {
+        callback();
+    }
 };

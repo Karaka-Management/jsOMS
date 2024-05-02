@@ -16,11 +16,13 @@ export function logAction (action, callback, id)
 
     window.omsApp.notifyManager.send(
         new NotificationMessage(
-            action.data.status,
-            action.data.title,
-            action.data.message
+            action.data[0].status,
+            action.data[0].title,
+            action.data[0].message
         ), NotificationType.APP_NOTIFICATION
     );
 
-    callback();
+    if (typeof callback === 'function') {
+        callback();
+    }
 };

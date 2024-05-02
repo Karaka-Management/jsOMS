@@ -18,5 +18,7 @@ export function focusAction (action, callback)
 
     focus.focus();
 
-    callback();
+    if (typeof callback === 'function') {
+        callback();
+    }
 };

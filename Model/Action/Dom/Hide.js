@@ -20,5 +20,7 @@ export function hideAction (action, callback)
     /** global: jsOMS */
     jsOMS.addClass(hide, 'vh');
 
-    callback();
+    if (typeof callback === 'function') {
+        callback();
+    }
 };

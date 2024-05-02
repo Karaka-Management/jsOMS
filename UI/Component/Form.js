@@ -1284,7 +1284,7 @@ export class Form
             if (redirect !== null
                 && (statusCode === 200 || statusCode === null)
             ) {
-                const redirectUrl = UriFactory.build(redirect, responseData)
+                const redirectUrl = UriFactory.build(redirect, responseData);
                 fetch(redirectUrl)
                     .then((response) => response.text())
                     .then((html) => {

@@ -21,5 +21,7 @@ export function domAddElement (action, callback, id)
         e.appendChild.removeChild(i);
     }
 
-    callback();
+    if (typeof callback === 'function') {
+        callback();
+    }
 };
