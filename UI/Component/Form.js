@@ -1180,6 +1180,17 @@ export class Form
 
         const redirect = form.getFormElement().getAttribute('data-redirect');
 
+        if (form.getMethod() === 'GET_REDIRECT') {
+            let url = form.getAction();
+            for (const pair of data) {
+                url += '&' + pair[0] + '=' + pair[1];
+            }
+
+            window.location.href = url;
+
+            return;
+        }
+
         request.setData(data);
         request.setType(RequestType.FORM_DATA); // @todo consider to allow different request type
         request.setUri(action !== null ? action : form.getAction());

@@ -31,13 +31,10 @@ export class SmartTextInput
         this.inputComponent = e;
 
         this.inputField = this.inputComponent.getElementsByClassName('input-div')[0];
-        // @todo Implement. Then find all data-tpl-value and data-tpl-text which are the elements to fill
-        this.dataContainer = this.inputField.getAttribute('data-container') === ''
-            ? this.inputComponent
-            : this.inputField.closest(this.inputField.getAttribute('data-container'));
         this.dataList   = this.inputComponent.getElementsByClassName('input-datalist')[0];
         this.dataListBody   = this.inputComponent.getElementsByClassName('input-datalist-body')[0];
         this.dataTpl    = document.getElementsByClassName('input-data-tpl')[0];
+        this.elementContainer = this.dataTpl.hasAttribute('data-container') ? this.dataTpl.getAttribute('data-container') : '';
         this.src        = this.inputComponent.getAttribute('data-src');
 
         const self = this;
@@ -69,8 +66,13 @@ export class SmartTextInput
 
                 if (length > 0 && self.inputField.getAttribute('data-value') !== '') {
                     let isValid = false;
+
                     for (let i = 0; i < length; ++i) {
-                        if (list[i].textContent === self.inputField.textContent) {
+                        const textElements = list[i].hasAttribute('data-tpl-text')
+                            ? [list[i]]
+                            : list[i].querySelectorAll('[data-tpl-text]');
+
+                        if (Array.from(textElements).map(e => e.textContent).join(' ').trim() === self.inputField.textContent) {
                             isValid = true;
 
                             break;
@@ -128,13 +130,13 @@ export class SmartTextInput
                 }
             } else if (e.code === 'Enter' || e.code === 'Tab') {
                 self.clearDataListSelection(self);
-                self.addToResultList(self, document.activeElement);
+                self.addToResultList(self, self.elementContainer === '' ? document.activeElement : document.activeElement.closest('.' + self.elementContainer));
             }
         });
 
         this.dataList.addEventListener('click', function (e) {
             self.clearDataListSelection(self);
-            self.addToResultList(self, e.target);
+            self.addToResultList(self, self.elementContainer === '' ? e.target : e.target.closest('.' + self.elementContainer));
             self.dataList.classList.add('vh');
         });
     };
@@ -291,8 +293,11 @@ export class SmartTextInput
             self.inputField.value = jsOMS.getArray(self.inputField.getAttribute('data-value'), data);
         }
 
-        self.inputField.setAttribute('data-value', e.getAttribute('data-value'));
-        self.inputField.textContent = e.textContent;
+        const value = e.hasAttribute('data-value') ? e.getAttribute('data-value') : e.querySelector('[data-value]').getAttribute('data-value');
+        const textElements = e.hasAttribute('data-tpl-text') ? [e] : e.querySelectorAll('[data-tpl-text]');
+
+        self.inputField.setAttribute('data-value', value);
+        self.inputField.textContent = Array.from(textElements).map(e => e.textContent).join(' ').trim();
 
         self.inputField.focus();
         self.dataList.classList.add('vh');

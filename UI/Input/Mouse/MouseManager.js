@@ -37,12 +37,16 @@ export class MouseManager
      */
     add (element, type, button, callback, exact)
     {
-        if (typeof this.elements[element] === 'undefined') {
-            this.elements[element] = [];
-        }
+        const elements = document.querySelectorAll(element);
+        const length = elements.length;
+        for (let i = 0; i < length; ++i) {
+            if (typeof this.elements[elements[i].id] === 'undefined') {
+                this.elements[elements[i].id] = [];
+            }
 
-        this.bind(element, type);
-        this.elements[element].push({ callback: callback, type: type, button: button, exact: exact });
+            this.bind(elements[i].id, type);
+            this.elements[elements[i].id].push({ callback: callback, type: type, button: button, exact: exact });
+        }
     };
 
     /**
