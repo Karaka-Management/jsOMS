@@ -66,7 +66,7 @@ describe('UriFactoryTest', function ()
     {
         it('Testing global queries', function ()
         {
-            let uri  = 'www.test-uri.com?id={@ID}&test={.mTest}&two={/path}&hash={#hash}&found={/not}?v={/valid2}',
+            let uri  = 'www.test-uri.com?id={@ID}&test={.mTest}&two={/path}&hash={#hash}&found={/not}?v={?valid2}',
                 vars = {
                 '@ID'   : 1,
                 '.mTest': 'someString',
@@ -75,7 +75,7 @@ describe('UriFactoryTest', function ()
             },
             expected = 'www.test-uri.com?id=1&test=someString&two=PATH&hash=test&found=ERROR%20PATH&v=query4';
 
-            expect(UriFactory.setQuery('/valid2', 'query4')).toBeTruthy();
+            expect(UriFactory.setQuery('?valid2', 'query4')).toBeTruthy();
             expect(UriFactory.build(uri, vars)).toBe(expected);
         });
     });
