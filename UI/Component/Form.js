@@ -242,7 +242,7 @@ export class Form
                     ? self.forms[document.getElementById(id).getAttribute('data-update-form')].getFormElement()
                     : (
                         document.getElementById(id).getAttribute('data-delete-form') !== null
-                            ?  self.forms[document.getElementById(id).getAttribute('data-delete-form')].getFormElement()
+                            ? self.forms[document.getElementById(id).getAttribute('data-delete-form')].getFormElement()
                             : null
                     )
             );
@@ -408,7 +408,7 @@ export class Form
     {
         jsOMS.preventAll(event);
 
-        if (document.querySelector('[data-update-form="' + id  + '"') === null) {
+        if (document.querySelector('[data-update-form="' + id + '"') === null) {
             this.formActionSaveInline(self, event, id, elementIndex);
         } else {
             this.formActionSaveExternal(self, event, id, elementIndex);
@@ -600,7 +600,7 @@ export class Form
 
     formActionSaveExternal (self, event, id, elementIndex)
     {
-        const mainForm       = document.querySelector('[data-update-form="' + id  + '"');
+        const mainForm       = document.querySelector('[data-update-form="' + id + '"');
         const externalFormId = id;
         id                   = mainForm.getAttribute('id');
 
