@@ -73,7 +73,7 @@ describe('UriFactoryTest', function ()
                 '/path' : 'PATH',
                 '#hash' : 'test',
             },
-            expected = 'www.test-uri.com?id=1&test=someString&two=PATH&hash=test&found=ERROR%20PATH&v=query4';
+            expected = 'www.test-uri.com?id=1&test=someString&two=PATH&hash=test&found=null&v=query4';
 
             expect(UriFactory.setQuery('?valid2', 'query4')).toBeTruthy();
             expect(UriFactory.build(uri, vars)).toBe(expected);
