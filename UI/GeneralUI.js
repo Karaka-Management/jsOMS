@@ -11,7 +11,7 @@ import { SmartTextInput } from './Component/SmartTextInput.js';
  * UI manager for handling basic ui elements.
  *
  * @copyright Dennis Eichhorn
- * @license   OMS License 2.0
+ * @license   OMS License 2.2
  * @version   1.0.0
  * @since     1.0.0
  */
