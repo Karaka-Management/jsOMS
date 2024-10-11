@@ -154,7 +154,7 @@ export class Table
             /**
              * @todo Karaka/jsOMS#90
              *  Implement export
-             *  Either create download in javascript from this data or make round trip to server who then sends the data.
+             *  Either create download in JS from this data or make round trip to server who then sends the data.
              *  The export should be possible (if available) in json, csv, excel, word, pdf, ...
              *  If no endpoint is specified or reachable the client side should create a json or csv export.
              */

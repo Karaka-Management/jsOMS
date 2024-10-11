@@ -108,7 +108,7 @@ export class SmartTextInput
             }
         });
 
-        // @bug This is never getting run?!
+        // @bug This never runs?!
         this.dataList.addEventListener('keydown', function (e) {
             jsOMS.preventAll(e);
 
@@ -136,7 +136,11 @@ export class SmartTextInput
 
         this.dataList.addEventListener('click', function (e) {
             self.clearDataListSelection(self);
-            self.addToResultList(self, self.elementContainer === '' ? e.target : e.target.closest('.' + self.elementContainer));
+            self.addToResultList(
+                self, self.elementContainer === ''
+                    ? e.target
+                    : e.target.closest('.' + self.elementContainer)
+                );
             self.dataList.classList.add('vh');
         });
     };
@@ -280,13 +284,17 @@ export class SmartTextInput
      * This can add the selected dropdown elements to a table, badge list etc. depending on the template structure.
      *
      * @param {SmartTextInput}  self This reference
-     * @param {Element}        e    Element
+     * @param {Element}         e    Element
      *
      * @return {void}
      *
      * @since 1.0.0
      */
     addToResultList (self, e) {
+        // @bug There is sometimes a situation when text is in the input field and you then want to switch
+        //      to a different drop down element. When you click on that drop down element, it doesn't fill into the input text
+        //      you then have to click it over and over until it works
+        //      https://github.com/Karaka-Management/jsOMS/issues/142
         const data = JSON.parse(e.getAttribute('data-data'));
 
         if (self.inputField.getAttribute('data-autocomplete') === 'true') {

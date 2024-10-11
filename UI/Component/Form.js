@@ -1207,7 +1207,11 @@ export class Form
             let statusCode = null;
             let responseData = null;
 
-            if (xhr.getResponseHeader('content-type').includes('application/octet-stream')) {
+            const contentType = xhr.getResponseHeader('content-type');
+
+            if (contentType !== null
+                && contentType.includes('application/octet-stream')
+            ) {
                 responseData = new Blob([xhr.response], { type: 'application/octet-stream' });
                 const doc  = document.createElement('a');
                 doc.style  = 'display: none';
@@ -1231,7 +1235,7 @@ export class Form
                 doc.click();
                 window.URL.revokeObjectURL(url);
                 document.body.removeChild(doc);
-            } else if (xhr.getResponseHeader('content-type').includes('text/html')) {
+            } else if (contentType.includes('text/html')) {
                 // window.location = UriFactory.build(uri);
 
                 responseData = xhr.response;

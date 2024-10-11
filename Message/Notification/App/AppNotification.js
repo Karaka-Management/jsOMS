@@ -108,7 +108,10 @@ export class AppNotification
 
         const logs             = document.getElementsByClassName('log-msg');
         const lastElementAdded = logs[logs.length - 1];
-        window.navigator.vibrate(msg.vibrate ? 200 : 0);
+
+        if (typeof window.navigator.vibrate !== 'undefined') {
+            window.navigator.vibrate(msg.vibrate ? 200 : 0);
+        }
 
         if (msg.isSticky) {
             return;

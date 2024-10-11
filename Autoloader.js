@@ -3,7 +3,7 @@ import { AssetManager } from './Asset/AssetManager.js';
 /**
  * Autoloader.
  *
- * The autoloader is responsible for defining namespaces and dynamically loading javascript
+ * The autoloader is responsible for defining namespaces and dynamically loading js
  * files that are not yet included. The intention is to provide a similar functionality as
  * include, import etc. Contrary to it's name the autoloader is not able to truly autoload
  * referenced classes.
@@ -55,7 +55,7 @@ Autoloader.defineNamespace = function (namespace)
 };
 
 /**
- * Collect all loaded javascript files
+ * Collect all loaded JS files
  *
  * @return {void}
  *
