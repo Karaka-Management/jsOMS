@@ -35,23 +35,29 @@ Autoloader.assetLoader = new AssetManager();
  */
 Autoloader.defineNamespace = function (namespace)
 {
-    if (Autoloader.namespaced.indexOf(namespace) === -1) {
-        const paths = namespace.split('.');
-        paths.splice(0, 1);
+    if (Autoloader.namespaced.indexOf(namespace) !== -1) {
+        return;
+    }
 
-        const length = paths.length;
-        let current  = window.omsApp;
+    const paths = namespace.split('.');
+    paths.splice(0, 1);
 
-        for (let i = 0; i < length; ++i) {
-            if (typeof current[paths[i]] === 'undefined') {
-                current[paths[i]] = {};
-            }
+    const length = paths.length;
+    let current  = window.omsApp;
 
-            current = current[paths[i]];
+    if (typeof current === 'undefined') {
+        return;
+    }
+
+    for (let i = 0; i < length; ++i) {
+        if (typeof current[paths[i]] === 'undefined') {
+            current[paths[i]] = {};
         }
 
-        Autoloader.namespaced.push(namespace);
+        current = current[paths[i]];
     }
+
+    Autoloader.namespaced.push(namespace);
 };
 
 /**

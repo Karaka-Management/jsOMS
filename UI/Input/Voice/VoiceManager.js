@@ -28,7 +28,7 @@ export class VoiceManager
         this.recognition           = null;
         this.speechRecognitionList = null;
 
-        if (SpeechRecognition !== null) {
+        if (SpeechRecognition !== null && SpeechGrammarList !== null) {
             this.recognition           = new SpeechRecognition();
             this.speechRecognitionList = new SpeechGrammarList();
         }
