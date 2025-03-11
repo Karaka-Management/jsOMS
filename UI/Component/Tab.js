@@ -70,6 +70,7 @@ export class Tab
         for (let i = 0; i < length; ++i) {
             nodes[i].addEventListener('click', function (evt)
             {
+                this.querySelector('label').click();
                 let fragmentString = this.querySelector('label').getAttribute('for');
 
                 /* Change Tab */
