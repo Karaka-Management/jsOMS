@@ -3,13 +3,13 @@ import { AssetManager } from './Asset/AssetManager.js';
 /**
  * Autoloader.
  *
- * The autoloader is responsible for defining namespaces and dynamically loading javascript
+ * The autoloader is responsible for defining namespaces and dynamically loading js
  * files that are not yet included. The intention is to provide a similar functionality as
  * include, import etc. Contrary to it's name the autoloader is not able to truly autoload
  * referenced classes.
  *
  * @copyright Dennis Eichhorn
- * @license   OMS License 2.0
+ * @license   OMS License 2.2
  * @version   1.0.0
  * @since     1.0.0
  */
@@ -35,27 +35,33 @@ Autoloader.assetLoader = new AssetManager();
  */
 Autoloader.defineNamespace = function (namespace)
 {
-    if (Autoloader.namespaced.indexOf(namespace) === -1) {
-        const paths = namespace.split('.');
-        paths.splice(0, 1);
+    if (Autoloader.namespaced.indexOf(namespace) !== -1) {
+        return;
+    }
 
-        const length = paths.length;
-        let current  = window.omsApp;
+    const paths = namespace.split('.');
+    paths.splice(0, 1);
 
-        for (let i = 0; i < length; ++i) {
-            if (typeof current[paths[i]] === 'undefined') {
-                current[paths[i]] = {};
-            }
+    const length = paths.length;
+    let current  = window.omsApp;
 
-            current = current[paths[i]];
+    if (typeof current === 'undefined') {
+        return;
+    }
+
+    for (let i = 0; i < length; ++i) {
+        if (typeof current[paths[i]] === 'undefined') {
+            current[paths[i]] = {};
         }
 
-        Autoloader.namespaced.push(namespace);
+        current = current[paths[i]];
     }
+
+    Autoloader.namespaced.push(namespace);
 };
 
 /**
- * Collect all loaded javascript files
+ * Collect all loaded JS files
  *
  * @return {void}
  *

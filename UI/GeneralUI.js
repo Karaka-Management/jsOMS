@@ -1,7 +1,8 @@
 
 import { jsOMS } from '../Utils/oLib.js';
 import { UriFactory }    from '../Uri/UriFactory.js';
-import { AdvancedInput } from './Component/AdvancedInput.js';
+import { TagInput } from './Component/TagInput.js';
+import { SmartTextInput } from './Component/SmartTextInput.js';
 // import { NotificationLevel }   from '../Message/Notification/NotificationLevel.js';
 // import { NotificationMessage } from '../Message/Notification/NotificationMessage.js';
 // import { NotificationType }    from '../Message/Notification/NotificationType.js';
@@ -10,7 +11,7 @@ import { AdvancedInput } from './Component/AdvancedInput.js';
  * UI manager for handling basic ui elements.
  *
  * @copyright Dennis Eichhorn
- * @license   OMS License 2.0
+ * @license   OMS License 2.2
  * @version   1.0.0
  * @since     1.0.0
  */
@@ -196,7 +197,7 @@ export class GeneralUI
             }
 
             e[i].addEventListener('load', function () {
-                const spinner = this.parentElement.getElementsByClassName('ispinner');
+                const spinner = this.parentElement.getElementsByClassName('spinner');
 
                 if (spinner.length > 0) {
                     spinner[0].style.display = 'none';
@@ -256,14 +257,28 @@ export class GeneralUI
      */
     bindInput (e = null)
     {
-        e = e !== null
+        let l = e !== null
             ? [e]
             : document.getElementsByClassName('advIpt');
 
-        const length = e.length;
+        let length = l.length;
 
         for (let i = 0; i < length; ++i) {
-            new AdvancedInput(e[i], this.app.eventManager, this.app.uiManager.getDOMObserver()); // eslint-disable-line no-new
+            new TagInput(l[i], this.app.eventManager, this.app.uiManager.getDOMObserver()); // eslint-disable-line no-new
+        }
+
+        l = e !== null
+            ? [e]
+            : document.querySelectorAll('.smart-input-wrapper');
+
+        length = l.length;
+
+        for (let i = 0; i < length; ++i) {
+            if (!l[i].querySelector('.input-div').hasAttribute('contenteditable')) {
+                continue;
+            }
+
+            new SmartTextInput(l[i]); // eslint-disable-line no-new
         }
     };
 

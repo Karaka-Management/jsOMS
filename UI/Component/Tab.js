@@ -6,7 +6,7 @@ import { UriFactory } from '../../Uri/UriFactory.js';
  * Tab manager class.
  *
  * @copyright Dennis Eichhorn
- * @license   OMS License 2.0
+ * @license   OMS License 2.2
  * @version   1.0.0
  * @since     1.0.0
  */
@@ -70,6 +70,7 @@ export class Tab
         for (let i = 0; i < length; ++i) {
             nodes[i].addEventListener('click', function (evt)
             {
+                this.querySelector('label').click();
                 let fragmentString = this.querySelector('label').getAttribute('for');
 
                 /* Change Tab */

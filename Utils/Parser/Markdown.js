@@ -3135,7 +3135,7 @@
         text = globals.converter._dispatch('completeHTMLDocument.before', text, options, globals);
 
         var doctype = 'html',
-            doctypeParsed = '<!DOCTYPE HTML>\n',
+            doctypeParsed = '<!DOCTYPE html>\n',
             title = '',
             charset = '<meta charset="utf-8">\n',
             lang = '',

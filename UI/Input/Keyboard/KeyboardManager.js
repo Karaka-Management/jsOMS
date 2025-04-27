@@ -3,7 +3,7 @@ import { jsOMS } from '../../../Utils/oLib.js';
  * Keyboard manager class.
  *
  * @copyright Dennis Eichhorn
- * @license   OMS License 2.0
+ * @license   OMS License 2.2
  * @version   1.0.0
  * @since     1.0.0
  */
@@ -60,6 +60,11 @@ export class KeyboardManager
         for (let i = 0; i < length; ++i) {
             elements[i].addEventListener('keydown', function (event)
             {
+                if (self.down.includes(event.keyCode)) {
+                    // Already fired
+                    return;
+                }
+
                 self.down.push(event.keyCode);
                 self.run(element, event);
             });
@@ -90,7 +95,7 @@ export class KeyboardManager
     run (element, event)
     {
         if (typeof this.elements[element] === 'undefined') {
-            throw new Error('Unexpected elmenet!');
+            throw new Error('Unexpected element!');
         }
 
         const actions       = this.elements[element].concat(this.elements['']);

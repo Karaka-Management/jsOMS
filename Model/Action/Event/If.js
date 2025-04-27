@@ -41,5 +41,7 @@ export function ifAction (action, callback, id)
         }
     }
 
-    callback();
+    if (typeof callback === 'function') {
+        callback();
+    }
 };

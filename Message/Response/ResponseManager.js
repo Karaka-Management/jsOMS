@@ -1,4 +1,4 @@
-import { jsOMS } from '../../Utils/oLib.js';
+import { Logger } from '../../Log/Logger.js';
 /**
  * @typedef {import('../Request/Request.js').Request} Request
  */
@@ -9,7 +9,7 @@ import { jsOMS } from '../../Utils/oLib.js';
  * Used for auto handling different responses.
  *
  * @copyright Dennis Eichhorn
- * @license   OMS License 2.0
+ * @license   OMS License 2.2
  * @version   1.0.0
  * @since     1.0.0
  */
@@ -72,7 +72,7 @@ export class ResponseManager
         } else if (typeof this.messages[key] !== 'undefined') {
             this.messages[key].null(data);
         } else {
-            jsOMS.Log.Logger.instance.warning('Undefined type: ' + key);
+            Logger.instance.warning('Undefined type: ' + key);
         }
     };
 };

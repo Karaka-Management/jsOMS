@@ -7,7 +7,7 @@ import { RequestType }   from './RequestType.js';
  * Request class.
  *
  * @copyright Dennis Eichhorn
- * @license   OMS License 2.0
+ * @license   OMS License 2.2
  * @version   1.0.0
  * @since     1.0.0
  *
@@ -239,6 +239,11 @@ export class Request
         this.data = data;
     };
 
+    addData(name, data)
+    {
+        this.data[name] = data;
+    };
+
     /**
      * Get request data.
      *
@@ -316,23 +321,16 @@ export class Request
 
         // @question Consider to change to fetch
         if (this.xhr.readyState !== 1) {
-            if (this.type === RequestType.FORM_DATA) {
-                // GET request doesn't allow body/payload. Therefor we have to put the data into the uri
-                if (this.method === RequestMethod.GET) {
-                    let url = this.uri;
-                    for (const pair of this.data.entries()) {
-                        url += '&' + pair[0] + '=' + pair[1];
-                    }
-
-                    this.xhr.open(this.method, UriFactory.build(url));
-                } else {
-                    this.xhr.open(this.method, UriFactory.build(this.uri));
+            let url = this.uri;
+            if (this.method === RequestMethod.GET) {
+                for (const pair of Object.entries(this.data)) {
+                    url += '&' + pair[0] + '=' + pair[1];
                 }
             } else {
-                console.log(UriFactory.build(this.uri));
-
-                this.xhr.open(this.method, UriFactory.build(this.uri));
+                url = this.uri;
             }
+
+            this.xhr.open(this.method, UriFactory.build(url));
 
             for (const p in this.requestHeader) {
                 if (Object.prototype.hasOwnProperty.call(this.requestHeader, p) && this.requestHeader[p] !== '') {

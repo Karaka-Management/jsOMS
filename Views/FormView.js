@@ -1,5 +1,4 @@
 import { jsOMS } from '../Utils/oLib.js';
-import { Input } from '../UI/Component/Input.js';
 
 /**
  * Form view.
@@ -9,18 +8,18 @@ import { Input } from '../UI/Component/Input.js';
  * form elements such as canvas etc.
  *
  * @copyright Dennis Eichhorn
- * @license   OMS License 2.0
+ * @license   OMS License 2.2
  * @version   1.0.0
  * @since     1.0.0
  *
- * @tood Karaka/jsOMS#60
- *  On change listener
- *  Allow to add a on change listener in a form. This should result in automatic submits after changing a form.
- *  Consider the following cases to submit the form:
- *      * on Enter (all except textarea)
- *      * on Change (by using a timer)
- *      * on Leave (all elements)
- *  The listener should be defined in the form definition once and in js be applied to all form elements.
+ * @todo On change listener
+ *      Allow to add a on change listener in a form. This should result in automatic submits after changing a form.
+ *      Consider the following cases to submit the form:
+ *          * on Enter (all except textarea)
+ *          * on Change (by using a timer)
+ *          * on Leave (all elements)
+ *      The listener should be defined in the form definition once and in js be applied to all form elements.
+ *      https://github.com/Karaka-Management/jsOMS/issues/60
  */
 export class FormView
 {
@@ -775,27 +774,6 @@ export class FormView
             this.action = this.form.attributes['data-uri'].value;
         } else {
             this.action = 'EMPTY';
-        }
-
-        const elements = this.getFormElements();
-        const length   = elements.length;
-
-        for (let i = 0; i < length; ++i) {
-            switch (elements[i].tagName.toLowerCase()) {
-                case 'input':
-                    Input.bindElement(elements[i]);
-                    break;
-                case 'select':
-                    // this.bindSelect(elements[i]);
-                    break;
-                case 'textarea':
-                    // this.bindTextarea(elements[i]);
-                    break;
-                case 'button':
-                    // this.bindButton(elements[i]);
-                    break;
-                default:
-            }
         }
     };
 

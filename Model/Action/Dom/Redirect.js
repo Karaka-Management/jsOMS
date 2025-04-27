@@ -13,10 +13,16 @@ export function redirectMessage (action, callback, id)
 {
     setTimeout(function ()
     {
+        const url = action.uri === '' ? '' : UriFactory.build(action.uri);
+
         if (action.src) {
-            document.getElementById(action.src).src = UriFactory.build(action.uri);
+            document.getElementById(action.src).src = url;
         } else {
-            window.location = UriFactory.build(action.uri);
+            if (url === window.location.href || url === '') {
+                document.location.reload();
+            } else {
+                window.location.href = url;
+            }
         }
     }, parseInt(action.delay));
 };

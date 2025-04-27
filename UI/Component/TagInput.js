@@ -9,11 +9,11 @@ import { Request } from '../../Message/Request/Request.js';
  * Advanced input class.
  *
  * @copyright  Dennis Eichhorn
- * @license    OMS License 2.0
+ * @license    OMS License 2.2
  * @version    1.0.0
  * @since      1.0.0
  */
-export class AdvancedInput
+export class TagInput
 {
     /**
      * @constructor
@@ -149,7 +149,7 @@ export class AdvancedInput
      *
      * This method adds remote results to the dropdown list for selecting
      *
-     * @param {AdvancedInput} self This reference
+     * @param {TagInput} self This reference
      * @param {Object}        data Response data
      *
      * @return {void}
@@ -217,7 +217,7 @@ export class AdvancedInput
     /**
      * Callback for input field content change
      *
-     * @param {AdvancedInput} self This reference
+     * @param {TagInput} self This reference
      *
      * @return {void}
      *
@@ -257,7 +257,7 @@ export class AdvancedInput
     /**
      * Clear all selected/marked options in dropdown
      *
-     * @param {AdvancedInput} self This reference
+     * @param {TagInput} self This reference
      *
      * @return {void}
      *
@@ -283,7 +283,7 @@ export class AdvancedInput
      *
      * This can add the selected dropdown elements to a table, badge list etc. depending on the template structure.
      *
-     * @param {AdvancedInput}  self This reference
+     * @param {TagInput}  self This reference
      * @param {Element}        e    Element
      *
      * @return {void}
@@ -379,7 +379,7 @@ export class AdvancedInput
      *
      * @param {Object}        action   Action type
      * @param {function}      callback Callback to be triggered
-     * @param {AdvancedInput} self     This reference (passed to callback)
+     * @param {TagInput} self     This reference (passed to callback)
      * @param {Object}        data     Data (passed to callback)
      *
      * @return {void}
@@ -388,16 +388,16 @@ export class AdvancedInput
      */
     inputTimeDelay (action, callback, self, data)
     {
-        if (AdvancedInput.timerDelay[action.id]) {
-            clearTimeout(AdvancedInput.timerDelay[action.id]);
-            delete AdvancedInput.timerDelay[action.id];
+        if (TagInput.timerDelay[action.id]) {
+            clearTimeout(TagInput.timerDelay[action.id]);
+            delete TagInput.timerDelay[action.id];
         }
 
-        AdvancedInput.timerDelay[action.id] = setTimeout(function () {
-            delete AdvancedInput.timerDelay[action.id];
+        TagInput.timerDelay[action.id] = setTimeout(function () {
+            delete TagInput.timerDelay[action.id];
             callback(self, data);
         }, action.delay);
     };
 };
 
-AdvancedInput.timerDelay = {};
+TagInput.timerDelay = {};

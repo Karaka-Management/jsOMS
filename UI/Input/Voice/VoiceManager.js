@@ -5,7 +5,7 @@ import { Logger } from '../../../Log/Logger.js';
  * Voice manager class.
  *
  * @copyright Dennis Eichhorn
- * @license   OMS License 2.0
+ * @license   OMS License 2.2
  * @version   1.0.0
  * @since     1.0.0
  */
@@ -28,7 +28,7 @@ export class VoiceManager
         this.recognition           = null;
         this.speechRecognitionList = null;
 
-        if (SpeechRecognition !== null) {
+        if (SpeechRecognition !== null && SpeechGrammarList !== null) {
             this.recognition           = new SpeechRecognition();
             this.speechRecognitionList = new SpeechGrammarList();
         }

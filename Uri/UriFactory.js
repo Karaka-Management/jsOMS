@@ -6,7 +6,7 @@ import { FormView } from './../Views/FormView.js';
  * Uri factory.
  *
  * @copyright Dennis Eichhorn
- * @license   OMS License 2.0
+ * @license   OMS License 2.2
  * @version   1.0.0
  * @since     1.0.0
  */
@@ -212,11 +212,16 @@ export class UriFactory
             }
         }
 
-        let parsed = uri.replace(new RegExp('\{[\/#\?%@\.\$\!].*?\}', 'g'), function (match) {
+        let parsed = uri.replace(new RegExp('\{[\/#\?%@°\.\$\!].*?\}', 'g'), function (match) {
             match = match.substring(1, match.length - 1);
 
-            if (toMatch !== null && Object.prototype.hasOwnProperty.call(toMatch, match)) {
-                return toMatch[match];
+            if (toMatch !== null
+                    && (Object.prototype.hasOwnProperty.call(toMatch, match)
+                        || match.includes('/'))
+            ) {
+                return typeof toMatch[match] === 'undefined'
+                    ? (match.includes('/') ? jsOMS.getArray(match, toMatch) : toMatch[match])
+                    : toMatch[match]
             } else if (typeof UriFactory.uri[match] !== 'undefined') {
                 return UriFactory.uri[match];
             } else if (match.indexOf('!') === 0) {
@@ -265,6 +270,20 @@ export class UriFactory
                 return current.query();
             } else if (match.indexOf('/') === 0 && match.length === 1) {
                 return current.path;
+            } else if (match.indexOf('°') === 0 && match.length === 1) {
+                if(!navigator.geolocation) {
+                    return;
+                }
+
+                var lat = 0.0;
+                var lon = 0.0;
+
+                navigator.geolocation.getCurrentPosition(position => {
+                    lat = position.coords.latitude;
+                    lon = position.coords.longitude;
+                });
+
+                return lat === 0.0 && lon === 0.0 ? '' : lat + ',' + lon;
             } else if (match.indexOf(':user') === 0) {
                 return current.user;
             } else if (match.indexOf(':pass') === 0) {

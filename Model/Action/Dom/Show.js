@@ -21,5 +21,7 @@ export function showAction (action, callback, id)
     /** global: jsOMS */
     jsOMS.removeClass(show, 'vh');
 
-    callback();
+    if (typeof callback === 'function') {
+        callback();
+    }
 };

@@ -48,5 +48,7 @@ export function removeButtonAction (action, callback, id)
         }, 200);
     }
 
-    callback();
+    if (typeof callback === 'function') {
+        callback();
+    }
 };

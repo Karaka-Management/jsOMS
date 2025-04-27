@@ -29,5 +29,7 @@ export function formSubmitAction (action, callback, id)
         formManager.submit(formManager.get(i.id));
     }
 
-    callback();
+    if (typeof callback === 'function') {
+        callback();
+    }
 };

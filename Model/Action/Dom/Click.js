@@ -25,5 +25,7 @@ export function domClickAction (action, callback, id)
         i.click();
     }
 
-    callback();
+    if (typeof callback === 'function') {
+        callback();
+    }
 };

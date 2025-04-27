@@ -16,5 +16,7 @@ export function preventEvent (action, callback, id)
 
     jsOMS.preventAll(action.data);
 
-    callback();
+    if (typeof callback === 'function') {
+        callback();
+    }
 };

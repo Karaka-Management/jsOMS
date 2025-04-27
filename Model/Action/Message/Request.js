@@ -8,9 +8,13 @@ import { Request } from '../../../Message/Request/Request.js';
  *
  * @since 1.0.0
  */
-export function requestAction (action, callback)
+export function requestAction (action, callback, id)
 {
     'use strict';
+
+    if (action.uri === '') {
+        action.uri = document.getElementById(id).href;
+    }
 
     /** global: jsOMS */
     const request = new Request(action.uri, action.method, action.request_type);
